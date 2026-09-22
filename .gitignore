@@ -11,3 +11,6 @@ desktop.ini
 # Datos temporales
 /tmp/
 *.tmp
+
+# Pipeline: cache de descargas
+pipeline/estado/cache/

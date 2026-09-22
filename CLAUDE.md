@@ -93,6 +93,28 @@ El mayor riesgo del proyecto es abandonarlo en el mes cuatro.
 - [ ] Fase 4 — GitHub + Cloudflare Pages
 - [ ] Fase 5 — pre-AdSense (legales + CMP)
 
+### Hallazgo crítico sobre el NAP-DGT (22/09/2026)
+
+**Los ficheros DATEX2 de la DGT NO sirven para deducir qué distintivos pueden
+circular.** Cada ayuntamiento codifica el mismo XML con significados opuestos:
+
+| Municipio | `negate` | Distintivos declarados |
+|---|---|---|
+| A Coruña | true | 0, ECO, C, B |
+| Madrid | true | Sin distintivo |
+| Bilbao | true | 0, ECO, C, B, Sin distintivo |
+
+Si el bloque negado son los permitidos, Madrid queda al revés. Si son los
+prohibidos, A Coruña queda al revés. Bilbao es absurdo en ambas lecturas.
+
+**Decisión: no se publica ninguna regla de acceso derivada de esta fuente.**
+`pipeline/zbe_nap.py` guarda la evidencia en bruto (`evidencia_sin_interpretar`)
+para agilizar la verificación manual, pero las reglas solo se publican tras
+leer la ordenanza. No reabrir esto salvo que la DGT normalice el formato.
+
+Lo que sí aporta el NAP: los 45 municipios con ZBE registrada, su fuente
+oficial, fecha y horarios. Es información de nivel C, publicable.
+
 ### Trampas ya pisadas (no repetir)
 
 - **`disableKinds` debe ir en la raíz de `hugo.toml`**, antes de cualquier cabecera

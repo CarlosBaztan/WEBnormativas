@@ -1,0 +1,100 @@
+
+=== 2026-09-22T21:05:01+00:00 ===
+NUEVO    A Coruña (oficial)
+NUEVO    Molina de Segura (oficial)
+NUEVO    Cartuja (pendiente_verificacion)
+NUEVO    Pamplona Ensanche (oficial)
+NUEVO    Málaga (pendiente_verificacion)
+NUEVO    Palma (pendiente_verificacion)
+NUEVO    Ávila (pendiente_verificacion)
+NUEVO    Salamanca (pendiente_verificacion)
+NUEVO    Torremolinos (pendiente_verificacion)
+NUEVO    Fuenlabrada (pendiente_verificacion)
+NUEVO    Rondas de Barcelona (pendiente_verificacion)
+NUEVO    Viladecans (pendiente_verificacion)
+NUEVO    Sant Joan Despí (pendiente_verificacion)
+NUEVO    Gavà (pendiente_verificacion)
+NUEVO    Castellón (pendiente_verificacion)
+NUEVO    Granollers (pendiente_verificacion)
+NUEVO    Valladolid (pendiente_verificacion)
+NUEVO    San Sebastián (pendiente_verificacion)
+NUEVO    Granada (pendiente_verificacion)
+NUEVO    El Prat de Llobregat (pendiente_verificacion)
+NUEVO    Las Rozas (pendiente_verificacion)
+NUEVO    Cerdanyola del Vallès (pendiente_verificacion)
+NUEVO    Sant Boi de Llobregat (pendiente_verificacion)
+NUEVO    Sant Cugat Del Vallès (pendiente_verificacion)
+NUEVO    Madrid (pendiente_verificacion)
+NUEVO    Cartagena (pendiente_verificacion)
+NUEVO    Benidorm (pendiente_verificacion)
+NUEVO    Pontevedra (pendiente_verificacion)
+NUEVO    Bilbao (pendiente_verificacion)
+NUEVO    Gasteiz (pendiente_verificacion)
+NUEVO    Dos Hermanas (oficial)
+NUEVO    Sabadell (pendiente_verificacion)
+NUEVO    Oviedo (pendiente_verificacion)
+NUEVO    Alcalá de Henares (oficial)
+NUEVO    Motril (oficial)
+NUEVO    Lleida (pendiente_verificacion)
+NUEVO    Reus (pendiente_verificacion)
+NUEVO    Manlleu (pendiente_verificacion)
+NUEVO    Mataró (pendiente_verificacion)
+NUEVO    Rubí (pendiente_verificacion)
+NUEVO    Tarragona (pendiente_verificacion)
+NUEVO    Terrassa (pendiente_verificacion)
+NUEVO    Girona (pendiente_verificacion)
+NUEVO    Alicante (pendiente_verificacion)
+NUEVO    Valencia.xml (pendiente_verificacion)
+
+=== 2026-09-22T21:07:15+00:00 ===
+CAMBIO   A Coruña: etiquetas_permitidas: ['B', 'C', 'ECO', '0'] -> []
+CAMBIO   A Coruña: confianza: 'oficial' -> 'pendiente_verificacion'
+CAMBIO   Molina de Segura: etiquetas_permitidas: ['B', 'ECO', '0'] -> []
+CAMBIO   Molina de Segura: confianza: 'oficial' -> 'pendiente_verificacion'
+CAMBIO   Cartuja: horario_restriccion: '' -> '07:00:00Z–18:59:59Z'
+CAMBIO   Pamplona Ensanche: etiquetas_permitidas: ['B', 'C', 'ECO', '0'] -> []
+CAMBIO   Pamplona Ensanche: confianza: 'oficial' -> 'pendiente_verificacion'
+CAMBIO   Málaga: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Palma: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Ávila: horario_restriccion: '' -> '07:00:00Z–19:59:59Z'
+CAMBIO   Salamanca: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Torremolinos: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Fuenlabrada: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Rondas de Barcelona: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Viladecans: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Sant Joan Despí: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Gavà: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Castellón: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Granollers: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Valladolid: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   San Sebastián: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Granada: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   El Prat de Llobregat: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Las Rozas: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Cerdanyola del Vallès: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Sant Boi de Llobregat: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Sant Cugat Del Vallès: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Madrid: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Cartagena: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Benidorm: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Pontevedra: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Bilbao: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Gasteiz: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Dos Hermanas: etiquetas_permitidas: ['0'] -> []
+CAMBIO   Dos Hermanas: confianza: 'oficial' -> 'pendiente_verificacion'
+CAMBIO   Sabadell: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Oviedo: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Alcalá de Henares: etiquetas_permitidas: ['B', 'C', 'ECO', '0'] -> []
+CAMBIO   Alcalá de Henares: confianza: 'oficial' -> 'pendiente_verificacion'
+CAMBIO   Motril: etiquetas_permitidas: ['ECO', '0'] -> []
+CAMBIO   Motril: confianza: 'oficial' -> 'pendiente_verificacion'
+CAMBIO   Lleida: horario_restriccion: '' -> '07:00:00Z–20:00:00Z; 00:00:00Z–00:00:00Z'
+CAMBIO   Reus: horario_restriccion: '' -> '07:00:00Z–19:00:00Z'
+CAMBIO   Manlleu: horario_restriccion: '' -> '00:00:00Z–23:59:00Z'
+CAMBIO   Mataró: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Rubí: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Tarragona: horario_restriccion: '' -> '07:00:00Z–19:00:00Z'
+CAMBIO   Terrassa: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Girona: horario_restriccion: '' -> '07:00:00Z–20:00:00Z'
+CAMBIO   Alicante: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
+CAMBIO   Valencia.xml: horario_restriccion: '' -> '00:00:00Z–23:59:59Z'
