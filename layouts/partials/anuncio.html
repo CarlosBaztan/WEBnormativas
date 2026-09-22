@@ -1,0 +1,49 @@
+{{- /*
+  anuncio.html — contenedor reservado para AdSense.
+
+  REGLA DURA 4: cero anuncios encima del formulario de una herramienta.
+  Solo se permite un hueco DEBAJO del resultado, o al final de un artículo.
+
+  El partial hace cumplir la regla por sí mismo: si se le pide una ubicación
+  que no está en la lista blanca, no renderiza nada y deja un comentario en
+  el HTML. Así la regla no depende de que quien lo invoque se acuerde.
+
+  Uso:
+    {{ partial "anuncio.html" (dict "ubicacion" "bajo-resultado") }}
+    {{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
+
+  Ubicaciones permitidas: bajo-resultado | fin-articulo
+  Formatos: horizontal (por defecto) | bloque
+
+  No renderiza nada salvo que site.Params.adsEnabled sea true (Fase 5).
+  Reserva altura siempre que renderiza, para no provocar CLS.
+*/ -}}
+
+{{- $ubicacion := "fin-articulo" -}}
+{{- $formato := "horizontal" -}}
+{{- if reflect.IsMap . -}}
+  {{- with index . "ubicacion" }}{{ $ubicacion = lower (printf "%v" .) }}{{ end -}}
+  {{- with index . "formato" }}{{ $formato = lower (printf "%v" .) }}{{ end -}}
+{{- end -}}
+
+{{- $permitidas := slice "bajo-resultado" "fin-articulo" -}}
+
+{{- if not (in $permitidas $ubicacion) -}}
+<!-- anuncio omitido: la ubicación "{{ $ubicacion }}" infringe la regla dura 4 (nada por encima del formulario) -->
+{{- else if not site.Params.adsEnabled -}}
+<!-- anuncio desactivado: site.Params.adsEnabled = false -->
+{{- else -}}
+<aside class="anuncio anuncio--{{ $formato }}" data-ubicacion="{{ $ubicacion }}" aria-label="Publicidad">
+  <p class="anuncio__etiqueta">Publicidad</p>
+  <div class="anuncio__hueco">
+    {{- with site.Params.adsenseClient }}
+    <ins class="adsbygoogle"
+         style="display:block;width:100%;height:100%"
+         data-ad-client="{{ . }}"
+         {{- with site.Params.adsenseSlot }} data-ad-slot="{{ . }}"{{ end }}
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    {{- end }}
+  </div>
+</aside>
+{{- end -}}

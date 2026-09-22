@@ -1,0 +1,164 @@
+{{- /*
+  schema.html — JSON-LD propio del sitio. Se engancha desde extend_head.html.
+
+  Qué emite:
+    guias/  + .Params.faq       => FAQPage
+    datos/  (sección)           => DataCatalog
+    datos/  (página)            => Dataset
+    resto                       => WebPage (enriquecido en las fichas de zbe/)
+
+  El tema PaperMod ya emite BreadcrumbList y BlogPosting; esto no los sustituye,
+  los complementa con nodos @id distintos.
+
+  El JSON se construye como mapa y se serializa con `jsonify`: así el escapado
+  de comillas y acentos es correcto y una ficha con texto raro no rompe nada.
+
+  Front matter opcional que aprovecha:
+    faq:            - pregunta: "..."   (o question:)
+                      respuesta: "..."  (o answer:)
+    licencia:       URL de licencia (por defecto CC-BY 4.0 en datos/)
+    cobertura_temporal: "2000/2025"
+    descargas:      - nombre: "ZBE por municipio (CSV)"
+                      formato: "text/csv"
+                      url: "/datos/zbe.csv"
+*/ -}}
+
+{{- if not .IsHome -}}
+
+{{- $desc := "" -}}
+{{- with .Description }}{{ $desc = . | plainify }}{{ else }}{{ $desc = .Summary | plainify }}{{ end -}}
+
+{{- $sitio := dict
+      "@type" "WebSite"
+      "@id" (printf "%s#website" site.Home.Permalink)
+      "name" site.Title
+      "url" site.Home.Permalink -}}
+
+{{- $editor := dict
+      "@type" "Organization"
+      "name" site.Title
+      "url" site.Home.Permalink -}}
+
+{{- $seccion := .Section -}}
+{{- $datos := dict -}}
+
+{{- /* Una página sin `date` ni `lastmod` tiene Lastmod cero: emitir
+       "0001-01-01" sería peor que no emitir nada. */ -}}
+{{- $modificado := "" -}}
+{{- if not .Lastmod.IsZero }}{{ $modificado = .Lastmod.Format "2006-01-02" }}{{ end -}}
+
+{{- /* ---------- FAQPage ---------- */ -}}
+{{- $faq := slice -}}
+{{- with .Params.faq -}}
+  {{- range . -}}
+    {{- if reflect.IsMap . -}}
+      {{- $q := "" }}{{ with index . "pregunta" }}{{ $q = printf "%v" . }}{{ else }}{{ with index . "question" }}{{ $q = printf "%v" . }}{{ end }}{{ end -}}
+      {{- $a := "" }}{{ with index . "respuesta" }}{{ $a = printf "%v" . }}{{ else }}{{ with index . "answer" }}{{ $a = printf "%v" . }}{{ end }}{{ end -}}
+      {{- if and (ne $q "") (ne $a "") -}}
+        {{- $faq = $faq | append (dict
+              "@type" "Question"
+              "name" ($q | plainify)
+              "acceptedAnswer" (dict "@type" "Answer" "text" ($a | markdownify | plainify))) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and (eq $seccion "guias") (gt (len $faq) 0) -}}
+
+  {{- $datos = dict
+        "@context" "https://schema.org"
+        "@type" "FAQPage"
+        "@id" (printf "%s#faq" .Permalink)
+        "url" .Permalink
+        "name" .Title
+        "description" $desc
+        "inLanguage" "es-ES"
+        "isPartOf" $sitio
+        "publisher" $editor
+        "mainEntity" $faq -}}
+
+{{- else if eq $seccion "datos" -}}
+
+  {{- $licencia := "https://creativecommons.org/licenses/by/4.0/" -}}
+  {{- with .Params.licencia }}{{ $licencia = printf "%v" . }}{{ end -}}
+
+  {{- $distribuciones := slice -}}
+  {{- with .Params.descargas -}}
+    {{- range . -}}
+      {{- if reflect.IsMap . -}}
+        {{- $u := "" }}{{ with index . "url" }}{{ $u = printf "%v" . }}{{ end -}}
+        {{- if ne $u "" -}}
+          {{- $d := dict "@type" "DataDownload" "contentUrl" (absURL $u) -}}
+          {{- with index . "formato" }}{{ $d = merge $d (dict "encodingFormat" (printf "%v" .)) }}{{ end -}}
+          {{- with index . "nombre" }}{{ $d = merge $d (dict "name" (printf "%v" .)) }}{{ end -}}
+          {{- $distribuciones = $distribuciones | append $d -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $datos = dict
+        "@context" "https://schema.org"
+        "@type" (cond .IsSection "DataCatalog" "Dataset")
+        "@id" (printf "%s#dataset" .Permalink)
+        "url" .Permalink
+        "name" .Title
+        "description" $desc
+        "inLanguage" "es-ES"
+        "license" $licencia
+        "isAccessibleForFree" true
+        "creator" $editor
+        "publisher" $editor
+        "isPartOf" $sitio
+        "spatialCoverage" (dict "@type" "Place" "name" "España") -}}
+
+  {{- with .Params.cobertura_temporal }}{{ $datos = merge $datos (dict "temporalCoverage" (printf "%v" .)) }}{{ end -}}
+  {{- if gt (len $distribuciones) 0 }}{{ $datos = merge $datos (dict "distribution" $distribuciones) }}{{ end -}}
+
+{{- else -}}
+
+  {{- $datos = dict
+        "@context" "https://schema.org"
+        "@type" "WebPage"
+        "@id" (printf "%s#webpage" .Permalink)
+        "url" .Permalink
+        "name" .Title
+        "description" $desc
+        "inLanguage" "es-ES"
+        "isPartOf" $sitio
+        "publisher" $editor -}}
+
+  {{- /* Fichas de ZBE: trazabilidad legible por máquina (lastReviewed + citation). */ -}}
+  {{- if and (eq $seccion "zbe") .IsPage -}}
+    {{- $p := .Params -}}
+    {{- with $p.municipio -}}
+      {{- $lugar := dict "@type" "Place" "name" (printf "%v" .) -}}
+      {{- with $p.provincia -}}
+        {{- $lugar = merge $lugar (dict "address" (dict
+              "@type" "PostalAddress"
+              "addressCountry" "ES"
+              "addressRegion" (printf "%v" .))) -}}
+      {{- end -}}
+      {{- $datos = merge $datos (dict "about" $lugar) -}}
+    {{- end -}}
+    {{- with $p.fecha_verificacion -}}
+      {{- $f := findRE `^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])` (printf "%v" .) 1 -}}
+      {{- with $f }}{{ $datos = merge $datos (dict "lastReviewed" (index . 0)) }}{{ end -}}
+    {{- end -}}
+    {{- $u := "" }}{{ with $p.fuente_url }}{{ $u = trim (printf "%v" .) " " }}{{ end -}}
+    {{- if or (hasPrefix $u "https://") (hasPrefix $u "http://") -}}
+      {{- $cita := dict "@type" "Legislation" "url" $u -}}
+      {{- with $p.fuente_nombre }}{{ $cita = merge $cita (dict "name" (printf "%v" .)) }}{{ end -}}
+      {{- $datos = merge $datos (dict "citation" $cita) -}}
+    {{- end -}}
+  {{- end -}}
+
+{{- end -}}
+
+{{- with $modificado }}{{ $datos = merge $datos (dict "dateModified" .) }}{{ end -}}
+
+{{- /* safeJS es imprescindible: sin él, html/template trata el <script> como
+       contexto JS y serializa el JSON como una cadena escapada. */ -}}
+<script type="application/ld+json">{{ $datos | jsonify | safeJS }}</script>
+{{- end -}}

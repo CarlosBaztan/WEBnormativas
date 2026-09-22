@@ -1,0 +1,181 @@
+{{- /*
+  layouts/zbe/single.html — ficha de ZBE de un municipio.
+
+  REGLA DURA: nunca una respuesta binaria. Esta plantilla nunca dice
+  "puedes entrar" / "no puedes entrar". Expone lo que dice la ordenanza,
+  con su fuente y su fecha, y deja la decisión al usuario.
+
+  Si etiquetas_permitidas viene vacío, no se pinta una tabla vacía: se dice
+  explícitamente que las reglas no están verificadas (nivel C del CLAUDE.md).
+*/ -}}
+
+{{- define "main" }}
+{{- $p := .Params }}
+
+{{- /* --- Normalización de campos (todo degrada a "no consta") --- */ -}}
+{{- $estadoZbe := "" }}{{ with $p.estado_zbe }}{{ $estadoZbe = lower (trim (printf "%v" .) " ") }}{{ end }}
+{{- $estadosTexto := dict
+      "activa"   "En vigor"
+      "prevista" "Aprobada o anunciada, todavía no en vigor"
+      "sin_zbe"  "Sin zona de bajas emisiones" }}
+{{- $estadoTexto := index $estadosTexto $estadoZbe | default "No consta" }}
+{{- $estadoClase := cond (isset $estadosTexto $estadoZbe) $estadoZbe "desconocido" }}
+
+{{- $fechaVigorISO := "" }}{{ $fechaVigorES := "" }}
+{{- with $p.fecha_vigor }}
+  {{- $m := findRE `^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])` (printf "%v" .) 1 }}
+  {{- with $m }}
+    {{- $fechaVigorISO = index . 0 }}
+    {{- $t := split $fechaVigorISO "-" }}
+    {{- $fechaVigorES = printf "%s/%s/%s" (index $t 2) (index $t 1) (index $t 0) }}
+  {{- end }}
+{{- end }}
+
+{{- $horario := "" }}{{ with $p.horario_restriccion }}{{ $horario = trim (printf "%v" .) " " }}{{ end }}
+
+{{- $etiquetas := slice }}
+{{- with $p.etiquetas_permitidas }}
+  {{- range . }}{{ $v := upper (trim (printf "%v" .) " ") }}{{ if ne $v "" }}{{ $etiquetas = $etiquetas | append $v }}{{ end }}{{ end }}
+{{- end }}
+{{- $nombresEtiqueta := dict
+      "0"   "Etiqueta 0 emisiones"
+      "ECO" "Etiqueta ECO"
+      "C"   "Etiqueta C"
+      "B"   "Etiqueta B"
+      "SIN" "Sin distintivo ambiental" }}
+
+{{- $excepciones := slice }}
+{{- with $p.excepciones }}
+  {{- range . }}{{ $v := trim (printf "%v" .) " " }}{{ if ne $v "" }}{{ $excepciones = $excepciones | append $v }}{{ end }}{{ end }}
+{{- end }}
+
+{{- $verificado := eq (lower (printf "%v" ($p.estado_dato | default ""))) "verificado" }}
+{{- $reglasSinVerificar := or (not $verificado) (eq (len $etiquetas) 0) }}
+
+<article class="post-single ficha-zbe">
+
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with .Description }}
+    <div class="post-description">{{ . }}</div>
+    {{- end }}
+  </header>
+
+  {{- /* Trazabilidad arriba: lo primero que se ve es de dónde sale el dato. */}}
+  {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "compacta") }}
+
+  {{- if $reglasSinVerificar }}
+  <aside class="aviso aviso--sin-datos" role="note" aria-label="Reglas no verificadas">
+    <p class="aviso__titulo">Las reglas de acceso de esta ZBE no están verificadas</p>
+    <p>
+      {{ if eq (len $etiquetas) 0 -}}
+        Sabemos {{ if eq $estadoZbe "activa" }}que la zona está en vigor{{ else if eq $estadoZbe "prevista" }}que el municipio ha anunciado una zona{{ else }}lo que consta en los registros oficiales{{ end }},
+        pero todavía no hemos contrastado artículo por artículo qué distintivos ambientales pueden circular.
+      {{- else -}}
+        Tenemos una lista provisional de distintivos, pero no la hemos contrastado con el texto oficial.
+      {{- end }}
+      Por eso no publicamos aquí una tabla de etiquetas: preferimos no decir nada a decir algo que no hemos comprobado.
+    </p>
+    <p>Consulta la ordenanza del ayuntamiento antes de circular. En cuanto la verifiquemos, esta ficha se actualizará con la referencia exacta y su fecha.</p>
+  </aside>
+  {{- end }}
+
+  <section class="ficha-datos" aria-labelledby="titulo-datos">
+    <h2 id="titulo-datos">Lo que consta en la normativa</h2>
+
+    <dl class="datos-lista">
+
+      <div class="datos-fila">
+        <dt>Estado de la zona</dt>
+        <dd><span class="badge badge--{{ $estadoClase }}">{{ $estadoTexto }}</span></dd>
+      </div>
+
+      <div class="datos-fila">
+        <dt>En vigor desde</dt>
+        <dd>
+          {{- if $fechaVigorES }}<time datetime="{{ $fechaVigorISO }}">{{ $fechaVigorES }}</time>
+          {{- else if eq $estadoZbe "sin_zbe" }}<span class="dato-vacio">No aplica</span>
+          {{- else }}<span class="dato-vacio">No consta una fecha verificada</span>{{ end }}
+        </dd>
+      </div>
+
+      <div class="datos-fila">
+        <dt>Distintivos que la ordenanza permite circular</dt>
+        <dd>
+          {{- if and $verificado (gt (len $etiquetas) 0) }}
+          <ul class="etiquetas">
+            {{- range $etiquetas }}
+            <li><span class="etiqueta etiqueta--{{ lower . }}">{{ index $nombresEtiqueta . | default (printf "Distintivo %s" .) }}</span></li>
+            {{- end }}
+          </ul>
+          <p class="datos-nota">La ordenanza nombra estos distintivos. Que un vehículo los tenga no equivale por sí solo a poder acceder: revisa horario y excepciones, y la señalización de la vía.</p>
+          {{- else }}
+          <span class="dato-vacio">Sin verificar. No publicamos esta lista hasta haberla leído en el texto oficial.</span>
+          {{- end }}
+        </dd>
+      </div>
+
+      <div class="datos-fila">
+        <dt>Horario de restricción</dt>
+        <dd>
+          {{- if and $verificado (ne $horario "") }}{{ $horario }}
+          {{- else if ne $horario "" }}{{ $horario }} <span class="dato-vacio">(sin verificar)</span>
+          {{- else }}<span class="dato-vacio">No consta un horario verificado</span>{{ end }}
+        </dd>
+      </div>
+
+      <div class="datos-fila">
+        <dt>Excepciones recogidas</dt>
+        <dd>
+          {{- if gt (len $excepciones) 0 }}
+          <ul class="excepciones">
+            {{- range $excepciones }}<li>{{ . }}</li>{{ end }}
+          </ul>
+          {{- else }}<span class="dato-vacio">No consta ninguna excepción verificada. Casi todas las ordenanzas contemplan alguna (residentes, personas con movilidad reducida, servicios): compruébalo en el texto oficial.</span>{{ end }}
+        </dd>
+      </div>
+
+      {{- if or $p.municipio $p.provincia }}
+      <div class="datos-fila">
+        <dt>Ámbito</dt>
+        <dd>
+          {{- with $p.municipio }}{{ . }}{{ end }}
+          {{- with $p.provincia }}{{ if $p.municipio }}, {{ end }}provincia de {{ . }}{{ end }}
+          {{- with $p.ccaa }} ({{ . }}){{ end }}
+        </dd>
+      </div>
+      {{- end }}
+
+    </dl>
+
+    <p class="ficha-descargo">
+      Esta ficha resume una norma; no es una autorización ni una respuesta a
+      «¿puedo entrar?». La decisión y la responsabilidad son tuyas: contrasta
+      siempre con el texto oficial enlazado y con la señalización de la zona.
+    </p>
+  </section>
+
+  {{- if .Content }}
+  <div class="post-content md-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" .Content -}}
+    {{- else }}{{ .Content }}{{ end }}
+  </div>
+  {{- end }}
+
+  {{- /* Regla dura 4: aquí no hay formulario; el hueco va al final del artículo. */}}
+  {{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
+
+  {{- /* Trazabilidad también al cierre, en versión completa. */}}
+  {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "completa") }}
+
+  <footer class="post-footer">
+    <p class="volver"><a href="{{ "/zbe/" | relURL }}">&larr; Todos los municipios con ZBE</a></p>
+    {{- if (.Param "ShowPostNavLinks") }}
+    {{- partial "post_nav_links.html" . }}
+    {{- end }}
+  </footer>
+
+</article>
+{{- end }}{{/* end main */}}

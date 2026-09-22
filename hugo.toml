@@ -1,0 +1,100 @@
+baseURL = "https://example.pages.dev/"
+languageCode = "es-es"
+defaultContentLanguage = "es"
+title = "Normativa del vehículo en España"
+theme = "PaperMod"
+
+enableRobotsTXT = true
+enableGitInfo = false
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
+# Sin taxonomías: generaban páginas vacías e indexables (/tags/, /categories/,
+# y una /etiquetas-dgt/ rota que esperaba la clave `etiqueta` cuando el
+# archetype usa `etiquetas_permitidas`, que es un array).
+# OJO: esta clave debe ir en la RAÍZ, antes de cualquier cabecera [tabla].
+# Si se coloca después, TOML la anida dentro de esa tabla y deja de aplicarse.
+disableKinds = ["taxonomy", "term"]
+
+# Regla dura 1: un dato sin verificar no se publica.
+# Convención: estado_dato = pendiente  <=>  draft = true
+# El script pipeline/auditoria.py comprueba que ambos no se desincronicen.
+
+[pagination]
+  pagerSize = 20
+
+[minify]
+  disableXML = true
+  minifyOutput = true
+
+[params]
+  # OJO: no fijar env = "production" aquí. Hacerlo obliga a TODOS los builds
+  # (incluidas las previsualizaciones de Cloudflare) a emitir "index, follow".
+  # PaperMod ya usa hugo.Environment, que vale "production" con `hugo` y
+  # "development" con `hugo server`.
+  description = "Normativa, fiscalidad y trámites del vehículo en España. Datos oficiales verificados y fechados."
+  author = "Normativa del vehículo"
+  defaultTheme = "auto"
+  ShowReadingTime = false
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = false
+  ShowToc = true
+  TocOpen = false
+  disableSpecial1stPost = true
+  hidemeta = false
+  comments = false
+
+  # Hueco de anuncio: SOLO debajo del resultado de la herramienta.
+  # Regla dura 4: cero anuncios encima del formulario.
+  adsEnabled = false
+
+  [params.homeInfoParams]
+    Title = "¿Puedes circular por la ZBE de tu ciudad?"
+    Content = "Consulta las restricciones reales de cada municipio, con la ordenanza citada y la fecha en que se verificó."
+
+[menu]
+  [[menu.main]]
+    identifier = "zbe"
+    name = "ZBE"
+    url = "/zbe/"
+    weight = 10
+  [[menu.main]]
+    identifier = "etiquetas"
+    name = "Etiquetas DGT"
+    url = "/etiquetas/"
+    weight = 20
+  [[menu.main]]
+    identifier = "datos"
+    name = "Datos abiertos"
+    url = "/datos/"
+    weight = 30
+  [[menu.main]]
+    identifier = "guias"
+    name = "Guías"
+    url = "/guias/"
+    weight = 40
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = true
+
+# Vacío a propósito: anula las taxonomías por defecto de Hugo (tags, categories).
+[taxonomies]
+
+# El sitemap usa la fecha de verificación como señal de frescura:
+# es el único dato de actualidad real que tiene el proyecto.
+[frontmatter]
+  lastmod = ["fecha_verificacion", ":git", "lastmod", "date", "publishDate"]
+
+[sitemap]
+  changefreq = "monthly"
+  filename = "sitemap.xml"
+  priority = 0.5

@@ -84,8 +84,23 @@ El mayor riesgo del proyecto es abandonarlo en el mes cuatro.
 - [x] Investigación de nicho y competencia
 - [x] Plan de negocio
 - [x] Repo inicializado
-- [ ] Dominio elegido
-- [ ] Spec técnico del sitio
-- [ ] Hugo scaffolding
-- [ ] Herramienta "¿Puedo circular?"
-- [ ] Dataset ZBE v1
+- [x] **Fase 1 — estructura Hugo** (pendiente de revisión del usuario)
+- [ ] Dominio elegido ← **adelantar: debe conectarse antes de publicar la pieza 1**
+- [ ] Fase 2 — herramienta "¿Puedo circular?"
+- [ ] Fase 3 — pipeline de datos
+- [ ] Fase 4 — GitHub + Cloudflare Pages
+- [ ] Fase 5 — pre-AdSense (legales + CMP)
+
+### Trampas ya pisadas (no repetir)
+
+- **`disableKinds` debe ir en la raíz de `hugo.toml`**, antes de cualquier cabecera
+  `[tabla]`. Si va después, TOML la anida dentro de esa tabla y deja de aplicarse
+  en silencio.
+- **`params.env = "production"` fijo** fuerza `index, follow` en todos los builds,
+  incluidas las previsualizaciones. No fijarlo: PaperMod ya usa `hugo.Environment`.
+- **`public/` no se limpia sola** entre builds. Para verificar que algo dejó de
+  generarse hay que borrarla antes (`Remove-Item public -Recurse -Force`).
+- **JSON-LD con `jsonify` dentro de `<script>`** sale escapado como cadena e
+  invisible para Google. Necesita `| safeJS`.
+- **`cast.ToInt` sobre `"09"`** devuelve 0 (lo interpreta en base 0). No usar para
+  aritmética de fechas.
