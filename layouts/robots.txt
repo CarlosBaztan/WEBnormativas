@@ -1,0 +1,12 @@
+{{- if site.Params.noindex -}}
+# Sitio en preparacion, en dominio temporal.
+# Se levanta poniendo noindex = false en hugo.toml, una vez conectado el
+# dominio propio y publicado contenido verificado.
+User-agent: *
+Disallow: /
+{{- else -}}
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}
+{{- end }}

@@ -1,4 +1,4 @@
-baseURL = "https://example.pages.dev/"
+baseURL = "https://webnormativas.bi-ia-carlosbaz.workers.dev/"
 languageCode = "es-es"
 defaultContentLanguage = "es"
 title = "Normativa del vehículo en España"
@@ -29,6 +29,13 @@ disableKinds = ["taxonomy", "term"]
   minifyOutput = true
 
 [params]
+  # Mientras esté en true: meta noindex + robots.txt que lo bloquea todo.
+  # Estamos en dominio temporal y sin contenido verificado; indexar ahora
+  # obligaría a migrar con un 301 sobre un dominio joven.
+  # Poner en false cuando (1) el dominio propio esté conectado y baseURL
+  # actualizado, y (2) haya fichas verificadas publicadas.
+  noindex = true
+
   # El feed de portada solo muestra estas secciones. Sin esto, las páginas
   # legales (aviso legal, cookies, contacto) aparecen como si fueran artículos.
   mainSections = ["zbe", "etiquetas", "guias"]

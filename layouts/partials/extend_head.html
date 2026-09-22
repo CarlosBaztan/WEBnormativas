@@ -2,4 +2,26 @@
   extend_head.html — hook que PaperMod invoca dentro de <head>.
   Sobrescribe el del tema por lookup order (themes/ no se toca).
 */ -}}
+{{- /*
+  Mientras `noindex` siga en true, el sitio pide a los buscadores que no lo
+  indexen. Es deliberado: estamos en un dominio temporal (.workers.dev) y sin
+  contenido verificado. Indexar ahora obligaria a migrar con un 301 sobre un
+  dominio joven, que es justo lo que queremos evitar.
+
+  QUITARLO cuando se cumplan las dos condiciones:
+    1. El dominio propio esta conectado y baseURL actualizado.
+    2. Hay contenido real publicado (fichas verificadas).
+  Basta con poner noindex = false en hugo.toml.
+
+  NOTA: PaperMod ya emite su propio <meta name="robots" content="index, follow">
+  y no hay forma barata de suprimirlo sin sobrescribir head.html entero. Durante
+  el periodo de noindex conviven las dos etiquetas; Google aplica la mas
+  restrictiva, asi que gana esta. El conflicto se resuelve solo al poner
+  noindex = false, porque entonces esta no se renderiza.
+
+  La guarda principal es layouts/robots.txt, que bloquea el rastreo completo.
+*/ -}}
+{{- if site.Params.noindex }}
+<meta name="robots" content="noindex, nofollow">
+{{- end }}
 {{- partial "schema.html" . -}}
