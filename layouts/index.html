@@ -1,0 +1,134 @@
+{{- define "main" }}
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+    <p class="post-description">{{ .Description }}</p>
+  </header>
+
+  <div class="post-content">
+
+    {{/*
+      Datos inyectados desde data/*.json. Nunca se codifican en el JS.
+      safeJS es imprescindible: sin él, html/template trata el bloque como
+      contexto JS y serializa el JSON como cadena escapada.
+    */}}
+    <script type="application/json" id="datos-etiquetas">{{ site.Data.etiquetas_dgt | jsonify | safeJS }}</script>
+    <script type="application/json" id="datos-zbe">{{ site.Data.zbe | jsonify | safeJS }}</script>
+
+    <form id="form-circular" class="pc-form" novalidate>
+      <fieldset>
+        <legend>Tu vehículo</legend>
+
+        <div class="pc-campo">
+          <label for="tipo-vehiculo">Tipo de vehículo</label>
+          <select id="tipo-vehiculo" name="tipo-vehiculo">
+            <option value="turismo">Turismo</option>
+            <option value="furgoneta_ligera">Furgoneta ligera</option>
+            <option value="ocho_plazas_o_pesado">Vehículo de 8 o más plazas, o pesado</option>
+            <option value="moto">Motocicleta o ciclomotor</option>
+          </select>
+        </div>
+
+        <div id="grupo-combustion">
+          <div class="pc-campo">
+            <label for="tecnologia">Combustible o tecnología</label>
+            <select id="tecnologia" name="tecnologia">
+              <option value="gasolina">Gasolina</option>
+              <option value="diesel">Diésel</option>
+              <option value="electrico_bateria">Eléctrico de batería</option>
+              <option value="electrico_autonomia_extendida">Eléctrico de autonomía extendida</option>
+              <option value="pila_combustible">Pila de combustible (hidrógeno)</option>
+              <option value="hibrido_enchufable">Híbrido enchufable</option>
+              <option value="hibrido_no_enchufable">Híbrido no enchufable</option>
+              <option value="gnc">Gas natural comprimido (GNC)</option>
+              <option value="gnl">Gas natural licuado (GNL)</option>
+              <option value="glp">Gas licuado del petróleo (GLP)</option>
+            </select>
+          </div>
+
+          <div class="pc-campo pc-campo--fecha">
+            <div>
+              <label for="anio">Año de matriculación</label>
+              <input type="number" id="anio" name="anio" min="1900" max="2100" step="1" inputmode="numeric" placeholder="2014">
+            </div>
+            <div>
+              <label for="mes">Mes <span class="pc-opcional">(si lo sabes)</span></label>
+              <select id="mes" name="mes">
+                <option value="">No lo sé</option>
+                <option value="1">Enero</option><option value="2">Febrero</option>
+                <option value="3">Marzo</option><option value="4">Abril</option>
+                <option value="5">Mayo</option><option value="6">Junio</option>
+                <option value="7">Julio</option><option value="8">Agosto</option>
+                <option value="9">Septiembre</option><option value="10">Octubre</option>
+                <option value="11">Noviembre</option><option value="12">Diciembre</option>
+              </select>
+            </div>
+          </div>
+          <p class="pc-ayuda">Cuenta la fecha de matriculación, no la de fabricación ni la de compra. El mes solo importa si tu año cae justo en un límite.</p>
+
+          <div class="pc-campo" id="campo-autonomia" hidden>
+            <label for="autonomia">Autonomía eléctrica homologada, en km</label>
+            <input type="number" id="autonomia" name="autonomia" min="0" max="1000" step="1" inputmode="numeric" placeholder="45">
+            <p class="pc-ayuda">A partir de 40 km corresponde el distintivo 0; por debajo, el ECO.</p>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Municipio</legend>
+        <div class="pc-campo">
+          <label for="municipio">Zona que quieres consultar</label>
+          {{ $municipios := site.Data.zbe.municipios }}
+          <select id="municipio" name="municipio">
+            <option value="">Elige un municipio</option>
+            {{- range $slug, $m := $municipios }}
+            <option value="{{ $slug }}">{{ $m.municipio }}</option>
+            {{- end }}
+          </select>
+          {{- if not $municipios }}
+          <p class="pc-ayuda">Todavía no hay ninguna ordenanza municipal verificada. Estamos revisándolas una a una; hasta entonces no publicamos reglas de acceso.</p>
+          {{- end }}
+        </div>
+      </fieldset>
+
+      <div class="pc-acciones">
+        <button type="submit" class="pc-boton">Consultar</button>
+        <button type="button" id="borrar-perfil" class="pc-boton pc-boton--secundario">Borrar mis datos</button>
+      </div>
+
+      <p id="aviso-guardado" class="pc-ayuda" hidden>Hemos recuperado los datos que guardaste en este navegador.</p>
+      <p class="pc-ayuda pc-privacidad">Los datos del vehículo se guardan solo en tu navegador, para no tener que repetirlos. No se envían a ningún sitio.</p>
+    </form>
+
+    {{/* Región anunciada por lectores de pantalla al aparecer el resultado. */}}
+    <div id="resultado" class="pc-resultado" role="region" aria-live="polite" aria-label="Resultado de la consulta">
+      <noscript>
+        <div class="pc-aviso">
+          <p class="pc-aviso__titulo">Esta herramienta necesita JavaScript</p>
+          <p>Puedes consultar tu distintivo directamente en
+            <a href="https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/" rel="noopener">la sede electrónica de la DGT</a>,
+            y las fichas por municipio en <a href="{{ "zbe/" | relURL }}">Zonas de Bajas Emisiones</a>.</p>
+        </div>
+      </noscript>
+    </div>
+
+    {{/* Regla dura 4: el anuncio va SIEMPRE debajo del resultado, nunca encima del formulario. */}}
+    <div id="anuncio-bajo-resultado" hidden>
+      {{ partial "anuncio.html" (dict "ubicacion" "bajo-resultado" "contexto" .) }}
+    </div>
+
+    <section class="pc-explicacion">
+      <h2>Cómo funciona</h2>
+      <p>Esta herramienta deduce el distintivo ambiental a partir del tipo de vehículo, su combustible y su fecha de matriculación, siguiendo los criterios publicados por la DGT. Después contrasta ese distintivo con la ordenanza del municipio que elijas.</p>
+      <p><strong>Es una deducción, no un dato oficial.</strong> El distintivo real lo asigna la DGT en el Registro de Vehículos, y hay excepciones: importaciones, reclasificaciones y homologaciones especiales. Compruébalo siempre en la sede electrónica.</p>
+      <p>De los municipios solo publicamos lo que hemos leído en su ordenanza, citando el artículo y la fecha en que lo verificamos. Si no aparece, es que aún no lo hemos comprobado.</p>
+    </section>
+
+  </div>
+</article>
+
+{{ $js := resources.Get "js/puedo-circular.js" | minify | fingerprint }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+
+{{- end }}

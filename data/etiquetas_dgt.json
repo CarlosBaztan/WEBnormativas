@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "descripcion": "Reglas de asignación del distintivo ambiental de la DGT.",
+    "fuentes": [
+      {
+        "nombre": "DGT — Distintivo ambiental",
+        "url": "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"
+      },
+      {
+        "nombre": "Ayuntamiento de Madrid — Distintivos de los vehículos en función del impacto ambiental",
+        "url": "https://www.madrid.es/portales/munimadrid/es/Inicio/Movilidad-y-transportes/Distintivos-de-los-vehiculos-en-funcion-del-impacto-ambiental/"
+      }
+    ],
+    "fecha_verificacion": "2026-09-22",
+    "confianza": "oficial",
+    "ADVERTENCIA": "El distintivo real lo asigna la DGT en el Registro de Vehículos. Derivarlo del tipo, combustible y año es una APROXIMACIÓN: hay excepciones (importaciones, reclasificaciones, homologaciones especiales). Toda salida debe remitir a la consulta oficial.",
+    "consulta_oficial": "https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/"
+  },
+
+  "distintivos": {
+    "0": {
+      "nombre": "0 emisiones",
+      "color": "Azul",
+      "orden": 4
+    },
+    "ECO": {
+      "nombre": "ECO",
+      "color": "Verde y azul",
+      "orden": 3
+    },
+    "C": {
+      "nombre": "C",
+      "color": "Verde",
+      "orden": 2
+    },
+    "B": {
+      "nombre": "B",
+      "color": "Amarillo",
+      "orden": 1
+    },
+    "sin": {
+      "nombre": "Sin distintivo",
+      "color": "Ninguno",
+      "orden": 0
+    }
+  },
+
+  "reglas": {
+    "por_tecnologia": [
+      {
+        "distintivo": "0",
+        "aplica_a": ["electrico_bateria", "electrico_autonomia_extendida", "pila_combustible"],
+        "nota": "BEV, REEV y FCEV obtienen 0 emisiones con independencia del año."
+      },
+      {
+        "distintivo": "0",
+        "aplica_a": ["hibrido_enchufable"],
+        "condicion": "autonomia_electrica_km >= 40",
+        "nota": "PHEV con 40 km o más de autonomía eléctrica."
+      },
+      {
+        "distintivo": "ECO",
+        "aplica_a": ["hibrido_enchufable"],
+        "condicion": "autonomia_electrica_km < 40",
+        "requiere_ademas": "criterios_C",
+        "nota": "PHEV de menos de 40 km. Debe cumplir además los criterios de la etiqueta C."
+      },
+      {
+        "distintivo": "ECO",
+        "aplica_a": ["hibrido_no_enchufable", "gnc", "gnl", "glp"],
+        "requiere_ademas": "criterios_C",
+        "nota": "HEV y vehículos de gas. Deben cumplir además los criterios de la etiqueta C."
+      }
+    ],
+
+    "por_combustible_y_fecha": {
+      "ligeros": {
+        "_descripcion": "Turismos (M1) y furgonetas ligeras (N1).",
+        "gasolina": {
+          "C": { "desde": "2006-01-01" },
+          "B": { "desde": "2001-01-01", "hasta": "2005-12-31" },
+          "sin": { "hasta": "2000-12-31" }
+        },
+        "diesel": {
+          "C": { "desde": "2015-09-01" },
+          "B": { "desde": "2006-01-01", "hasta": "2015-08-31" },
+          "sin": { "hasta": "2005-12-31" }
+        }
+      },
+      "pesados_y_8_plazas": {
+        "_descripcion": "Vehículos de 8 o más plazas y vehículos pesados.",
+        "gasolina": {
+          "C": { "desde": "2014-01-01" },
+          "B": { "desde": "2006-01-01", "hasta": "2013-12-31" },
+          "sin": { "hasta": "2005-12-31" }
+        },
+        "diesel": {
+          "C": { "desde": "2014-01-01" },
+          "B": { "desde": "2006-01-01", "hasta": "2013-12-31" },
+          "sin": { "hasta": "2005-12-31" }
+        }
+      }
+    }
+  },
+
+  "_limitaciones_conocidas": [
+    "Las motocicletas y ciclomotores siguen criterios propios que NO están recogidos aquí. No derivar su distintivo con estas reglas.",
+    "Un vehículo importado o reclasificado puede tener un distintivo distinto al que sugiere su año de matriculación.",
+    "La fecha determinante es la de matriculación, no la de fabricación ni la de compra.",
+    "Tener el distintivo no equivale a poder acceder: cada ZBE fija sus propias condiciones."
+  ]
+}

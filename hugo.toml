@@ -29,6 +29,10 @@ disableKinds = ["taxonomy", "term"]
   minifyOutput = true
 
 [params]
+  # El feed de portada solo muestra estas secciones. Sin esto, las páginas
+  # legales (aviso legal, cookies, contacto) aparecen como si fueran artículos.
+  mainSections = ["zbe", "etiquetas", "guias"]
+
   # OJO: no fijar env = "production" aquí. Hacerlo obliga a TODOS los builds
   # (incluidas las previsualizaciones de Cloudflare) a emitir "index, follow".
   # PaperMod ya usa hugo.Environment, que vale "production" con `hugo` y

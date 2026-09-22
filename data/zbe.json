@@ -1,0 +1,37 @@
+{
+  "_meta": {
+    "descripcion": "Reglas de acceso a las Zonas de Bajas Emisiones, por municipio.",
+    "ADVERTENCIA": "Este archivo está VACÍO a propósito. Todavía no se ha verificado ninguna ordenanza municipal. La herramienta debe decir que no hay datos para el municipio consultado, nunca inventarlos ni suponerlos.",
+    "fecha_actualizacion": "2026-09-22",
+    "fuentes_previstas": [
+      {
+        "nombre": "NAP-DGT — Zonas de Bajas Emisiones (DATEX2V3)",
+        "url": "https://nap.dgt.es/dataset?license_id=cc-by&res_format=DATEX2V3&tags=ZBE",
+        "licencia": "CC-BY",
+        "nivel_confianza": "A"
+      },
+      {
+        "nombre": "MITECO — Las zonas de bajas emisiones en España",
+        "url": "https://www.miteco.gob.es/en/calidad-y-evaluacion-ambiental/temas/movilidad/zonas_de_bajas_emisiones_en_espana.html",
+        "nivel_confianza": "C (solo indica si existe ZBE, no sus reglas)"
+      }
+    ],
+    "esquema_por_municipio": {
+      "slug": "identificador en la URL, ej. 'zaragoza'",
+      "municipio": "nombre oficial",
+      "provincia": "provincia",
+      "ccaa": "comunidad autónoma",
+      "estado_zbe": "activa | prevista | sin_zbe",
+      "fecha_vigor": "YYYY-MM-DD o cadena vacía",
+      "etiquetas_permitidas": "array de distintivos, ej. ['0','ECO','C']",
+      "horario_restriccion": "texto literal de la ordenanza",
+      "excepciones": "array de textos",
+      "fuente_nombre": "ej. 'Ordenanza municipal art. 7, BOP Zaragoza'",
+      "fuente_url": "enlace directo al documento oficial",
+      "fecha_verificacion": "YYYY-MM-DD",
+      "confianza": "oficial | derivado | pendiente_verificacion"
+    }
+  },
+
+  "municipios": {}
+}

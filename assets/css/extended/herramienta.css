@@ -1,0 +1,205 @@
+/* Herramienta "¿Puedo circular?" — portada */
+
+.pc-form {
+  margin: 1.5rem 0;
+}
+
+.pc-form fieldset {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.pc-form legend {
+  font-weight: 700;
+  padding: 0 0.5rem;
+}
+
+.pc-campo {
+  margin: 0 0 1rem;
+}
+
+.pc-campo label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.pc-campo select,
+.pc-campo input[type="number"] {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  color: var(--primary);
+  background: var(--theme);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.pc-campo--fecha {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pc-campo--fecha > div {
+  flex: 1 1 10rem;
+}
+
+.pc-opcional {
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.pc-ayuda {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin: 0.4rem 0 0;
+}
+
+.pc-privacidad {
+  margin-top: 0.75rem;
+}
+
+.pc-acciones {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 0;
+}
+
+.pc-boton {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  background: var(--primary);
+  color: var(--theme);
+  cursor: pointer;
+}
+
+.pc-boton--secundario {
+  background: transparent;
+  color: var(--primary);
+}
+
+.pc-boton:hover {
+  opacity: 0.85;
+}
+
+.pc-form :focus-visible,
+.pc-boton:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Reserva de espacio: el resultado no debe desplazar la página al aparecer. */
+.pc-resultado {
+  min-height: 8rem;
+  margin: 1.5rem 0;
+}
+
+.pc-distintivo {
+  border: 2px solid var(--border);
+  border-left-width: 6px;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.pc-distintivo__etiqueta {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.pc-distintivo__valor {
+  margin: 0.2rem 0 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.pc-distintivo__color {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.pc-aviso {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.pc-aviso__titulo {
+  margin: 0 0 0.4rem;
+  font-weight: 700;
+}
+
+.pc-aviso p:last-child,
+.pc-ordenanza p:last-child,
+.pc-cruce p:last-child {
+  margin-bottom: 0;
+}
+
+.pc-ordenanza {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.pc-ordenanza h3 {
+  margin-top: 0;
+}
+
+.pc-cruce {
+  border-left: 6px solid var(--border);
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem;
+  background: var(--code-bg);
+  border-radius: 0 8px 8px 0;
+}
+
+.pc-nota,
+.pc-oficial {
+  font-size: 0.92rem;
+  opacity: 0.9;
+}
+
+.pc-fuente {
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.pc-ok {
+  font-weight: 600;
+}
+
+.pc-explicacion {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  margin-top: 2rem;
+}
+
+/* Contraste suficiente en ambos temas sin depender del color para comunicar. */
+.pc-aviso--incierto,
+.pc-aviso--sindatos {
+  border-color: currentColor;
+  border-left-width: 6px;
+}
+
+@media print {
+  .pc-form,
+  .pc-acciones,
+  #anuncio-bajo-resultado {
+    display: none;
+  }
+}

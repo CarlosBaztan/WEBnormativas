@@ -85,7 +85,9 @@ El mayor riesgo del proyecto es abandonarlo en el mes cuatro.
 - [x] Plan de negocio
 - [x] Repo inicializado
 - [x] **Fase 1 — estructura Hugo** (pendiente de revisión del usuario)
-- [ ] Dominio elegido ← **adelantar: debe conectarse antes de publicar la pieza 1**
+- [ ] Dominio: se arranca en `.pages.dev` y se migra en ~2 semanas (decisión del
+      22/09/2026). Coste cero mientras no haya enlaces ni indexación.
+      **Migrar ANTES de empezar a buscar enlaces.**
 - [ ] Fase 2 — herramienta "¿Puedo circular?"
 - [ ] Fase 3 — pipeline de datos
 - [ ] Fase 4 — GitHub + Cloudflare Pages
