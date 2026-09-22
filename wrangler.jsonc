@@ -1,0 +1,26 @@
+{
+  // Sitio estático servido como assets de un Worker.
+  //
+  // Cloudflare está migrando Pages hacia Workers, y el flujo nuevo espera
+  // `npx wrangler deploy` en vez de un directorio de salida configurado en
+  // el panel. Este fichero es el que le dice qué publicar.
+  //
+  // El build sigue siendo de Hugo: `hugo --gc --minify` genera `public/`,
+  // y wrangler sube ese directorio tal cual. No hay código de Worker: es
+  // un despliegue solo de assets.
+  //
+  // Requiere la variable de entorno HUGO_VERSION = 0.166.0 en el panel de
+  // Cloudflare. Sin ella se usa una version antigua de Hugo y el build falla.
+
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "webnormativas",
+  "compatibility_date": "2026-09-22",
+
+  "assets": {
+    "directory": "./public",
+
+    // Hugo genera public/404.html; que Cloudflare lo sirva en las rutas
+    // inexistentes, en vez de devolver un 404 vacío.
+    "not_found_handling": "404-page"
+  }
+}
