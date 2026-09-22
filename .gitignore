@@ -1,0 +1,13 @@
+﻿# Hugo
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Datos temporales
+/tmp/
+*.tmp

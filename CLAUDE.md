@@ -1,0 +1,91 @@
+# WEBnormativas — contexto del proyecto
+
+Portal de **normativa y fiscalidad del vehículo en España**. Sitio de nicho monetizado.
+Ver [PLAN-NEGOCIO.md](PLAN-NEGOCIO.md) para el análisis completo.
+
+## Quién
+
+Carlos, Zaragoza. Analista de negocio/datos (SQL, Power BI), ADE + máster en BI.
+Jornada completa: pocas horas/semana para esto. Presupuesto: solo dominio (~10-20 €/año).
+
+## Stack
+
+- **Hugo** (sitio estático) + **Cloudflare Pages** (hosting gratis) + **GitHub**
+- Herramientas interactivas en **JavaScript client-side**, sin backend
+- Claude genera contenido y herramientas; Carlos verifica y publica
+
+## Decisiones tomadas (no volver a debatir)
+
+1. **Nicho:** normativa/fiscalidad del vehículo. ZBE como punto de entrada.
+2. **Verticales:** ZBE → etiquetas DGT → IVTM → ITV → multas → trámites.
+3. **Empezar estrecho:** solo ZBE + etiquetas hasta ~mes 6. Abrir todas las categorías a la vez diluye la autoridad temática.
+4. **El producto es el dataset**, no la calculadora. Una fórmula la copia cualquiera; 151 ordenanzas consolidadas no.
+5. **Dominio neutro y ampliable** (no atarlo a "ZBE"). Sin decidir aún.
+6. **Monetización apilada:** AdSense (arranca antes) + afiliación/leads (más valor por visita). Ambas.
+7. **Perfil de vehículo único** en `localStorage`, reutilizable por todas las herramientas.
+
+## Reglas de publicación de datos (críticas)
+
+Niveles de confianza. **Nunca publicar por encima del nivel que se tiene:**
+
+| Nivel | Origen | Qué se publica |
+|---|---|---|
+| A | NAP-DGT, DATEX2 legible por máquina | Respuesta completa |
+| B | Ordenanza leída a mano, artículo citado | Respuesta completa + fecha |
+| C | Solo se sabe que hay ZBE (mapa MITECO) | Ficha "reglas sin verificar" + enlace oficial. **No responder** "¿puedo entrar?" |
+| D | Sin datos | **No publicar página** |
+
+- **Nunca respuesta binaria.** No "✅ puedes entrar", sino "la ordenanza X (art. Y, fecha) permite… [enlace]. Verificado el DD/MM/AAAA".
+- Cada dato lleva **fuente + enlace + fecha de verificación** visibles.
+- Datos sin revisar durante meses se marcan solos como "pendiente de verificación".
+- Solo fuentes oficiales y abiertas. Respetar robots.txt. No scrapear competidores.
+
+## Ritmo
+
+**4-6 piezas/mes**, cada una verificada. Publicar 80 páginas de golpe generadas con IA = penalización por *scaled content abuse*. El ritmo lento es una decisión de diseño, no una limitación.
+
+## Fuentes de datos verificadas
+
+| Fuente | Contenido | Licencia |
+|---|---|---|
+| [NAP-DGT](https://nap.dgt.es/dataset?license_id=cc-by&res_format=DATEX2V3&tags=ZBE) | Geometría + restricciones ZBE (DATEX2V3), cobertura parcial | **CC-BY** (citar) |
+| [Mapa MITECO](https://www.miteco.gob.es/en/calidad-y-evaluacion-ambiental/temas/movilidad/zonas_de_bajas_emisiones_en_espana.html) | Listado oficial de municipios con ZBE y su estado | Pública |
+| [Hacienda — consulta impositiva municipal](https://serviciostelematicosext.hacienda.gob.es/SGFAL/ConsultaTipos/aspx/listado_municipiosm.aspx) | IVTM/IBI/IAE/IVTNU/ICIO por municipio, **export Excel masivo**, 2000-2025 | Pública |
+| [API carburantes MITECO](https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/) | Precios de todas las gasolineras, horario | Pública |
+| [DGT en cifras](https://www.dgt.es/menusecundario/dgt-en-cifras/) | Parque de vehículos y matriculaciones (ancho fijo) | Pública |
+| [RD 1052/2022](https://www.boe.es/buscar/doc.php?id=BOE-A-2022-22689) | Marco legal ZBE | Pública |
+
+**Legal:** el [art. 13 LPI](https://www.iberley.es/legislacion/articulo-13-ley-propiedad-intelectual) excluye las disposiciones legales y los actos de organismos públicos de la propiedad intelectual → las ordenanzas municipales son libremente reproducibles.
+
+## Contexto de mercado (verificado 21-22/09/2026)
+
+- Desde **01/01/2026** todos los municipios >50.000 hab. están obligados a tener ZBE.
+- Feb-2026: 56 ciudades operativas → previsión de **151 municipios / 33M personas** durante el año.
+- Multa por acceso indebido: **200 €**.
+
+**Competidores analizados** (ninguno consolidado, ninguno con datos propios):
+
+| Sitio | Edad | Páginas | Dom. ref. | Visitas/mes |
+|---|---|---|---|---|
+| sacacuentas.es | ~12m | 91 | 119 | **28** |
+| simuloo.com | ~12m | 150 | 100+ | ~4.000 |
+| costerealcoche.com | ~8m | 12 | — | — |
+| ibeonix.es | nuevo | 3 | — | — |
+
+Dos de los cuatro llevan meses abandonados.
+
+## Expectativa realista
+
+120-450 €/mes a 18 meses (escenario medio). **Los primeros 6 meses no darán casi nada.**
+El mayor riesgo del proyecto es abandonarlo en el mes cuatro.
+
+## Estado actual
+
+- [x] Investigación de nicho y competencia
+- [x] Plan de negocio
+- [x] Repo inicializado
+- [ ] Dominio elegido
+- [ ] Spec técnico del sitio
+- [ ] Hugo scaffolding
+- [ ] Herramienta "¿Puedo circular?"
+- [ ] Dataset ZBE v1
