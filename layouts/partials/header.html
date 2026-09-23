@@ -48,6 +48,18 @@
         <span class="boton-buscar__texto">Buscar</span>
       </a>
 
+      {{- /* Solo visible por debajo de 64rem: ahí el menú lateral pasa a ser
+             un panel desplegable y este botón es la única forma de abrirlo. */}}
+      <button type="button" class="boton-menu" aria-controls="menu-lateral"
+              aria-expanded="false" aria-label="Abrir el menú de secciones">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
       {{- if (not site.Params.disableThemeToggle) }}
       <button id="theme-toggle" class="theme-toggle" accesskey="t" title="Cambiar tema (Alt + T)"
               aria-label="Cambiar entre tema claro y oscuro">

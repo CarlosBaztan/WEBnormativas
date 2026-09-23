@@ -80,7 +80,12 @@
 
 .marca:hover { text-decoration: none; }
 
+/* Para que el recorte con puntos suspensivos funcione, todos los eslabones
+   de la cadena flex tienen que poder encogerse: .logo, .marca y el propio
+   texto. Basta que uno conserve min-width:auto para que desborde. */
 .marca__texto {
+  min-width: 0;
+  flex: 0 1 auto;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -151,9 +156,23 @@
 
 .boton-buscar__texto { font-size: 0.9rem; }
 
-@media (max-width: 48rem) {
-  /* En móvil solo la lupa: el texto se come el poco ancho que hay.
-     Ancho y alto fijos, o el círculo sale ovalado. */
+/* Por debajo del punto en que aparece la columna, la cabecera se queda en
+   una sola fila: el menú de secciones se consulta desde el panel, que ya
+   contiene esos mismos destinos. Así el contenido empieza antes. */
+@media (max-width: 63.99rem) {
+  .nav-propia .menu { display: none; }
+
+  /* Una sola fila: el título cede espacio (y se recorta si hace falta)
+     antes que los botones, que deben seguir siendo alcanzables. */
+  .nav-propia {
+    flex-wrap: nowrap;
+    height: var(--cabecera-alto);
+  }
+  .nav-propia .logo { min-width: 0; }
+  .logo a.marca { font-size: 1.1rem; }
+
+  /* Solo la lupa: el texto se come el poco ancho que hay. Ancho y alto
+     fijos, o el círculo sale ovalado. */
   .boton-buscar__texto { display: none; }
   .boton-buscar {
     width: 2.25rem;
@@ -162,29 +181,109 @@
     justify-content: center;
     border-radius: 50%;
   }
-  .logo a.marca { font-size: 0.95rem; }
 
-  /* El menú se desplaza en horizontal; este hueco evita que el último
-     elemento quede pegado bajo la lupa al hacer scroll. */
-  .nav-propia .menu { padding-right: 0.35rem; }
-  .nav-derecha { gap: 0.5rem; }
+  .nav-derecha { gap: 0.4rem; }
+}
+
+@media (max-width: 26rem) {
+  /* Pantallas muy estrechas: el título cede antes que los botones. */
+  .logo a.marca { font-size: 1rem; }
+  .logo-senal { width: 30px; height: 30px; }
 }
 
 /* --- Menú lateral -------------------------------------------------------- */
 
-/* En móvil el menú va antes del contenido, como una lista de secciones
-   con los grupos cerrados. En escritorio pasa a columna fija (más abajo). */
+/* --- Menú lateral: panel en móvil, columna en escritorio ---------------- */
+
+/* Por defecto (móvil) es un panel deslizante fuera de pantalla. El contenido
+   empieza justo debajo de la cabecera, sin un bloque de navegación delante. */
 .menu-lateral {
-  margin: 1.25rem auto 0;
-  padding: 0 var(--gap, 24px);
-  max-width: calc(var(--main-width, 720px) + var(--gap, 24px) * 2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(20rem, 86vw);
+  z-index: 40;
+  margin: 0;
+  padding: 0 0.6rem 2rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--theme);
+  border-right: 1px solid var(--border);
+  transform: translateX(-100%);
+  /* visibility evita que el panel cerrado siga siendo tabulable. */
+  visibility: hidden;
+  transition: transform 0.2s ease, visibility 0.2s;
 }
 
-.menu-lateral__grupos {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.35rem 0.6rem;
+.menu-lateral[data-abierto] {
+  transform: none;
+  visibility: visible;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-lateral { transition: none; }
+}
+
+.fondo-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.fondo-menu[hidden] { display: none; }
+
+.menu-lateral__cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 0.5rem;
+  background: var(--theme);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+
+.menu-lateral__rotulo {
+  font-weight: 700;
+}
+
+.menu-lateral__cerrar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.menu-lateral__cerrar:hover { background: var(--code-bg); }
+
+/* Botón hamburguesa de la cabecera: solo existe mientras el menú es panel. */
+.boton-menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.boton-menu:hover { background: var(--code-bg); }
 
 /* Una sola tipografía en todo el menú: mismo tamaño y misma caja para los
    títulos de grupo y para los enlaces. Solo cambian el peso y el sangrado. */
@@ -287,27 +386,24 @@
     flex-wrap: nowrap;
   }
 
+  /* Con la columna siempre a la vista, el panel y su botón sobran. */
+  .boton-menu,
+  .fondo-menu,
+  .menu-lateral__cabecera { display: none; }
+
   .menu-lateral {
-    position: fixed;
     /* +1px: la altura de la cabecera es la del nav, y su borde inferior
        queda fuera. Sin esto el menú se le mete justo por debajo. */
     top: calc(var(--cabecera-alto) + 1px);
-    left: 0;
+    bottom: auto;
     width: var(--ml-ancho);
     max-width: var(--ml-ancho);
     max-height: calc(100vh - var(--cabecera-alto) - 1px);
-    overflow-y: auto;
-    margin: 0;
     padding: 1rem 0.75rem 2rem;
-    border-right: 1px solid var(--border);
     z-index: 10;
-  }
-
-  /* En columna no hace falta el recuadro: ya lo delimita el borde derecho. */
-  .menu-lateral__grupos {
-    border: 0;
-    border-radius: 0;
-    padding: 0;
+    transform: none;
+    visibility: visible;
+    transition: none;
   }
 
   body .main { margin-left: var(--ml-ancho); }

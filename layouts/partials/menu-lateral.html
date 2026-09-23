@@ -1,11 +1,14 @@
 {{- /*
-  partials/menu-lateral.html — navegación lateral izquierda.
+  partials/menu-lateral.html — navegación de secciones.
 
-  Los grupos están siempre visibles: no hay un envoltorio "Secciones" que
-  los esconda. Cada uno es un <details> plegable con su flecha, y se abre
-  solo el que contiene la página actual (en la portada, el primero).
+  Dos formas según el ancho:
+    · Escritorio (≥64rem): columna fija a la izquierda, siempre visible.
+    · Móvil: panel lateral que se abre con el botón de la cabecera. Así el
+      contenido empieza justo debajo del encabezado en vez de tener que
+      recorrer el menú entero.
 
-  El contenido sale de data/menu_lateral.json.
+  Cada grupo es un <details> plegable; en escritorio se abre el que
+  contiene la página actual, y en la portada el primero.
 
   Se renderiza desde header.html, NO desde extend_footer.html: el tema
   cachea el pie sin incluir la página en la clave, y el menú acababa
@@ -15,11 +18,25 @@
 {{- with site.Data.menu_lateral }}
 {{- $actual := $.RelPermalink }}
 
-<nav class="menu-lateral" aria-label="Secciones del sitio">
+<div class="fondo-menu" hidden></div>
+
+<nav id="menu-lateral" class="menu-lateral" aria-label="Secciones del sitio">
+
+  {{- /* Solo se ve cuando el menú es un panel. En escritorio sobra. */}}
+  <div class="menu-lateral__cabecera">
+    <span class="menu-lateral__rotulo">Secciones</span>
+    <button type="button" class="menu-lateral__cerrar" aria-label="Cerrar el menú">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
   <div class="menu-lateral__grupos">
     {{- range $i, $grupo := .grupos }}
 
-    {{- /* ¿Contiene este grupo la página actual? */ -}}
     {{- $abierto := false }}
     {{- range $grupo.enlaces }}
       {{- if and (not .proximamente) (eq ($.RelPermalink) (.url | relURL)) }}{{ $abierto = true }}{{ end }}
@@ -54,29 +71,64 @@
   </div>
 </nav>
 
-{{- /*
-  El menú se renderiza justo después de la cabecera, así que en móvil queda
-  ANTES del contenido. Ahí se cierran todos los grupos para que ocupe seis
-  filas y no toda la pantalla; en escritorio se respeta el grupo abierto.
-
-  Se sirve abierto en el HTML a propósito: sin JavaScript queda desplegado,
-  que es el estado accesible.
-*/ -}}
 <script>
   (function () {
-    var grupos = document.querySelectorAll('.menu-lateral__grupo');
-    if (!grupos.length) return;
-    var anchaParaColumna = window.matchMedia('(min-width: 64rem)');
+    var nav = document.getElementById('menu-lateral');
+    var boton = document.querySelector('.boton-menu');
+    var fondo = document.querySelector('.fondo-menu');
+    var cerrar = nav && nav.querySelector('.menu-lateral__cerrar');
+    if (!nav || !boton) return;
+
+    var enColumna = window.matchMedia('(min-width: 64rem)');
+    var grupos = nav.querySelectorAll('.menu-lateral__grupo');
     var abiertosDeInicio = [];
     grupos.forEach(function (g) { abiertosDeInicio.push(g.open); });
 
+    function abrir() {
+      nav.setAttribute('data-abierto', '');
+      boton.setAttribute('aria-expanded', 'true');
+      fondo.hidden = false;
+      document.body.style.overflow = 'hidden';
+      // El foco entra al panel: si no, el teclado se queda detrás del fondo.
+      (cerrar || nav).focus();
+    }
+
+    function cerrarPanel(devolverFoco) {
+      nav.removeAttribute('data-abierto');
+      boton.setAttribute('aria-expanded', 'false');
+      fondo.hidden = true;
+      document.body.style.overflow = '';
+      if (devolverFoco) boton.focus();
+    }
+
+    boton.addEventListener('click', function () {
+      if (nav.hasAttribute('data-abierto')) cerrarPanel(true); else abrir();
+    });
+
+    if (cerrar) cerrar.addEventListener('click', function () { cerrarPanel(true); });
+    fondo.addEventListener('click', function () { cerrarPanel(false); });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.hasAttribute('data-abierto')) cerrarPanel(true);
+    });
+
+    // Al navegar, el panel no debe quedarse abierto por detrás.
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('a') && !enColumna.matches) cerrarPanel(false);
+    });
+
     function ajustar() {
-      grupos.forEach(function (g, i) {
-        g.open = anchaParaColumna.matches ? abiertosDeInicio[i] : false;
-      });
+      if (enColumna.matches) {
+        cerrarPanel(false);
+        grupos.forEach(function (g, i) { g.open = abiertosDeInicio[i]; });
+      } else {
+        // En el panel, los grupos arrancan cerrados: se ve el índice entero
+        // de un vistazo en vez de una lista larga.
+        grupos.forEach(function (g) { g.open = false; });
+      }
     }
     ajustar();
-    anchaParaColumna.addEventListener('change', ajustar);
+    enColumna.addEventListener('change', ajustar);
   })();
 </script>
 {{- end }}
