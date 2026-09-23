@@ -1,13 +1,150 @@
-/* Menú lateral izquierdo.
-   Se renderiza al final del <body> y se coloca aquí visualmente, para no
-   tener que sobrescribir baseof.html del tema. */
+/* Menú lateral izquierdo y cabecera fija.
+
+   El menú se renderiza al final del <body> (extend_footer) y se coloca
+   aquí visualmente, para no sobrescribir baseof.html del tema. */
 
 /* En :root, no en .menu-lateral: las variables se heredan hacia abajo y
    .main no es descendiente del menú, así que allí no llegaría y la regla
-   de margen quedaría inválida (y en silencio). */
+   de margen quedaría inválida, y en silencio. */
 :root {
-  --ml-ancho: 15rem;
+  --ml-ancho: 16rem;
+  --cabecera-alto: 3.75rem;
 }
+
+/* --- Cabecera fija ------------------------------------------------------ */
+
+.header--fijo {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--theme);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-propia {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: none;
+  padding: 0.55rem 1rem;
+}
+
+.nav-propia .logo {
+  margin: 0;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+/* Título pegado a la izquierda, con la señal a su derecha.
+   Selector `.logo a.marca` para ganar a `.logo a` del tema, que le pone un
+   borde de píldora al título. */
+.logo a.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+.marca:hover { text-decoration: none; }
+
+.marca__texto {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logo-senal {
+  flex: 0 0 auto;
+  display: block;
+}
+
+.nav-derecha {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: nowrap;
+  /* Sin min-width:0 el `ul` no puede encogerse y empuja la lupa y el
+     conmutador de tema fuera de la pantalla en móvil. */
+  min-width: 0;
+}
+
+.nav-propia .menu {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* El menú cede espacio y se desplaza en horizontal; los botones no. */
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.boton-buscar,
+.nav-propia .theme-toggle {
+  flex: 0 0 auto;
+}
+
+.nav-propia .menu::-webkit-scrollbar { display: none; }
+
+.nav-propia .menu a {
+  display: block;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.nav-propia .menu a:hover { background: var(--code-bg); }
+
+/* --- Botón de búsqueda --------------------------------------------------- */
+
+.boton-buscar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.boton-buscar:hover {
+  background: var(--code-bg);
+  text-decoration: none;
+}
+
+.boton-buscar__texto { font-size: 0.9rem; }
+
+@media (max-width: 48rem) {
+  /* En móvil solo la lupa: el texto se come el poco ancho que hay.
+     Ancho y alto fijos, o el círculo sale ovalado. */
+  .boton-buscar__texto { display: none; }
+  .boton-buscar {
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .logo a.marca { font-size: 0.95rem; }
+
+  /* El menú se desplaza en horizontal; este hueco evita que el último
+     elemento quede pegado bajo la lupa al hacer scroll. */
+  .nav-propia .menu { padding-right: 0.35rem; }
+  .nav-derecha { gap: 0.5rem; }
+}
+
+/* --- Menú lateral -------------------------------------------------------- */
 
 .menu-lateral {
   margin: 2rem auto 0;
@@ -17,46 +154,75 @@
 
 .menu-lateral__caja {
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.5rem 1rem 1rem;
+  border-radius: 10px;
+  padding: 0.25rem 0.75rem 0.75rem;
+}
+
+/* Filas simétricas: mismo alto, mismo padding, flecha siempre a la derecha. */
+.menu-lateral summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  border-radius: 6px;
+}
+
+.menu-lateral summary::-webkit-details-marker { display: none; }
+
+.menu-lateral summary:hover { background: var(--code-bg); }
+
+.menu-lateral summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .menu-lateral__titulo {
   font-weight: 700;
-  cursor: pointer;
-  padding: 0.5rem 0;
+  padding: 0.6rem 0.5rem;
 }
 
 .menu-lateral__grupo {
-  margin-top: 1.1rem;
+  border-top: 1px solid var(--border);
 }
 
+.menu-lateral__grupo:first-child { border-top: 0; }
+
 .menu-lateral__grupo-titulo {
-  margin: 0 0 0.35rem;
-  font-size: 0.8rem;
+  padding: 0.6rem 0.5rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  opacity: 0.7;
+  opacity: 0.75;
 }
+
+.chevron {
+  flex: 0 0 auto;
+  opacity: 0.6;
+  transition: transform 0.15s ease;
+}
+
+[open] > summary > .chevron { transform: rotate(90deg); }
 
 .menu-lateral ul {
   list-style: none;
-  margin: 0;
+  margin: 0 0 0.5rem;
   padding: 0;
 }
 
-.menu-lateral__item {
-  margin: 0;
-}
-
 .menu-lateral__item a,
-.menu-lateral__item > span:first-child {
-  display: block;
-  padding: 0.4rem 0.6rem;
+.menu-lateral__item--pendiente {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  /* Sangrado de un nivel para que se vean colgando de su grupo. */
+  padding: 0.42rem 0.5rem 0.42rem 1.1rem;
   border-radius: 6px;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.35;
 }
 
@@ -71,38 +237,37 @@
   box-shadow: inset 3px 0 0 var(--primary);
 }
 
-.menu-lateral__item--pendiente {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  opacity: 0.55;
-}
+.menu-lateral__item--pendiente { opacity: 0.5; }
 
 .menu-lateral__badge {
-  font-size: 0.68rem;
+  flex: 0 0 auto;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   border: 1px solid currentColor;
   border-radius: 999px;
   padding: 0.05rem 0.4rem;
-  white-space: nowrap;
 }
 
-/* A partir de aquí cabe la columna: el menú se fija a la izquierda y el
-   contenido principal se desplaza para dejarle sitio. Por debajo, se queda
-   como un bloque plegable al final de la página. */
+/* A partir de aquí cabe la columna: el menú se fija y el contenido se
+   desplaza para dejarle sitio.
+
+   `body` delante a propósito: PaperMod define `.main { margin: auto }` y,
+   a igualdad de especificidad, ganaba la del tema según el orden de
+   concatenación del bundle. */
 @media (min-width: 64rem) {
   .menu-lateral {
     position: fixed;
-    top: 5rem;
+    top: var(--cabecera-alto);
     left: 0;
     width: var(--ml-ancho);
     max-width: var(--ml-ancho);
-    max-height: calc(100vh - 7rem);
+    max-height: calc(100vh - var(--cabecera-alto));
     overflow-y: auto;
     margin: 0;
-    padding: 0 0.75rem;
-    z-index: 5;
+    padding: 1rem 0.75rem 2rem;
+    border-right: 1px solid var(--border);
+    z-index: 10;
   }
 
   .menu-lateral__caja {
@@ -110,30 +275,18 @@
     padding: 0;
   }
 
-  /* En escritorio siempre abierto: el disclosure solo tiene sentido en móvil. */
-  .menu-lateral__titulo {
-    display: none;
-  }
+  /* El disclosure global solo tiene sentido en móvil. */
+  .menu-lateral__titulo { display: none; }
 
-  /* `body` delante a propósito: PaperMod define `.main { margin: auto }` y,
-     a igualdad de especificidad, ganaba la del tema según el orden de
-     concatenación del bundle. Con `body .main` no depende del orden. */
-  body .main,
-  body .nav {
-    margin-left: var(--ml-ancho);
-  }
+  body .main { margin-left: var(--ml-ancho); }
 }
 
 /* Pantallas muy anchas: hay sitio de sobra, el contenido vuelve al centro. */
 @media (min-width: 100rem) {
-  body .main,
-  body .nav {
-    margin-left: auto;
-  }
+  body .main { margin-left: auto; }
 }
 
 @media print {
-  .menu-lateral {
-    display: none;
-  }
+  .menu-lateral,
+  .header--fijo { display: none; }
 }

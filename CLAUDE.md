@@ -117,6 +117,23 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
 
 ### Trampas ya pisadas (no repetir)
 
+- **`extend_footer.html` no sirve para contenido que dependa de la página.**
+  `baseof.html` del tema llama al pie con
+  `partialCached "footer.html" . .Layout .Kind ...`: la clave **no incluye la
+  página**, así que todas las que comparten layout reutilizan un único render.
+  El menú lateral estuvo ahí y marcaba la misma entrada como actual en todo el
+  sitio. La cabecera sí se cachea por página (`partialCached "header.html" . .Page`),
+  así que el menú se renderiza desde `header.html`.
+- **Las variables CSS solo se heredan hacia abajo.** `--ml-ancho` estaba en
+  `.menu-lateral` y `.main` no es descendiente suyo: la declaración quedaba
+  inválida en silencio. Las variables compartidas van en `:root`.
+- **PaperMod gana por especificidad en cosas que parecen nuestras.** `.main`
+  y `.logo a` del tema pisan a `.main` y `.marca`. Usar `body .main` y
+  `.logo a.marca`.
+- **No editar contenido con `Get-Content`/`Set-Content` de PowerShell 5.1.**
+  Lee como ANSI y reescribe como UTF-8: corrompe todos los acentos. Usar las
+  herramientas de edición o Python.
+
 - **`disableKinds` debe ir en la raíz de `hugo.toml`**, antes de cualquier cabecera
   `[tabla]`. Si va después, TOML la anida dentro de esa tabla y deja de aplicarse
   en silencio.

@@ -1,8 +1,15 @@
 {{- /*
   extend_footer.html — hook que PaperMod invoca al final del <body>.
 
-  Aquí se renderiza el menú lateral. Va al final del DOM a propósito: el
-  contenido principal queda antes, que es lo que importa para lectores de
-  pantalla y para el rastreo. El CSS lo coloca visualmente a la izquierda.
+  Deliberadamente vacío.
+
+  El menú lateral estuvo aquí y daba un resultado incorrecto: baseof.html
+  llama al pie con `partialCached "footer.html" . .Layout .Kind ...`, y esa
+  clave no incluye la página, así que todas las páginas con el mismo layout
+  comparten un único render. El menú se quedaba con el contexto de la primera
+  página compilada y marcaba la misma entrada como actual en todo el sitio.
+
+  Ahora se renderiza desde header.html, que sí se cachea por página.
+
+  No devolver nada a contenido dependiente de la página desde este hook.
 */ -}}
-{{- partial "menu-lateral.html" . -}}

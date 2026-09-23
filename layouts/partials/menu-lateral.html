@@ -1,14 +1,12 @@
 {{- /*
   partials/menu-lateral.html — navegación lateral izquierda.
 
-  Se renderiza desde extend_footer.html (hook de PaperMod) y se coloca con
-  CSS. Así no hay que sobrescribir baseof.html entero, que traería el resto
-  del tema a nuestro mantenimiento.
+  Cada grupo es un <details> plegable. Se abre solo si contiene la página
+  actual, y en la portada se abre el primero: así el menú arranca ordenado
+  en vez de desplegado entero.
 
-  El contenido sale de data/menu_lateral.json: se edita sin tocar plantillas.
-
-  En pantallas estrechas se convierte en un <details> plegado, para no comerse
-  la pantalla antes del contenido.
+  El contenido sale de data/menu_lateral.json. Se renderiza desde
+  extend_footer.html y se coloca por CSS, para no sobrescribir baseof.html.
 */ -}}
 
 {{- with site.Data.menu_lateral }}
@@ -16,30 +14,70 @@
 
 <nav class="menu-lateral" aria-labelledby="titulo-menu-lateral">
   <details class="menu-lateral__caja" open>
-    <summary id="titulo-menu-lateral" class="menu-lateral__titulo">Secciones</summary>
+    <summary id="titulo-menu-lateral" class="menu-lateral__titulo">
+      <span>Secciones</span>
+      {{ partial "chevron.html" . }}
+    </summary>
 
-    {{- range .grupos }}
-    <div class="menu-lateral__grupo">
-      <p class="menu-lateral__grupo-titulo">{{ .titulo }}</p>
-      <ul>
-        {{- range .enlaces }}
-        {{- if .proximamente }}
-        <li class="menu-lateral__item menu-lateral__item--pendiente">
-          <span>{{ .texto }}</span>
-          <span class="menu-lateral__badge">Próximamente</span>
-        </li>
-        {{- else }}
-        {{- $url := .url | relURL }}
-        {{- $esActual := eq $actual $url }}
-        <li class="menu-lateral__item">
-          <a href="{{ $url }}"{{ if $esActual }} aria-current="page"{{ end }}>{{ .texto }}</a>
-        </li>
-        {{- end }}
-        {{- end }}
-      </ul>
+    <div class="menu-lateral__grupos">
+      {{- range $i, $grupo := .grupos }}
+
+      {{- /* ¿Contiene este grupo la página actual? */ -}}
+      {{- $abierto := false }}
+      {{- range $grupo.enlaces }}
+        {{- if and (not .proximamente) (eq ($.RelPermalink) (.url | relURL)) }}{{ $abierto = true }}{{ end }}
+      {{- end }}
+      {{- /* En la portada, el primer grupo abierto para que no quede todo cerrado. */ -}}
+      {{- if and (eq $i 0) (eq $actual ("/" | relURL)) }}{{ $abierto = true }}{{ end }}
+
+      <details class="menu-lateral__grupo"{{ if $abierto }} open{{ end }}>
+        <summary class="menu-lateral__grupo-titulo">
+          <span>{{ $grupo.titulo }}</span>
+          {{ partial "chevron.html" . }}
+        </summary>
+        <ul>
+          {{- range $grupo.enlaces }}
+          {{- if .proximamente }}
+          <li class="menu-lateral__item menu-lateral__item--pendiente">
+            <span class="menu-lateral__texto">{{ .texto }}</span>
+            <span class="menu-lateral__badge">Pronto</span>
+          </li>
+          {{- else }}
+          {{- $url := .url | relURL }}
+          <li class="menu-lateral__item">
+            <a href="{{ $url }}"{{ if eq $actual $url }} aria-current="page"{{ end }}>
+              <span class="menu-lateral__texto">{{ .texto }}</span>
+            </a>
+          </li>
+          {{- end }}
+          {{- end }}
+        </ul>
+      </details>
+
+      {{- end }}
     </div>
-    {{- end }}
 
   </details>
 </nav>
+
+{{- /*
+  El menú se renderiza justo después de la cabecera (ver header.html), así
+  que en móvil queda ANTES del contenido y obligaría a recorrerlo entero
+  para llegar al artículo. Aquí se pliega en pantallas estrechas.
+
+  Se sirve abierto en el HTML a propósito: sin JavaScript, en escritorio
+  el desplegable general está oculto y un `details` cerrado dejaría el menú
+  inaccesible. Cerrarlo desde JS solo afecta a móvil, donde sí hay un
+  resumen visible con el que volver a abrirlo.
+*/ -}}
+<script>
+  (function () {
+    var caja = document.querySelector('.menu-lateral__caja');
+    if (!caja) return;
+    var anchaParaColumna = window.matchMedia('(min-width: 64rem)');
+    function ajustar() { caja.open = anchaParaColumna.matches; }
+    ajustar();
+    anchaParaColumna.addEventListener('change', ajustar);
+  })();
+</script>
 {{- end }}

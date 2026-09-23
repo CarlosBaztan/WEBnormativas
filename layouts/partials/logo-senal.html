@@ -1,0 +1,30 @@
+{{- /*
+  logo-senal.html — marca del sitio.
+
+  Señal circular roja con la silueta de un turismo, sin la barra diagonal:
+  no es una señal de prohibición real, sino el motivo visual del proyecto.
+
+  El coche usa currentColor para adaptarse a tema claro y oscuro; el rojo
+  se mantiene fijo porque es lo que hace reconocible la señal.
+
+  La silueta está dibujada para leerse a 30 px: cabina marcada con
+  parabrisas inclinado, capó corto y ruedas que sobresalen del cuerpo.
+
+  aria-hidden y focusable="false": es decorativa, el nombre del sitio ya
+  está en texto justo al lado.
+*/ -}}
+<svg class="logo-senal" viewBox="0 0 100 100" width="32" height="32"
+     aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="42" fill="none" stroke="#E32213" stroke-width="10"/>
+  <g fill="currentColor">
+    <path d="M22 62
+             L22 55 Q22 51.5 25.5 50.5
+             L31 50.5 L37 41.5 Q38.5 39.5 41 39.5
+             L59 39.5 Q61.5 39.5 63 41.5
+             L69 50.5 L74.5 50.5 Q78 51.5 78 55
+             L78 62 Q78 63.5 76.5 63.5
+             L23.5 63.5 Q22 63.5 22 62 Z"/>
+    <circle cx="33" cy="63" r="7"/>
+    <circle cx="67" cy="63" r="7"/>
+  </g>
+</svg>
