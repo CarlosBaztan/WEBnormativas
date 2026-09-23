@@ -127,6 +127,11 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
 - **Las variables CSS solo se heredan hacia abajo.** `--ml-ancho` estaba en
   `.menu-lateral` y `.main` no es descendiente suyo: la declaración quedaba
   inválida en silencio. Las variables compartidas van en `:root`.
+- **`min-width: 0` hace falta en TODOS los eslabones de una cadena flex.**
+  Un elemento flex con `min-width: auto` no baja de su tamaño mínimo de
+  contenido, aunque sus hijos sí puedan encogerse. En la cabecera lo tenían
+  `.logo` y `.marca__texto` pero no `.marca`, que está en medio: el título no
+  se recortaba y la señal del logotipo se montaba encima de la lupa en móvil.
 - **PaperMod gana por especificidad en cosas que parecen nuestras.** `.main`
   y `.logo a` del tema pisan a `.main` y `.marca`. Usar `body .main` y
   `.logo a.marca`.
