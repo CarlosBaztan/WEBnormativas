@@ -71,6 +71,28 @@
     <script type="application/json" id="datos-etiquetas">{{ site.Data.etiquetas_dgt | jsonify | safeJS }}</script>
     <script type="application/json" id="datos-municipios">{{ $verificados | jsonify | safeJS }}</script>
 
+    {{/*
+      Imágenes de los distintivos para el recuadro del resultado.
+
+      Van aparte de datos-etiquetas y no dentro de él: aquel fichero son las
+      reglas de asignación de la DGT, y las rutas de las imágenes no son un
+      dato normativo sino una decisión de presentación que además depende del
+      procesado de Hugo (el nombre del fichero lleva un hash).
+    */}}
+    {{- $imgs := dict }}
+    {{- range $clave, $d := site.Data.etiquetas_dgt.distintivos }}
+      {{- with resources.Get (printf "img/distintivos/%s.png" (lower $clave)) }}
+        {{- $x1 := .Resize "72x png Lanczos" }}
+        {{- $x2 := .Resize "144x png Lanczos" }}
+        {{- $imgs = merge $imgs (dict $clave (dict
+              "src"    $x1.RelPermalink
+              "src2x"  $x2.RelPermalink
+              "ancho"  $x1.Width
+              "alto"   $x1.Height)) }}
+      {{- end }}
+    {{- end }}
+    <script type="application/json" id="datos-distintivos-img">{{ $imgs | jsonify | safeJS }}</script>
+
     <form id="form-circular" class="pc-form" novalidate>
       <fieldset>
         <legend>Tu vehículo</legend>

@@ -3,6 +3,9 @@ title: "Etiqueta C: años y combustibles que la obtienen"
 description: "Desde qué año de matriculación un gasolina o un diésel lleva el distintivo C de la DGT, por qué las fechas son distintas según el combustible, y qué acceso da."
 date: 2026-09-23
 
+# Imagen del distintivo que acompaña al título. Ver layouts/etiquetas/single.html.
+distintivo: "C"
+
 estado_dato: "verificado"
 fuente_nombre: "DGT — Distintivo ambiental"
 fuente_url: "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"

@@ -1,0 +1,43 @@
+{{- /*
+  imagen.html — imagen de contenido servida desde assets/, con su pie.
+
+  Uso en un .md:
+    {{< imagen src="img/distintivos/todos.png"
+               alt="..." pie="..." ancho="420" >}}
+
+  `src` es la ruta dentro de assets/. Si el fichero no existe rompe el build
+  a propósito: una imagen rota se ve en producción, un error de compilación no.
+
+  `ancho` es el ancho de presentación. Nunca se amplía por encima del
+  original: ampliar un PNG de 414 px a 800 lo deja borroso y además pesa más.
+  Se sirve a 2x cuando el original da para ello.
+
+  `alt` es obligatorio: estas imágenes son contenido, no decoración. Para
+  iconos decorativos está partials/distintivo.html.
+*/ -}}
+
+{{- $src := .Get "src" }}
+{{- $alt := .Get "alt" }}
+{{- $pie := .Get "pie" }}
+{{- $ancho := int (.Get "ancho" | default 0) }}
+
+{{- if not $alt }}{{ errorf "shortcode imagen: falta alt en %s (%s)" $src .Position }}{{ end }}
+{{- $r := resources.Get $src }}
+{{- if not $r }}{{ errorf "shortcode imagen: no existe assets/%s (%s)" $src .Position }}{{ end }}
+
+{{- $w := cond (and (gt $ancho 0) (lt $ancho $r.Width)) $ancho $r.Width }}
+{{- $x1 := $r.Resize (printf "%dx png" $w) }}
+{{- /* cond evalúa siempre las dos ramas, así que el 2x se genera con un if
+       para no crear de paso una copia ampliada que nadie usa. */ -}}
+{{- $x2 := $x1 }}
+{{- if le (mul $w 2) $r.Width }}{{ $x2 = $r.Resize (printf "%dx png" (mul $w 2)) }}{{ end }}
+
+<figure class="figura-imagen">
+  <img src="{{ $x1.RelPermalink }}"
+       {{ if ne $x2.RelPermalink $x1.RelPermalink }}srcset="{{ $x1.RelPermalink }} 1x, {{ $x2.RelPermalink }} 2x"{{ end }}
+       width="{{ $x1.Width }}" height="{{ $x1.Height }}"
+       alt="{{ $alt }}" loading="lazy" decoding="async">
+  {{- with $pie }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>

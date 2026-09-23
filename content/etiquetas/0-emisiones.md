@@ -3,6 +3,9 @@ title: "Etiqueta 0 emisiones: qué vehículos la llevan y qué permite"
 description: "Qué coches obtienen el distintivo azul 0 emisiones de la DGT, por qué la autonomía de 40 km es la frontera en los híbridos enchufables, y qué acceso da."
 date: 2026-09-23
 
+# Imagen del distintivo que acompaña al título. Ver layouts/etiquetas/single.html.
+distintivo: "0"
+
 estado_dato: "verificado"
 fuente_nombre: "DGT — Distintivo ambiental"
 fuente_url: "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"

@@ -2,7 +2,8 @@
   "_meta": {
     "descripcion": "Menú lateral izquierdo. Editable sin tocar plantillas.",
     "como_editar": "Cada grupo tiene un título y una lista de enlaces. Un enlace con \"proximamente\": true se muestra apagado y sin enlazar, para anunciar secciones que aún no existen.",
-    "aviso": "Un enlace sin `proximamente` debe apuntar a una página que exista, o dará 404."
+    "aviso": "Un enlace sin `proximamente` debe apuntar a una página que exista, o dará 404.",
+    "icono": "Opcional. Clave de distintivo ambiental (0, ECO, C, B): pinta su imagen junto al texto del enlace. Ver layouts/partials/distintivo.html."
   },
 
   "grupos": [
@@ -28,10 +29,10 @@
       "titulo": "Etiquetas DGT",
       "enlaces": [
         { "texto": "Todas las etiquetas", "url": "/etiquetas/" },
-        { "texto": "0 emisiones", "url": "/etiquetas/0-emisiones/" },
-        { "texto": "ECO", "url": "/etiquetas/eco/" },
-        { "texto": "C", "url": "/etiquetas/c/" },
-        { "texto": "B", "url": "/etiquetas/b/" },
+        { "texto": "0 emisiones", "url": "/etiquetas/0-emisiones/", "icono": "0" },
+        { "texto": "ECO", "url": "/etiquetas/eco/", "icono": "ECO" },
+        { "texto": "C", "url": "/etiquetas/c/", "icono": "C" },
+        { "texto": "B", "url": "/etiquetas/b/", "icono": "B" },
         { "texto": "Sin distintivo", "url": "/etiquetas/sin-distintivo/" }
       ]
     },

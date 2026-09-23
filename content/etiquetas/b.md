@@ -3,6 +3,9 @@ title: "Etiqueta B: años, combustibles y dónde ya no entra"
 description: "Desde qué año un gasolina o un diésel lleva el distintivo B de la DGT, y en qué zonas de bajas emisiones empieza a tener restricciones."
 date: 2026-09-23
 
+# Imagen del distintivo que acompaña al título. Ver layouts/etiquetas/single.html.
+distintivo: "B"
+
 estado_dato: "verificado"
 fuente_nombre: "DGT — Distintivo ambiental"
 fuente_url: "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"

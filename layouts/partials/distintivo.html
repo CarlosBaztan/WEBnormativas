@@ -1,0 +1,36 @@
+{{- /*
+  distintivo.html — imagen del distintivo ambiental de la DGT.
+
+  Uso:
+    {{ partial "distintivo.html" (dict "clave" "ECO" "ancho" 56) }}
+
+  Parámetros:
+    clave  — "0", "ECO", "C" o "B". Las mismas que en data/etiquetas_dgt.json.
+    ancho  — ancho de presentación en píxeles (por defecto 40).
+    clase  — clase CSS extra para el <img>.
+    alt    — texto alternativo. POR DEFECTO VACÍO, y casi siempre debe serlo:
+             en los tres sitios donde se usa (título de la página, menú lateral
+             y recuadro del resultado) el nombre del distintivo ya está escrito
+             al lado, así que repetirlo solo añade ruido al lector de pantalla.
+
+  "Sin distintivo" no tiene imagen porque no existe: el fichero no está y
+  `with` deja el bloque vacío en lugar de romper el build.
+
+  Se sirven dos tamaños (1x y 2x) desde el original de 205 px. El srcset
+  evita cargar 14 KB por icono de 18 px en el menú, que aparece en todas
+  las páginas del sitio.
+*/ -}}
+{{- $clave := lower (printf "%v" (.clave | default "")) }}
+{{- $ancho := int (.ancho | default 40) }}
+{{- $clase := .clase | default "" }}
+{{- $alt := .alt | default "" }}
+{{- with resources.Get (printf "img/distintivos/%s.png" $clave) }}
+{{- $x1 := .Resize (printf "%dx png Lanczos" $ancho) }}
+{{- $x2 := .Resize (printf "%dx png Lanczos" (mul $ancho 2)) }}
+<img class="distintivo-img{{ with $clase }} {{ . }}{{ end }}"
+     src="{{ $x1.RelPermalink }}"
+     srcset="{{ $x1.RelPermalink }} 1x, {{ $x2.RelPermalink }} 2x"
+     width="{{ $x1.Width }}" height="{{ $x1.Height }}"
+     alt="{{ $alt }}"{{ if eq $alt "" }} aria-hidden="true"{{ end }}
+     loading="lazy" decoding="async">
+{{- end }}

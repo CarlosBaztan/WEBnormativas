@@ -59,7 +59,10 @@
         {{- $url := .url | relURL }}
         <li class="menu-lateral__item">
           <a href="{{ $url }}"{{ if eq $actual $url }} aria-current="page"{{ end }}>
-            <span class="menu-lateral__texto">{{ .texto }}</span>
+            <span class="menu-lateral__texto">
+              {{- with .icono }}{{ partial "distintivo.html" (dict "clave" . "ancho" 18 "clase" "distintivo-img--menu") }}{{ end -}}
+              {{ .texto }}
+            </span>
           </a>
         </li>
         {{- end }}

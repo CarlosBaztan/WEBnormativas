@@ -41,6 +41,25 @@
   // estado_dato: "verificado"; ver el comentario en layouts/index.html.
   var MUNICIPIOS = leerJSON('datos-municipios') || [];
 
+  // Rutas de las imágenes de los distintivos, procesadas por Hugo (llevan
+  // hash en el nombre). Si falta el bloque, el recuadro sale solo con texto:
+  // la imagen ilustra, no informa.
+  var IMAGENES = leerJSON('datos-distintivos-img') || {};
+
+  /*
+   * La imagen es decorativa: el nombre del distintivo va escrito justo al
+   * lado, así que un alt que lo repita solo estorba al lector de pantalla.
+   */
+  function imagenDistintivo(clave) {
+    var i = IMAGENES[clave];
+    if (!i) return '';
+    return '<img class="distintivo-img distintivo-img--resultado"' +
+      ' src="' + esc(i.src) + '"' +
+      ' srcset="' + esc(i.src) + ' 1x, ' + esc(i.src2x) + ' 2x"' +
+      ' width="' + i.ancho + '" height="' + i.alto + '"' +
+      ' alt="" aria-hidden="true" decoding="async">';
+  }
+
   function municipioPorSlug(slug) {
     for (var i = 0; i < MUNICIPIOS.length; i++) {
       if (MUNICIPIOS[i].slug === slug) return MUNICIPIOS[i];
@@ -210,10 +229,12 @@
         ? '<p class="pc-nota">La asignación exacta depende de la homologación Euro concreta del vehículo.</p>'
         : '';
       return '<div class="pc-distintivo pc-distintivo--' + esc(res.distintivo) + '">' +
+        imagenDistintivo(res.distintivo) +
+        '<div class="pc-distintivo__texto">' +
         '<p class="pc-distintivo__etiqueta">Distintivo que probablemente le corresponde</p>' +
         '<p class="pc-distintivo__valor">' + esc(d ? d.nombre : res.distintivo) + '</p>' +
         (d && d.color ? '<p class="pc-distintivo__color">Color: ' + esc(d.color) + '</p>' : '') +
-        '</div>' + extra;
+        '</div></div>' + extra;
     }
 
     // Casos sin respuesta única: se explican, no se resuelven a ojo.

@@ -82,7 +82,10 @@
 
 /* Para que el recorte con puntos suspensivos funcione, todos los eslabones
    de la cadena flex tienen que poder encogerse: .logo, .marca y el propio
-   texto. Basta que uno conserve min-width:auto para que desborde. */
+   texto. Basta que uno conserve min-width:auto para que desborde: a .marca
+   le faltaba, y en movil la señal del logotipo se montaba encima de la lupa. */
+.logo a.marca { min-width: 0; }
+
 .marca__texto {
   min-width: 0;
   flex: 0 1 auto;

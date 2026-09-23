@@ -1,0 +1,98 @@
+/* Imágenes de los distintivos ambientales de la DGT.
+
+   El mismo PNG (205 px, fondo transparente) se sirve en tres tamaños desde
+   partials/distintivo.html: junto al título de cada página de distintivo,
+   como icono en el menú lateral, y grande en el recuadro del resultado de
+   la herramienta.
+
+   Son pegatinas de color saturado con perfil oscuro, así que se leen igual
+   en tema claro y en oscuro y no necesitan fondo propio. */
+
+.distintivo-img {
+  flex: 0 0 auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+/* --- Junto al título de la página ---------------------------------------- */
+
+/* Arriba y no centrado: estos titulares ocupan dos o tres líneas, y una
+   pegatina flotando a media altura parece descolgada. Alineada con la
+   primera línea se lee como lo que es, el rótulo de la página. */
+.titulo-con-distintivo {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+/* La pegatina es algo más alta que la caja de la primera línea; el ajuste
+   la centra ópticamente sobre ella. */
+.distintivo-img--titulo {
+  margin-top: -0.1em;
+}
+
+/* El ancho va en el atributo del <img> para reservar hueco y no provocar
+   saltos de maquetación; aquí solo se corrige en pantallas estrechas, donde
+   52 px le comen demasiado sitio a un título de dos líneas. */
+/* En pantallas estrechas la pegatina se pone encima: al lado le robaba
+   casi 50 px a un titular que ya venía en cuatro o cinco líneas. */
+@media (max-width: 30rem) {
+  .titulo-con-distintivo {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .distintivo-img--titulo {
+    width: 44px;
+    height: auto;
+    margin-top: 0;
+  }
+}
+
+/* --- Icono del menú lateral ---------------------------------------------- */
+
+/* El texto del enlace pasa a ser una caja flex para alinear el icono con la
+   primera línea del rótulo. Los enlaces sin icono no se ven afectados. */
+.menu-lateral__texto {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+/* --- Recuadro del resultado de la herramienta ---------------------------- */
+
+.pc-distintivo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pc-distintivo__texto {
+  min-width: 0;
+}
+
+@media (max-width: 26rem) {
+  .distintivo-img--resultado {
+    width: 54px;
+    height: auto;
+  }
+}
+
+/* --- Imágenes de contenido (shortcode `imagen`) -------------------------- */
+
+.figura-imagen {
+  margin: 1.6rem auto;
+  text-align: center;
+}
+
+.figura-imagen img {
+  max-width: 100%;
+  height: auto;
+}
+
+.figura-imagen figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
+  opacity: 0.8;
+}

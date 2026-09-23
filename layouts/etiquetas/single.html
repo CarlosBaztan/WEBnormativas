@@ -1,0 +1,62 @@
+{{- /*
+  layouts/etiquetas/single.html — página de un distintivo ambiental.
+
+  Copia del single.html de PaperMod con un único cambio: el <h1> lleva
+  delante la imagen del distintivo que corresponde a la página, tomada del
+  front matter (`distintivo: "0" | "ECO" | "C" | "B"`).
+
+  Se copia la plantilla entera, en lugar de inyectar la imagen por CSS,
+  porque el título del tema no ofrece ningún gancho y un pseudoelemento con
+  imagen de fondo no se puede servir en dos resoluciones.
+
+  Se han omitido del original los bloques que este sitio no usa: portada
+  (`cover`), lista de traducciones, enlace de edición, canónico, etiquetas
+  de taxonomía (desactivadas en hugo.toml), botones de compartir y
+  comentarios. Si alguno se reactiva, hay que traerlo de
+  themes/PaperMod/layouts/single.html.
+*/ -}}
+
+{{- define "main" }}
+
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title titulo-con-distintivo">
+      {{- with .Params.distintivo }}
+      {{ partial "distintivo.html" (dict "clave" . "ancho" 52 "clase" "distintivo-img--titulo") }}
+      {{- end }}
+      <span>{{ .Title }}</span>
+    </h1>
+    {{- if .Description }}
+    <div class="post-description">{{ .Description }}</div>
+    {{- end }}
+    {{- if not (.Param "hideMeta") }}
+    <div class="post-meta">{{- partial "post_meta.html" . -}}</div>
+    {{- end }}
+  </header>
+
+  {{- if (.Param "ShowToc") }}
+  {{- partial "toc.html" . }}
+  {{- end }}
+
+  {{- if .Content }}
+  <div class="post-content md-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" .Content -}}
+    {{- else }}{{ .Content }}{{ end }}
+  </div>
+  {{- end }}
+
+  {{- partial "extend_post_content.html" . }}
+
+  {{- /* Regla dura 4: el hueco de anuncio va al final del artículo, nunca antes. */}}
+  {{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
+
+  <footer class="post-footer">
+    {{- if (.Param "ShowPostNavLinks") }}
+    {{- partial "post_nav_links.html" . }}
+    {{- end }}
+  </footer>
+</article>
+
+{{- end }}{{/* end main */}}

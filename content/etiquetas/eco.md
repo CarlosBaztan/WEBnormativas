@@ -3,6 +3,9 @@ title: "Etiqueta ECO: qué híbridos y vehículos de gas entran y cuáles no"
 description: "Qué vehículos obtienen el distintivo ECO de la DGT, por qué un híbrido puede quedarse sin ella, y qué acceso da a las zonas de bajas emisiones."
 date: 2026-09-23
 
+# Imagen del distintivo que acompaña al título. Ver layouts/etiquetas/single.html.
+distintivo: "ECO"
+
 estado_dato: "verificado"
 fuente_nombre: "DGT — Distintivo ambiental"
 fuente_url: "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"
