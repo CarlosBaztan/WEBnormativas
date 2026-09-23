@@ -176,6 +176,28 @@
   </div>
   {{- end }}
 
+  {{- /*
+    Enlaces a las páginas de zona del mismo municipio.
+
+    Se generan aquí, en la plantilla, y no en el cuerpo de la ficha: el brief
+    de Madrid pide expresamente no ampliar su texto. Además así aparecen solos
+    cuando se publique una zona nueva.
+  */ -}}
+  {{- if $porZonas }}
+    {{- $municipio := $p.municipio }}
+    {{- $zonas := where (where (where site.RegularPages "Section" "zbe") "Params.tipo" "zona") "Params.municipio" $municipio }}
+    {{- with $zonas }}
+  <nav class="zonas-relacionadas" aria-labelledby="titulo-zonas">
+    <h2 id="titulo-zonas">Cada zona, en detalle</h2>
+    <ul>
+      {{- range . }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Params.articulo }} <span class="zona-articulo">({{ . }})</span>{{ end }}</li>
+      {{- end }}
+    </ul>
+  </nav>
+    {{- end }}
+  {{- end }}
+
   {{- /* Regla dura 4: aquí no hay formulario; el hueco va al final del artículo. */}}
   {{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
 

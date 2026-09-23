@@ -25,6 +25,13 @@
     {{- $verificados := slice }}
     {{- range where (where site.RegularPages "Section" "zbe") "Params.estado_dato" "verificado" }}
       {{- $p := .Params }}
+
+      {{/*
+        Las páginas de zona (/zbe/madrid/distrito-centro/) viven en la misma
+        sección pero no son municipios: no van al selector ni pasan por la
+        validación de codigo_ine.
+      */}}
+      {{- if eq ($p.tipo | default "municipio") "zona" }}{{ continue }}{{ end }}
       {{/* Se captura aquí: dentro de `with`, el contexto deja de ser la página. */}}
       {{- $ruta := .File.Path }}
 
