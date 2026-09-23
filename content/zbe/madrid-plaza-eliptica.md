@@ -18,6 +18,8 @@ estado_dato: "verificado"
 draft: false
 ---
 
+Su nombre oficial es **ZBEDEP Plaza Elíptica** *(Zona de Bajas Emisiones de Especial Protección)*.
+
 Es la más simple de las tres zonas de Madrid: **los vehículos sin distintivo ambiental no pueden circular** por su interior. El resto sí.
 
 ## Quién entra y quién no

@@ -345,6 +345,15 @@
         'pero la ordenanza exige algo más: ser residente, tener actividad en la zona o acreditar un destino concreto. ' +
         'Lo detallamos debajo.</p>');
     }
+
+    // La sigla aparece en los nombres oficiales de las zonas y no se explica sola.
+    var usaZbedep = zonas.some(function (z) {
+      return /ZBEDEP/i.test(String(z.nombre || ''));
+    });
+    if (usaZbedep) {
+      partes.push('<p class="pc-veredicto__sigla">ZBEDEP: Zona de Bajas Emisiones de Especial Protección.</p>');
+    }
+
     partes.push('</div>');
     return partes.join('');
   }

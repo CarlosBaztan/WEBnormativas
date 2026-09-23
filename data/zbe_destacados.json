@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "descripcion": "Municipios que se muestran destacados en la tabla de /zbe/. El resto sigue accesible en la lista completa.",
+    "criterio": "Capitales de provincia y municipios grandes, todos ellos presentes en el registro oficial del NAP de la DGT. El orden es el de esta lista.",
+    "ADVERTENCIA": "Estar en esta lista significa que el municipio tiene ZBE REGISTRADA oficialmente, no que esté sancionando. Eso solo lo afirmamos tras leer su ordenanza, y entonces la ficha pasa a estado verificado.",
+    "como_editar": "Añade o quita slugs. Deben coincidir con las claves de data/zbe.json. Si un slug no existe ahí, se ignora sin romper el build."
+  },
+
+  "slugs": [
+    "madrid",
+    "rondas-de-barcelona",
+    "valencia",
+    "sevilla-cartuja",
+    "malaga",
+    "bilbao",
+    "vitoria-gasteiz",
+    "donostia-san-sebastian",
+    "valladolid",
+    "granada",
+    "alicante",
+    "palma",
+    "oviedo",
+    "a-coruna",
+    "pamplona-ensanche",
+    "salamanca",
+    "castellon",
+    "tarragona",
+    "lleida",
+    "girona",
+    "pontevedra",
+    "avila",
+    "cartagena",
+    "terrassa",
+    "sabadell",
+    "alcala-de-henares",
+    "fuenlabrada",
+    "dos-hermanas",
+    "mataro",
+    "reus"
+  ]
+}

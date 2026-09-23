@@ -18,7 +18,9 @@ estado_dato: "verificado"
 draft: false
 ---
 
-Es la zona del centro histórico, la que antes se llamaba Madrid Central. Se puede **circular libremente por las calles del perímetro**, pero no atravesar el interior.
+Es la zona del centro histórico, la que antes se llamaba Madrid Central. Su nombre oficial es **ZBEDEP Distrito Centro** *(Zona de Bajas Emisiones de Especial Protección)*.
+
+Se puede **circular libremente por las calles del perímetro**, pero no atravesar el interior.
 
 ## Quién puede entrar
 

@@ -1,0 +1,201 @@
+/* Página /zbe/: tabla de municipios y contenido de apoyo. */
+
+/* Respiración entre bloques: antes el texto iba demasiado apretado
+   comparado con el resto de páginas del sitio. */
+.pagina-zbe .post-content > h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 0.9rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.pagina-zbe .post-content > h2:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.pagina-zbe .post-content > p {
+  margin: 0 0 1.1rem;
+  line-height: 1.7;
+  max-width: 62ch;
+}
+
+.resumen-cobertura {
+  border-left: 4px solid var(--primary);
+  background: var(--code-bg);
+  border-radius: 0 8px 8px 0;
+  padding: 0.9rem 1.1rem;
+  margin: 1.5rem 0 !important;
+  max-width: none !important;
+}
+
+/* --- Tabla ------------------------------------------------------------- */
+
+.tabla-scroll {
+  overflow-x: auto;
+  margin: 1.25rem 0 1.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.tabla-zbe {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 0.94rem;
+}
+
+.tabla-zbe caption {
+  text-align: left;
+}
+
+/* Anchos fijos: sin esto las columnas bailaban entre las dos tablas y
+   el contenido quedaba descuadrado. */
+.col-municipio  { width: 28%; }
+.col-provincia  { width: 17%; }
+.col-estado     { width: 15%; }
+.col-fuente     { width: 15%; }
+.col-verificado { width: 25%; }
+
+.tabla-zbe th,
+.tabla-zbe td {
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabla-zbe thead th {
+  position: sticky;
+  top: 0;
+  background: var(--theme);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.tabla-zbe tbody tr:last-child th,
+.tabla-zbe tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.tabla-zbe tbody tr:hover {
+  background: var(--code-bg);
+}
+
+.celda-municipio {
+  font-weight: 600;
+}
+
+.estado-registrada {
+  white-space: nowrap;
+}
+
+.dato-vacio {
+  opacity: 0.5;
+}
+
+.celda-verificado {
+  white-space: nowrap;
+}
+
+.marca {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.86rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+
+.marca--si  { border-style: solid; }
+.marca--no  { border-style: dashed; opacity: 0.7; font-weight: 400; }
+
+.marca-fecha {
+  display: block;
+  font-size: 0.78rem;
+  opacity: 0.7;
+  margin-top: 0.2rem;
+}
+
+.lista-completa {
+  margin: 0 0 1.5rem;
+}
+
+.lista-completa > summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.6rem 0;
+}
+
+/* --- Glosario de columnas ---------------------------------------------- */
+
+.glosario {
+  margin: 1.25rem 0 1.5rem;
+}
+
+.glosario dt {
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.glosario dd {
+  margin: 0.25rem 0 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--border);
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+/* --- Señales ------------------------------------------------------------ */
+
+.figura-senales {
+  margin: 1.5rem 0 2rem;
+}
+
+.figura-senales__imagenes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.figura-senales img {
+  width: auto;
+  height: auto;
+  max-width: 13rem;
+  max-height: 20rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff; /* las señales son sobre fondo blanco */
+  padding: 0.35rem;
+}
+
+.figura-senales figcaption {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.fuente-lista {
+  margin-top: 2rem !important;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 40rem) {
+  .tabla-zbe { font-size: 0.88rem; }
+  .tabla-zbe th,
+  .tabla-zbe td { padding: 0.55rem 0.6rem; }
+  .col-municipio  { width: 34%; }
+  .col-provincia  { width: 20%; }
+  .col-estado     { width: 18%; }
+  .col-fuente     { width: 14%; }
+  .col-verificado { width: 24%; }
+}

@@ -184,6 +184,12 @@
   opacity: 0.9;
 }
 
+.pc-veredicto__sigla {
+  margin: 0.6rem 0 0;
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+
 /* --- Acceso a la ficha completa ---------------------------------------- */
 
 .pc-cta {

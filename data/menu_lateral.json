@@ -1,0 +1,62 @@
+{
+  "_meta": {
+    "descripcion": "Menú lateral izquierdo. Editable sin tocar plantillas.",
+    "como_editar": "Cada grupo tiene un título y una lista de enlaces. Un enlace con \"proximamente\": true se muestra apagado y sin enlazar, para anunciar secciones que aún no existen.",
+    "aviso": "Un enlace sin `proximamente` debe apuntar a una página que exista, o dará 404."
+  },
+
+  "grupos": [
+    {
+      "titulo": "Herramientas",
+      "enlaces": [
+        { "texto": "¿Puedo circular?", "url": "/" },
+        { "texto": "Qué etiqueta tengo", "url": "/etiquetas/" },
+        { "texto": "Calculadora del IVTM", "proximamente": true },
+        { "texto": "Cuándo me toca la ITV", "proximamente": true }
+      ]
+    },
+    {
+      "titulo": "Zonas de Bajas Emisiones",
+      "enlaces": [
+        { "texto": "Listado de municipios", "url": "/zbe/" },
+        { "texto": "Qué es una ZBE", "url": "/zbe/que-es/" },
+        { "texto": "Excepciones", "url": "/zbe/excepciones/" },
+        { "texto": "ZBE de Madrid", "url": "/zbe/madrid/" }
+      ]
+    },
+    {
+      "titulo": "Etiquetas DGT",
+      "enlaces": [
+        { "texto": "Todas las etiquetas", "url": "/etiquetas/" },
+        { "texto": "0 emisiones", "url": "/etiquetas/0-emisiones/" },
+        { "texto": "ECO", "url": "/etiquetas/eco/" },
+        { "texto": "C", "url": "/etiquetas/c/" },
+        { "texto": "B", "url": "/etiquetas/b/" },
+        { "texto": "Sin distintivo", "url": "/etiquetas/sin-distintivo/" }
+      ]
+    },
+    {
+      "titulo": "Multas y trámites",
+      "enlaces": [
+        { "texto": "Multas por entrar en ZBE", "url": "/multas/zbe/" },
+        { "texto": "Cómo recurrir una multa", "proximamente": true },
+        { "texto": "Trámites con la DGT", "proximamente": true }
+      ]
+    },
+    {
+      "titulo": "Impuestos",
+      "enlaces": [
+        { "texto": "Impuesto de circulación", "proximamente": true },
+        { "texto": "Impuesto de matriculación", "proximamente": true }
+      ]
+    },
+    {
+      "titulo": "El proyecto",
+      "enlaces": [
+        { "texto": "Datos abiertos", "url": "/datos/" },
+        { "texto": "Metodología", "url": "/metodologia/" },
+        { "texto": "Sobre este proyecto", "url": "/sobre/" }
+      ]
+    }
+  ]
+}

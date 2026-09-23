@@ -1,0 +1,45 @@
+{{- /*
+  partials/menu-lateral.html — navegación lateral izquierda.
+
+  Se renderiza desde extend_footer.html (hook de PaperMod) y se coloca con
+  CSS. Así no hay que sobrescribir baseof.html entero, que traería el resto
+  del tema a nuestro mantenimiento.
+
+  El contenido sale de data/menu_lateral.json: se edita sin tocar plantillas.
+
+  En pantallas estrechas se convierte en un <details> plegado, para no comerse
+  la pantalla antes del contenido.
+*/ -}}
+
+{{- with site.Data.menu_lateral }}
+{{- $actual := $.RelPermalink }}
+
+<nav class="menu-lateral" aria-labelledby="titulo-menu-lateral">
+  <details class="menu-lateral__caja" open>
+    <summary id="titulo-menu-lateral" class="menu-lateral__titulo">Secciones</summary>
+
+    {{- range .grupos }}
+    <div class="menu-lateral__grupo">
+      <p class="menu-lateral__grupo-titulo">{{ .titulo }}</p>
+      <ul>
+        {{- range .enlaces }}
+        {{- if .proximamente }}
+        <li class="menu-lateral__item menu-lateral__item--pendiente">
+          <span>{{ .texto }}</span>
+          <span class="menu-lateral__badge">Próximamente</span>
+        </li>
+        {{- else }}
+        {{- $url := .url | relURL }}
+        {{- $esActual := eq $actual $url }}
+        <li class="menu-lateral__item">
+          <a href="{{ $url }}"{{ if $esActual }} aria-current="page"{{ end }}>{{ .texto }}</a>
+        </li>
+        {{- end }}
+        {{- end }}
+      </ul>
+    </div>
+    {{- end }}
+
+  </details>
+</nav>
+{{- end }}

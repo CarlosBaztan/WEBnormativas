@@ -68,6 +68,17 @@ NS = {
 
 DISTINTIVOS_CONOCIDOS = {"0", "ECO", "C", "B"}
 
+# El NAP nombra algunos recursos de forma confusa o directamente con el
+# nombre del fichero. Se corrigen aqui, no en la plantilla, para que el
+# dato publicado en /datos/ salga tambien bien.
+CORRECCIONES_NOMBRE = {
+    "Valencia.xml": "Valencia",
+    "Cartuja": "Sevilla (Cartuja)",
+    "Sevilla-Cartuja": "Sevilla (Cartuja)",
+    "Gasteiz": "Vitoria-Gasteiz",
+    "Pamplona Ensanche": "Pamplona (Ensanche)",
+}
+
 
 # --------------------------------------------------------------------------
 # Utilidades
@@ -120,9 +131,21 @@ def url_xml_de_recurso(id_recurso: str, usar_cache: bool) -> tuple[str, str] | N
     if not m:
         return None
     titulo = re.search(r"<title>(.*?)</title>", html, re.S)
-    nombre = titulo.group(1).split("-")[-1].split("|")[0].strip() if titulo else id_recurso
-    # Los recursos se llaman "ZBE <Municipio>"; el prefijo sobra en el slug.
+    nombre = id_recurso
+    if titulo:
+        t = titulo.group(1)
+        # El titulo es "... (ZBE) - ZBE <Municipio> | Punto de Acceso...".
+        # Se busca "ZBE " seguido del nombre hasta la barra. Partir por "-"
+        # rompia los toponimos con guion: "Vitoria-Gasteiz" quedaba en
+        # "Gasteiz" y "Donostia - San Sebastian" en "San Sebastian".
+        m2 = re.search(r"ZBE\s+(.+?)\s*\|", t, re.S)
+        nombre = (m2.group(1) if m2 else t.split("|")[0]).strip()
     nombre = re.sub(r"^ZBE\s+", "", nombre).strip()
+    # Recursos mal nombrados en origen: algunos traen el titulo completo del
+    # conjunto de datos, o el nombre del fichero con su extension.
+    nombre = re.sub(r"^Zonas de Bajas Emisiones\s*\(ZBE\)\s*-\s*", "", nombre).strip()
+    nombre = re.sub(r"\.xml$", "", nombre, flags=re.I).strip()
+    nombre = CORRECCIONES_NOMBRE.get(nombre, nombre)
     return nombre, m.group(1)
 
 

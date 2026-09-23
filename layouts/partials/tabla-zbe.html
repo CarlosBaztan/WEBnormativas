@@ -1,0 +1,67 @@
+{{- /*
+  partials/tabla-zbe.html — tabla de municipios con ZBE.
+
+  Parámetros:
+    filas       slice de municipios de data/zbe.json
+    verificadas dict slug -> página de la ficha verificada
+
+  La columna "Provincia" solo se rellena cuando tenemos ficha propia: el
+  dataset del NAP no trae provincia, y no se inventa.
+*/ -}}
+{{- $verificadas := .verificadas }}
+
+<div class="tabla-scroll">
+  <table class="tabla-zbe">
+    <caption class="visually-hidden">Municipios con Zona de Bajas Emisiones registrada</caption>
+    <colgroup>
+      <col class="col-municipio">
+      <col class="col-provincia">
+      <col class="col-estado">
+      <col class="col-fuente">
+      <col class="col-verificado">
+    </colgroup>
+    <thead>
+      <tr>
+        <th scope="col">Municipio</th>
+        <th scope="col">Provincia</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Fuente oficial</th>
+        <th scope="col">¿Verificado?</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{- range .filas }}
+      {{- $ficha := index $verificadas .slug }}
+      <tr>
+        <th scope="row" class="celda-municipio">
+          {{- if $ficha }}<a href="{{ $ficha.RelPermalink }}">{{ .municipio }}</a>
+          {{- else }}{{ .municipio }}{{ end }}
+        </th>
+        <td>
+          {{- with $ficha }}{{ .Params.provincia | default "—" }}
+          {{- else }}<span class="dato-vacio">—</span>{{ end }}
+        </td>
+        <td>
+          {{- if .zbe_existe }}<span class="estado-registrada">Registrada</span>
+          {{- else }}<span class="dato-vacio">No consta</span>{{ end }}
+        </td>
+        <td>
+          {{- with .fuente_url }}
+          <a href="{{ . }}" rel="noopener nofollow" target="_blank">Fichero DGT</a>
+          {{- else }}<span class="dato-vacio">—</span>{{ end }}
+        </td>
+        <td class="celda-verificado">
+          {{- if $ficha }}
+          <span class="marca marca--si">Sí</span>
+          {{- with $ficha.Params.fecha_verificacion }}
+          <span class="marca-fecha">{{ dateFormat "02/01/2006" . }}</span>
+          {{- end }}
+          {{- else }}
+          <span class="marca marca--no">Todavía no</span>
+          {{- end }}
+        </td>
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>
