@@ -36,7 +36,17 @@
   }
 
   var ETIQUETAS = leerJSON('datos-etiquetas');
-  var ZBE = leerJSON('datos-zbe');
+
+  // Municipios publicables. Vienen del front matter de las fichas con
+  // estado_dato: "verificado"; ver el comentario en layouts/index.html.
+  var MUNICIPIOS = leerJSON('datos-municipios') || [];
+
+  function municipioPorSlug(slug) {
+    for (var i = 0; i < MUNICIPIOS.length; i++) {
+      if (MUNICIPIOS[i].slug === slug) return MUNICIPIOS[i];
+    }
+    return null;
+  }
 
   if (!ETIQUETAS) return; // Sin reglas no se deduce nada. El HTML sin JS ya explica qué hacer.
 
@@ -230,45 +240,123 @@
       '<p>' + msg + '</p></div>';
   }
 
-  function pintarMunicipio(slug) {
-    var municipios = (ZBE && ZBE.municipios) || {};
-    var m = slug ? municipios[slug] : null;
+  /*
+   * Un municipio puede tener varias zonas con reglas distintas (Madrid tiene
+   * tres). Se responde POR ZONA: una respuesta única seria falsa.
+   *
+   * `distintivos_permitidos` de una zona puede ser:
+   *   - un array: ["0", "ECO", "C con condiciones"]
+   *   - la cadena "pendiente": esa zona no se ha verificado todavia
+   */
 
+  // "C con condiciones" -> { clave: "C", condicionado: true }
+  function analizarEntrada(entrada) {
+    var txt = String(entrada).trim();
+    var m = /^(0|ECO|C|B)\b\s*(.*)$/i.exec(txt);
+    if (!m) return { clave: null, texto: txt, condicionado: false };
+    var clave = m[1].toUpperCase();
+    return { clave: clave, texto: txt, condicionado: m[2].trim().length > 0 };
+  }
+
+  function pintarZona(zona, distintivoUsuario) {
+    var partes = ['<div class="pc-zona">'];
+    partes.push('<h4>' + esc(zona.nombre || zona.id || 'Zona') + '</h4>');
+
+    var permitidos = zona.distintivos_permitidos;
+    var pendiente = (typeof permitidos === 'string') || !permitidos || !permitidos.length;
+
+    if (pendiente) {
+      partes.push('<p class="pc-zona__pendiente"><strong>Pendiente de verificar.</strong> ' +
+        'No hemos contrastado todavía qué distintivos permite esta zona, así que no respondemos por ella.</p>');
+      if (zona.nota) partes.push('<p class="pc-nota">' + esc(zona.nota) + '</p>');
+    } else {
+      var entradas = permitidos.map(analizarEntrada);
+      partes.push('<p>La ordenanza nombra estos distintivos: <strong>' +
+        entradas.map(function (e) { return esc(e.texto); }).join(', ') + '</strong>.</p>');
+
+      if (distintivoUsuario) {
+        var coincide = null;
+        for (var i = 0; i < entradas.length; i++) {
+          if (entradas[i].clave === distintivoUsuario) { coincide = entradas[i]; break; }
+        }
+        // "un vehículo con distintivo Sin distintivo" suena a error; se redacta aparte.
+        var sujeto = distintivoUsuario === 'sin'
+          ? 'Un vehículo <strong>sin distintivo ambiental</strong>'
+          : 'Un vehículo con distintivo <strong>' + esc(nombreDistintivo(distintivoUsuario)) + '</strong>';
+
+        if (coincide && coincide.condicionado) {
+          partes.push('<p class="pc-cruce pc-cruce--condicional">' + sujeto +
+            ' figura, pero <strong>' + esc(coincide.texto.replace(/^(0|ECO|C|B)\s*/i, '')) +
+            '</strong>. Comprueba si cumples esas condiciones en el texto oficial.</p>');
+        } else if (coincide) {
+          partes.push('<p class="pc-cruce pc-cruce--si">' + sujeto +
+            ' figura entre los que la ordenanza nombra para esta zona.</p>');
+        } else {
+          partes.push('<p class="pc-cruce pc-cruce--no">' + sujeto +
+            ' no figura entre los que la ordenanza nombra para esta zona.</p>');
+        }
+      }
+
+      if (zona.prohibidos && zona.prohibidos.length) {
+        partes.push('<p>Expresamente excluidos: <strong>' +
+          zona.prohibidos.map(function (p) { return esc(p); }).join(', ') + '</strong>.</p>');
+      }
+      if (zona.horario) partes.push('<p>Horario: ' + esc(zona.horario) + '</p>');
+      if (zona.nota) partes.push('<p class="pc-nota">' + esc(zona.nota) + '</p>');
+    }
+
+    if (zona.articulo) {
+      partes.push('<p class="pc-articulo">Referencia: ' + esc(zona.articulo) + '</p>');
+    }
+    partes.push('</div>');
+    return partes.join('');
+  }
+
+  function pintarMunicipio(slug, distintivoUsuario) {
     if (!slug) {
       return '<div class="pc-aviso"><p>No has elegido municipio, así que no podemos contrastarlo con ninguna ordenanza.</p></div>';
     }
 
-    if (!m || m.confianza !== 'oficial') {
+    var m = municipioPorSlug(slug);
+    if (!m) {
       return '<div class="pc-aviso pc-aviso--sindatos">' +
         '<p class="pc-aviso__titulo">Todavía no hemos verificado la ordenanza de este municipio</p>' +
-        '<p>Sabemos que existe la zona, pero no hemos contrastado artículo por artículo qué distintivos ' +
-        'pueden circular. Preferimos no decir nada a decir algo sin comprobar.</p>' +
-        '<p>Consulta la ordenanza del ayuntamiento antes de circular.</p>' +
+        '<p>Preferimos no decir nada a decir algo sin comprobar. Consulta la ordenanza del ayuntamiento antes de circular.</p>' +
         '</div>';
     }
 
-    var permitidas = m.etiquetas_permitidas || [];
     var partes = ['<div class="pc-ordenanza">'];
     partes.push('<h3>Lo que dice la ordenanza de ' + esc(m.municipio) + '</h3>');
 
-    if (permitidas.length) {
-      partes.push('<p>Distintivos que la ordenanza permite circular: <strong>' +
-        permitidas.map(function (p) { return esc(nombreDistintivo(p)); }).join(', ') + '</strong>.</p>');
+    var zonas = m.zonas || [];
+    if (zonas.length > 1) {
+      partes.push('<p class="pc-nota">' + esc(m.municipio) + ' tiene ' + zonas.length +
+        ' zonas con reglas distintas. Estas son las de cada una.</p>');
     }
-    if (m.horario_restriccion) {
-      partes.push('<p>Horario de restricción: ' + esc(m.horario_restriccion) + '</p>');
+
+    if (!zonas.length) {
+      partes.push('<p class="pc-zona__pendiente">No consta ninguna zona verificada para este municipio.</p>');
+    } else {
+      for (var i = 0; i < zonas.length; i++) {
+        partes.push(pintarZona(zonas[i], distintivoUsuario));
+      }
     }
-    if (m.excepciones && m.excepciones.length) {
-      partes.push('<p>Excepciones recogidas:</p><ul>' +
-        m.excepciones.map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('') + '</ul>');
-    }
+
+    partes.push('<p class="pc-nota">Esto resume una norma; no es una autorización. Contrasta siempre con el ' +
+      'texto oficial y con la señalización de la zona. La decisión y la responsabilidad son tuyas.</p>');
+
     if (m.fuente_nombre) {
       var fuente = m.fuente_url
         ? '<a href="' + esc(m.fuente_url) + '" rel="noopener" target="_blank">' + esc(m.fuente_nombre) + '</a>'
         : esc(m.fuente_nombre);
+      var boletin = m.fuente_boletin ? ' · ' + esc(m.fuente_boletin) : '';
       var fecha = m.fecha_verificacion ? ' · Verificado el ' + esc(formatearFecha(m.fecha_verificacion)) : '';
-      partes.push('<p class="pc-fuente">Fuente: ' + fuente + fecha + '</p>');
+      partes.push('<p class="pc-fuente">Fuente: ' + fuente + boletin + fecha + '</p>');
     }
+    if (m.url) {
+      partes.push('<p><a href="' + esc(m.url) + '">Ficha completa de ' + esc(m.municipio) + '</a></p>');
+    }
+
     partes.push('</div>');
     return partes.join('');
   }
@@ -279,26 +367,6 @@
     var mes = parseInt(m[2], 10), dia = parseInt(m[3], 10);
     if (mes < 1 || mes > 12 || dia < 1 || dia > 31) return iso;
     return m[3] + '/' + m[2] + '/' + m[1];
-  }
-
-  function cruzar(res, slug) {
-    var municipios = (ZBE && ZBE.municipios) || {};
-    var m = slug ? municipios[slug] : null;
-    if (!m || m.confianza !== 'oficial' || !res.distintivo) return '';
-
-    var permitidas = m.etiquetas_permitidas || [];
-    if (!permitidas.length) return '';
-
-    var entra = permitidas.indexOf(res.distintivo) !== -1;
-
-    // Atribuido a la ordenanza, nunca afirmado por el sitio.
-    return '<div class="pc-cruce ' + (entra ? 'pc-cruce--si' : 'pc-cruce--no') + '">' +
-      '<p>Según esa ordenanza, un vehículo con distintivo <strong>' + esc(nombreDistintivo(res.distintivo)) +
-      '</strong> ' + (entra ? 'figura entre los que pueden circular' : 'no figura entre los que pueden circular') +
-      ' por la zona' + (m.horario_restriccion ? ' en el horario indicado' : '') + '.</p>' +
-      '<p class="pc-nota">Esto resume una norma; no es una autorización. Contrasta siempre con el texto oficial ' +
-      'y con la señalización de la zona. La decisión y la responsabilidad son tuyas.</p>' +
-      '</div>';
   }
 
   // --- Eventos ------------------------------------------------------------
@@ -343,8 +411,7 @@
     salida.innerHTML =
       pintarDistintivo(res) +
       bloqueConsultaOficial() +
-      pintarMunicipio(slug) +
-      cruzar(res, slug);
+      pintarMunicipio(slug, res.distintivo);
 
     var anclaAnuncio = document.getElementById('anuncio-bajo-resultado');
     if (anclaAnuncio) anclaAnuncio.hidden = false;

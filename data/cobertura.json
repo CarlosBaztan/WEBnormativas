@@ -1,0 +1,10 @@
+{
+  "_meta": {
+    "descripcion": "Texto de cobertura que se muestra bajo el selector de municipios de la herramienta.",
+    "por_que": "Está aquí y no en la plantilla para poder actualizarlo sin tocar código, según se vayan verificando municipios."
+  },
+
+  "aviso_cobertura": "Por ahora solo Madrid está verificada.",
+  "proximos": ["Barcelona", "Valencia", "Sevilla"],
+  "etiqueta_proximos": "Siguientes:"
+}

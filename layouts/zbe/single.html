@@ -50,7 +50,17 @@
 {{- end }}
 
 {{- $verificado := eq (lower (printf "%v" ($p.estado_dato | default ""))) "verificado" }}
-{{- $reglasSinVerificar := or (not $verificado) (eq (len $etiquetas) 0) }}
+
+{{- /*
+  Municipios con varias zonas (Madrid: ciudad, Distrito Centro, Plaza Elíptica)
+  no encajan en el esquema plano: cada zona tiene sus propios distintivos y
+  horarios. En esos casos el cuerpo de la ficha ya trae la tabla por zona, así
+  que se omite el bloque estructurado en lugar de pintarlo vacío y declarar
+  "sin verificar" una ficha que sí lo está.
+*/ -}}
+{{- $porZonas := and $p.zonas (gt (len $p.zonas) 0) }}
+
+{{- $reglasSinVerificar := and (not $porZonas) (or (not $verificado) (eq (len $etiquetas) 0)) }}
 
 <article class="post-single ficha-zbe">
 
@@ -81,6 +91,7 @@
   </aside>
   {{- end }}
 
+  {{- if not $porZonas }}
   <section class="ficha-datos" aria-labelledby="titulo-datos">
     <h2 id="titulo-datos">Lo que consta en la normativa</h2>
 
@@ -155,6 +166,7 @@
       siempre con el texto oficial enlazado y con la señalización de la zona.
     </p>
   </section>
+  {{- end }}
 
   {{- if .Content }}
   <div class="post-content md-content">

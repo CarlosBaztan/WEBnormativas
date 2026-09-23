@@ -166,6 +166,34 @@
   border-radius: 0 8px 8px 0;
 }
 
+/* Una zona por bloque: un municipio puede tener varias con reglas distintas. */
+.pc-zona {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin: 0 0 1rem;
+}
+
+.pc-zona h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.pc-zona__pendiente {
+  border-left: 4px solid currentColor;
+  padding-left: 0.75rem;
+}
+
+.pc-articulo {
+  font-size: 0.88rem;
+  opacity: 0.85;
+  margin: 0.6rem 0 0;
+}
+
+.pc-cobertura {
+  font-style: italic;
+}
+
 .pc-nota,
 .pc-oficial {
   font-size: 0.92rem;
