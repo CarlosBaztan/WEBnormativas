@@ -258,6 +258,97 @@
     return { clave: clave, texto: txt, condicionado: m[2].trim().length > 0 };
   }
 
+  /*
+   * Veredicto de una zona para un distintivo concreto.
+   * Devuelve: "permitido" | "condicionado" | "no_figura" | "pendiente" | "sin_distintivo_usuario"
+   */
+  function veredictoZona(zona, distintivoUsuario) {
+    var permitidos = zona.distintivos_permitidos;
+    if ((typeof permitidos === 'string') || !permitidos || !permitidos.length) return 'pendiente';
+    if (!distintivoUsuario) return 'sin_distintivo_usuario';
+    var entradas = permitidos.map(analizarEntrada);
+    for (var i = 0; i < entradas.length; i++) {
+      if (entradas[i].clave === distintivoUsuario) {
+        return entradas[i].condicionado ? 'condicionado' : 'permitido';
+      }
+    }
+    return 'no_figura';
+  }
+
+  var TEXTO_VEREDICTO = {
+    permitido:   { etiqueta: 'Sí',              clase: 'si',   icono: '✓' },
+    condicionado:{ etiqueta: 'Solo con condiciones', clase: 'cond', icono: '!' },
+    no_figura:   { etiqueta: 'No',              clase: 'no',   icono: '×' },
+    pendiente:   { etiqueta: 'Sin verificar',   clase: 'pend', icono: '?' },
+    sin_distintivo_usuario: { etiqueta: 'Indica tu vehículo', clase: 'pend', icono: '?' }
+  };
+
+  /*
+   * Resumen arriba del todo: la respuesta a "¿puedo circular?", zona por zona.
+   * Sigue siendo atribuida a la ordenanza, no una autorización nuestra.
+   */
+  function pintarVeredicto(m, distintivoUsuario) {
+    var zonas = m.zonas || [];
+    if (!zonas.length) return '';
+
+    var veredictos = zonas.map(function (z) { return veredictoZona(z, distintivoUsuario); });
+    var hay = function (v) { return veredictos.indexOf(v) !== -1; };
+
+    var titular;
+    var claseGlobal;
+    var soloVerificadas = veredictos.filter(function (v) { return v !== 'pendiente'; });
+
+    // Todas las zonas verificadas coinciden => respuesta única.
+    // Solo si difieren tiene sentido decir "depende de la zona".
+    var todasIgual = function (v) {
+      return soloVerificadas.length > 0 && soloVerificadas.every(function (x) { return x === v; });
+    };
+    var plural = soloVerificadas.length > 1;
+
+    if (!distintivoUsuario) {
+      titular = 'Necesitamos saber tu distintivo para responder';
+      claseGlobal = 'pend';
+    } else if (!soloVerificadas.length) {
+      titular = 'Todavía no podemos responder por ' + esc(m.municipio);
+      claseGlobal = 'pend';
+    } else if (todasIgual('permitido')) {
+      titular = plural ? 'Sí, en las zonas que hemos verificado' : 'Sí, según la ordenanza';
+      claseGlobal = 'si';
+    } else if (todasIgual('no_figura')) {
+      titular = plural ? 'No, en ninguna de las zonas verificadas' : 'No, según la ordenanza';
+      claseGlobal = 'no';
+    } else if (todasIgual('condicionado')) {
+      titular = 'Solo si cumples ciertas condiciones';
+      claseGlobal = 'cond';
+    } else {
+      titular = 'Depende de la zona';
+      claseGlobal = hay('no_figura') ? 'no' : 'cond';
+    }
+
+    var partes = ['<div class="pc-veredicto pc-veredicto--' + claseGlobal + '">'];
+    partes.push('<p class="pc-veredicto__pregunta">¿Puedes circular por ' + esc(m.municipio) + '?</p>');
+    partes.push('<p class="pc-veredicto__titular">' + titular + '</p>');
+
+    partes.push('<ul class="pc-veredicto__zonas">');
+    for (var i = 0; i < zonas.length; i++) {
+      var t = TEXTO_VEREDICTO[veredictos[i]];
+      partes.push('<li class="pc-vz pc-vz--' + t.clase + '">' +
+        '<span class="pc-vz__icono" aria-hidden="true">' + t.icono + '</span>' +
+        '<span class="pc-vz__zona">' + esc(zonas[i].nombre || zonas[i].id) + '</span>' +
+        '<span class="pc-vz__valor">' + t.etiqueta + '</span>' +
+        '</li>');
+    }
+    partes.push('</ul>');
+
+    if (hay('condicionado')) {
+      partes.push('<p class="pc-veredicto__nota">«Solo con condiciones» significa que tu distintivo figura, ' +
+        'pero la ordenanza exige algo más: ser residente, tener actividad en la zona o acreditar un destino concreto. ' +
+        'Lo detallamos debajo.</p>');
+    }
+    partes.push('</div>');
+    return partes.join('');
+  }
+
   function pintarZona(zona, distintivoUsuario) {
     var partes = ['<div class="pc-zona">'];
     partes.push('<h4>' + esc(zona.nombre || zona.id || 'Zona') + '</h4>');
@@ -325,6 +416,16 @@
         '</div>';
     }
 
+    // El veredicto va fuera del recuadro de la ordenanza: es la respuesta,
+    // no el detalle. Y justo después, el acceso a la ficha completa.
+    var salida = [pintarVeredicto(m, distintivoUsuario)];
+
+    if (m.url) {
+      salida.push('<a class="pc-cta" href="' + esc(m.url) + '">' +
+        'Ficha completa de ' + esc(m.municipio) +
+        '<span class="pc-cta__flecha" aria-hidden="true">→</span></a>');
+    }
+
     var partes = ['<div class="pc-ordenanza">'];
     partes.push('<h3>Lo que dice la ordenanza de ' + esc(m.municipio) + '</h3>');
 
@@ -353,16 +454,18 @@
       var fecha = m.fecha_verificacion ? ' · Verificado el ' + esc(formatearFecha(m.fecha_verificacion)) : '';
       partes.push('<p class="pc-fuente">Fuente: ' + fuente + boletin + fecha + '</p>');
     }
-    if (m.url) {
-      partes.push('<p><a href="' + esc(m.url) + '">Ficha completa de ' + esc(m.municipio) + '</a></p>');
-    }
 
     partes.push('</div>');
-    return partes.join('');
+    salida.push(partes.join(''));
+    return salida.join('');
   }
 
+  /*
+   * Acepta "2026-09-23" y también "2026-09-23T00:00:00Z": Hugo convierte el
+   * front matter a fecha y jsonify la serializa en ISO completo.
+   */
   function formatearFecha(iso) {
-    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso));
+    var m = /^(\d{4})-(\d{2})-(\d{2})(?:[T ].*)?$/.exec(String(iso).trim());
     if (!m) return iso;
     var mes = parseInt(m[2], 10), dia = parseInt(m[3], 10);
     if (mes < 1 || mes > 12 || dia < 1 || dia > 31) return iso;
@@ -408,13 +511,28 @@
     var res = derivar(datos);
     var slug = selMunicipio ? selMunicipio.value : '';
 
+    // Orden: qué distintivo tienes, la respuesta, el acceso a la ficha, y
+    // después el detalle. El aviso sobre la DGT va detrás: es importante,
+    // pero no debe interponerse entre la pregunta y su respuesta.
     salida.innerHTML =
       pintarDistintivo(res) +
-      bloqueConsultaOficial() +
-      pintarMunicipio(slug, res.distintivo);
+      pintarMunicipio(slug, res.distintivo) +
+      bloqueConsultaOficial();
 
     var anclaAnuncio = document.getElementById('anuncio-bajo-resultado');
     if (anclaAnuncio) anclaAnuncio.hidden = false;
+
+    // Llevar al usuario al resultado: en móvil suele quedar fuera de pantalla.
+    // scroll-margin-top en el CSS evita que la cabecera fija lo tape.
+    try {
+      salida.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) {
+      salida.scrollIntoView(); // navegadores sin soporte de opciones
+    }
+    // Y mover el foco, para que quien navega con teclado o lector de
+    // pantalla aterrice también en el resultado, no solo la vista.
+    salida.setAttribute('tabindex', '-1');
+    salida.focus({ preventScroll: true });
   });
 
   var btnBorrar = document.getElementById('borrar-perfil');

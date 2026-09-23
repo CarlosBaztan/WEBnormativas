@@ -100,6 +100,115 @@
 .pc-resultado {
   min-height: 8rem;
   margin: 1.5rem 0;
+  /* Al hacer scroll hasta aquí, que no lo tape la cabecera fija. */
+  scroll-margin-top: 5rem;
+}
+
+.pc-resultado:focus {
+  outline: none;
+}
+
+/* --- Veredicto: la respuesta a "¿puedo circular?" ---------------------- */
+
+.pc-veredicto {
+  border: 2px solid var(--border);
+  border-left-width: 8px;
+  border-radius: 8px;
+  padding: 1.1rem 1.3rem;
+  margin: 0 0 0.75rem;
+}
+
+.pc-veredicto__pregunta {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.pc-veredicto__titular {
+  margin: 0.15rem 0 0.9rem;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pc-veredicto__zonas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.pc-vz {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.pc-vz__icono {
+  font-weight: 700;
+  text-align: center;
+}
+
+.pc-vz__valor {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* En pantallas estrechas el veredicto se salía del recuadro: pasa a su
+   propia línea, alineado bajo el nombre de la zona. */
+@media (max-width: 30rem) {
+  .pc-vz {
+    grid-template-columns: 1.6rem 1fr;
+  }
+  .pc-vz__valor {
+    grid-column: 2;
+    margin-top: 0.15rem;
+  }
+}
+
+/* El significado no se confía solo al color: cada estado lleva su texto
+   ("Sí", "No", "Solo con condiciones") y un símbolo propio. */
+.pc-vz--si    { border-left: 4px solid currentColor; }
+.pc-vz--cond  { border-left: 4px solid currentColor; border-style: dashed; }
+.pc-vz--no    { border-left: 4px solid currentColor; }
+.pc-vz--pend  { border-left: 4px dotted currentColor; opacity: 0.85; }
+
+.pc-veredicto__nota {
+  margin: 0.9rem 0 0;
+  font-size: 0.92rem;
+  opacity: 0.9;
+}
+
+/* --- Acceso a la ficha completa ---------------------------------------- */
+
+.pc-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--theme);
+  background: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+}
+
+.pc-cta:hover,
+.pc-cta:focus-visible {
+  opacity: 0.88;
+  text-decoration: none;
+}
+
+.pc-cta__flecha {
+  font-size: 1.15rem;
 }
 
 .pc-distintivo {
