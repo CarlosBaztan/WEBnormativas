@@ -27,11 +27,12 @@
       {{- $p := .Params }}
 
       {{/*
-        Las páginas de zona (/zbe/madrid/distrito-centro/) viven en la misma
-        sección pero no son municipios: no van al selector ni pasan por la
-        validación de codigo_ine.
+        En la sección zbe/ conviven tres cosas: fichas de municipio, páginas de
+        zona (/zbe/madrid/distrito-centro/) y artículos generales (/zbe/que-es/).
+        Solo las primeras van al selector y pasan por la validación de
+        codigo_ine. `tipo` lo distingue, y "municipio" es el valor por defecto.
       */}}
-      {{- if eq ($p.tipo | default "municipio") "zona" }}{{ continue }}{{ end }}
+      {{- if ne ($p.tipo | default "municipio") "municipio" }}{{ continue }}{{ end }}
       {{/* Se captura aquí: dentro de `with`, el contexto deja de ser la página. */}}
       {{- $ruta := .File.Path }}
 
@@ -144,7 +145,7 @@
           {{- with site.Data.cobertura }}
           <p class="pc-ayuda pc-cobertura">
             {{ .aviso_cobertura }}
-            {{- with .proximos }} {{ $.Site.Data.cobertura.etiqueta_proximos }} {{ delimit . ", " " y " }}.{{ end }}
+            {{- with .proximos }} {{ site.Data.cobertura.etiqueta_proximos }} {{ delimit . ", " " y " }}.{{ end }}
           </p>
           {{- end }}
 

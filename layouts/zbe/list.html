@@ -1,113 +1,117 @@
 {{- /*
-  layouts/zbe/list.html — listado de municipios con ZBE, agrupado por provincia.
+  layouts/zbe/list.html — índice de municipios con Zona de Bajas Emisiones.
 
-  Agrupación manual en lugar de GroupByParam: así una ficha a la que le falte
-  `provincia` aparece igualmente (en "Provincia no indicada") en vez de
-  desaparecer del listado sin avisar.
+  La tabla se genera desde data/zbe.json (salida de pipeline/zbe_nap.py), que
+  acredita qué municipios tienen ZBE registrada oficialmente.
 
-  Sin JavaScript: el filtrado es un índice de anclas por provincia.
+  La columna "¿Verificado por nosotros?" NO sale de ahí: se cruza con las
+  fichas de content/zbe/. Un municipio solo cuenta como verificado cuando
+  alguien ha leído su ordenanza y la ficha tiene estado_dato: verificado.
+
+  Esa distinción es el punto de la página: registrado ≠ verificado.
 */ -}}
 
 {{- define "main" }}
 
-{{- $paginas := .RegularPages.ByTitle }}
-
-{{- /* Provincias distintas, conservando la primera grafía vista. */ -}}
-{{- $provincias := slice }}
-{{- range $paginas }}
-  {{- $prov := "Provincia no indicada" }}
-  {{- with .Params.provincia }}{{ $v := trim (printf "%v" .) " " }}{{ if ne $v "" }}{{ $prov = $v }}{{ end }}{{ end }}
-  {{- if not (in $provincias $prov) }}{{ $provincias = $provincias | append $prov }}{{ end }}
-{{- end }}
-{{- $provincias = sort $provincias }}
-
-{{- $estadosTexto := dict
-      "activa"   "En vigor"
-      "prevista" "Prevista"
-      "sin_zbe"  "Sin ZBE" }}
-
-<header class="page-header">
-  {{- partial "breadcrumbs.html" . }}
-  <h1>{{ .Title }}</h1>
-  {{- with .Description }}
-  <div class="post-description">{{ . | markdownify }}</div>
+{{- /* Fichas verificadas, indexadas por slug, para el cruce. */ -}}
+{{- $verificadas := dict }}
+{{- range where (where site.RegularPages "Section" "zbe") "Params.estado_dato" "verificado" }}
+  {{- if ne (.Params.tipo | default "municipio") "zona" }}
+    {{- $verificadas = merge $verificadas (dict .File.ContentBaseName .) }}
   {{- end }}
-</header>
-
-{{- if .Content }}
-<div class="post-content md-content">{{ .Content }}</div>
 {{- end }}
 
-{{- if eq (len $paginas) 0 }}
+{{- $datos := site.Data.zbe }}
+{{- $municipios := $datos.municipios }}
+{{- $total := len $municipios }}
+{{- $nVerificadas := len $verificadas }}
 
-<p class="aviso aviso--sin-datos" role="note">
-  Todavía no hay ninguna ficha publicada. Solo publicamos un municipio cuando
-  hemos leído su ordenanza y podemos citarla con fecha.
-</p>
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with .Description }}<div class="post-description">{{ . }}</div>{{- end }}
+  </header>
 
-{{- else }}
+  <div class="post-content">
 
-<p class="listado-resumen">
-  {{ len $paginas }} municipio{{ if ne (len $paginas) 1 }}s{{ end }}
-  en {{ len $provincias }} provincia{{ if ne (len $provincias) 1 }}s{{ end }}.
-  Cada ficha cita la norma de la que sale el dato y la fecha en que se comprobó.
-</p>
+    {{- with .Content }}{{ . }}{{- end }}
 
-<nav class="indice-provincias" aria-label="Ir a una provincia">
-  <h2 class="indice-provincias__titulo" id="indice-provincias">Provincias</h2>
-  <ul aria-labelledby="indice-provincias">
-    {{- range $provincias }}
-    <li><a href="#prov-{{ anchorize . }}">{{ . }}</a></li>
-    {{- end }}
-  </ul>
-</nav>
+    <p class="resumen-cobertura">
+      <strong>{{ $total }} municipios</strong> con ZBE registrada oficialmente.
+      De ellos hemos verificado la ordenanza de
+      <strong>{{ $nVerificadas }}</strong>.
+    </p>
 
-{{- range $prov := $provincias }}
-{{- $delGrupo := slice }}
-{{- range $paginas }}
-  {{- $suya := "Provincia no indicada" }}
-  {{- with .Params.provincia }}{{ $v := trim (printf "%v" .) " " }}{{ if ne $v "" }}{{ $suya = $v }}{{ end }}{{ end }}
-  {{- if eq $suya $prov }}{{ $delGrupo = $delGrupo | append . }}{{ end }}
+    <div class="tabla-scroll">
+      <table class="tabla-zbe">
+        <caption class="visually-hidden">Municipios con Zona de Bajas Emisiones registrada</caption>
+        <thead>
+          <tr>
+            <th scope="col">Municipio</th>
+            <th scope="col">Provincia</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Fuente oficial</th>
+            <th scope="col">¿Verificado por nosotros?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{- range $slug, $m := $municipios }}
+          {{- $ficha := index $verificadas $slug }}
+          <tr>
+            <th scope="row">
+              {{- if $ficha }}<a href="{{ $ficha.RelPermalink }}">{{ $m.municipio }}</a>
+              {{- else }}{{ $m.municipio }}{{ end }}
+            </th>
+            <td>
+              {{- with $ficha }}{{ .Params.provincia | default "No consta" }}
+              {{- else }}<span class="dato-vacio">No consta</span>{{ end }}
+            </td>
+            <td>{{ if $m.zbe_existe }}Registrada{{ else }}<span class="dato-vacio">No consta</span>{{ end }}</td>
+            <td>
+              {{- with $m.fuente_url }}
+              <a href="{{ . }}" rel="noopener nofollow" target="_blank">Fichero DGT</a>
+              {{- else }}<span class="dato-vacio">—</span>{{ end }}
+            </td>
+            <td>
+              {{- if $ficha }}
+              <span class="marca marca--si">Sí</span>
+              <span class="marca-fecha">{{ with $ficha.Params.fecha_verificacion }}{{ . }}{{ end }}</span>
+              {{- else }}
+              <span class="marca marca--no">Todavía no</span>
+              {{- end }}
+            </td>
+          </tr>
+          {{- end }}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Qué significa cada columna</h2>
+
+    <p><strong>Registrada</strong> quiere decir que el ayuntamiento ha comunicado su zona al Punto de Acceso Nacional de la DGT. Acredita que la zona existe, no qué vehículos pueden circular por ella.</p>
+
+    <p><strong>Verificado por nosotros</strong> significa que hemos leído la ordenanza municipal, artículo por artículo, y publicado sus reglas con la referencia exacta y la fecha. Solo entonces respondemos a «¿puedo entrar?».</p>
+
+    <p>Mientras una fila diga «todavía no», no publicamos sus reglas. Preferimos no decir nada a decir algo sin comprobar: equivocarse aquí le cuesta 200 € a quien nos lea.</p>
+
+    <h2>Por qué faltan municipios</h2>
+
+    <p>Desde el 1 de enero de 2026 están obligados a tener ZBE todos los municipios de más de 50.000 habitantes. Esta tabla recoge los que constan en el registro de la DGT, que son menos.</p>
+
+    <p><strong>Que un municipio no aparezca no significa que no tenga zona de bajas emisiones.</strong> Comprueba siempre con tu ayuntamiento.</p>
+
+    <p>Puedes descargar estos datos en <a href="/datos/zbe/">formato abierto</a>.</p>
+
+    {{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
+
+    <p class="fuente-lista">
+      <strong>Fuente:</strong>
+      <a href="{{ $datos._meta.fuente_url }}" rel="noopener" target="_blank">{{ $datos._meta.fuente_nombre }}</a>
+      · Licencia {{ $datos._meta.licencia }}
+      · Datos descargados el {{ $datos._meta.fecha_actualizacion }}
+    </p>
+
+  </div>
+</article>
 {{- end }}
-
-<section class="grupo-provincia" aria-labelledby="prov-{{ anchorize $prov }}">
-  <h2 class="grupo-provincia__titulo" id="prov-{{ anchorize $prov }}">{{ $prov }}</h2>
-
-  <ul class="municipios">
-    {{- range $delGrupo }}
-    {{- $estado := "" }}{{ with .Params.estado_zbe }}{{ $estado = lower (trim (printf "%v" .) " ") }}{{ end }}
-    {{- $estadoTexto := index $estadosTexto $estado | default "Estado no consta" }}
-    {{- $estadoClase := cond (isset $estadosTexto $estado) $estado "desconocido" }}
-    {{- $verificado := eq (lower (printf "%v" (.Params.estado_dato | default ""))) "verificado" }}
-    <li class="municipio">
-      <a class="municipio__enlace" href="{{ .Permalink }}">
-        <span class="municipio__nombre">{{ with .Params.municipio }}{{ . }}{{ else }}{{ .Title }}{{ end }}</span>
-      </a>
-      <span class="badge badge--{{ $estadoClase }}">{{ $estadoTexto }}</span>
-      {{- if not $verificado }}
-      <span class="badge badge--pendiente">Reglas sin verificar</span>
-      {{- end }}
-      {{- with .Description }}
-      <p class="municipio__desc">{{ . | plainify }}</p>
-      {{- end }}
-    </li>
-    {{- end }}
-  </ul>
-</section>
-{{- end }}
-
-<aside class="leyenda" aria-label="Qué significa cada estado">
-  <h2 class="leyenda__titulo">Cómo leer esta tabla</h2>
-  <dl class="leyenda__lista">
-    <div class="datos-fila"><dt><span class="badge badge--activa">En vigor</span></dt><dd>La zona está delimitada y las restricciones se aplican.</dd></div>
-    <div class="datos-fila"><dt><span class="badge badge--prevista">Prevista</span></dt><dd>El municipio la ha aprobado o anunciado, pero aún no se aplica.</dd></div>
-    <div class="datos-fila"><dt><span class="badge badge--sin_zbe">Sin ZBE</span></dt><dd>No consta zona de bajas emisiones en ese municipio.</dd></div>
-    <div class="datos-fila"><dt><span class="badge badge--pendiente">Reglas sin verificar</span></dt><dd>Sabemos que la zona existe, pero no hemos contrastado qué distintivos permite. No damos una respuesta que no podemos respaldar.</dd></div>
-  </dl>
-</aside>
-
-{{- end }}
-
-{{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
-
-{{- end }}{{/* end main */}}

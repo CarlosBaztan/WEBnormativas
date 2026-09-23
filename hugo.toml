@@ -1,5 +1,5 @@
 baseURL = "https://webnormativas.bi-ia-carlosbaz.workers.dev/"
-languageCode = "es-es"
+locale = "es-es"
 defaultContentLanguage = "es"
 title = "Normativa del vehículo en España"
 theme = "PaperMod"
