@@ -87,6 +87,18 @@ disableKinds = ["taxonomy", "term"]
     name = "Guías"
     url = "/guias/"
     weight = 40
+  # Institucionales al final: sin esto quedan huérfanas, sin ningún enlace
+  # entrante desde el sitio.
+  [[menu.main]]
+    identifier = "metodologia"
+    name = "Metodología"
+    url = "/metodologia/"
+    weight = 90
+  [[menu.main]]
+    identifier = "sobre"
+    name = "Sobre"
+    url = "/sobre/"
+    weight = 100
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
