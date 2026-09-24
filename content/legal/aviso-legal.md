@@ -27,7 +27,7 @@ Datos identificativos del responsable pendientes de completar.
 
 ## Objeto y condiciones de uso
 
-Este sitio recopila y resume normativa relacionada con los vehículos en España —zonas de bajas emisiones, distintivos ambientales, fiscalidad y trámites— citando en cada caso la fuente oficial y la fecha de comprobación.
+Este sitio recopila y resume normativa relacionada con los vehículos en España (zonas de bajas emisiones, distintivos ambientales, fiscalidad y trámites) citando en cada caso la fuente oficial y la fecha de comprobación.
 
 El acceso es gratuito y no requiere registro. Al usarlo, aceptas estas condiciones.
 

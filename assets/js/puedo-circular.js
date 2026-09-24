@@ -115,7 +115,7 @@
    * Devuelve { distintivo, incierto, motivo }.
    *
    * `mes` puede ser null: el usuario no lo sabe. En ese caso, si el año cae
-   * justo en el umbral, no se elige por él — se devuelve `incierto` y la
+   * justo en el umbral, no se elige por él: se devuelve `incierto` y la
    * interfaz muestra las dos posibilidades.
    */
   function porFecha(grupo, combustible, anio, mes) {

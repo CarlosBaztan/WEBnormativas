@@ -7,7 +7,7 @@ date: 2026-09-23
 distintivo: "C"
 
 estado_dato: "verificado"
-fuente_nombre: "DGT — Distintivo ambiental"
+fuente_nombre: "Distintivo ambiental de la DGT"
 fuente_url: "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"
 fecha_verificacion: "2026-09-23"
 draft: false
@@ -75,6 +75,6 @@ Por los umbrales de fecha y el asunto del mes en 2015, aquí deducir es arriesga
 
 ---
 
-**Fuente:** [DGT — Distintivo ambiental](https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/) · **Verificado el 23 de septiembre de 2026**
+**Fuente:** [Distintivo ambiental de la DGT](https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/) · **Verificado el 23 de septiembre de 2026**
 
 *Esta página resume criterios oficiales con fines informativos. El distintivo que consta en el Registro de Vehículos de la DGT es el que vale.*

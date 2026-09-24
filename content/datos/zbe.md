@@ -7,12 +7,12 @@ draft: false
 
 dataset: true
 dataset_licencia: "CC-BY 4.0"
-dataset_fuente_nombre: "DGT — Punto de Acceso Nacional de Tráfico y Movilidad"
+dataset_fuente_nombre: "Punto de Acceso Nacional de Tráfico y Movilidad (DGT)"
 dataset_fuente_url: "https://nap.dgt.es/dataset/zonas-de-bajas-emisiones"
 dataset_formatos: ["CSV", "JSON"]
 fecha_verificacion: "2026-09-22"
 estado_dato: "verificado"
-fuente_nombre: "DGT — Punto de Acceso Nacional, Zonas de Bajas Emisiones (DATEX2 v3)"
+fuente_nombre: "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)"
 fuente_url: "https://nap.dgt.es/dataset/zonas-de-bajas-emisiones"
 ---
 
@@ -20,8 +20,8 @@ Listado consolidado de los **45 municipios españoles con Zona de Bajas Emisione
 
 ## Descargas
 
-- [zbe.csv](/datos/zbe.csv) — una fila por municipio
-- [zbe.json](/datos/zbe.json) — incluye la evidencia en bruto sin interpretar
+- [zbe.csv](/datos/zbe.csv): una fila por municipio
+- [zbe.json](/datos/zbe.json): incluye la evidencia en bruto sin interpretar
 
 Licencia **CC-BY 4.0**. Puedes reutilizarlo libremente citando como fuente a la Dirección General de Tráfico y, si te viene bien, a esta página.
 

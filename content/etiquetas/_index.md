@@ -7,7 +7,7 @@ description: "Los cinco casos posibles según combustible y año de matriculaci�
 date: 2026-09-23
 
 estado_dato: "verificado"
-fuente_nombre: "DGT — Distintivo ambiental"
+fuente_nombre: "Distintivo ambiental de la DGT"
 fuente_url: "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"
 fecha_verificacion: "2026-09-23"
 draft: false
@@ -62,11 +62,11 @@ Se compra en las oficinas de Correos por 5 euros.
 
 Consulta las restricciones reales de tu ciudad:
 
-- **[ZBE de Madrid](/zbe/madrid/)** — tres zonas con reglas distintas
+- **[ZBE de Madrid](/zbe/madrid/)**: tres zonas con reglas distintas
 - **[Todos los municipios con ZBE](/zbe/)**
 
 ---
 
-**Fuente:** [DGT — Distintivo ambiental](https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/) · **Verificado el 23 de septiembre de 2026**
+**Fuente:** [Distintivo ambiental de la DGT](https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/) · **Verificado el 23 de septiembre de 2026**
 
 *Esta página resume criterios oficiales con fines informativos. El distintivo que consta en el Registro de Vehículos de la DGT es el que vale.*

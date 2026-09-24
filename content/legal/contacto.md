@@ -38,5 +38,5 @@ La web lleva publicidad, pero los anunciantes no influyen en lo que se publica. 
 ---
 
 - **[Sobre este proyecto](/sobre/)**
-- **[Metodología](/metodologia/)** — cómo verificamos
+- **[Metodología](/metodologia/)**: cómo verificamos
 - **[Aviso legal](/legal/aviso-legal/)**

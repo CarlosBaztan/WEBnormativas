@@ -113,7 +113,7 @@ El control se hace con cámaras con lector de matrículas (art. 22.10 de la orde
 
 ## Excepciones y autorizaciones
 
-Si crees que te corresponde una excepción —residencia, movilidad reducida, vehículo histórico, actividad profesional dentro de la zona—, se tramita en la sede electrónica del Ayuntamiento. Dos detalles útiles:
+Si crees que te corresponde una excepción (residencia, movilidad reducida, vehículo histórico, actividad profesional dentro de la zona), se tramita en la sede electrónica del Ayuntamiento. Dos detalles útiles:
 
 - El alta de una tarjeta de movilidad reducida **vale para todas las zonas de bajas emisiones de Madrid**, no hay que repetirla por zona.
 - El Ayuntamiento se compromete a responder en **10 días naturales**. Si no responde, se entiende permitida provisionalmente la circulación.

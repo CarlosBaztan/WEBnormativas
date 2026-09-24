@@ -23,7 +23,7 @@ draft: true
 ---
 
 <!--
-FICHA DE EJEMPLO — NO PUBLICADA.
+FICHA DE EJEMPLO, NO PUBLICADA.
 
 Sirve como plantilla de referencia. Está deliberadamente en estado
 pendiente y con los campos de datos vacíos: no se ha verificado

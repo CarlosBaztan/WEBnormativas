@@ -72,7 +72,7 @@ Se tramita en la sede electrónica del Ayuntamiento. Dos detalles útiles:
 
 ## Las otras zonas de Madrid
 
-- **[Plaza Elíptica](/zbe/madrid/plaza-eliptica/)** — reglas más simples
+- **[Plaza Elíptica](/zbe/madrid/plaza-eliptica/)**: reglas más simples
 - **[Resumen de las tres zonas](/zbe/madrid/)**
 
 ---

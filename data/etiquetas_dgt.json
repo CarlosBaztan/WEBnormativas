@@ -3,11 +3,11 @@
     "descripcion": "Reglas de asignación del distintivo ambiental de la DGT.",
     "fuentes": [
       {
-        "nombre": "DGT — Distintivo ambiental",
+        "nombre": "Distintivo ambiental de la DGT",
         "url": "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"
       },
       {
-        "nombre": "Ayuntamiento de Madrid — Distintivos de los vehículos en función del impacto ambiental",
+        "nombre": "Distintivos de los vehículos en función del impacto ambiental (Ayuntamiento de Madrid)",
         "url": "https://www.madrid.es/portales/munimadrid/es/Inicio/Movilidad-y-transportes/Distintivos-de-los-vehiculos-en-funcion-del-impacto-ambiental/"
       }
     ],

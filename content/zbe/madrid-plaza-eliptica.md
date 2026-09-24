@@ -69,7 +69,7 @@ Se tramita en la sede electrónica del Ayuntamiento. El alta de la tarjeta de mo
 
 ## Las otras zonas de Madrid
 
-- **[Distrito Centro](/zbe/madrid/distrito-centro/)** — reglas bastante más restrictivas
+- **[Distrito Centro](/zbe/madrid/distrito-centro/)**: reglas bastante más restrictivas
 - **[Resumen de las tres zonas](/zbe/madrid/)**
 
 ---

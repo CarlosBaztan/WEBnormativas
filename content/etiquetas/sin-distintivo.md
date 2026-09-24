@@ -4,7 +4,7 @@ description: "Qué vehículos no obtienen ninguna etiqueta de la DGT, por qué n
 date: 2026-09-23
 
 estado_dato: "verificado"
-fuente_nombre: "DGT — Distintivo ambiental"
+fuente_nombre: "Distintivo ambiental de la DGT"
 fuente_url: "https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/"
 fecha_verificacion: "2026-09-23"
 draft: false
@@ -29,13 +29,13 @@ Es la pregunta más repetida, y la respuesta es que no hay nada que solicitar.
 
 El distintivo depende de la clasificación del vehículo en el Registro de la DGT, no de un trámite. **No existe forma de obtener uno** para un vehículo que no cumple los umbrales: ni pasando la ITV, ni con una puesta a punto, ni pagando.
 
-La única excepción es que la DGT tenga mal clasificado tu vehículo. Si crees que es tu caso —por ejemplo, un vehículo importado—, se corrige en Tráfico aportando la documentación, no comprando una pegatina.
+La única excepción es que la DGT tenga mal clasificado tu vehículo. Si crees que es tu caso (por ejemplo, un vehículo importado), se corrige en Tráfico aportando la documentación, no comprando una pegatina.
 
 ## Dónde no puedes circular
 
 Este es el grupo con restricciones reales, y va a más.
 
-En Madrid, en las dos zonas que hemos verificado —**Distrito Centro** y **Plaza Elíptica**— los vehículos sin distintivo **no figuran entre los que la ordenanza permite circular**. En Plaza Elíptica la prohibición es expresa, e incluye el tramo de la A-42 que queda dentro.
+En Madrid, en las dos zonas que hemos verificado (**Distrito Centro** y **Plaza Elíptica**) los vehículos sin distintivo **no figuran entre los que la ordenanza permite circular**. En Plaza Elíptica la prohibición es expresa, e incluye el tramo de la A-42 que queda dentro.
 
 Comprueba tu ciudad antes de moverte:
 
@@ -67,6 +67,6 @@ Compruébalo con tu matrícula en la [consulta oficial de la DGT](https://sede.d
 
 ---
 
-**Fuente:** [DGT — Distintivo ambiental](https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/) · **Verificado el 23 de septiembre de 2026**
+**Fuente:** [Distintivo ambiental de la DGT](https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/) · **Verificado el 23 de septiembre de 2026**
 
 *Esta página resume criterios oficiales con fines informativos. El distintivo que consta en el Registro de Vehículos de la DGT es el que vale.*

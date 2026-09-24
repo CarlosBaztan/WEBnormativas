@@ -65,7 +65,7 @@ Esta web no se dirige a menores de edad ni recoge deliberadamente datos de menor
 
 ## Cambios
 
-Si esta política cambia, se actualizará la fecha del encabezado. Los cambios relevantes —como activar publicidad o analítica— se anunciarán en la propia web antes de aplicarse.
+Si esta política cambia, se actualizará la fecha del encabezado. Los cambios relevantes, como activar publicidad o analítica, se anunciarán en la propia web antes de aplicarse.
 
 ---
 

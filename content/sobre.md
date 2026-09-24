@@ -11,7 +11,7 @@ Esta web responde a una pregunta concreta: **¿puedo circular con mi coche por e
 
 La normativa del vehículo en España está repartida entre miles de ordenanzas municipales, diecisiete normativas autonómicas y varios organismos estatales. Cada una publica en su sitio, en su formato y con su calendario.
 
-El resultado es que una pregunta sencilla —¿puedo entrar en el centro de mi ciudad?— obliga a rastrear un boletín provincial. Y que mucha gente acabe pagando 200 euros por un dato que era público pero estaba enterrado.
+El resultado es que una pregunta tan sencilla como «¿puedo entrar en el centro de mi ciudad?» obliga a rastrear un boletín provincial. Y que mucha gente acabe pagando 200 euros por un dato que era público pero estaba enterrado.
 
 Lo que hacemos es leer esas normas, una a una, y publicarlas en un formato consultable, diciendo siempre de dónde sale cada cosa.
 
@@ -53,6 +53,6 @@ Los avisos de errores tienen prioridad: si nos dices que algo está mal y tienes
 
 ---
 
-- **[Metodología](/metodologia/)** — cómo verificamos
+- **[Metodología](/metodologia/)**: cómo verificamos
 - **[Aviso legal](/legal/aviso-legal/)**
 - **[Privacidad](/legal/privacidad/)**

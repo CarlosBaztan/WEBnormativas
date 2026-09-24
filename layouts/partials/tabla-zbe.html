@@ -38,8 +38,8 @@
           {{- else }}{{ .municipio }}{{ end }}
         </th>
         <td>
-          {{- with $ficha }}{{ .Params.provincia | default "—" }}
-          {{- else }}<span class="dato-vacio">—</span>{{ end }}
+          {{- with $ficha }}{{ .Params.provincia | default "No consta" }}
+          {{- else }}<span class="dato-vacio">No consta</span>{{ end }}
         </td>
         <td>
           {{- if .zbe_existe }}<span class="estado-registrada">Registrada</span>
@@ -48,7 +48,7 @@
         <td>
           {{- with .fuente_url }}
           <a href="{{ . }}" rel="noopener nofollow" target="_blank">Fichero DGT</a>
-          {{- else }}<span class="dato-vacio">—</span>{{ end }}
+          {{- else }}<span class="dato-vacio">No consta</span>{{ end }}
         </td>
         <td class="celda-verificado">
           {{- if $ficha }}

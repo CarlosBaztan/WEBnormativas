@@ -56,8 +56,8 @@ La invitación se gestiona desde el sistema municipal y tiene sus propios límit
 
 ## Dónde mirar la tuya
 
-- **[ZBE de Madrid](/zbe/madrid/)** — las tres zonas, con sus excepciones
-- **[Municipios con ZBE](/zbe/)** — el resto, con enlace a su fuente oficial
+- **[ZBE de Madrid](/zbe/madrid/)**: las tres zonas, con sus excepciones
+- **[Municipios con ZBE](/zbe/)**: el resto, con enlace a su fuente oficial
 
 Si tu municipio aparece como «todavía no verificado», no publicamos sus excepciones: consúltalas en tu ayuntamiento.
 

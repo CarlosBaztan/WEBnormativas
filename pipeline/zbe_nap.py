@@ -1,5 +1,5 @@
 """
-Pipeline ZBE — Punto de Acceso Nacional de la DGT (NAP).
+Pipeline ZBE del Punto de Acceso Nacional de la DGT (NAP).
 
 Descarga los ficheros DATEX2 v3 de Zonas de Bajas Emisiones publicados por la
 DGT, extrae las restricciones de acceso por distintivo ambiental y genera:
@@ -53,7 +53,7 @@ CACHE = ESTADO / "cache"
 URL_DATASET = "https://nap.dgt.es/dataset/zonas-de-bajas-emisiones"
 URL_RECURSO = "https://nap.dgt.es/dataset/zonas-de-bajas-emisiones/resource/{id}"
 
-FUENTE_NOMBRE = "DGT — Punto de Acceso Nacional, Zonas de Bajas Emisiones (DATEX2 v3)"
+FUENTE_NOMBRE = "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)"
 LICENCIA = "CC-BY (Direccion General de Trafico)"
 
 PAUSA_SEGUNDOS = 0.5  # cortesia con el servidor
@@ -175,7 +175,9 @@ def horarios_de(raiz: ET.Element) -> list[str]:
         ini = periodo.findtext("com:startTimeOfPeriod", default="", namespaces=NS)
         fin = periodo.findtext("com:endTimeOfPeriod", default="", namespaces=NS)
         if ini or fin:
-            horarios.append(f"{ini}–{fin}".strip("–"))
+            # "de X a Y" en vez de un guion: las rayas y los guiones largos
+            # no se usan en el texto de cara al usuario.
+            horarios.append(f"{ini} a {fin}" if (ini and fin) else (ini or fin))
     # sin duplicados, conservando orden
     vistos, unicos = set(), []
     for h in horarios:
