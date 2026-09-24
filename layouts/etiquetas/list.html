@@ -1,0 +1,67 @@
+{{- /*
+  layouts/etiquetas/list.html — índice de la sección "Etiquetas DGT".
+
+  Copia del list.html de PaperMod reducida a lo que esta sección usa (no hay
+  portada, ni taxonomías, ni paginación: son cinco páginas) y con un único
+  cambio de fondo: el titular se parte después de los dos puntos.
+
+  Al quitar la paginación desaparece el alias /etiquetas/page/1/ que generaba
+  el tema, que no era más que una redirección a esta misma página. Si algún
+  día la sección pasa de veinte páginas seguirán saliendo todas aquí, que es
+  lo que se quiere de un índice.
+
+  El salto se inserta aquí y no en el texto del front matter a propósito. El
+  título tiene que seguir siendo una sola línea de texto plano para el
+  <title>, las migas de pan, el RSS y el buscador; el corte es una decisión
+  de maquetación de esta página, y solo de esta.
+
+  El <br> se anula por CSS en pantallas estrechas (ver .salto-titulo): allí
+  no hay sitio para que la segunda mitad quepa entera y el titular fluye
+  mejor si se parte por donde caiga.
+*/ -}}
+
+{{- define "main" }}
+
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>
+    {{- /* Se escapa primero y se marca seguro después: entre medias solo se
+           envuelve la segunda mitad, así un título con < o & seguiría saliendo
+           bien. Se usa un <span> en bloque y no un <br> porque el minificador
+           elimina el espacio que precede a un <br>, y al ocultarlo en móvil el
+           titular se quedaba sin él ("DGT:¿cuál"). */ -}}
+    {{- $titulo := .Title | htmlEscape }}
+    {{- $titulo = replaceRE `^([^:]+:)\s+(.+)$` `$1 <span class="titulo-continua">$2</span>` $titulo 1 }}
+    {{ $titulo | safeHTML }}
+  </h1>
+  {{- if .Description }}
+  <div class="post-description">{{ .Description | markdownify }}</div>
+  {{- end }}
+</header>
+
+{{- if .Content }}
+<div class="post-content md-content">
+  {{- if not (.Param "disableAnchoredHeadings") }}
+  {{- partial "anchored_headings.html" .Content -}}
+  {{- else }}{{ .Content }}{{ end }}
+</div>
+{{- end }}
+
+{{- range .RegularPages }}
+<article class="post-entry">
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">{{ .Title }}</h2>
+  </header>
+  {{- if (ne (.Param "hideSummary") true) }}
+  <div class="entry-content">
+    <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
+  </div>
+  {{- end }}
+  {{- if not (.Param "hideMeta") }}
+  <footer class="entry-footer">{{- partial "post_meta.html" . -}}</footer>
+  {{- end }}
+  <a class="entry-link" aria-label="Ir a {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+</article>
+{{- end }}
+
+{{- end }}{{- /* end main */ -}}

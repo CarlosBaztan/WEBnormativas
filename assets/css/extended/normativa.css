@@ -478,6 +478,14 @@
     }
 }
 
+/* Salto de línea opcional dentro de un titular (ver etiquetas/list.html):
+   la segunda mitad baja de línea cuando hay sitio. En pantallas estrechas
+   se deja en línea, porque no cabe entera y el titular se lee mejor
+   partiéndose por donde caiga. */
+@media (min-width: 30rem) {
+    .titulo-continua { display: block; }
+}
+
 /* ------------------------------- Responsive ------------------------------- */
 
 @media (max-width: 640px) {

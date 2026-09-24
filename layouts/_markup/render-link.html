@@ -1,0 +1,27 @@
+{{- /*
+  render-link.html — enlaces escritos en Markdown.
+
+  Los enlaces que salen del sitio se abren en una pestaña nueva. Casi todos
+  apuntan a una fuente oficial (DGT, BOE, ayuntamientos) que el usuario va a
+  querer consultar sin perder lo que estaba leyendo aquí.
+
+  `rel="noopener"` es obligatorio con target="_blank": sin él, la página de
+  destino puede manipular la nuestra a través de window.opener.
+
+  El aviso "(se abre en una ventana nueva)" es texto solo para lectores de
+  pantalla. Abrir una pestaña sin avisar desorienta a quien no ve que ha
+  cambiado de contexto. Es la misma convención que ya usa
+  partials/fuente-verificacion.html.
+
+  No lleva `nofollow`: son enlaces editoriales a fuentes oficiales, no
+  publicidad ni contenido de terceros.
+*/ -}}
+
+{{- $u := urls.Parse .Destination -}}
+{{- $propio := (urls.Parse site.BaseURL).Host -}}
+{{- $externo := and (in (slice "http" "https") $u.Scheme) (ne $u.Host $propio) -}}
+{{- if $externo -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }} target="_blank" rel="noopener external">{{ .Text | safeHTML }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>
+{{- else -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- end -}}

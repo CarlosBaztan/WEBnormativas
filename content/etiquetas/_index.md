@@ -1,5 +1,8 @@
 ---
-title: "Etiquetas ambientales de la DGT: cuál te corresponde"
+# El titular se parte tras los dos puntos en pantallas anchas. Lo hace
+# layouts/etiquetas/list.html, no el texto: aquí va en una sola línea
+# porque es lo que ven el <title>, las migas y el buscador.
+title: "Etiquetas ambientales de la DGT: ¿cuál te corresponde?"
 description: "Los cinco casos posibles según combustible y año de matriculación, cómo consultar el distintivo de tu coche por matrícula y qué te permite cada uno."
 date: 2026-09-23
 
