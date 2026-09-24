@@ -14,7 +14,7 @@ El distintivo ambiental clasifica los vehículos según sus emisiones. Hay **cua
 
 {{< imagen src="img/distintivos/todos.png" ancho="380"
     alt="Los cuatro distintivos ambientales de la DGT: 0 emisiones (azul), ECO (verde y azul), C (verde) y B (amarillo)."
-    pie="Los cuatro distintivos que emite la DGT. El quinto caso es no tener ninguno." >}}
+    pie="Los distintivos que emite la DGT" >}}
 
 ## Los cinco casos
 
