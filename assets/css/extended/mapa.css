@@ -115,3 +115,22 @@
 @media print {
   .mapa-zbe { display: none; }
 }
+
+/* --- Mapa dentro de una ficha ------------------------------------------ */
+
+.mapa-municipio {
+  height: 320px;
+  margin: 1.25rem 0 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--code-bg);
+}
+
+@media (max-width: 30rem) {
+  .mapa-municipio { height: 240px; }
+}
+
+@media print {
+  .mapa-municipio { display: none; }
+}

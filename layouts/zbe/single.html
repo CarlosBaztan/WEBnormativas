@@ -107,6 +107,10 @@
   </aside>
   {{- end }}
 
+  {{- /* El perimetro, debajo de la trazabilidad: primero de donde sale el
+         dato, despues el dibujo. Se pinta solo si hay geometria. */}}
+  {{ partial "mapa-municipio.html" . }}
+
   {{- if $reglasSinVerificar }}
   <aside class="aviso aviso--sin-datos" role="note" aria-label="Reglas no verificadas">
     <p class="aviso__titulo">Las reglas de acceso de esta ZBE no están verificadas</p>

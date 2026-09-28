@@ -1,0 +1,40 @@
+{{- /*
+  mapa-municipio.html — el perimetro de UNA zona, dentro de su ficha.
+
+  Solo se pinta si hay geometria para ese municipio. El slug del fichero de
+  contenido es el que cruza con properties.slug del GeoJSON, que a su vez sale
+  del nombre del XML del NAP: si no coinciden, no hay mapa y no pasa nada mas.
+
+  Va DEBAJO del bloque de fuente y verificacion a proposito: primero de donde
+  sale el dato, despues el dibujo.
+
+  Leaflet se carga aqui igual que en /mapa/, y solo en las fichas que tienen
+  geometria. Los hashes de integridad estan calculados sobre los ficheros
+  reales del CDN; si se cambia de version hay que recalcularlos con
+    curl -s URL | openssl dgst -sha512 -binary | openssl base64 -A
+  o el navegador bloquea el recurso.
+*/ -}}
+
+{{- $slug := .File.ContentBaseName }}
+{{- $geo := resources.Get "../static/datos/zbe-simplificado.geojson" }}
+
+<div id="mapa-municipio" class="mapa-municipio" data-slug="{{ $slug }}"
+     role="region" aria-label="Perimetro de la zona de bajas emisiones de {{ .Params.municipio | default .Title }}">
+  <p class="mapa-zbe__cargando">Cargando el perímetro…</p>
+</div>
+
+<p class="mapa-atribucion">
+  Perímetro:
+  <a href="https://nap.dgt.es/dataset/zonas-de-bajas-emisiones" rel="noopener external" target="_blank">DGT, Punto de Acceso Nacional<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>,
+  CC-BY. Mapa base:
+  <a href="https://www.openstreetmap.org/copyright" rel="noopener external" target="_blank">OpenStreetMap<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>.
+  El perímetro oficial lo fija la ordenanza, no este trazado.
+</p>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+      integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+        integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="{{ (resources.Get "js/mapa-municipio.js" | minify | fingerprint).RelPermalink }}" defer></script>
