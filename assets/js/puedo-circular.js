@@ -466,7 +466,19 @@
     }
 
     if (!zonas.length) {
-      partes.push('<p class="pc-zona__pendiente">No consta ninguna zona verificada para este municipio.</p>');
+      // Dos motivos muy distintos para no tener zonas, y el usuario necesita
+      // saber cual es el suyo: que no lo hayamos comprobado, o que no haya
+      // nada que cumplir todavia. Valencia es el segundo caso.
+      if (m.estado_zbe === 'prevista') {
+        partes.push('<p class="pc-zona__pendiente"><strong>Esta zona todavía no está en vigor.</strong> ' +
+          'El municipio tiene una ordenanza redactada pero sin aprobación definitiva, ' +
+          'así que hoy no hay restricción exigible ni sanción posible. ' +
+          'Lo explicamos en la ficha completa.</p>');
+      } else if (m.estado_zbe === 'sin_zbe') {
+        partes.push('<p class="pc-zona__pendiente">No consta una zona de bajas emisiones en este municipio.</p>');
+      } else {
+        partes.push('<p class="pc-zona__pendiente">No consta ninguna zona verificada para este municipio.</p>');
+      }
     } else {
       for (var i = 0; i < zonas.length; i++) {
         partes.push(pintarZona(zonas[i], distintivoUsuario));

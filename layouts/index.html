@@ -48,6 +48,30 @@
         {{- errorf "FICHA PUBLICADA INCOMPLETA: content/%s tiene estado_dato: verificado pero le faltan estos campos obligatorios: %s. O los rellenas, o pones estado_dato: pendiente y draft: true." $ruta (delimit . ", ") }}
       {{- end }}
 
+      {{/*
+        La herramienta responde POR ZONA. Los municipios con varias (Madrid)
+        las declaran en `zonas`; los que tienen una sola (Bilbao) usan los
+        campos planos, que es lo natural y lo que genera el archetype.
+
+        Sin esto, una ficha plana perfectamente verificada haria que la
+        herramienta dijese "no consta ninguna zona verificada", que es
+        justo lo contrario de la verdad. Se sintetiza la zona unica.
+
+        Valencia queda fuera a proposito: su lista esta vacia porque no hay
+        reglas en vigor, y una lista vacia aqui es falsa.
+      */}}
+      {{- $zonas := $p.zonas | default slice }}
+      {{- if and (not $zonas) $p.etiquetas_permitidas }}
+        {{- $zonas = slice (dict
+              "id"                     .File.ContentBaseName
+              "nombre"                 ($p.municipio | default .Title)
+              "distintivos_permitidos" $p.etiquetas_permitidas
+              "horario"                ($p.horario_restriccion | default "")
+              "articulo"               ($p.articulo | default "")
+              "nota"                   ($p.nota_zona | default "")
+            ) }}
+      {{- end }}
+
       {{- $verificados = $verificados | append (dict
             "slug"               .File.ContentBaseName
             "municipio"          ($p.municipio | default .Title)
@@ -59,7 +83,8 @@
             "fuente_boletin"     ($p.fuente_boletin | default "")
             "fecha_verificacion" $p.fecha_verificacion
             "sancion"            ($p.sancion_tipificacion | default "")
-            "zonas"              ($p.zonas | default slice)
+            "estado_zbe"         ($p.estado_zbe | default "")
+            "zonas"              $zonas
           ) }}
     {{- end }}
 
