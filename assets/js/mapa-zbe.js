@@ -36,6 +36,32 @@
     return COLORES[estado] || COLORES.pendiente;
   }
 
+  /*
+   * Umbral en km2 por encima del cual una zona se considera "de ciudad".
+   *
+   * Madrid tiene una zona de 1.152 km2 (el termino municipal entero) y dos
+   * ZBEDEP de 6,3 y 1,6. Pintadas igual, las pequenas desaparecen debajo de
+   * la grande y el mapa da a entender que toda la ciudad esta restringida,
+   * que no es lo que pasa.
+   *
+   * Las grandes van con trazo discontinuo y relleno casi transparente; las
+   * pequenas, solidas y por encima.
+   */
+  var UMBRAL_KM2 = 50;
+
+  function esDeCiudad(p) {
+    return (p.km2 || 0) >= UMBRAL_KM2;
+  }
+
+  function estilo(f) {
+    var p = f.properties;
+    var c = color(p.estado_dato);
+    if (esDeCiudad(p)) {
+      return { color: c, weight: 1.5, dashArray: '6 5', fillColor: c, fillOpacity: 0.06 };
+    }
+    return { color: c, weight: 2.5, fillColor: c, fillOpacity: 0.38 };
+  }
+
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -44,8 +70,15 @@
 
   function globo(p) {
     var partes = ['<strong>' + esc(p.municipio) + '</strong>'];
+    if (p.zona) {
+      partes.push('<span class="globo-zona">' + esc(p.zona) + '</span>');
+    }
     if (p.provincia && p.provincia !== p.municipio) {
       partes.push('<span class="globo-provincia">' + esc(p.provincia) + '</span>');
+    }
+    if (p.zona && esDeCiudad(p)) {
+      partes.push('<span class="globo-nota">Esta zona abarca todo el municipio. ' +
+        'Dentro hay otras con reglas mas estrictas: son las que se ven marcadas encima.</span>');
     }
 
     if (p.url_ficha) {
@@ -104,14 +137,17 @@
       })
       .then(function (datos) {
         var capa = L.geoJSON(datos, {
-          style: function (f) {
-            var c = color(f.properties.estado_dato);
-            return { color: c, weight: 2, fillColor: c, fillOpacity: 0.25 };
-          },
+          style: estilo,
           onEachFeature: function (f, capaZona) {
             capaZona.bindPopup(globo(f.properties));
             // Accesible por teclado: sin esto el mapa solo existe para el raton.
-            capaZona.bindTooltip(f.properties.municipio, { sticky: true });
+            var rotulo = f.properties.zona
+              ? f.properties.municipio + ': ' + f.properties.zona
+              : f.properties.municipio;
+            capaZona.bindTooltip(rotulo, { sticky: true });
+            // Las pequenas al frente: si no, quedan tapadas por la municipal
+            // y no se pueden ni pulsar.
+            if (!esDeCiudad(f.properties)) capaZona.bringToFront();
           }
         }).addTo(mapa);
 

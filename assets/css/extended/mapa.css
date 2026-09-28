@@ -134,3 +134,20 @@
 @media print {
   .mapa-municipio { display: none; }
 }
+
+.globo-zona {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+/* Leyenda de tipos de zona, distinta de la de estado del dato. */
+.mapa-leyenda--tipos .mapa-leyenda__muestra--ciudad {
+  color: var(--secondary);
+  background: transparent;
+  border-style: dashed;
+}
+
+.mapa-leyenda--tipos .mapa-leyenda__muestra--especial {
+  color: var(--secondary);
+  background: color-mix(in srgb, currentColor 38%, transparent);
+}

@@ -28,6 +28,8 @@
         var zona = (datos.features || []).filter(function (f) {
           return f.properties && f.properties.slug === slug;
         });
+        // Las grandes primero: se dibujan debajo.
+        zona.sort(function (a, b) { return (b.properties.km2 || 0) - (a.properties.km2 || 0); });
 
         // Sin geometria para este municipio no se deja un hueco vacio: se
         // quita el bloque entero, atribucion incluida.
@@ -55,11 +57,38 @@
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(mapa);
 
+        /*
+         * Un municipio puede tener varias zonas de tamanos muy distintos.
+         * Madrid tiene el termino municipal entero (1.152 km2) y dos ZBEDEP
+         * de 6,3 y 1,6. Pintadas igual, las pequenas no se ven.
+         */
+        var UMBRAL_KM2 = 50;
+        var deCiudad = function (p) { return (p.km2 || 0) >= UMBRAL_KM2; };
+
         var capa = L.geoJSON(zona, {
-          style: { color: '#1a7f37', weight: 2, fillColor: '#1a7f37', fillOpacity: 0.22 }
+          style: function (f) {
+            return deCiudad(f.properties)
+              ? { color: '#57606a', weight: 1.5, dashArray: '6 5',
+                  fillColor: '#57606a', fillOpacity: 0.06 }
+              : { color: '#1a7f37', weight: 2.5,
+                  fillColor: '#1a7f37', fillOpacity: 0.3 };
+          },
+          onEachFeature: function (f, c) {
+            if (f.properties.zona) c.bindTooltip(f.properties.zona, { sticky: true });
+            if (!deCiudad(f.properties)) c.bringToFront();
+          }
         }).addTo(mapa);
 
-        mapa.fitBounds(capa.getBounds(), { padding: [16, 16] });
+        /*
+         * Se encuadra en las zonas pequenas cuando las hay: encuadrar en la
+         * municipal dejaria las ZBEDEP como dos puntos invisibles, que es
+         * justo el problema que este cambio viene a resolver.
+         */
+        var pequenas = zona.filter(function (f) { return !deCiudad(f.properties); });
+        var referencia = pequenas.length
+          ? L.geoJSON(pequenas).getBounds()
+          : capa.getBounds();
+        mapa.fitBounds(referencia, { padding: [16, 16] });
 
         var aviso = contenedor.querySelector('.mapa-zbe__cargando');
         if (aviso) aviso.remove();

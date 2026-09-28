@@ -197,14 +197,19 @@ def _ficha_de(slug):
 
 def construir_geojson(tolerancia=None):
     """
-    Monta la coleccion completa a partir de data/zbe.json y del cache del NAP.
+    Monta la coleccion completa: UNA FEATURE POR ZONA, no por municipio.
+
+    Madrid tiene tres zonas con reglas distintas y tamanos que se diferencian
+    en dos ordenes de magnitud. Fusionarlas pintaba el termino municipal
+    entero de un color y las dos ZBEDEP desaparecian debajo.
+
+    `km2` va en las propiedades para que el mapa pueda pintar las grandes
+    debajo y las pequenas encima, sin inventarse una clasificacion que el dato
+    no trae.
 
     `tolerancia` en grados simplifica la geometria; sin ella se devuelve tal
-    cual viene. Se publican las dos versiones: la completa como dato abierto y
-    la simplificada para el navegador.
-
-    Un municipio sin fichero en el cache se omite en silencio: no tenemos su
-    perimetro y no hay nada que dibujar.
+    cual. Se publican las dos versiones: la completa como dato abierto y la
+    simplificada para el navegador.
     """
     datos = json.load(io.open(os.path.join(RAIZ, "data", "zbe.json"), encoding="utf-8"))
     features = []
@@ -216,39 +221,57 @@ def construir_geojson(tolerancia=None):
         if not os.path.exists(ruta):
             continue
 
-        anillos = anillos_de_fichero(ruta, incidencias)
-        if tolerancia:
-            anillos = [simplificar(a, tolerancia) for a in anillos]
-        if not anillos:
+        zonas = zonas_de_fichero(ruta, incidencias)
+        if not zonas:
             continue
 
-        # Varios anillos son zonas separadas del mismo municipio (Madrid tiene
-        # tres), no agujeros: cada uno va como poligono propio.
-        if len(anillos) == 1:
-            geometria = {"type": "Polygon", "coordinates": [anillos[0]]}
-        else:
-            geometria = {"type": "MultiPolygon", "coordinates": [[a] for a in anillos]}
-
         url, estado = _ficha_de(slug)
-        features.append({
-            "type": "Feature",
-            "geometry": geometria,
-            "properties": {
-                "slug": slug,
-                "municipio": m.get("municipio", slug),
-                "provincia": m.get("provincia", ""),
-                "estado_dato": estado,
-                "url_ficha": url,
-                "fuente_nombre": m.get("fuente_nombre", ""),
-                "fuente_url": m.get("fuente_url", ""),
-                "fecha_descarga": m.get("fecha_descarga", ""),
-            },
-        })
+        varias = len(zonas) > 1
+
+        for zona in zonas:
+            km2 = extension_km2(zona)
+            anillos = zona["anillos"]
+            if tolerancia:
+                anillos = [simplificar(a, tolerancia) for a in anillos]
+                anillos = [a for a in anillos if len(a) >= 4]
+            if not anillos:
+                continue
+
+            if len(anillos) == 1:
+                geometria = {"type": "Polygon", "coordinates": [anillos[0]]}
+            else:
+                # Varios anillos de la MISMA zona: partes separadas de ella,
+                # no agujeros. Distrito Centro tiene seis.
+                geometria = {"type": "MultiPolygon", "coordinates": [[a] for a in anillos]}
+
+            features.append({
+                "type": "Feature",
+                "geometry": geometria,
+                "properties": {
+                    "slug": slug,
+                    "id_zona": "%s-%d" % (slug, zona["indice"]),
+                    "municipio": m.get("municipio", slug),
+                    # El nombre que le da el ayuntamiento. Solo se muestra
+                    # aparte cuando el municipio tiene mas de una.
+                    "zona": zona["nombre"] if varias else "",
+                    "provincia": m.get("provincia", ""),
+                    "km2": round(km2, 2),
+                    "estado_dato": estado,
+                    "url_ficha": url,
+                    "fuente_nombre": m.get("fuente_nombre", ""),
+                    "fuente_url": m.get("fuente_url", ""),
+                    "fecha_descarga": m.get("fecha_descarga", ""),
+                },
+            })
+
+    # Las grandes primero: asi el mapa las dibuja debajo y las pequenas, que
+    # son las que de verdad restringen, quedan encima y se pueden pulsar.
+    features.sort(key=lambda f: -f["properties"]["km2"])
 
     return {
         "type": "FeatureCollection",
         "_meta": {
-            "descripcion": "Perimetros de las Zonas de Bajas Emisiones de Espana.",
+            "descripcion": "Perimetros de las Zonas de Bajas Emisiones de Espana, una por zona.",
             "fuente": "DGT, Punto de Acceso Nacional de Trafico y Movilidad",
             "licencia": "CC-BY. La atribucion a la DGT es obligatoria al reutilizar.",
             "generado_por": "pipeline/zbe_geometria.py",
@@ -259,6 +282,112 @@ def construir_geojson(tolerancia=None):
         },
         "features": features,
     }
+
+def _local(elemento):
+    return re.sub(r"^\{.*\}", "", elemento.tag)
+
+
+# Erratas del propio origen. La sigla correcta es ZBEDEP, "Zona de Bajas
+# Emisiones De Especial Proteccion", y el NAP la escribe mal en Madrid.
+# Se corrige aqui y no en el JavaScript: el dato que publicamos en
+# /datos/ tambien debe salir bien.
+CORRECCIONES_ZONA = {
+    "ZBEDPE Distrito Centro": "ZBEDEP Distrito Centro",
+    "ZBEDPE  Distrito Centro": "ZBEDEP Distrito Centro",
+}
+
+
+def _nombre_de_zona(zona):
+    """
+    El nombre que el ayuntamiento le pone a la zona, dentro de <name><value>.
+
+    Llega como "Madrid (ZBEDEP Plaza Eliptica)": se queda con lo de dentro del
+    parentesis, que es lo que distingue una zona de otra dentro del mismo
+    municipio. Si no hay parentesis, se devuelve tal cual.
+    """
+    for hijo in zona:
+        if _local(hijo) != "name":
+            continue
+        for sub in hijo.iter():
+            texto = (sub.text or "").strip()
+            if not texto:
+                continue
+            m = re.search(r"\(([^)]+)\)", texto)
+            bruto = re.sub(r"\s{2,}", " ", (m.group(1) if m else texto)).strip()
+            return CORRECCIONES_ZONA.get(bruto, bruto)
+    return ""
+
+
+def zonas_de_fichero(ruta, incidencias=None):
+    """
+    Devuelve una lista de zonas, no de anillos.
+
+    Cada <controlledZone> del DATEX2 es UNA zona con su nombre y sus poligonos.
+    Madrid tiene tres: el termino municipal entero, la ZBEDEP de Distrito
+    Centro y la de Plaza Eliptica.
+
+    Esto existe porque fusionar los 52 anillos de Madrid en una sola geometria
+    pintaba el municipio entero de un color y hacia desaparecer debajo las dos
+    zonas que de verdad restringen. Una zona del mapa es una controlledZone.
+    """
+    raiz = ET.parse(ruta).getroot()
+    nombre_fichero = os.path.basename(ruta)
+    slug_municipio = os.path.splitext(nombre_fichero)[0]
+    salida = []
+
+    for indice, zona in enumerate(e for e in raiz.iter() if _local(e) == "controlledZone"):
+        anillos = []
+        for pos, corners in enumerate(zona.iter("{%s}openlrPolygonCorners" % NS["loc"])):
+            anillo = []
+            problema = None
+            for par in corners.findall("loc:openlrCoordinates", NS):
+                lat = float(par.findtext("loc:latitude", namespaces=NS))
+                lon = float(par.findtext("loc:longitude", namespaces=NS))
+                try:
+                    verificar_punto(lat, lon, nombre_fichero)
+                except ValueError as e:
+                    problema = str(e)
+                    break
+                anillo.append([lon, lat])
+
+            if problema:
+                if incidencias is not None:
+                    incidencias.append(
+                        "%s: anillo %d descartado, no esta en grados WGS84. %s"
+                        % (nombre_fichero, pos, problema))
+                continue
+
+            if anillo and anillo[0] != anillo[-1]:
+                anillo.append(list(anillo[0]))
+            if len(anillo) >= 4:
+                anillos.append(anillo)
+
+        if not anillos:
+            continue
+
+        salida.append({
+            "nombre": _nombre_de_zona(zona) or slug_municipio,
+            "slug_municipio": slug_municipio,
+            "indice": indice,
+            "anillos": anillos,
+        })
+
+    return salida
+
+
+def extension_km2(zona):
+    """
+    Superficie aproximada del rectangulo que contiene la zona.
+
+    No es el area del poligono y no pretende serlo: sirve para ordenar zonas
+    por tamano y para decidir cual se pinta encima de cual.
+    """
+    puntos = [p for anillo in zona["anillos"] for p in anillo]
+    lats = [p[1] for p in puntos]
+    lons = [p[0] for p in puntos]
+    alto = (max(lats) - min(lats)) * 111.0
+    ancho = (max(lons) - min(lons)) * 111.0 * math.cos(math.radians(sum(lats) / len(lats)))
+    return alto * ancho
 
 
 def centroide(feature):

@@ -216,6 +216,39 @@ def test_cada_zona_cae_sobre_su_ciudad():
         assert km < 10, "%s sale a %.0f km de donde esta la ciudad" % (slug, km)
 
 
+def test_madrid_produce_una_zona_por_controlledzone():
+    """
+    Regresion de un fallo real: el pipeline fusionaba los 52 anillos de Madrid
+    en una sola geometria, asi que el mapa pintaba el termino municipal entero
+    de un color y las dos ZBEDEP desaparecian debajo.
+
+    El XML ya trae la agrupacion buena: tres <controlledZone>, cada una con su
+    nombre. Una zona del mapa es una controlledZone, no un municipio.
+    """
+    zonas = zg.zonas_de_fichero(os.path.join(CACHE, "madrid.xml"))
+    assert len(zonas) == 3, "salen %d zonas, deberian ser 3" % len(zonas)
+    nombres = [z["nombre"] for z in zonas]
+    assert any("Distrito Centro" in n for n in nombres), nombres
+    assert any(u"Elíptica" in n or "Eliptica" in n for n in nombres), nombres
+
+
+def test_la_zbe_de_ciudad_y_las_zbedep_tienen_tamanos_muy_distintos():
+    """
+    Lo que hace util el mapa: la zona municipal es dos ordenes de magnitud
+    mayor que las de especial proteccion. Si se pintan igual, no se ven.
+    """
+    zonas = {z["nombre"]: z for z in zg.zonas_de_fichero(os.path.join(CACHE, "madrid.xml"))}
+    grande = max(zonas.values(), key=lambda z: zg.extension_km2(z))
+    pequena = min(zonas.values(), key=lambda z: zg.extension_km2(z))
+    assert zg.extension_km2(grande) > 50 * zg.extension_km2(pequena),         "%.1f km2 frente a %.1f km2" % (zg.extension_km2(grande), zg.extension_km2(pequena))
+
+
+def test_cada_zona_sabe_de_que_municipio_es():
+    """El slug del municipio es lo que une el mapa con la ficha."""
+    for z in zg.zonas_de_fichero(os.path.join(CACHE, "madrid.xml")):
+        assert z["slug_municipio"] == "madrid", z
+
+
 def _ejecutar():
     fallos = 0
     for nombre, fn in sorted(globals().items()):
