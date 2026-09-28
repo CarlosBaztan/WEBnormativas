@@ -1,4 +1,4 @@
-# WEBnormativas — contexto del proyecto
+# WEBnormativas: contexto del proyecto
 
 Portal de **normativa y fiscalidad del vehículo en España**. Sitio de nicho monetizado.
 Ver [PLAN-NEGOCIO.md](PLAN-NEGOCIO.md) para el análisis completo.
@@ -50,7 +50,7 @@ Niveles de confianza. **Nunca publicar por encima del nivel que se tiene:**
 |---|---|---|
 | [NAP-DGT](https://nap.dgt.es/dataset?license_id=cc-by&res_format=DATEX2V3&tags=ZBE) | Geometría + restricciones ZBE (DATEX2V3), cobertura parcial | **CC-BY** (citar) |
 | [Mapa MITECO](https://www.miteco.gob.es/en/calidad-y-evaluacion-ambiental/temas/movilidad/zonas_de_bajas_emisiones_en_espana.html) | Listado oficial de municipios con ZBE y su estado | Pública |
-| [Hacienda — consulta impositiva municipal](https://serviciostelematicosext.hacienda.gob.es/SGFAL/ConsultaTipos/aspx/listado_municipiosm.aspx) | IVTM/IBI/IAE/IVTNU/ICIO por municipio, **export Excel masivo**, 2000-2025 | Pública |
+| [Consulta impositiva municipal de Hacienda](https://serviciostelematicosext.hacienda.gob.es/SGFAL/ConsultaTipos/aspx/listado_municipiosm.aspx) | IVTM/IBI/IAE/IVTNU/ICIO por municipio, **export Excel masivo**, 2000-2025 | Pública |
 | [API carburantes MITECO](https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/) | Precios de todas las gasolineras, horario | Pública |
 | [DGT en cifras](https://www.dgt.es/menusecundario/dgt-en-cifras/) | Parque de vehículos y matriculaciones (ancho fijo) | Pública |
 | [RD 1052/2022](https://www.boe.es/buscar/doc.php?id=BOE-A-2022-22689) | Marco legal ZBE | Pública |
@@ -69,8 +69,8 @@ Niveles de confianza. **Nunca publicar por encima del nivel que se tiene:**
 |---|---|---|---|---|
 | sacacuentas.es | ~12m | 91 | 119 | **28** |
 | simuloo.com | ~12m | 150 | 100+ | ~4.000 |
-| costerealcoche.com | ~8m | 12 | — | — |
-| ibeonix.es | nuevo | 3 | — | — |
+| costerealcoche.com | ~8m | 12 | Sin dato | Sin dato |
+| ibeonix.es | nuevo | 3 | Sin dato | Sin dato |
 
 Dos de los cuatro llevan meses abandonados.
 
@@ -188,17 +188,55 @@ El mayor riesgo del proyecto es abandonarlo en el mes cuatro.
 
 ## Estado actual
 
+Al 28/09/2026.
+
 - [x] Investigación de nicho y competencia
 - [x] Plan de negocio
-- [x] Repo inicializado
-- [x] **Fase 1 — estructura Hugo** (pendiente de revisión del usuario)
-- [ ] Dominio: se arranca en `.pages.dev` y se migra en ~2 semanas (decisión del
-      22/09/2026). Coste cero mientras no haya enlaces ni indexación.
-      **Migrar ANTES de empezar a buscar enlaces.**
-- [ ] Fase 2 — herramienta "¿Puedo circular?"
-- [ ] Fase 3 — pipeline de datos
-- [ ] Fase 4 — GitHub + Cloudflare Pages
-- [ ] Fase 5 — pre-AdSense (legales + CMP)
+- [x] Fase 1: estructura Hugo
+- [x] Fase 2: herramienta «¿Puedo circular?»
+- [x] Fase 3: pipeline de datos (`pipeline/zbe_nap.py`, 45 municipios)
+- [x] Fase 4: GitHub y Cloudflare Workers. En producción en
+      `webnormativas.bi-ia-carlosbaz.workers.dev`, con `noindex` puesto.
+- [x] Estudio de palabras clave (ver la sección de datos de búsqueda)
+- [x] Hoja de ruta de tres días:
+      `docs/superpowers/plans/2026-09-25-hoja-de-ruta-3-dias.md`
+- [ ] **Dominio: elegido, sin comprar.** Ver abajo. Es lo único que bloquea
+      arrancar la hoja de ruta.
+- [ ] Fase 5: pre-AdSense (legales y CMP). Bloqueada hasta tener los datos de
+      identidad de Carlos, que exige el art. 10 LSSI.
+
+### Dominio (28/09/2026)
+
+**Elegido: `cocheenregla`.** Carlos estuvo a punto de comprar
+`cocheenregla.com` en OVH por 7,99 € el primer año y 13,49 €/año de
+renovación, y lo dejó para otro momento. **No comprado todavía.**
+
+Por qué ese: «tener el coche en regla» describe el servicio entero (ITV,
+impuesto, etiqueta, ZBE, multas, trámites) sin atarse a ninguna vertical, y
+suena serio. Segundo candidato: `papelesdelcoche`, más memorable pero con la
+sombra de «sin papeles».
+
+Disponibilidad comprobada el 28/09 (`.com` por RDAP, autoritativo; `.es` por
+ausencia de NS, que es indicio fuerte pero hay que confirmarlo al pagar).
+Libres en las dos extensiones: cocheenregla, papelesdelcoche,
+normativadelcoche, vehiculoenregla, normativauto, reglasdelcoche,
+micochelegal, tucochealdia, cocheenregla, conductorenregla, datosdelcoche.
+Cogidos: cochelegal, autolegal, autonorma, enregla, autoenregla, vialibre,
+luzverde, sinmultas, todoenregla, etiquetacoche, mivehiculo.
+
+Descartado a propósito `codigocirculacion` pese a ser el de más gancho: hace
+parecer que el sitio es oficial, y todo el argumento del proyecto es el
+contrario.
+
+Sobre ampliar a otros países: ni «coche» ni el `.es` valen fuera de España, pero
+el activo del proyecto es el dataset español y no se transfiere. Si alguna vez
+se quiere esa puerta, la decisión es `.com` (ya tomada) más carpetas por país,
+no cambiar el nombre.
+
+El procedimiento de conexión con Cloudflare está escrito paso a paso en
+[docs/conectar-dominio.md](docs/conectar-dominio.md). **Lo crítico:** desactivar
+el DNSSEC en OVH ANTES de cambiar los servidores de nombres, o el dominio
+puede quedarse inaccesible.
 
 ### Hallazgo crítico sobre el NAP-DGT (22/09/2026)
 
