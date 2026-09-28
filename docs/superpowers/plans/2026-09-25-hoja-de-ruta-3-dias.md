@@ -655,9 +655,18 @@ pueden completar.
 
 - [ ] **Paso 1.** Inventario de huecos de anuncio ya existentes y dónde
       faltaría alguno, respetando la regla dura 4.
-- [ ] **Paso 2.** Investigar programas de afiliación españoles realistas para
-      este tráfico —seguros de coche, ITV, recambios, talleres— y anotar
-      **condiciones reales, no estimadas**, con enlace a cada programa.
+- [ ] **Paso 2.** Investigar programas de afiliación de **seguros de coche**,
+      que es donde está el dinero: 6,13 $ de CPC frente a 0,49 $ de ZBE, con un
+      racimo de 446.000 búsquedas al mes. Anotar **condiciones reales, no
+      estimadas**, con enlace a cada programa. Después, ITV y talleres.
+- [ ] **Paso 2b.** Diseñar la vertical de **seguro obligatorio**, que es el
+      puente entre el tráfico y el dinero. No se compite por «seguro de coche»:
+      su SERP son diez aseguradoras con KD de 42 a 47. Se compite por las
+      preguntas de normativa que ellas no responden, que tienen KD de 6 a 11:
+      «¿es obligatorio el seguro si el coche no circula?», «¿qué pasa si
+      conduzco sin seguro?», «¿qué multa hay por no tenerlo?». Mismo formato
+      que las fichas de ZBE: norma citada, artículo y fecha de verificación.
+      Salen del BOE, nunca de lo que sepa un modelo.
 - [ ] **Paso 3.** Escribir `docs/monetizacion.md` con lo encontrado y lo que
       queda por decidir. Sin cifras inventadas: lo que sea estimación irá
       marcado como tal.

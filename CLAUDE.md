@@ -74,6 +74,43 @@ Niveles de confianza. **Nunca publicar por encima del nivel que se tiene:**
 
 Dos de los cuatro llevan meses abandonados.
 
+## Datos de búsqueda verificados (Semrush, 28/09/2026)
+
+España, escritorio. Cifras reales, no estimaciones.
+
+| Racimo | Búsquedas/mes | CPC | Densidad | Intención |
+|---|---|---|---|---|
+| ZBE | 221.010 | 0,49 $ | 0,01 | Informativa |
+| Impuesto de circulación | 25.900 | 0,44 $ | 0,02 | Informativa |
+| Seguro de coche | 446.000 | **6,13 $** | 0,83 | **Comercial** |
+
+**El hallazgo que define la monetización:** el tráfico de ZBE es abundante y
+fácil de ganar (KD medio del 19 % sobre 5.755 palabras) pero vale muy poco por
+clic. El del seguro vale doce veces más, pero su SERP lo ocupan diez
+aseguradoras con KD de 42 a 47. **No se compite por «seguro de coche».**
+
+Dónde sí hay hueco: las preguntas de *normativa* dentro del racimo del seguro,
+que las aseguradoras no responden porque están ahí para vender pólizas.
+«¿Es obligatorio tener seguro si el coche no circula?» tiene KD 11; «¿es
+obligatorio el seguro de vida al financiar un coche?», KD 6.
+
+**Modelo resultante: ZBE trae el tráfico, el seguro lo monetiza.**
+
+Subgrupos dentro del racimo de ZBE, por número de palabras: barcelona 884,
+**mapa 849**, madrid 779, zona 542, etiqueta 254, multa 210, camara 181.
+Que «mapa» sea el segundo mayor es lo que justifica el mapa y la herramienta
+de «¿está mi calle dentro de una ZBE?».
+
+Municipios por volumen y dificultad: Madrid 9.900/36, Barcelona 6.600/39
+(CPC 4,12 $, el único con valor publicitario), Bilbao 4.400/21, Granada
+4.400/25, Valencia 3.600/**16**, Málaga 3.600/26, Valladolid 3.600/31,
+Benidorm 2.900/17.
+
+**Lo que NO funciona, comprobado:** la calculadora del IVTM. Las variaciones
+principales son «cómo pagar», «pagar por internet» y «pagar sin recibo», y los
+diez primeros resultados son portales tributarios municipales. Quien busca el
+IVTM quiere pagarlo, y eso solo lo resuelve su ayuntamiento.
+
 ## Expectativa realista
 
 120-450 €/mes a 18 meses (escenario medio). **Los primeros 6 meses no darán casi nada.**
