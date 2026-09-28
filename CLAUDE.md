@@ -35,6 +35,20 @@ Niveles de confianza. **Nunca publicar por encima del nivel que se tiene:**
 | C | Solo se sabe que hay ZBE (mapa MITECO) | Ficha "reglas sin verificar" + enlace oficial. **No responder** "¿puedo entrar?" |
 | D | Sin datos | **No publicar página** |
 
+**Cómo se expresa cada nivel en el front matter** (`estado_dato`):
+
+| Nivel | `estado_dato` | `draft` | Efecto |
+|---|---|---|---|
+| A o B | `verificado` | `false` | Se publica, responde «¿puedo entrar?» y entra en el selector de la herramienta |
+| C | `parcial` | `false` | **Se publica**, dice lo que consta y lo que no, y **no** entra en el selector |
+| D | `pendiente` | `true` | No se publica |
+
+El nivel `parcial` existe desde el 29/09/2026. Antes no había forma de publicar
+un nivel C: `pendiente` obliga a `draft: true` y la ficha no salía, así que el
+trabajo de comprobar que una ZBE existe se perdía. Primer caso: Benidorm, cuya
+ZBE opera desde enero de 2025 pero cuyo ayuntamiento no publica de forma
+legible qué distintivos quedan restringidos.
+
 - **Nunca respuesta binaria.** No "✅ puedes entrar", sino "la ordenanza X (art. Y, fecha) permite… [enlace]. Verificado el DD/MM/AAAA".
 - Cada dato lleva **fuente + enlace + fecha de verificación** visibles.
 - Datos sin revisar durante meses se marcan solos como "pendiente de verificación".

@@ -33,9 +33,15 @@
 
 {{- /* --- Normalización defensiva de los campos --- */ -}}
 
+{{- /* Tres niveles, los de CLAUDE.md:
+       verificado  reglas leidas en el texto oficial
+       parcial     consta la ZBE y su fuente, pero no las reglas de acceso
+       pendiente   cualquier otra cosa */ -}}
 {{- $estado := "pendiente" -}}
 {{- with $p.estado_dato }}{{ $estado = lower (trim (printf "%v" .) " ") }}{{ end -}}
-{{- if ne $estado "verificado" }}{{ $estado = "pendiente" }}{{ end -}}
+{{- $parcial := eq $estado "parcial" -}}
+{{- if not (in (slice "verificado" "parcial") $estado) }}{{ $estado = "pendiente" }}{{ end -}}
+{{- if $parcial }}{{ $estado = "pendiente" }}{{ end -}}
 
 {{- $nombre := "" -}}
 {{- with $p.fuente_nombre }}{{ $nombre = trim (printf "%v" .) " " }}{{ end -}}
@@ -151,10 +157,14 @@
     <span class="fuente__icono" aria-hidden="true">
       <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" focusable="false"><path d="M10 1.8 1.2 17.2h17.6L10 1.8Zm0 4.6a.9.9 0 0 1 .9.9v4.3a.9.9 0 0 1-1.8 0V7.3a.9.9 0 0 1 .9-.9Zm0 8.9a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Z"/></svg>
     </span>
+    {{- if $parcial }}
+    <span class="fuente__texto"><strong>Reglas de acceso sin verificar.</strong> Hemos comprobado en la fuente oficial que esta zona existe, pero no hemos podido leer en un texto oficial qué distintivos pueden circular.</span>
+    {{- else }}
     <span class="fuente__texto"><strong>Datos sin verificar.</strong> No hemos contrastado todavía esta información con el texto oficial, así que puede estar incompleta o desactualizada.</span>
+    {{- end }}
   </p>
   <p class="fuente__nota">
-    No tomes decisiones a partir de esta página.
+    {{ if $parcial }}No decidas si puedes entrar a partir de esta página.{{ else }}No tomes decisiones a partir de esta página.{{ end }}
     {{ if $urlValida -}}
       Consulta directamente
       <a class="fuente__enlace" href="{{ $url }}" rel="nofollow noopener external" target="_blank">{{ with $nombre }}{{ . }}{{ else }}la fuente oficial{{ end }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>.

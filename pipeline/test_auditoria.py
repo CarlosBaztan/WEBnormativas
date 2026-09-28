@@ -82,12 +82,46 @@ def test_una_zbe_prevista_no_tiene_que_declarar_reglas():
 
 
 def test_una_zbe_activa_si_tiene_que_declarar_reglas():
-    assert au.exige_reglas({"estado_zbe": "activa", "codigo_ine": "28079"})
+    # estado_dato explicito: desde que existe el nivel "parcial", solo a una
+    # ficha que se declara verificada se le exigen reglas de acceso.
+    assert au.exige_reglas({"estado_zbe": "activa", "codigo_ine": "28079",
+                            "estado_dato": "verificado"})
 
 
 def test_un_articulo_no_tiene_que_declarar_reglas():
     """Sin codigo_ine no es la ficha de un municipio, es un articulo."""
     assert not au.exige_reglas({"estado_zbe": "activa"})
+
+
+def test_parcial_se_publica_sin_ser_incoherente():
+    """
+    Nivel C de CLAUDE.md: sabemos que la ZBE existe y de donde sale el dato,
+    pero no hemos podido leer las reglas de acceso. La tabla de confianza dice
+    que eso SI se publica, con su enlace oficial y sin responder "puedo
+    entrar". Hasta ahora el proyecto no tenia como expresarlo: "pendiente"
+    obliga a draft y la ficha no salia.
+
+    Caso de Benidorm: la ZBE opera desde el 1 de enero de 2025, pero ni la
+    pagina municipal ni el portal dicen que distintivos quedan restringidos.
+    """
+    assert au.publicable({"estado_dato": "parcial", "draft": "false"})
+    assert not au.incoherente({"estado_dato": "parcial", "draft": "false"})
+
+
+def test_pendiente_publicado_sigue_siendo_incoherente():
+    """Lo de siempre no cambia: pendiente con draft false es un dato sin
+    verificar que se colaria a produccion."""
+    assert au.incoherente({"estado_dato": "pendiente", "draft": "false"})
+
+
+def test_parcial_no_tiene_que_declarar_reglas():
+    assert not au.exige_reglas({"estado_dato": "parcial", "estado_zbe": "activa",
+                                "codigo_ine": "03031"})
+
+
+def test_verificada_activa_si_tiene_que_declarar_reglas():
+    assert au.exige_reglas({"estado_dato": "verificado", "estado_zbe": "activa",
+                            "codigo_ine": "28079"})
 
 
 def _ejecutar():

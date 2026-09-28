@@ -41,6 +41,40 @@ def front_matter(texto: str) -> dict[str, str]:
     return campos
 
 
+# Los tres estados posibles de una ficha, que se corresponden con los niveles
+# de confianza de CLAUDE.md:
+#
+#   verificado  nivel A o B: reglas leidas en el texto oficial. Responde
+#               "¿puedo entrar?" y alimenta la herramienta.
+#   parcial     nivel C: consta que la ZBE existe, con su fuente y su fecha,
+#               pero no hemos podido leer las reglas de acceso. La ficha SE
+#               PUBLICA, dice lo que sabe y NO responde "¿puedo entrar?".
+#   pendiente   nivel D: no hay nada solido. No se publica.
+ESTADOS_PUBLICABLES = ("verificado", "parcial")
+
+
+def publicable(fm: dict) -> bool:
+    """Si esta ficha puede llegar a produccion con lo que sabemos de ella."""
+    return fm.get("estado_dato", "") in ESTADOS_PUBLICABLES
+
+
+def incoherente(fm: dict) -> bool:
+    """
+    Detecta el desajuste entre lo que la ficha dice saber y si se publica.
+
+    Lo grave es publicar un "pendiente": seria un dato sin verificar en
+    produccion. Al reves, un "verificado" en borrador es trabajo tirado, y
+    tambien se avisa.
+    """
+    estado = fm.get("estado_dato", "")
+    draft = str(fm.get("draft", "")).lower() == "true"
+    if estado == "pendiente" and not draft:
+        return True
+    if estado in ESTADOS_PUBLICABLES and draft:
+        return True
+    return False
+
+
 def declara_reglas(texto: str) -> bool:
     """
     Dice si la ficha declara algo sobre quien puede circular.
@@ -91,6 +125,10 @@ def exige_reglas(fm: dict) -> bool:
     if not fm.get("codigo_ine"):
         return False
     if fm.get("tipo", "municipio") != "municipio":
+        return False
+    # A una ficha "parcial" no se le exigen reglas: no tenerlas es
+    # precisamente lo que la hace parcial.
+    if fm.get("estado_dato", "") != "verificado":
         return False
     return fm.get("estado_zbe", "") == "activa"
 
@@ -161,12 +199,16 @@ def main() -> int:
         draft = fm.get("draft", "").lower() == "true"
 
         # 2. Coherencia estado_dato <-> draft
-        if estado == "pendiente" and not draft:
-            incoherentes.append(f"{rel}: estado_dato=pendiente pero draft=false (SE PUBLICARIA)")
-        elif estado == "verificado" and draft:
-            incoherentes.append(f"{rel}: estado_dato=verificado pero draft=true (no se publica)")
+        if incoherente(fm):
+            if estado == "pendiente":
+                incoherentes.append(f"{rel}: estado_dato=pendiente pero draft=false (SE PUBLICARIA)")
+            else:
+                incoherentes.append(f"{rel}: estado_dato={estado} pero draft=true (no se publica)")
 
-        if estado != "verificado":
+        # La trazabilidad y la frescura se exigen a todo lo que se publica,
+        # tambien a las fichas parciales: si decimos que hay una ZBE, hay que
+        # decir de donde lo sabemos y cuando lo miramos.
+        if not publicable(fm):
             continue
 
         # 3. Trazabilidad completa
