@@ -159,12 +159,22 @@ acrónimo. No hay medición del racimo completo de la expresión larga (la
 consulta del 28/09 salió filtrada a preguntas), así que se toma la decisión
 conservadora de cubrir ambas.
 
-**Segunda confirmación de que lo que falta es el mapa.** En las 63 preguntas
-de «zona de bajas emisiones», el grupo mayor es `cual` con 19: «¿cuál es la
-zona de bajas emisiones de Madrid?» (140 búsquedas), «de Granada» (40, KD 13),
-«de Valladolid» (30). La gente no pregunta qué es una ZBE, pregunta **dónde
-está**. Es la misma señal que da el grupo «mapa» con 849 palabras dentro del
-racimo de la sigla, desde una fuente distinta.
+**Cuánto respaldo tiene el mapa, dicho con precisión.** Conviene no inflarlo:
+
+- El grupo «mapa» son **849 variantes de escritura de 5.755**, una de cada
+  siete. Sale de la vista sin filtrar, que es lo que le da valor. Pero es un
+  **recuento de palabras, no de búsquedas**: la barra lateral estaba en modo
+  «By number» y no se midió el volumen. No tratar 849 como demanda.
+- Que en las preguntas de «zona de bajas emisiones» domine «¿cuál es la de
+  Madrid?» **no es una confirmación independiente**: esa vista estaba filtrada a
+  preguntas, y las 63 juntas suman 1.060 búsquedas. Es la misma señal con datos
+  más débiles.
+
+Lo que de verdad sostiene el mapa no es el volumen, son las otras dos patas:
+**ningún competidor publica los polígonos** (los diez primeros resultados son
+ayuntamientos, cada uno con el suyo) y **la geometría ya está descargada**, así
+que el coste es un script. Aunque la demanda sea la mitad de lo estimado, sale
+a cuenta.
 
 **Lo que NO funciona, comprobado:** la calculadora del IVTM. Las variaciones
 principales son «cómo pagar», «pagar por internet» y «pagar sin recibo», y los
