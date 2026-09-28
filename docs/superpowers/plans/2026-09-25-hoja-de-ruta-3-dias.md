@@ -459,7 +459,13 @@ function leerPerfil() {
       las fichas de ZBE. Misma regla: no es una autorización.
 - [ ] **Paso 6.** Hueco de anuncio debajo del resultado, con
       `partials/anuncio.html`. Nunca encima.
-- [ ] **Paso 7.** Commit y despliegue.
+- [ ] **Paso 7.** Crear también `content/itv/pegatina.md`, respondiendo a «¿es
+      obligatorio llevar la pegatina de la ITV?». Son 2.190 búsquedas al mes
+      con KD 15 y 16, la mejor oportunidad individual de todo el estudio de
+      palabras clave. Mismo formato que las páginas de distintivos: norma
+      citada con su artículo, enlace al BOE y fecha de verificación. **El dato
+      sale del texto oficial, no de lo que yo crea recordar.**
+- [ ] **Paso 8.** Commit y despliegue.
 
 ---
 

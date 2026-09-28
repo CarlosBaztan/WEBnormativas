@@ -83,6 +83,7 @@ España, escritorio. Cifras reales, no estimaciones.
 | ZBE | 221.010 | 0,49 $ | 0,01 | Informativa |
 | Impuesto de circulación | 25.900 | 0,44 $ | 0,02 | Informativa |
 | Seguro de coche | 446.000 | **6,13 $** | 0,83 | **Comercial** |
+| ITV | 5.272.580 | 0,50 $ | 0,08 | Comercial |
 
 **El hallazgo que define la monetización:** el tráfico de ZBE es abundante y
 fácil de ganar (KD medio del 19 % sobre 5.755 palabras) pero vale muy poco por
@@ -119,6 +120,25 @@ Municipios por volumen y dificultad: Madrid 9.900/36, Barcelona 6.600/39
 (CPC 4,12 $, el único con valor publicitario), Bilbao 4.400/21, Granada
 4.400/25, Valencia 3.600/**16**, Málaga 3.600/26, Valladolid 3.600/31,
 Benidorm 2.900/17.
+
+**La ITV es enorme y casi toda inservible.** De sus 253.247 palabras, más de
+71.000 son para pedir cita (grupos: cita 37.116, previa 15.566, telefono
+10.874, pedir 7.433), y las cinco primeras suman más de 600.000 búsquedas al
+mes solo para reservar hora. Eso lo resuelven Applus, Itevelesa y Sitval, que
+ocupan el top 10, **con el local pack de Google Maps apareciendo dos veces**:
+Google trata la consulta como local, y una web nacional no gana consultas
+locales. El término principal tiene KD 73.
+
+Lo que sí se puede servir de la ITV:
+- **«¿Es obligatorio llevar la pegatina de la ITV?»: 1.600 búsquedas con KD 16**,
+  más 590 de su variante con KD 15. Es la mejor oportunidad individual de todo
+  el estudio, y es el mismo formato que las páginas de distintivos que ya hay.
+- El grupo «paso», 21.231 palabras, el segundo mayor. Casi con seguridad
+  «cuándo pasar la ITV» y «cada cuánto se pasa». Intención deducida del nombre
+  del grupo, no comprobada palabra por palabra.
+
+Aviso sobre la cifra: parte del volumen es ruido británico. «what's on itv
+tonight» aparece con 590 búsquedas en la base de España.
 
 **Lo que NO funciona, comprobado:** la calculadora del IVTM. Las variaciones
 principales son «cómo pagar», «pagar por internet» y «pagar sin recibo», y los
