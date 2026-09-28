@@ -374,3 +374,24 @@
 }
 
 .pc-distintivo--itv .pc-distintivo__valor { font-size: 1.6rem; }
+
+/* --- "¿Está mi calle dentro de una ZBE?" ------------------------------ */
+
+.mi-calle-zonas {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+}
+
+.mi-calle-zonas li {
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.mi-calle-zonas li:last-child { border-bottom: 0; }
+
+/* El titular aquí es una dirección, que puede ser larga: sin esto se sale
+   de la caja en pantallas estrechas. */
+.pc-veredicto__titular {
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,88 @@
+{{- /*
+  layouts/zbe/mi-calle.html — "¿Está mi calle dentro de una ZBE?"
+
+  Se selecciona con `layout: "mi-calle"` en el front matter, porque la sección
+  zbe ya tiene su propio single.html para las fichas de municipio.
+
+  La geocodificación la hace Nominatim de OpenStreetMap desde el navegador del
+  usuario: la dirección no pasa por ningún servidor nuestro. Eso se dice en la
+  página y en la política de privacidad.
+
+  REGLA DURA 4: el hueco de anuncio va debajo del resultado.
+*/ -}}
+
+{{- define "main" }}
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with .Description }}<div class="post-description">{{ . }}</div>{{ end }}
+  </header>
+
+  {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "compacta") }}
+
+  <div class="post-content md-content">{{ .Content }}</div>
+
+  <form id="form-mi-calle" class="pc-form" novalidate>
+    <fieldset>
+      <legend>Tu dirección</legend>
+
+      <div class="pc-campo">
+        <label for="mi-calle-direccion">Calle, número y municipio</label>
+        <input type="text" id="mi-calle-direccion" name="mi-calle-direccion"
+               autocomplete="off" placeholder="Gran Vía 1, Madrid">
+      </div>
+
+      <p class="pc-ayuda">
+        Pon el municipio siempre. «Calle Mayor» existe en cientos de pueblos de España,
+        y sin el municipio podríamos responderte por el que no es.
+      </p>
+    </fieldset>
+
+    <button type="submit" class="pc-boton">Comprobar</button>
+  </form>
+
+  <div id="resultado-mi-calle" class="pc-resultado" aria-live="polite"></div>
+
+  {{ partial "anuncio.html" (dict "ubicacion" "bajo-resultado") }}
+
+  <section class="pc-descargo">
+    <h2>Qué hace y qué no hace esta herramienta</h2>
+
+    <p>
+      Cruza la dirección que escribes con los <strong>perímetros que publica la DGT</strong>
+      en su Punto de Acceso Nacional, los mismos que ves en
+      <a href="{{ "/mapa/" | relURL }}">el mapa</a>.
+    </p>
+
+    <p>
+      <strong>No te dice si puedes circular.</strong> Que una calle esté dentro de una zona
+      no significa que tu coche no pueda entrar: eso depende de tu distintivo y de lo que
+      diga la ordenanza. Para eso está
+      <a href="{{ "/" | relURL }}">la herramienta «¿puedo circular?»</a>.
+    </p>
+
+    <p>
+      <strong>El perímetro oficial lo fija la ordenanza municipal</strong>, no este trazado.
+      La DGT publica lo que cada ayuntamiento le comunica, y puede ir por detrás de una
+      ampliación reciente. Contrasta siempre con la ficha del municipio y con la señalización
+      de la calle.
+    </p>
+
+    <p>
+      <strong>Tu dirección no se guarda.</strong> La búsqueda la hace tu navegador contra
+      Nominatim, el servicio de direcciones de OpenStreetMap. No pasa por ningún servidor
+      nuestro, no la almacenamos y no queda registrada en ninguna parte de este sitio.
+    </p>
+  </section>
+
+  <p class="mapa-atribucion">
+    Perímetros:
+    <a href="https://nap.dgt.es/dataset/zonas-de-bajas-emisiones" rel="noopener external" target="_blank">DGT, Punto de Acceso Nacional<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>,
+    CC-BY. Búsqueda de direcciones:
+    <a href="https://nominatim.openstreetmap.org/" rel="noopener external" target="_blank">Nominatim, de OpenStreetMap<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>.
+  </p>
+</article>
+
+<script src="{{ (resources.Get "js/mi-calle.js" | minify | fingerprint).RelPermalink }}" defer></script>
+{{- end }}

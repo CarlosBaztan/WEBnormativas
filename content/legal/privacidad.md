@@ -71,3 +71,24 @@ Si esta política cambia, se actualizará la fecha del encabezado. Los cambios r
 
 - **[Aviso legal](/legal/aviso-legal/)**
 - **[Política de cookies](/legal/cookies/)**
+## Búsqueda de direcciones
+
+La herramienta [«¿está mi calle dentro de una ZBE?»](/zbe/mi-calle/) necesita convertir
+la dirección que escribes en unas coordenadas. Eso lo hace **tu propio navegador**
+consultando a [Nominatim](https://nominatim.openstreetmap.org/), el servicio de
+direcciones de OpenStreetMap.
+
+Qué implica, en concreto:
+
+- **La dirección no pasa por ningún servidor nuestro.** Este sitio es estático y no
+  tiene backend: no hay dónde recibirla.
+- **No la guardamos** ni en el servidor ni en tu navegador.
+- **Sí llega a OpenStreetMap**, junto con la dirección IP de tu conexión, porque la
+  petición la hace tu navegador directamente. Se rige por
+  [su política de privacidad](https://wiki.osmfoundation.org/wiki/Privacy_Policy).
+- El cálculo de si esa dirección cae dentro de una zona se hace **en tu dispositivo**,
+  con los perímetros que ya se han descargado.
+
+Si prefieres no usar ese servicio, tienes el mismo dato en
+[el mapa](/mapa/), que no envía nada a ninguna parte.
+
