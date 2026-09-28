@@ -33,7 +33,7 @@ estado_dato: "verificado"
 draft: false
 ---
 
-Granada tiene la Zona de Bajas Emisiones **más permisiva** de las que llevamos verificadas, y además con un criterio que no usa ninguna otra ciudad: **dónde tributa el vehículo**.
+Granada tiene la Zona de Bajas Emisiones **más permisiva** de las que llevamos verificadas, y su criterio de excepción principal no es el distintivo ni el empadronamiento, sino **dónde tributa el vehículo**.
 
 ## Qué distintivos pueden entrar
 
@@ -47,7 +47,7 @@ Granada tiene la Zona de Bajas Emisiones **más permisiva** de las que llevamos 
 
 El anexo V.3, apartado 1, letra b) de la Ordenanza Integral de Movilidad Sostenible autoriza expresamente a acceder, circular y estacionar a los *«vehículos con distintivo ambiental B, C, ECO o 0 emisiones»*, y sin necesidad de pedir ninguna autorización municipal.
 
-El artículo 134.1 lo dice por el otro lado: se prohíbe el acceso a los vehículos **no incluidos** en ese anexo. Así que en la práctica la restricción alcanza solo a los vehículos sin distintivo ambiental.
+El artículo 134.1 lo dice por el otro lado: prohíbe el acceso a los vehículos *«no incluidos en el anexo V de esta Ordenanza, **sin perjuicio del acceso a los aparcamientos estratégicos de borde** a que se refiere este mismo anexo»*. Así que en la práctica la restricción alcanza solo a los vehículos sin distintivo ambiental, y ni siquiera les cierra los aparcamientos de borde.
 
 ## El detalle que cambia las cosas: el domicilio fiscal
 
@@ -61,7 +61,7 @@ Dicho al revés, y es lo que conviene retener: **la ZBE de Granada afecta sobre 
 
 **La ordenanza no establece una franja horaria general para la ZBE.** Sí lo hace para las zonas de acceso restringido, que son otra cosa y tienen sus horarios en el anexo VI.
 
-Lo decimos así, con esa cautela, porque hemos leído el capítulo entero y no aparece: no es lo mismo que afirmar que la restricción es permanente las 24 horas.
+Hemos leído el capítulo entero y no aparece ninguna. Que no haya franja no significa que haya horas libres: el artículo 131.3 dice que *«la ZBE tendrá una vigencia indefinida»*, y el 134.1 prohíbe sin límite temporal.
 
 ## El perímetro
 
@@ -81,8 +81,10 @@ Por encima de eso, el artículo 133 prevé dos escalones más: autorizaciones te
 
 ## Desde cuándo se multa
 
-El régimen sancionador entró en vigor el **1 de octubre de 2025**. Antes hubo un periodo de información ciudadana que el ayuntamiento llegó a ampliar.
+El ayuntamiento anunció el inicio del régimen sancionador para el **1 de octubre de 2025**, tras un periodo de información ciudadana que llegó a ampliar.
+
+Esa fecha sale de sus comunicados, **no de la ordenanza**: su disposición transitoria tercera regula un régimen graduado de primer y segundo mes, sin fecha de calendario. Lo decimos porque la diferencia puede importar si alguien recurre una multa.
 
 Conviene no confundir dos fechas que se solapan: la ordenanza se publicó en el BOP el 9 de mayo de 2025, y la aprobación definitiva del proyecto de ZBE es de un decreto del 5 de septiembre de 2025, publicado el 18 de septiembre.
 
-La ordenanza incluye además una sanción propia de **500 euros** para quien presente una declaración responsable falsa o con omisiones esenciales para obtener o renovar la autorización de acceso, con pérdida del derecho durante un año. Eso es distinto de la multa por entrar sin poder hacerlo, que se rige por la [Ley de Tráfico](/multas/zbe/).
+La ordenanza incluye además una sanción propia de **500 euros** para quien presente con inexactitudes, falsedades u omisiones esenciales la declaración responsable **de renovación** de la autorización, o la comunicación de acceso puntual, con pérdida del derecho durante un año. Eso es distinto de la multa por entrar sin poder hacerlo, que se rige por la [Ley de Tráfico](/multas/zbe/).

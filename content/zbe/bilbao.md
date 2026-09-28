@@ -20,6 +20,7 @@ excepciones:
   - "Vehículos históricos"
   - "Ciclomotores de menos de 50 cc con velocidad máxima por construcción de 45 km/h"
   - "Vehículos de emergencias y servicios esenciales"
+  - "Acceso a un parking de rotación autorizado, solo para vehículos con distintivo B"
 
 fuente_nombre: "Ayuntamiento de Bilbao, condiciones generales de acceso a la Zona de Bajas Emisiones"
 fuente_url: "https://www.bilbao.eus/cs/Satellite?c=Page&cid=1279235265919&language=es&pageid=1279235265919&pagename=Bilbaonet/Page/BIO_contenidoFinal"
@@ -38,7 +39,7 @@ La Zona de Bajas Emisiones de Bilbao **está en vigor desde el 15 de junio de 20
 | **[0 emisiones](/etiquetas/0-emisiones/)** | Sí, sin restricción |
 | **[ECO](/etiquetas/eco/)** | Sí, sin restricción |
 | **[C](/etiquetas/c/)** | Sí, sin restricción |
-| **[B](/etiquetas/b/)** | **No**, desde el 15 de junio de 2025 |
+| **[B](/etiquetas/b/)** | **No** desde el 15 de junio de 2025, salvo para ir a un parking de rotación autorizado |
 | **[Sin distintivo](/etiquetas/sin-distintivo/)** | **No**, desde la entrada en vigor |
 
 La fecha que se le pasa a todo el mundo es la del distintivo B. Cuando la ZBE arrancó en junio de 2024, los vehículos B podían entrar: tenían **un año de moratoria**. Esa moratoria terminó el 15 de junio de 2025, y desde entonces tampoco pueden acceder salvo que entren en alguna de las excepciones.
@@ -49,7 +50,9 @@ Si tu coche lleva el distintivo B y hace tiempo que no conduces por Bilbao, ese 
 
 La restricción se aplica **de lunes a viernes laborables, de 7:00 a 20:00**.
 
-Fuera de esa franja, y los fines de semana y festivos, no hay restricción de acceso por distintivo ambiental.
+Sábados, domingos y festivos no hay restricción de acceso por distintivo ambiental, ni tampoco fuera de esa franja en días laborables.
+
+El horario no está en la página de condiciones de acceso que citamos arriba, sino en la de [área y horarios de aplicación](https://www.bilbao.eus/cs/Satellite?c=Page&cid=1279235264638&language=es&pageid=1279235264638&pagename=Bilbaonet/Page/BIO_contenidoFinal) del mismo ayuntamiento.
 
 ## No hace falta llevar la pegatina
 
@@ -68,6 +71,7 @@ Pueden acceder aunque su distintivo esté restringido:
 - **Vehículos históricos.**
 - **Ciclomotores de menos de 50 cc** con velocidad máxima por construcción de 45 km/h.
 - **Vehículos de emergencias y servicios esenciales.**
+- **Quien accede a un parking de rotación autorizado**, pero **solo con distintivo B**. Es la salida que le queda a un B desde que terminó su moratoria, y no aparece en casi ningún resumen.
 
 ## El perímetro
 
@@ -77,4 +81,4 @@ El ayuntamiento publica la delimitación exacta de la zona en su documentación 
 
 El acceso indebido a una zona de bajas emisiones es una infracción grave de la Ley de Tráfico. Lo explicamos en detalle en [multas por entrar en una ZBE](/multas/zbe/).
 
-Cuando la ZBE arrancó hubo tres meses sin multas: las infracciones solo generaban un aviso informativo. Ese periodo terminó hace tiempo.
+Cuando la ZBE arrancó hubo un periodo de adaptación sin multas, en el que las infracciones solo generaban un aviso informativo. Ese periodo terminó hace tiempo. No publicamos su duración exacta porque no la hemos podido leer en una página oficial.

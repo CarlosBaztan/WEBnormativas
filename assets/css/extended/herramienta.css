@@ -395,3 +395,13 @@
 .pc-veredicto__titular {
   overflow-wrap: anywhere;
 }
+
+/* Aviso de que un distintivo permitido hoy tiene fecha de salida. */
+.pc-veredicto__caduca {
+  margin: 0.75rem 0 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  background: var(--code-bg);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}

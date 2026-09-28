@@ -27,9 +27,11 @@ estado_dato: "verificado"
 draft: false
 ---
 
-La ZBE Rondas de Barcelona es **la más antigua y la más grande de España**: funciona desde el 1 de enero de 2020 y cubre más de 95 km².
+La ZBE Rondas de Barcelona es **la más grande de España** y una de las primeras: las restricciones arrancaron el 1 de enero de 2020.
 
 Lo primero que conviene entender es que **no es una ZBE municipal**. La gestiona el Área Metropolitana de Barcelona y abarca cinco municipios, enteros o en parte.
+
+Su superficie, más de 95 km², y el detalle de qué partes de Barcelona quedan fuera no aparecen en la página que citamos como fuente: los hemos tomado de otras páginas del propio Área Metropolitana. Lo decimos para que sepas qué está respaldado por la cita y qué no.
 
 ## Qué distintivos pueden entrar
 
@@ -40,6 +42,8 @@ Lo primero que conviene entender es que **no es una ZBE municipal**. La gestiona
 | **[C](/etiquetas/c/)** | Sí |
 | **[B](/etiquetas/b/)** | Sí |
 | **[Sin distintivo](/etiquetas/sin-distintivo/)** | No, en horario de restricción |
+
+Lee antes el apartado sobre la situación legal, más abajo.
 
 ## Horario
 
@@ -87,6 +91,18 @@ Un apunte útil para las motos: el umbral está en Euro 2, que se corresponde ap
 
 Es el error más común entre quien llega de fuera de España: se da por hecho que si el coche es moderno no hay nada que hacer, y no es así.
 
+## Un apunte sobre la situación legal
+
+Esta ZBE ha tenido vaivenes que conviene conocer, y aquí vamos a ser explícitos sobre **qué hemos podido comprobar y qué no**.
+
+Lo que consta en fuentes municipales: la zona **estuvo suspendida** a principios de 2026, en el contexto de las incidencias del servicio de Cercanías, y volvió al servicio normal el **16 de marzo de 2026**. Y las administraciones implicadas, Ayuntamiento, Generalitat y Área Metropolitana, han hecho frente común **para mantener la ZBE tras una resolución judicial contraria**, que han recurrido.
+
+Lo que **no** hemos podido leer: ni la sentencia, ni el número de resolución, ni el alcance exacto de la anulación, ni el estado del recurso. Las páginas del Ayuntamiento de Barcelona que lo explican nos devuelven un error al intentar leerlas, y no vamos a describir un proceso judicial a partir de titulares.
+
+Qué significa para ti, en la práctica: **las restricciones se aplican hoy**, según las páginas del Área Metropolitana que citamos. Pero si te han multado en 2026, o estás pensando en recurrir una sanción, merece la pena que mires el estado del proceso: aquí no te lo podemos dar verificado.
+
 ## Si te multan
 
 El acceso indebido es una infracción de tráfico. Lo explicamos en [multas por entrar en una ZBE](/multas/zbe/).
+
+Un dato que suele perderse: aunque la restricción arrancó el 1 de enero de 2020, **las sanciones no empezaron hasta el 15 de septiembre de 2020**, tras un aplazamiento por la pandemia.

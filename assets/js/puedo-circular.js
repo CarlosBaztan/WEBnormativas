@@ -290,10 +290,43 @@
     var entradas = permitidos.map(analizarEntrada);
     for (var i = 0; i < entradas.length; i++) {
       if (entradas[i].clave === distintivoUsuario) {
+        // Varias ordenanzas escalonan las restricciones por fecha: Malaga
+        // saca al distintivo B el 30/11/2026 y Valladolid el 31/12/2027.
+        // Sin esto, la ficha seguiria diciendo que si el dia despues, y
+        // nadie tendria por que acordarse de cambiarla.
+        if (caducado(zona, distintivoUsuario)) return 'caducado';
         return entradas[i].condicionado ? 'condicionado' : 'permitido';
       }
     }
     return 'no_figura';
+  }
+
+  /*
+   * Un distintivo puede estar permitido hoy y dejar de estarlo en una fecha
+   * que la ordenanza ya fija. `caducan` viene del front matter de la ficha.
+   */
+  function caducado(zona, distintivo) {
+    var f = fechaCruda(zona, distintivo);
+    if (!f) return false;
+    var limite = new Date(f + 'T00:00:00');
+    if (isNaN(limite.getTime())) return false;
+    return new Date() >= limite;
+  }
+
+  /*
+   * Hugo pasa a minusculas las claves de los mapas del front matter, asi que
+   * `caducan: { B: ... }` llega como `{ b: ... }`. Se busca de las dos formas
+   * para no depender de ese detalle.
+   */
+  function fechaCruda(zona, distintivo) {
+    var fechas = zona.caducan;
+    if (!fechas) return null;
+    return fechas[distintivo] || fechas[String(distintivo).toLowerCase()] || null;
+  }
+
+  function fechaCaducidad(zona, distintivo) {
+    var f = fechaCruda(zona, distintivo);
+    return f ? formatearFecha(f) : '';
   }
 
   var TEXTO_VEREDICTO = {
@@ -301,6 +334,7 @@
     condicionado:{ etiqueta: 'Solo con condiciones', clase: 'cond', icono: '!' },
     no_figura:   { etiqueta: 'No',              clase: 'no',   icono: '×' },
     pendiente:   { etiqueta: 'Sin verificar',   clase: 'pend', icono: '?' },
+    caducado:    { etiqueta: 'Ya no',           clase: 'no',   icono: '×' },
     sin_distintivo_usuario: { etiqueta: 'Indica tu vehículo', clase: 'pend', icono: '?' }
   };
 
@@ -335,6 +369,9 @@
     } else if (todasIgual('permitido')) {
       titular = plural ? 'Sí, en las zonas que hemos verificado' : 'Sí, según la ordenanza';
       claseGlobal = 'si';
+    } else if (todasIgual('caducado')) {
+      titular = 'Ya no, la excepción ha caducado';
+      claseGlobal = 'no';
     } else if (todasIgual('no_figura')) {
       titular = plural ? 'No, en ninguna de las zonas verificadas' : 'No, según la ordenanza';
       claseGlobal = 'no';
@@ -343,7 +380,7 @@
       claseGlobal = 'cond';
     } else {
       titular = 'Depende de la zona';
-      claseGlobal = hay('no_figura') ? 'no' : 'cond';
+      claseGlobal = (hay('no_figura') || hay('caducado')) ? 'no' : 'cond';
     }
 
     var partes = ['<div class="pc-veredicto pc-veredicto--' + claseGlobal + '">'];
@@ -360,6 +397,26 @@
         '</li>');
     }
     partes.push('</ul>');
+
+    // Un distintivo que hoy entra pero tiene fecha de salida: es el dato mas
+    // accionable que puede dar esta herramienta, y se pierde si no se dice.
+    if (distintivoUsuario) {
+      var avisos = [];
+      for (var k = 0; k < zonas.length; k++) {
+        if (veredictos[k] !== 'permitido' && veredictos[k] !== 'condicionado') continue;
+        var f = fechaCaducidad(zonas[k], distintivoUsuario);
+        if (f) {
+          avisos.push(plural
+            ? esc(zonas[k].nombre || zonas[k].id) + ', hasta el ' + esc(f)
+            : 'hasta el ' + esc(f));
+        }
+      }
+      if (avisos.length) {
+        partes.push('<p class="pc-veredicto__caduca"><strong>Pero tiene fecha de caducidad:</strong> ' +
+          avisos.join('; ') + '. A partir de ese día, la ordenanza deja de permitir tu distintivo. ' +
+          'Lo explicamos en la ficha completa.</p>');
+      }
+    }
 
     if (hay('condicionado')) {
       partes.push('<p class="pc-veredicto__nota">«Solo con condiciones» significa que tu distintivo figura, ' +

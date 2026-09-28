@@ -16,10 +16,11 @@ etiquetas_permitidas: ["0", "ECO", "C", "B"]
 horario_restriccion: "No hemos podido confirmar el horario en una fuente oficial"
 excepciones:
   - "Residentes con permiso de estacionamiento regulado, autorización anual renovable"
-  - "Titulares de una actividad económica en la zona, autorización anual renovable"
+  - "Propietarios o arrendatarios de una plaza de garaje dentro de la zona, autorización anual renovable"
+  - "Propietarios o arrendatarios de un local con actividad comercial en la zona, autorización anual renovable"
   - "Vehículos con tarjeta de persona con movilidad reducida en vigor"
-  - "Servicios esenciales: sanitarios, bomberos, policía y obras públicas, con carácter permanente"
-  - "Taxis y vehículos históricos, con carácter permanente"
+  - "Servicios esenciales: ambulancias y servicios médicos públicos, bomberos, policía y fuerzas de seguridad, grúa municipal, servicios funerarios, protección civil, limpieza pública, semáforos y alumbrado"
+  - "Taxis adaptados declarados registralmente como tales y vehículos históricos, con carácter permanente"
   - "Vehículos con matrícula extranjera que cumplan los estándares de emisiones, autorización anual"
   - "Accesos esporádicos, hasta un máximo de 8 autorizaciones al mes"
 
@@ -42,15 +43,19 @@ La Zona de Bajas Emisiones de Zaragoza es de las **más permisivas en cuanto a d
 | **[ECO](/etiquetas/eco/)** | Sí, acceso libre |
 | **[C](/etiquetas/c/)** | Sí, acceso libre |
 | **[B](/etiquetas/b/)** | Sí, acceso libre |
-| **[Sin distintivo](/etiquetas/sin-distintivo/)** | Necesita registrarse para acceder al interior |
+| **[Sin distintivo](/etiquetas/sin-distintivo/)** | **No**, salvo 8 autorizaciones puntuales al mes |
 
-El ayuntamiento lo plantea al revés que otras ciudades: en vez de prohibir, **exige registro** a los vehículos sin distintivo ambiental de la DGT para acceder al interior de la zona.
+Los vehículos sin distintivo ambiental **no tienen acceso general**. La única vía que les deja la ordenanza son autorizaciones puntuales: un máximo de **8 al mes**, concedidas por día.
+
+Conviene decirlo así de claro porque es fácil entenderlo al revés: registrarse no te abre la zona, te da ocho días.
 
 ## El perímetro
 
-La zona está delimitada por el Paseo Echegaray y Caballero, San Vicente de Paúl, el Coso, la Plaza de España, Conde Aranda, Mayoral, la Plaza de Santo Domingo y la calle Ramón Celma.
-
 Es, en esencia, **el casco histórico**. Si tu recorrido por Zaragoza no entra ahí, la ZBE no te afecta.
+
+**No reproducimos aquí el listado de calles.** Lo habíamos publicado, y al revisarlo no hemos podido encontrarlo literalmente en las páginas oficiales que citamos: la del mapa dice que la ordenanza «delimita el perímetro», pero no lo detalla. Preferimos quitarlo a dejar un listado que no podemos respaldar.
+
+Puedes ver el trazado que publica la DGT en [el mapa](/mapa/) o comprobar una dirección concreta en [«¿está mi calle dentro de una ZBE?»](/zbe/mi-calle/).
 
 ## El horario: no lo publicamos
 
@@ -62,11 +67,15 @@ Hay informaciones que hablan de una aplicación de lunes a viernes de 8:00 a 20:
 
 **Residentes** con permiso de estacionamiento regulado: autorización anual renovable.
 
-**Titulares de una actividad económica** en la zona: igual, anual y renovable.
+**Propietarios o arrendatarios de una plaza de garaje** dentro de la zona: anual y renovable. Es una de las vías más usadas y suele quedarse fuera de los resúmenes.
+
+**Propietarios o arrendatarios de un local con actividad comercial** en la zona: igual, anual y renovable. Ojo al matiz: la ordenanza exige **local**, no basta con tener una actividad económica declarada.
 
 **Personas con movilidad reducida** con tarjeta en vigor, mientras la tarjeta lo esté.
 
-**Servicios esenciales** (sanitarios, bomberos, policía, obras públicas), **taxis** y **vehículos históricos**: con carácter permanente.
+**Servicios esenciales**, con carácter permanente: ambulancias y servicios médicos públicos, bomberos, policía y fuerzas de seguridad, grúa municipal, servicios funerarios, protección civil, limpieza pública, semáforos y alumbrado.
+
+**Taxis adaptados** declarados registralmente como tales, y **vehículos históricos**: también permanentes. Un taxi ordinario no entra por esta vía.
 
 **Matrícula extranjera** que cumpla los estándares de emisiones: autorización anual.
 
@@ -74,10 +83,12 @@ Hay informaciones que hablan de una aplicación de lunes a viernes de 8:00 a 20:
 
 Esta es la vía más útil para quien entra de vez en cuando: se pueden pedir **hasta 8 autorizaciones de acceso esporádico al mes**.
 
-Es un régimen más generoso que el de Barcelona, que da 24 al año. En Zaragoza son 8 al mes, casi cuatro veces más.
+Es un régimen más amplio que el de Barcelona, que da 24 al año. En Zaragoza son 8 al mes, 96 al año: cuatro veces más.
+
+Para un vehículo sin distintivo, esta es **la única forma de entrar** si no encaja en ninguna excepción.
 
 ## La norma
 
-El texto del proyecto es de 31 de julio de 2024 y la ordenanza municipal, de **21 de agosto de 2024**. Los dos documentos están enlazados en la página oficial de la ZBE.
+El texto del proyecto es de 31 de julio de 2024 y la ordenanza municipal, de **21 de agosto de 2024**.
 
-La zona está planteada con horizonte **hasta 2030**.
+Los dos documentos están enlazados en la página oficial de la ZBE.
