@@ -41,9 +41,81 @@ def front_matter(texto: str) -> dict[str, str]:
     return campos
 
 
+def declara_reglas(texto: str) -> bool:
+    """
+    Dice si la ficha declara algo sobre quien puede circular.
+
+    Una ficha marcada como verificada que no declara reglas es el peor caso
+    posible: el lector ve el sello de comprobado y una pagina que no responde
+    a nada. Vale cualquiera de las dos formas que usa el proyecto:
+
+      - `etiquetas_permitidas` con contenido, para municipios de una sola zona.
+      - un bloque `zonas`, para los que tienen varias con reglas distintas,
+        como Madrid.
+
+    Se mira sobre el texto crudo porque front_matter() solo lee escalares y
+    las dos son listas.
+    """
+    m = re.match(r"^---\s*\n(.*?)\n---\s*\n", texto, re.S)
+    if not m:
+        return False
+    cabecera = m.group(1)
+
+    if re.search(r"^zonas:\s*$", cabecera, re.M):
+        return True
+
+    et = re.search(r"^etiquetas_permitidas:\s*(.*)$", cabecera, re.M)
+    if not et:
+        return False
+    resto = et.group(1).strip()
+    if resto in ("", "[]"):
+        # Puede continuar en lineas con guion debajo.
+        return bool(re.match(r"\s*\n\s*-\s*\S", cabecera[et.end():]))
+    return True
+
+
+def enlaces_rotos(fuentes: dict, comprobador=None) -> list:
+    """
+    Comprueba que las fuentes citadas siguen en pie.
+
+    `fuentes` es {ruta de la ficha: url}. `comprobador` recibe una url y
+    devuelve su codigo HTTP; se inyecta para poder probar esto sin red, y para
+    que la auditoria de cada dia no dependa de que los ayuntamientos esten
+    levantados.
+
+    Un enlace que no responde cuenta como roto: para el lector es lo mismo.
+    """
+    if comprobador is None:
+        comprobador = _codigo_http
+
+    rotos = []
+    for ficha, url in sorted(fuentes.items()):
+        try:
+            codigo = comprobador(url)
+        except Exception as e:
+            rotos.append("%s: %s no responde (%s)" % (ficha, url, e))
+            continue
+        if codigo >= 400:
+            rotos.append("%s: %s devuelve %s" % (ficha, url, codigo))
+    return rotos
+
+
+def _codigo_http(url: str) -> int:
+    """Peticion real. Aislada aqui para que enlaces_rotos sea testeable."""
+    import urllib.request
+
+    peticion = urllib.request.Request(url, method="HEAD", headers={
+        "User-Agent": "WEBnormativas/auditoria (+https://github.com/CarlosBaztan/WEBnormativas)"})
+    with urllib.request.urlopen(peticion, timeout=20) as r:
+        return r.status
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Audita frescura y coherencia de las fichas.")
     ap.add_argument("--meses", type=int, default=6, help="antiguedad maxima admitida (por defecto 6)")
+    ap.add_argument("--enlaces", action="store_true",
+                    help="comprueba ademas que las fuentes citadas siguen respondiendo "
+                         "(hace peticiones de red; se usa en la auditoria semanal)")
     args = ap.parse_args()
 
     limite = date.today() - timedelta(days=args.meses * 30)
@@ -51,6 +123,8 @@ def main() -> int:
     caducadas: list[str] = []
     incoherentes: list[str] = []
     sin_trazabilidad: list[str] = []
+    sin_reglas: list[str] = []
+    fuentes: dict[str, str] = {}
     revisadas = 0
 
     for ruta in sorted(CONTENIDO.rglob("*.md")):
@@ -91,12 +165,24 @@ def main() -> int:
             dias = (date.today() - fecha).days
             caducadas.append(f"{rel}: verificada hace {dias} dias ({fv})")
 
+        fuentes[rel] = fm["fuente_url"]
+
+        # 4. Una ficha de municipio verificada tiene que decir algo sobre quien
+        #    puede circular. El sello de verificado sobre una pagina que no
+        #    responde a nada es peor que no tener la pagina.
+        #    codigo_ine distingue la ficha de un municipio de un articulo.
+        if fm.get("codigo_ine") and fm.get("tipo", "municipio") == "municipio":
+            if not declara_reglas(ruta.read_text(encoding="utf-8")):
+                sin_reglas.append(
+                    f"{rel}: verificada pero no declara etiquetas_permitidas ni zonas")
+
     print(f"Fichas con estado_dato revisadas: {revisadas}\n")
 
     problemas = 0
     for titulo, lista in (
         ("INCOHERENCIAS estado_dato / draft", incoherentes),
         ("TRAZABILIDAD INCOMPLETA", sin_trazabilidad),
+        ("VERIFICADAS PERO SIN REGLAS", sin_reglas),
         (f"PENDIENTES DE REVISAR (mas de {args.meses} meses)", caducadas),
     ):
         if lista:
@@ -104,6 +190,19 @@ def main() -> int:
             print(f"{titulo} ({len(lista)}):")
             for x in lista:
                 print(f"  - {x}")
+            print()
+
+    if args.enlaces and fuentes:
+        print(f"Comprobando {len(fuentes)} fuentes oficiales...")
+        rotos = enlaces_rotos(fuentes)
+        if rotos:
+            problemas += len(rotos)
+            print(f"FUENTES QUE NO RESPONDEN ({len(rotos)}):")
+            for x in rotos:
+                print(f"  - {x}")
+            print()
+        else:
+            print("Todas responden.")
             print()
 
     if problemas == 0:

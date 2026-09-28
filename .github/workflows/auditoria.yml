@@ -1,0 +1,73 @@
+# Auditoria semanal del contenido.
+#
+# Existe por el mayor riesgo que tiene este proyecto, que no es tecnico: que
+# pasen meses sin tocarlo y las fichas envejezcan en silencio. Esto abre una
+# incidencia sola cuando eso pasa, para que la web no afirme cosas que ya no
+# son ciertas.
+#
+# Los lunes a las 7:00 UTC. Tambien se puede lanzar a mano desde la pestana
+# Actions.
+
+name: Auditoria del contenido
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  auditar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Tests del pipeline
+        run: |
+          python pipeline/test_zbe_geometria.py
+          python pipeline/test_auditoria.py
+
+      - name: Auditoria, con comprobacion de enlaces
+        id: auditoria
+        run: |
+          set +e
+          python pipeline/auditoria.py --enlaces > informe.txt 2>&1
+          echo "codigo=$?" >> "$GITHUB_OUTPUT"
+          cat informe.txt
+
+      - name: Abrir incidencia si algo falla
+        if: steps.auditoria.outputs.codigo != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const informe = fs.readFileSync('informe.txt', 'utf8');
+            const hoy = new Date().toISOString().slice(0, 10);
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Auditoria del ${hoy}: hay datos que revisar`,
+              body: [
+                'La auditoria semanal ha encontrado algo. Esto no rompe la web:',
+                'es un aviso de que algun dato publicado puede haber dejado de',
+                'ser cierto.',
+                '',
+                '```',
+                informe.trim(),
+                '```',
+                '',
+                'Que hacer con cada tipo de aviso esta explicado en CLAUDE.md,',
+                'en las reglas de publicacion de datos.',
+              ].join('\n'),
+            });
+
+      - name: Fallar si la auditoria fallo
+        if: steps.auditoria.outputs.codigo != '0'
+        run: exit 1
