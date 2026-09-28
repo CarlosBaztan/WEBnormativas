@@ -1,0 +1,176 @@
+{
+  "_meta": {
+    "descripcion": "Frecuencia de la inspección técnica periódica por categoría de vehículo.",
+    "fuente_nombre": "Real Decreto 920/2017, de 23 de octubre, por el que se regula la inspección técnica de vehículos, artículo 6.1",
+    "fuente_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2017-12841",
+    "texto": "Consolidado, última modificación de 18 de septiembre de 2024",
+    "fecha_verificacion": "2026-09-29",
+    "confianza": "oficial",
+    "ADVERTENCIA": "La antigüedad se cuenta desde la fecha de primera matriculación. Tras la primera inspección, la siguiente se cuenta desde la última realizada, no desde la matriculación. Esta tabla da la periodicidad, no sustituye a la fecha que figura en la tarjeta ITV del vehículo.",
+    "como_leer": "Cada tramo es [desde_anios, hasta_anios) con la periodicidad que aplica. `hasta_anios: null` significa sin límite superior."
+  },
+  "categorias": {
+    "turismo": {
+      "nombre": "Turismo",
+      "categoria_legal": "M1",
+      "descripcion": "Vehículos de hasta ocho plazas, excluida la del conductor",
+      "tramos": [
+        {
+          "desde_anios": 0,
+          "hasta_anios": 4,
+          "periodicidad": "exento"
+        },
+        {
+          "desde_anios": 4,
+          "hasta_anios": 10,
+          "periodicidad": "bienal"
+        },
+        {
+          "desde_anios": 10,
+          "hasta_anios": null,
+          "periodicidad": "anual"
+        }
+      ]
+    },
+    "furgoneta": {
+      "nombre": "Furgoneta o vehículo ligero de mercancías",
+      "categoria_legal": "N1",
+      "descripcion": "Transporte de mercancías con masa máxima de hasta 3,5 toneladas",
+      "tramos": [
+        {
+          "desde_anios": 0,
+          "hasta_anios": 2,
+          "periodicidad": "exento"
+        },
+        {
+          "desde_anios": 2,
+          "hasta_anios": 6,
+          "periodicidad": "bienal"
+        },
+        {
+          "desde_anios": 6,
+          "hasta_anios": 10,
+          "periodicidad": "anual"
+        },
+        {
+          "desde_anios": 10,
+          "hasta_anios": null,
+          "periodicidad": "semestral"
+        }
+      ]
+    },
+    "moto": {
+      "nombre": "Motocicleta, triciclo o cuadriciclo",
+      "categoria_legal": "L (salvo L1e)",
+      "descripcion": "Vehículos de dos o tres ruedas y cuadriciclos, sin incluir ciclomotores",
+      "tramos": [
+        {
+          "desde_anios": 0,
+          "hasta_anios": 4,
+          "periodicidad": "exento"
+        },
+        {
+          "desde_anios": 4,
+          "hasta_anios": null,
+          "periodicidad": "bienal"
+        }
+      ]
+    },
+    "ciclomotor": {
+      "nombre": "Ciclomotor",
+      "categoria_legal": "L1e",
+      "descripcion": "Dos ruedas, máximo 45 km/h, hasta 50 cm³ o 4 kW",
+      "tramos": [
+        {
+          "desde_anios": 0,
+          "hasta_anios": 3,
+          "periodicidad": "exento"
+        },
+        {
+          "desde_anios": 3,
+          "hasta_anios": null,
+          "periodicidad": "bienal"
+        }
+      ]
+    },
+    "autobus": {
+      "nombre": "Autobús o autocar",
+      "categoria_legal": "M2, M3",
+      "descripcion": "Más de ocho plazas, excluida la del conductor",
+      "tramos": [
+        {
+          "desde_anios": 0,
+          "hasta_anios": 5,
+          "periodicidad": "anual"
+        },
+        {
+          "desde_anios": 5,
+          "hasta_anios": null,
+          "periodicidad": "semestral"
+        }
+      ]
+    },
+    "camion": {
+      "nombre": "Camión o remolque de mercancías",
+      "categoria_legal": "N2, N3, O2 (salvo caravanas), O3, O4",
+      "descripcion": "Transporte de mercancías de más de 3,5 toneladas y remolques",
+      "tramos": [
+        {
+          "desde_anios": 0,
+          "hasta_anios": 10,
+          "periodicidad": "anual"
+        },
+        {
+          "desde_anios": 10,
+          "hasta_anios": null,
+          "periodicidad": "semestral"
+        }
+      ]
+    },
+    "caravana": {
+      "nombre": "Caravana remolcada",
+      "categoria_legal": "O2 caravanas",
+      "descripcion": "Caravanas remolcadas de la categoría O2",
+      "tramos": [
+        {
+          "desde_anios": 0,
+          "hasta_anios": 6,
+          "periodicidad": "exento"
+        },
+        {
+          "desde_anios": 6,
+          "hasta_anios": null,
+          "periodicidad": "bienal"
+        }
+      ]
+    }
+  },
+  "periodicidades": {
+    "exento": {
+      "nombre": "Exento",
+      "meses": null,
+      "explicacion": "Todavía no tiene que pasar la ITV."
+    },
+    "semestral": {
+      "nombre": "Cada seis meses",
+      "meses": 6,
+      "explicacion": "Dos inspecciones al año."
+    },
+    "anual": {
+      "nombre": "Cada año",
+      "meses": 12,
+      "explicacion": "Una inspección al año."
+    },
+    "bienal": {
+      "nombre": "Cada dos años",
+      "meses": 24,
+      "explicacion": "Una inspección cada dos años."
+    }
+  },
+  "_limitaciones_conocidas": [
+    "No cubre vehículos agrícolas, especiales de obras y servicios, estaciones transformadoras móviles ni vehículos de circo o ferias. Están en el mismo artículo 6.1 del RD 920/2017.",
+    "No cubre los regímenes propios de Fuerzas Armadas, Guardia Civil ni Policía, que tienen sus propias órdenes ministeriales.",
+    "Un vehículo histórico, uno reformado o uno tras un accidente grave pueden tener inspecciones no periódicas adicionales.",
+    "La fecha exacta de la próxima ITV figura en la tarjeta del vehículo y se cuenta desde la última inspección, no desde la matriculación."
+  ]
+}

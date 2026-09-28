@@ -346,3 +346,31 @@
     display: none;
   }
 }
+
+/* --- Tramos de periodicidad de la ITV --------------------------------- */
+
+.itv-tramos {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.itv-tramos li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.itv-tramos li:last-child { border-bottom: 0; }
+
+/* El tramo que le toca al usuario, destacado: es lo que ha venido a mirar. */
+.itv-tramo--actual {
+  font-weight: 700;
+  background: var(--code-bg);
+  border-radius: 6px;
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+.pc-distintivo--itv .pc-distintivo__valor { font-size: 1.6rem; }

@@ -13,7 +13,8 @@
         { "texto": "¿Puedo circular?", "url": "/" },
         { "texto": "Qué etiqueta tengo", "url": "/etiquetas/" },
         { "texto": "Calculadora del IVTM", "proximamente": true },
-        { "texto": "Cuándo me toca la ITV", "proximamente": true }
+        { "texto": "Cuándo me toca la ITV", "url": "/itv/cuando-me-toca/" },
+        { "texto": "¿Es obligatoria la pegatina de la ITV?", "url": "/itv/pegatina/" }
       ]
     },
     {

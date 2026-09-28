@@ -1,0 +1,99 @@
+{{- /*
+  layouts/itv/single.html — herramienta "¿Cuándo me toca la ITV?".
+
+  La tabla de periodicidad viene de data/itv_periodicidad.json, extraída del
+  artículo 6.1 del RD 920/2017 consolidado. Se inyecta como JSON y el
+  JavaScript no codifica ninguna regla a mano.
+
+  REGLA DURA 4: el hueco de anuncio va DEBAJO del resultado, nunca encima del
+  formulario.
+*/ -}}
+
+{{- define "main" }}
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with .Description }}<div class="post-description">{{ . }}</div>{{ end }}
+  </header>
+
+  {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "compacta") }}
+
+  <div class="post-content md-content">{{ .Content }}</div>
+
+  {{/* safeJS es imprescindible: sin él html/template serializa el JSON como
+       cadena escapada y el script recibe texto en vez de datos. */}}
+  <script type="application/json" id="datos-itv">{{ site.Data.itv_periodicidad | jsonify | safeJS }}</script>
+
+  <form id="form-itv" class="pc-form" novalidate>
+    <fieldset>
+      <legend>Tu vehículo</legend>
+
+      <p id="itv-recuperado" class="pc-ayuda" hidden>
+        Hemos recuperado los datos que guardaste en este navegador.
+      </p>
+
+      <div class="pc-campo">
+        <label for="itv-categoria">Tipo de vehículo</label>
+        <select id="itv-categoria" name="itv-categoria">
+          {{- range $clave, $cat := site.Data.itv_periodicidad.categorias }}
+          <option value="{{ $clave }}">{{ $cat.nombre }} ({{ $cat.categoria_legal }})</option>
+          {{- end }}
+        </select>
+      </div>
+
+      <div class="pc-fila">
+        <div class="pc-campo">
+          <label for="itv-anio">Año de matriculación</label>
+          <input type="number" id="itv-anio" name="itv-anio" min="1900" max="2100"
+                 inputmode="numeric" placeholder="2018">
+        </div>
+
+        <div class="pc-campo">
+          <label for="itv-mes">Mes <span class="pc-opcional">(si lo sabes)</span></label>
+          <select id="itv-mes" name="itv-mes">
+            <option value="">No lo sé</option>
+            {{- range $i, $m := (slice "enero" "febrero" "marzo" "abril" "mayo" "junio" "julio" "agosto" "septiembre" "octubre" "noviembre" "diciembre") }}
+            <option value="{{ add $i 1 }}">{{ $m | title }}</option>
+            {{- end }}
+          </select>
+        </div>
+      </div>
+
+      <p class="pc-ayuda">
+        Cuenta la fecha de <strong>primera matriculación</strong>, la que figura en el permiso
+        de circulación. No la de compra ni la de fabricación.
+      </p>
+    </fieldset>
+
+    <button type="submit" class="pc-boton">Consultar</button>
+  </form>
+
+  <div id="resultado-itv" class="pc-resultado" aria-live="polite"></div>
+
+  {{ partial "anuncio.html" (dict "ubicacion" "bajo-resultado") }}
+
+  <section class="pc-descargo">
+    <h2>Qué hace exactamente esta herramienta</h2>
+    <p>
+      Te dice <strong>cada cuánto</strong> le toca la inspección a tu vehículo según su
+      categoría y su edad, aplicando la tabla del artículo 6.1 del Real Decreto 920/2017.
+    </p>
+    <p>
+      <strong>No te dice la fecha exacta de tu próxima ITV</strong>, y no puede. Después de la
+      primera inspección, el plazo se cuenta desde la última que pasaste, no desde la
+      matriculación. Esa fecha está en la tarjeta ITV de tu vehículo y es la que vale.
+    </p>
+    <p>
+      Tampoco cubre vehículos agrícolas, especiales de obras y servicios, ni los regímenes
+      propios de las Fuerzas Armadas, la Guardia Civil y la Policía, que tienen sus propias
+      normas. Un vehículo histórico, uno reformado o uno tras un accidente grave pueden
+      tener además inspecciones no periódicas.
+    </p>
+  </section>
+
+  {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "completa") }}
+</article>
+
+<script src="{{ (resources.Get "js/itv.js" | minify | fingerprint).RelPermalink }}" defer></script>
+{{- end }}
