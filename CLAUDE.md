@@ -284,6 +284,12 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   Lee como ANSI y reescribe como UTF-8: corrompe todos los acentos. Usar las
   herramientas de edición o Python.
 
+- **Sin `timeZone` en `hugo.toml`, una ficha creada de madrugada no se
+  publica.** Un `date: 2026-09-29` sin hora se interpreta como medianoche
+  UTC, que en España son las 02:00. A las 00:04 hora local esa fecha está
+  en el futuro, y `buildFuture = false` descarta la página **en silencio**:
+  no aparece, no hay aviso, y el build termina en verde. Pasó con Granada y
+  Barcelona. Resuelto con `timeZone = "Europe/Madrid"`.
 - **`disableKinds` debe ir en la raíz de `hugo.toml`**, antes de cualquier cabecera
   `[tabla]`. Si va después, TOML la anida dentro de esa tabla y deja de aplicarse
   en silencio.

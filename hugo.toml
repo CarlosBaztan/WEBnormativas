@@ -1,6 +1,12 @@
 baseURL = "https://webnormativas.bi-ia-carlosbaz.workers.dev/"
 locale = "es-es"
 defaultContentLanguage = "es"
+
+# Sin esto, un `date: 2026-09-29` del front matter se interpreta como
+# medianoche UTC, que en Espana son las 02:00. Una ficha creada de
+# madrugada queda "en el futuro" y buildFuture = false la descarta en
+# silencio: la pagina no se genera y nadie se entera.
+timeZone = "Europe/Madrid"
 title = "Normativa del vehículo en España"
 theme = "PaperMod"
 
