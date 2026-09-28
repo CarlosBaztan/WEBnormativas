@@ -89,12 +89,26 @@ fácil de ganar (KD medio del 19 % sobre 5.755 palabras) pero vale muy poco por
 clic. El del seguro vale doce veces más, pero su SERP lo ocupan diez
 aseguradoras con KD de 42 a 47. **No se compite por «seguro de coche».**
 
-Dónde sí hay hueco: las preguntas de *normativa* dentro del racimo del seguro,
-que las aseguradoras no responden porque están ahí para vender pólizas.
-«¿Es obligatorio tener seguro si el coche no circula?» tiene KD 11; «¿es
-obligatorio el seguro de vida al financiar un coche?», KD 6.
+**Matiz importante, comprobado después:** al abrir los grupos del racimo del
+seguro **no aparece ninguno de «obligatorio», «multa», «ley» ni «sin
+seguro»** entre los diez mayores. Las dos palabras de normativa con KD 6 y 11
+que parecían abrir una veta son casos sueltos, no un filón: las 537 preguntas
+del racimo suman solo 2.600 búsquedas al mes entre todas.
 
-**Modelo resultante: ZBE trae el tráfico, el seguro lo monetiza.**
+Los diez grupos mayores son: baja 1.383, baratos 1.340, mas 913, dar 895,
+precio 833, alquiler 815, mejor 803, compañía 706, puede 695, cuanto 690.
+Cuatro de ellos (baratos, precio, mejor, compañía) son puro comercial y no se
+pueden disputar.
+
+**Modelo resultante: ZBE trae el tráfico, y el seguro se monetiza por
+afiliación, no por contenido.** No hay una vertical de normativa del seguro
+que construir; hay un mercado caro al que enviar tráfico propio.
+
+**Pendiente de resolver (octubre):** qué es el grupo «baja», el mayor del
+racimo con 1.383 palabras. Si es «dar de baja el seguro» es retención de
+clientes y no nos toca; si es «baja temporal del vehículo» es un trámite de la
+DGT y encaja de lleno en la vertical de trámites. Son cosas opuestas y no se
+puede deducir del recuento.
 
 Subgrupos dentro del racimo de ZBE, por número de palabras: barcelona 884,
 **mapa 849**, madrid 779, zona 542, etiqueta 254, multa 210, camara 181.
