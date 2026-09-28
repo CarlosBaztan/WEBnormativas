@@ -114,9 +114,11 @@ asignada dentro de la tarea que la causa.
 4. **`localStorage` bloqueado o lleno.** En navegación privada lanza
    excepción. Si no está envuelto, la herramienta entera deja de responder al
    pulsar «Consultar». → T9.
-5. **Un municipio sin coeficiente de IVTM.** La calculadora tiene que decir
-   que no lo tiene, no repartir una media ni usar el tipo estatal como si
-   fuera el municipal. → T11.
+5. **Una dirección ambigua.** «Calle Mayor» existe en cientos de municipios:
+   si el geocodificador la resuelve en el que no es, la herramienta afirmará
+   que estás dentro de una ZBE que no es la tuya. Tiene que mostrar siempre
+   qué dirección ha entendido y pedir que se confirme antes de responder.
+   → T10.
 
 ---
 
@@ -262,16 +264,24 @@ que convierte T4 y T5 en trabajo mecánico.
 
 ---
 
-### T4 · Cuatro municipios verificados: Zaragoza, Barcelona, Valencia, Sevilla
+### T4 · Cuatro municipios verificados: Valencia, Bilbao, Granada, Barcelona
 
 **Agentes:** yo leo las fuentes y extraigo los datos. Content Creator redacta
 el cuerpo a partir de los datos ya extraídos. Reality Checker revisa al final
 (T6). **Ningún agente toca la fuente.**
 
-**Contexto:** son los cuatro de más volumen de búsqueda. Zaragoza va primero
-porque ya hay una ficha de ejemplo en `content/zbe/zaragoza.md` y porque es
-donde vives, así que puedes contrastar el resultado con lo que ves en la
-calle.
+**Contexto:** el orden sale de los datos de Semrush del 28/09/2026, no de
+una intuición. Valencia tiene la mejor relación de todo el conjunto (3.600
+búsquedas con dificultad 16), seguida de Bilbao (4.400 con 21) y Granada
+(4.400 con 25). Barcelona es más difícil (6.600 con 39) pero entra en el
+primer grupo por una razón distinta: su CPC es de 4,12 $ frente a 0,00 $ de
+Bilbao. Es el único municipio donde el tráfico de ZBE tiene valor
+publicitario real.
+
+Zaragoza y Sevilla salen de este bloque: no aparecen entre las diez primeras
+por volumen. Zaragoza se mantiene como candidata porque ya hay una ficha de
+ejemplo en `content/zbe/zaragoza.md` y porque es donde vive Carlos, así que
+puede contrastar el resultado con lo que ve en la calle.
 
 **Ficheros:**
 - Modificar: `content/zbe/zaragoza.md` (pasa de ejemplo a ficha real)
@@ -311,7 +321,7 @@ calle.
 
 ---
 
-### T5 · Cuatro municipios más: Málaga, Bilbao, Valladolid, Vitoria-Gasteiz
+### T5 · Cuatro municipios más: Málaga, Valladolid, Benidorm, Zaragoza
 
 **Agentes:** los mismos que T4.
 
@@ -453,53 +463,73 @@ function leerPerfil() {
 
 ---
 
-### T10 · Datos del IVTM por municipio
-
-**Agente:** Data Engineer.
-
-**Contexto:** `CLAUDE.md` ya tiene localizada la fuente: la consulta de tipos
-impositivos municipales de Hacienda, con exportación masiva a Excel y serie
-2000-2025. Es el dato que hace posible la calculadora y es tan defendible como
-el de las ZBE.
-
-**Ficheros:** crear `pipeline/ivtm_hacienda.py`, `data/ivtm_coeficientes.json`,
-`static/datos/ivtm.csv`.
-
-- [ ] **Paso 1.** Descargar el Excel de coeficientes del IVTM por municipio.
-- [ ] **Paso 2.** Normalizar por código INE, que es la clave que ya usan las
-      fichas de ZBE. Sin eso las dos mitades del sitio no se cruzan.
-- [ ] **Paso 3.** El coeficiente municipal está acotado por ley. Cualquier
-      valor fuera de rango es un error de lectura del Excel, no un municipio
-      exótico: que el script pare y lo diga.
-- [ ] **Paso 4.** Los municipios sin dato se marcan explícitamente como sin
-      dato. **No se rellenan con la media ni con el mínimo legal.**
-- [ ] **Paso 5.** Publicar también el CSV en `/datos/`, como se hizo con las
-      ZBE. Los datos abiertos son parte del argumento de credibilidad.
-- [ ] **Paso 6.** Commit.
-
----
-
-### T11 · Calculadora del IVTM
+### T10 · ¿Está mi calle dentro de una ZBE?
 
 **Agente:** Frontend Developer.
 
-**Ficheros:** crear `content/impuestos/calculadora-ivtm.md`,
-`assets/js/ivtm.js`, `data/ivtm_tarifas_estatales.json`.
+**Contexto y por qué sustituye a la calculadora del IVTM.** Los datos de
+Semrush del 28/09/2026 tumbaron el plan anterior. El racimo del impuesto de
+circulación son 25.900 búsquedas al mes frente a las 221.010 de ZBE, con un
+CPC prácticamente igual (0,44 $ frente a 0,49 $), y sobre todo con la
+intención equivocada: las cinco primeras variaciones son «cómo pagar»,
+«pagar por internet» y «pagar sin recibo», y los diez primeros resultados son
+portales tributarios de ayuntamientos. Quien busca el IVTM quiere pagarlo, no
+calcularlo, y eso solo lo resuelve su ayuntamiento.
 
-- [ ] **Paso 1.** Extraer del texto refundido de la Ley de Haciendas Locales
-      los tramos de la tarifa estatal y llevarlos a JSON con su fuente.
-      **Verificar cada cifra en el BOE, ninguna de memoria.**
-- [ ] **Paso 2.** Implementar el cálculo: tarifa del tramo por coeficiente del
-      municipio.
-- [ ] **Paso 3.** Si el municipio no tiene coeficiente, decirlo y enlazar a su
-      ordenanza fiscal. **No se estima.** Esta es la comprobación del punto 5
-      de «Dónde suele romperse esto»: probarlo con un municipio sin dato antes
-      de dar la tarea por buena.
-- [ ] **Paso 4.** Avisar de que el resultado es orientativo: hay bonificaciones
-      municipales (vehículos históricos, eléctricos, familia numerosa) que no
-      están en el dato de Hacienda.
-- [ ] **Paso 5.** Reutilizar el perfil de vehículo, con el mismo `try/catch`.
-- [ ] **Paso 6.** Commit y despliegue.
+Lo que sí tiene demanda es el mapa: «mapa» es el segundo subgrupo más grande
+del racimo de ZBE, con 849 palabras, y entre las preguntas aparece «cómo saber
+si una calle es zbe madrid». Esta herramienta responde a eso con la geometría
+que ya está en disco desde T1.
+
+**Ficheros:** crear `content/zbe/mi-calle.md`, `assets/js/mi-calle.js`;
+modificar `data/menu_lateral.json`.
+
+**Consume:** `static/datos/zbe.geojson` de T1, con `properties.slug`,
+`properties.municipio` y `properties.url_ficha`.
+
+- [ ] **Paso 1.** Geocodificar la dirección con Nominatim de OpenStreetMap,
+      limitado a España. Respetar su política de uso: una petición por segundo
+      y cabecera de identificación. Si no responde, la herramienta lo dice y
+      ofrece el mapa para buscar a mano.
+- [ ] **Paso 2.** Implementar punto en polígono con el algoritmo de proyección
+      de rayos, a mano. Son 50 polígonos, no hace falta ninguna librería.
+- [ ] **Paso 3.** Probarlo con tres direcciones conocidas: una dentro de
+      Distrito Centro, una en Madrid pero fuera de él, y una en un municipio
+      sin ZBE. Las tres respuestas tienen que ser distintas y correctas.
+- [ ] **Paso 4.** **La respuesta nunca es binaria.** No «sí, estás dentro»,
+      sino «esta dirección cae dentro del perímetro que la DGT publica para la
+      ZBE de X. El perímetro oficial lo fija la ordenanza: compruébalo en
+      [enlace] y en la señalización de la calle». La geometría del NAP es un
+      dato de la DGT, no la ordenanza.
+- [ ] **Paso 5.** Enlazar desde el resultado a la ficha del municipio y a la
+      herramienta de «¿puedo circular?», que es el siguiente paso natural.
+- [ ] **Paso 6.** La dirección que escribe el usuario **no se guarda ni se
+      envía a ningún sitio nuestro**: va a Nominatim y se descarta. Decirlo en
+      la propia página y en la política de privacidad.
+- [ ] **Paso 7.** Hueco de anuncio debajo del resultado. Nunca encima.
+- [ ] **Paso 8.** Commit y despliegue.
+
+---
+
+### T11 · Página sobre las cámaras de las ZBE
+
+**Agente:** Content Creator redacta; yo extraigo los datos de la fuente.
+
+**Contexto:** «camara» es un subgrupo de 181 palabras dentro del racimo de
+ZBE, y no estaba en el plan. La gente quiere saber dónde están las cámaras
+que multan y cómo funcionan. Es contenido barato de producir y encaja con la
+página de multas que ya existe.
+
+**Ficheros:** crear `content/zbe/camaras.md`; modificar
+`content/multas/zbe.md` y `data/menu_lateral.json`.
+
+- [ ] **Paso 1.** Reunir de las ordenanzas ya verificadas qué dicen sobre el
+      control por cámara y la lectura de matrículas.
+- [ ] **Paso 2.** Explicar el circuito completo: cámara, cotejo con el
+      Registro de Vehículos, notificación. Sin especular sobre lo que no
+      conste por escrito en una fuente oficial.
+- [ ] **Paso 3.** Enlazar con `/multas/zbe/` en los dos sentidos.
+- [ ] **Paso 4.** Commit y despliegue.
 
 ---
 
