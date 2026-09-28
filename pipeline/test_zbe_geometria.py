@@ -7,6 +7,7 @@ El proyecto no usa framework de tests: se ejecuta con
 y devuelve codigo 1 si algo falla, para poder encadenarlo con auditoria.py.
 """
 
+import io
 import os
 import sys
 
@@ -70,6 +71,149 @@ def test_un_anillo_tiene_al_menos_cuatro_puntos():
     """Tres vertices mas el cierre. Con menos no es un poligono."""
     for anillo in zg.anillos_de_fichero(os.path.join(CACHE, "a-coruna.xml")):
         assert len(anillo) >= 4, "anillo de %d puntos" % len(anillo)
+
+
+def test_simplificar_quita_un_punto_alineado():
+    """
+    Tres puntos en linea recta: el del medio no aporta forma y sobra.
+    Es el caso mas simple de Ramer-Douglas-Peucker.
+    """
+    cuadrado = [[0, 0], [1, 0], [2, 0], [2, 2], [0, 2], [0, 0]]
+    salida = zg.simplificar(cuadrado, 0.1)
+    assert [1, 0] not in salida, "el punto alineado deberia desaparecer: %s" % salida
+    assert [2, 0] in salida, "las esquinas se quedan"
+
+
+def test_simplificar_reduce_un_anillo_real():
+    anillo = zg.anillos_de_fichero(os.path.join(CACHE, "a-coruna.xml"))[0]
+    salida = zg.simplificar(anillo, 0.0001)
+    assert len(salida) < len(anillo), "de %d puntos no bajo nada" % len(anillo)
+
+
+def test_simplificar_deja_el_anillo_cerrado():
+    anillo = zg.anillos_de_fichero(os.path.join(CACHE, "a-coruna.xml"))[0]
+    salida = zg.simplificar(anillo, 0.001)
+    assert salida[0] == salida[-1], "la simplificacion abrio el anillo"
+
+
+def test_simplificar_nunca_baja_de_cuatro_puntos():
+    """
+    Con una tolerancia brutal el algoritmo tenderia a dejar dos puntos, y eso
+    ya no es un poligono valido en GeoJSON.
+    """
+    anillo = zg.anillos_de_fichero(os.path.join(CACHE, "a-coruna.xml"))[0]
+    salida = zg.simplificar(anillo, 99.0)
+    assert len(salida) >= 4, "quedaron %d puntos" % len(salida)
+
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _coleccion():
+    if not hasattr(_coleccion, "cache"):
+        _coleccion.cache = zg.construir_geojson()
+    return _coleccion.cache
+
+
+def test_la_coleccion_es_un_featurecollection():
+    c = _coleccion()
+    assert c["type"] == "FeatureCollection"
+    assert len(c["features"]) >= 40, "solo %d zonas" % len(c["features"])
+
+
+def test_cada_feature_trae_lo_que_consume_el_mapa():
+    """
+    Contrato con T7 (mapa general), T8 (mapa por ficha) y T10 (mi calle).
+    Si falta una de estas claves, esas tres tareas se rompen.
+    """
+    for f in _coleccion()["features"]:
+        for clave in ("slug", "municipio", "estado_dato", "fuente_url", "fecha_descarga"):
+            assert clave in f["properties"], "falta %s en %s" % (clave, f["properties"])
+
+
+def test_los_slugs_coinciden_con_los_de_zbe_json():
+    """
+    Si los slugs no cuadran, el mapa enlaza a fichas que no existen. Es el
+    unico punto donde las dos mitades del proyecto se tienen que encontrar.
+    """
+    import json
+    datos = json.load(io.open(os.path.join(RAIZ, "data", "zbe.json"), encoding="utf-8"))
+    conocidos = set(datos["municipios"].keys())
+    for f in _coleccion()["features"]:
+        s = f["properties"]["slug"]
+        assert s in conocidos, "el slug %s no esta en data/zbe.json" % s
+
+
+def test_la_geometria_es_un_poligono_valido():
+    for f in _coleccion()["features"]:
+        g = f["geometry"]
+        assert g["type"] in ("Polygon", "MultiPolygon"), g["type"]
+        anillos = g["coordinates"] if g["type"] == "Polygon" else [
+            a for poly in g["coordinates"] for a in poly]
+        for anillo in anillos:
+            assert len(anillo) >= 4, "anillo de %d puntos" % len(anillo)
+            assert anillo[0] == anillo[-1], "anillo sin cerrar"
+
+
+def test_la_ficha_se_enlaza_solo_si_existe():
+    """
+    Madrid tiene ficha publicada; un municipio sin verificar no. Inventar la
+    URL daria 404 desde el mapa.
+    """
+    por_slug = {f["properties"]["slug"]: f["properties"] for f in _coleccion()["features"]}
+    assert por_slug["madrid"].get("url_ficha") == "/zbe/madrid/", por_slug["madrid"].get("url_ficha")
+
+
+def test_alicante_descarta_los_anillos_proyectados():
+    """
+    Regresion de un hallazgo real del 28/09/2026: alicante.xml mezcla dos
+    sistemas de coordenadas dentro del mismo fichero. 26 de sus 47 puntos
+    vienen en UTM (metros) y el resto en grados. El XML no declara cual es
+    cual.
+
+    No se convierten: adivinar la proyeccion dibujaria la zona en otro sitio,
+    que es peor que no dibujarla. Se descarta el anillo entero y se registra.
+    """
+    incidencias = []
+    anillos = zg.anillos_de_fichero(
+        os.path.join(CACHE, "alicante.xml"), incidencias)
+    assert incidencias, "descartar un anillo sin decirlo es esconder el problema"
+    assert "alicante" in " ".join(incidencias).lower()
+    for anillo in anillos:
+        for lon, lat in anillo:
+            assert -19.0 <= lon <= 5.0 and 27.0 <= lat <= 44.0,                 "se colo un punto proyectado: %s" % ([lon, lat],)
+
+
+def test_un_fichero_sano_no_genera_incidencias():
+    incidencias = []
+    zg.anillos_de_fichero(os.path.join(CACHE, "a-coruna.xml"), incidencias)
+    assert incidencias == [], incidencias
+
+
+def test_la_coleccion_registra_lo_descartado():
+    c = _coleccion()
+    assert "incidencias" in c["_meta"], "el dato abierto tiene que decir que se dejo fuera"
+
+
+# Posiciones reales, para contrastar que cada zona cae donde debe. Si alguien
+# invierte un par de coordenadas o se cuela una proyeccion, esto se entera.
+CIUDADES = {
+    "madrid": (40.42, -3.70), "valencia": (39.47, -0.38), "bilbao": (43.26, -2.93),
+    "granada": (37.18, -3.60), "malaga": (36.72, -4.42), "palma": (39.57, 2.65),
+    "a-coruna": (43.36, -8.41),
+}
+
+
+def test_cada_zona_cae_sobre_su_ciudad():
+    import math
+    por_slug = {f["properties"]["slug"]: f for f in _coleccion()["features"]}
+    for slug, (lat_real, lon_real) in CIUDADES.items():
+        lat, lon = zg.centroide(por_slug[slug])
+        km = math.hypot((lat - lat_real) * 111.0,
+                        (lon - lon_real) * 111.0 * math.cos(math.radians(lat)))
+        # Diez kilometros de margen: una ZBE grande como la de Madrid tiene su
+        # centro desplazado del centro historico, y eso es correcto.
+        assert km < 10, "%s sale a %.0f km de donde esta la ciudad" % (slug, km)
 
 
 def _ejecutar():
