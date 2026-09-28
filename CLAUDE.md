@@ -130,15 +130,27 @@ Google trata la consulta como local, y una web nacional no gana consultas
 locales. El término principal tiene KD 73.
 
 Lo que sí se puede servir de la ITV:
-- **«¿Es obligatorio llevar la pegatina de la ITV?»: 1.600 búsquedas con KD 16**,
-  más 590 de su variante con KD 15. Es la mejor oportunidad individual de todo
-  el estudio, y es el mismo formato que las páginas de distintivos que ya hay.
+- **La pegatina de la ITV: cuatro variantes de la misma pregunta que suman
+  2.930 búsquedas al mes, ninguna por encima de KD 18** (1.600/16, 590/15,
+  480/18, 260/17). Todas se responden con una sola página. Es la mejor
+  oportunidad individual de todo el estudio: más tráfico potencial que
+  `zbe benidorm` con una cuarta parte de la dificultad.
+- **El formato «¿Es obligatorio…?», con 292 preguntas** dentro del racimo. No
+  es una página, es una serie. Son preguntas de normativa con respuesta breve
+  y una norma detrás, que es justo para lo que está montado este sitio. Su CPC
+  es 0,00 $ porque no venden nada, pero traen visitas sin competencia que
+  después pasan por las páginas que sí monetizan.
+- **Tarifas de ITV por comunidad autónoma** (710 búsquedas entre «cuánto cuesta
+  pasar la itv» y «cuánto cuesta la itv»). Mismo patrón que las ZBE: dato
+  público, disperso en diecisiete sitios, que nadie consolida. Para octubre.
 - El grupo «paso», 21.231 palabras, el segundo mayor. Casi con seguridad
   «cuándo pasar la ITV» y «cada cuánto se pasa». Intención deducida del nombre
   del grupo, no comprobada palabra por palabra.
 
-Aviso sobre la cifra: parte del volumen es ruido británico. «what's on itv
-tonight» aparece con 590 búsquedas en la base de España.
+Aviso sobre la cifra: parte del volumen es ruido británico, ya cuantificado.
+Entre las 6.809 preguntas, los grupos `hub` (709), `watch` (531) y `tonight`
+(308) son la cadena de televisión ITV del Reino Unido. Unas 1.500 preguntas
+de cada 6.809 no tienen nada que ver con la inspección de vehículos.
 
 **Lo que NO funciona, comprobado:** la calculadora del IVTM. Las variaciones
 principales son «cómo pagar», «pagar por internet» y «pagar sin recibo», y los
