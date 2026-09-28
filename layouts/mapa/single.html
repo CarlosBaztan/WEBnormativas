@@ -1,0 +1,70 @@
+{{- /*
+  layouts/mapa/single.html — mapa de las ZBE de Espana.
+
+  Leaflet se carga SOLO aqui, no en el bundle global: es la unica pagina del
+  sitio con JavaScript de terceros y no debe lastrar a las demas.
+
+  El GeoJSON se pide despues del primer pintado, para no retrasar el LCP con
+  175 KB que no hacen falta para que la pagina sea legible.
+
+  Sin JavaScript la pagina sigue sirviendo: debajo del mapa va la tabla de
+  municipios enlazada, que es el mismo dato por otra via.
+*/ -}}
+
+{{- define "main" }}
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with .Description }}<div class="post-description">{{ . }}</div>{{ end }}
+  </header>
+
+  {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "compacta") }}
+
+  <div class="post-content md-content">{{ .Content }}</div>
+
+  <div id="mapa-zbe" class="mapa-zbe" role="region"
+       aria-label="Mapa de las zonas de bajas emisiones de Espana">
+    <p class="mapa-zbe__cargando">Cargando el mapa…</p>
+  </div>
+
+  <ul class="mapa-leyenda" aria-label="Leyenda del mapa">
+    <li><span class="mapa-leyenda__muestra mapa-leyenda__muestra--verificado"></span> Reglas verificadas: la ficha responde si puedes circular</li>
+    <li><span class="mapa-leyenda__muestra mapa-leyenda__muestra--parcial"></span> Zona confirmada, reglas sin verificar</li>
+    <li><span class="mapa-leyenda__muestra mapa-leyenda__muestra--pendiente"></span> Solo consta que la zona existe</li>
+  </ul>
+
+  <p class="mapa-atribucion">
+    Perimetros:
+    <a href="https://nap.dgt.es/dataset/zonas-de-bajas-emisiones" rel="noopener external" target="_blank">DGT, Punto de Acceso Nacional<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>,
+    bajo licencia CC-BY. Mapa base:
+    <a href="https://www.openstreetmap.org/copyright" rel="noopener external" target="_blank">OpenStreetMap<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>.
+  </p>
+
+  {{- /* La misma informacion por otra via, siempre visible y no solo en
+         noscript: si el mapa no carga, o si alguien prefiere una tabla,
+         el dato sigue estando a un clic. */}}
+  <p class="mapa-alternativa">
+    ¿Prefieres una lista? Tienes los 45 municipios con su fuente oficial y su
+    estado de verificación en <a href="{{ "/zbe/" | relURL }}">el listado de
+    municipios con ZBE</a>.
+  </p>
+
+  {{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
+</article>
+
+{{- /* Leaflet desde cdnjs. Los hashes de integridad estan CALCULADOS sobre
+       los ficheros reales, no copiados de ningun sitio:
+
+         curl -s URL | openssl dgst -sha512 -binary | openssl base64 -A
+
+       Si se cambia de version hay que recalcularlos, o el navegador bloquea
+       el recurso y el mapa no carga. */}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+      integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+        integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="{{ (resources.Get "js/mapa-zbe.js" | minify | fingerprint).RelPermalink }}" defer></script>
+{{- end }}
