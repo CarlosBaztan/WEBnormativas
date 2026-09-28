@@ -8,6 +8,9 @@ codigo_ine: "28079"
 provincia: "Madrid"
 ccaa: "Comunidad de Madrid"
 
+# activa | prevista | sin_zbe
+estado_zbe: "activa"
+
 fuente_nombre: "Ordenanza 2/2026, de 24 de marzo, que modifica la Ordenanza de Movilidad Sostenible de 5 de octubre de 2018"
 fuente_url: "https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF"
 fuente_boletin: "BOCM núm. 80, de 6 de abril de 2026, págs. 129-219"

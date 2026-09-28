@@ -75,6 +75,38 @@
   {{- /* Trazabilidad arriba: lo primero que se ve es de dónde sale el dato. */}}
   {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "compacta") }}
 
+  {{- /*
+    Dos situaciones distintas que antes se contaban igual:
+
+      - La ZBE existe y esta en vigor, pero no hemos leido su ordenanza.
+        Ahi el aviso correcto es "no lo hemos comprobado".
+      - La ordenanza esta leida de cabo a rabo, pero la zona todavia no esta
+        en vigor. Decir ahi "no hemos contrastado" seria mentir sobre nuestro
+        propio trabajo, y ademas deja al lector sin el dato que importa, que
+        es que hoy no hay nada que cumplir. Caso de Valencia.
+  */ -}}
+  {{- /* Solo con un valor explicito: un campo ausente es un dato que falta,
+       no una afirmacion de que la zona no existe. Madrid no lo declaraba
+       y con `ne "activa"` sus tres zonas activas salian como no vigentes. */ -}}
+  {{- $sinVigor := and $verificado (in (slice "prevista" "sin_zbe") $estadoZbe) }}
+  {{- $reglasSinVerificar = and $reglasSinVerificar (not $sinVigor) }}
+
+  {{- if $sinVigor }}
+  <aside class="aviso aviso--sin-datos" role="note" aria-label="Zona todavia no en vigor">
+    <p class="aviso__titulo">Esta zona de bajas emisiones todavia no esta en vigor</p>
+    <p>
+      {{ if eq $estadoZbe "prevista" -}}
+        El municipio tiene una ordenanza redactada, pero no ha completado su
+        aprobacion. Mientras no este aprobada definitivamente y publicada, no
+        hay restriccion exigible ni sancion posible.
+      {{- else -}}
+        No consta una zona de bajas emisiones en vigor en este municipio.
+      {{- end }}
+    </p>
+    <p>Debajo explicamos que prevé el texto y a quién afectaría, atribuido a ese texto y no presentado como norma vigente. Comprobado el {{ with $p.fecha_verificacion }}{{ . }}{{ end }} en la fuente oficial enlazada.</p>
+  </aside>
+  {{- end }}
+
   {{- if $reglasSinVerificar }}
   <aside class="aviso aviso--sin-datos" role="note" aria-label="Reglas no verificadas">
     <p class="aviso__titulo">Las reglas de acceso de esta ZBE no están verificadas</p>

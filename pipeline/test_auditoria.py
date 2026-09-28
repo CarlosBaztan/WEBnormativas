@@ -68,6 +68,28 @@ def test_un_enlace_que_no_responde_cuenta_como_roto():
     assert len(rotos) == 1
 
 
+def test_una_zbe_prevista_no_tiene_que_declarar_reglas():
+    """
+    Caso real de Valencia (28/09/2026): la ordenanza esta aprobada solo
+    inicialmente y el propio ayuntamiento dice que la aprobacion definitiva
+    sigue pendiente. No hay reglas en vigor que declarar, y exigirlas
+    obligaria a inventarlas o a no publicar una ficha que si aporta.
+
+    Solo se exigen reglas cuando la zona esta activa.
+    """
+    assert not au.exige_reglas({"estado_zbe": "prevista", "codigo_ine": "46250"})
+    assert not au.exige_reglas({"estado_zbe": "sin_zbe", "codigo_ine": "46250"})
+
+
+def test_una_zbe_activa_si_tiene_que_declarar_reglas():
+    assert au.exige_reglas({"estado_zbe": "activa", "codigo_ine": "28079"})
+
+
+def test_un_articulo_no_tiene_que_declarar_reglas():
+    """Sin codigo_ine no es la ficha de un municipio, es un articulo."""
+    assert not au.exige_reglas({"estado_zbe": "activa"})
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0

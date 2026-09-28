@@ -74,6 +74,27 @@ def declara_reglas(texto: str) -> bool:
     return True
 
 
+def exige_reglas(fm: dict) -> bool:
+    """
+    Dice si a esta ficha hay que exigirle reglas de acceso.
+
+    Solo se le exigen a la ficha de un municipio (la distingue codigo_ine)
+    cuya ZBE esta activa. Una zona "prevista" no tiene reglas en vigor que
+    declarar, y exigirselas obligaria a inventarlas o a no publicar una ficha
+    que si aporta.
+
+    Sale del caso de Valencia (28/09/2026): ordenanza aprobada solo
+    inicialmente, con el propio ayuntamiento diciendo que la aprobacion
+    definitiva sigue pendiente. Que eso conste, fechado y con su fuente, es
+    justamente lo que no publica nadie.
+    """
+    if not fm.get("codigo_ine"):
+        return False
+    if fm.get("tipo", "municipio") != "municipio":
+        return False
+    return fm.get("estado_zbe", "") == "activa"
+
+
 def enlaces_rotos(fuentes: dict, comprobador=None) -> list:
     """
     Comprueba que las fuentes citadas siguen en pie.
@@ -171,7 +192,7 @@ def main() -> int:
         #    puede circular. El sello de verificado sobre una pagina que no
         #    responde a nada es peor que no tener la pagina.
         #    codigo_ine distingue la ficha de un municipio de un articulo.
-        if fm.get("codigo_ine") and fm.get("tipo", "municipio") == "municipio":
+        if exige_reglas(fm):
             if not declara_reglas(ruta.read_text(encoding="utf-8")):
                 sin_reglas.append(
                     f"{rel}: verificada pero no declara etiquetas_permitidas ni zonas")
