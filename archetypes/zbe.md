@@ -4,7 +4,14 @@ description: ""
 date: {{ .Date }}
 
 # --- Identificación territorial ---
+# municipio | zona   (una "zona" es una parte de un municipio con reglas
+# propias, como el Distrito Centro de Madrid)
+tipo: "municipio"
 municipio: ""
+# Codigo INE de 5 digitos. OBLIGATORIO para publicar: layouts/index.html
+# rompe el build sin el, y es la clave que cruza las ZBE con los datos de
+# Hacienda. Se consulta en https://www.ine.es/daco/daco42/codmun/codmunmapa.htm
+codigo_ine: ""
 provincia: ""
 ccaa: ""
 
