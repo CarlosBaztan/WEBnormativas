@@ -3,11 +3,11 @@
     "descripcion": "Texto de cobertura que se muestra bajo el selector de municipios de la herramienta.",
     "por_que": "Está aquí y no en la plantilla para poder actualizarlo sin tocar código, según se vayan verificando municipios."
   },
-  "aviso_cobertura": "Verificados: Barcelona, Bilbao, Granada, Madrid y Valencia. En Valencia la ordenanza todavía no está en vigor y lo decimos en su ficha.",
+  "aviso_cobertura": "Con respuesta verificada: Barcelona, Bilbao, Granada, Madrid, Málaga, Valladolid y Zaragoza. Valencia y Benidorm tienen ficha pero todavía no respuesta.",
   "proximos": [
-    "Málaga",
-    "Valladolid",
-    "Zaragoza"
+    "A Coruña",
+    "Palma",
+    "Alicante"
   ],
   "etiqueta_proximos": "Siguientes:"
 }
