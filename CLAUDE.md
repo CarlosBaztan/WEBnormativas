@@ -152,6 +152,20 @@ Entre las 6.809 preguntas, los grupos `hub` (709), `watch` (531) y `tonight`
 (308) son la cadena de televisión ITV del Reino Unido. Unas 1.500 preguntas
 de cada 6.809 no tienen nada que ver con la inspección de vehículos.
 
+**Convención de títulos: se usan las dos formas.** «Zona de Bajas Emisiones
+(ZBE) de Valencia», no solo la sigla. La gente busca de las dos maneras y el
+visitante típico llega después de una multa de 200 euros sin conocer el
+acrónimo. No hay medición del racimo completo de la expresión larga (la
+consulta del 28/09 salió filtrada a preguntas), así que se toma la decisión
+conservadora de cubrir ambas.
+
+**Segunda confirmación de que lo que falta es el mapa.** En las 63 preguntas
+de «zona de bajas emisiones», el grupo mayor es `cual` con 19: «¿cuál es la
+zona de bajas emisiones de Madrid?» (140 búsquedas), «de Granada» (40, KD 13),
+«de Valladolid» (30). La gente no pregunta qué es una ZBE, pregunta **dónde
+está**. Es la misma señal que da el grupo «mapa» con 849 palabras dentro del
+racimo de la sigla, desde una fuente distinta.
+
 **Lo que NO funciona, comprobado:** la calculadora del IVTM. Las variaciones
 principales son «cómo pagar», «pagar por internet» y «pagar sin recibo», y los
 diez primeros resultados son portales tributarios municipales. Quien busca el
