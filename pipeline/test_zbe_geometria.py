@@ -275,6 +275,45 @@ def test_el_resumen_cuenta_aparte_las_zonas_dentro_de_un_municipio():
     assert r["municipios_con_varias_zonas"] >= 2,         "Madrid y Las Rozas tienen varias zonas: %r" % r
 
 
+def _por_slug(coleccion, slug):
+    return [f for f in coleccion["features"] if f["properties"]["slug"] == slug]
+
+
+def test_la_zona_grande_de_madrid_es_envolvente():
+    """
+    Madrid declara el termino municipal entero (1.152 km2) y dentro tiene dos
+    ZBEDEP de 6 y 2. La grande es contexto, no restriccion: el mapa la pinta
+    con trazo discontinuo para que no parezca que toda la ciudad esta cerrada.
+    """
+    zonas = _por_slug(zg.construir_geojson(zg.TOLERANCIA_MAPA), "madrid")
+    envolventes = [z for z in zonas if z["properties"]["envolvente"]]
+    assert len(envolventes) == 1, "solo la mayor: %r" % [
+        (z["properties"]["zona"], z["properties"]["envolvente"]) for z in zonas]
+    assert "ZBEDEP" not in envolventes[0]["properties"]["zona"],         "la envolvente no puede ser una zona de especial proteccion"
+
+
+def test_barcelona_no_es_envolvente_aunque_sea_grande():
+    """
+    La ZBE Rondes de Barcelona es enorme, pero no contiene otra zona mas
+    estricta: es ella misma la que restringe. Con el criterio anterior, que
+    miraba solo el tamano, se pintaba descolorida y daba a entender que ahi no
+    se prohibia nada.
+    """
+    zonas = _por_slug(zg.construir_geojson(zg.TOLERANCIA_MAPA), "rondas-de-barcelona")
+    assert len(zonas) == 1, "el NAP publica una sola zona para las Rondas"
+    assert zonas[0]["properties"]["envolvente"] is False,         "una zona sola nunca es envolvente, mida lo que mida"
+
+
+def test_zonas_hermanas_no_son_envolventes():
+    """
+    Las Rozas tiene cinco zonas de tamano parecido, ninguna dentro de otra.
+    La mayor no es el contexto de las demas.
+    """
+    zonas = _por_slug(zg.construir_geojson(zg.TOLERANCIA_MAPA), "las-rozas")
+    assert len(zonas) > 1, "el caso pierde sentido si solo hay una"
+    assert not any(z["properties"]["envolvente"] for z in zonas),         "ninguna de las cinco contiene a las otras"
+
+
 def _ejecutar():
     fallos = 0
     for nombre, fn in sorted(globals().items()):

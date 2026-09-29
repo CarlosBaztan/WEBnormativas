@@ -37,17 +37,19 @@
   }
 
   /*
-   * Umbral en km2 por encima del cual una zona se considera "de ciudad".
+   * Zonas de contexto.
    *
-   * Madrid tiene una zona de 1.152 km2 (el termino municipal entero) y dos
+   * Madrid declara el termino municipal entero (1.152 km2) y dentro tiene dos
    * ZBEDEP de 6,3 y 1,6. Pintadas igual, las pequenas desaparecen debajo de
    * la grande y el mapa da a entender que toda la ciudad esta restringida,
-   * que no es lo que pasa.
+   * que no es lo que pasa. La grande va con trazo discontinuo y relleno casi
+   * transparente; las pequenas, solidas y por encima.
    *
-   * Las grandes van con trazo discontinuo y relleno casi transparente; las
-   * pequenas, solidas y por encima.
+   * La marca la pone el pipeline, que sabe cuantas zonas tiene cada
+   * municipio. Antes se decidia aqui por tamano, y eso dejaba descolorida la
+   * ZBE Rondes de Barcelona, que es enorme pero no contiene ninguna otra: es
+   * ella misma la que restringe.
    */
-  var UMBRAL_KM2 = 50;
 
   /*
    * Por encima de este nivel de zoom se retiran las chinchetas: ya se esta
@@ -55,14 +57,14 @@
    */
   var ZOOM_SIN_CHINCHETAS = 11;
 
-  function esDeCiudad(p) {
-    return (p.km2 || 0) >= UMBRAL_KM2;
+  function esContexto(p) {
+    return !!p.envolvente;
   }
 
   function estilo(f) {
     var p = f.properties;
     var c = color(p.estado_dato);
-    if (esDeCiudad(p)) {
+    if (esContexto(p)) {
       return { color: c, weight: 1.5, dashArray: '6 5', fillColor: c, fillOpacity: 0.06 };
     }
     return { color: c, weight: 2.5, fillColor: c, fillOpacity: 0.38 };
@@ -82,9 +84,9 @@
     if (p.provincia && p.provincia !== p.municipio) {
       partes.push('<span class="globo-provincia">' + esc(p.provincia) + '</span>');
     }
-    if (p.zona && esDeCiudad(p)) {
+    if (esContexto(p)) {
       partes.push('<span class="globo-nota">Esta zona abarca todo el municipio. ' +
-        'Dentro hay otras con reglas mas estrictas: son las que se ven marcadas encima.</span>');
+        'Dentro hay otras con reglas más estrictas: son las que se ven marcadas encima.</span>');
     }
 
     if (p.url_ficha) {
@@ -140,10 +142,10 @@
    * problema que se quiere evitar.
    */
   function zonasQueImportan(grupo) {
-    var pequenas = grupo.capas.filter(function (c) {
-      return !esDeCiudad(c.feature.properties);
+    var restrictivas = grupo.capas.filter(function (c) {
+      return !esContexto(c.feature.properties);
     });
-    return pequenas.length ? pequenas : grupo.capas;
+    return restrictivas.length ? restrictivas : grupo.capas;
   }
 
   function limitesDe(grupo) {
@@ -300,7 +302,7 @@
             capaZona.bindTooltip(rotulo, { sticky: true });
             // Las pequenas al frente: si no, quedan tapadas por la municipal
             // y no se pueden ni pulsar.
-            if (!esDeCiudad(f.properties)) capaZona.bringToFront();
+            if (!esContexto(f.properties)) capaZona.bringToFront();
             capas.push(capaZona);
           }
         }).addTo(mapa);

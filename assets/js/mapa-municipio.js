@@ -18,14 +18,13 @@
   var DATOS = '/datos/zbe-simplificado.geojson';
 
   /*
-   * Un municipio puede tener varias zonas de tamanos muy distintos. Madrid
-   * tiene el termino municipal entero (1.152 km2) y dos ZBEDEP de 6,3 y 1,6.
-   * Pintadas igual, las pequenas no se ven.
+   * Un municipio puede declarar una zona que envuelve a las demas. Madrid
+   * tiene el termino municipal entero (1.152 km2) y dentro dos ZBEDEP de 6,3
+   * y 1,6: pintadas igual, las pequenas no se ven. La marca la pone el
+   * pipeline, que es quien sabe cuantas zonas tiene cada municipio.
    */
-  var UMBRAL_KM2 = 50;
-
-  function deCiudad(p) {
-    return (p.km2 || 0) >= UMBRAL_KM2;
+  function esContexto(p) {
+    return !!p.envolvente;
   }
 
   /*
@@ -100,7 +99,7 @@
 
         var capa = L.geoJSON(zona, {
           style: function (f) {
-            return deCiudad(f.properties)
+            return esContexto(f.properties)
               ? { color: '#57606a', weight: 1.5, dashArray: '6 5',
                   fillColor: '#57606a', fillOpacity: 0.06 }
               : { color: '#1a7f37', weight: 2.5,
@@ -108,7 +107,7 @@
           },
           onEachFeature: function (f, c) {
             if (f.properties.zona) c.bindTooltip(f.properties.zona, { sticky: true });
-            if (!deCiudad(f.properties)) c.bringToFront();
+            if (!esContexto(f.properties)) c.bringToFront();
           }
         }).addTo(mapa);
 
@@ -117,9 +116,9 @@
          * municipal dejaria las ZBEDEP como dos puntos invisibles, que es
          * justo el problema que este encuadre viene a resolver.
          */
-        var pequenas = zona.filter(function (f) { return !deCiudad(f.properties); });
-        var referencia = pequenas.length
-          ? L.geoJSON(pequenas).getBounds()
+        var restrictivas = zona.filter(function (f) { return !esContexto(f.properties); });
+        var referencia = restrictivas.length
+          ? L.geoJSON(restrictivas).getBounds()
           : capa.getBounds();
 
         function encuadra() {

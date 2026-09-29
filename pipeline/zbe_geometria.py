@@ -195,6 +195,34 @@ def _ficha_de(slug):
     return "/zbe/%s/" % slug, (m.group(1) if m else "pendiente")
 
 
+# Cuanto mayor tiene que ser una zona respecto de la siguiente para
+# considerarla el contexto de las demas y no una restriccion mas. Madrid esta
+# en 183 veces; Las Rozas, donde las cinco zonas son hermanas, en 1,19.
+FACTOR_ENVOLVENTE = 5.0
+
+
+def indice_envolvente(areas):
+    """
+    Devuelve la posicion de la zona que hace de contexto, o None si no hay.
+
+    Una zona es envolvente cuando el municipio declara varias y ella contiene
+    a las demas. No se comprueba la contencion geometrica: basta con que sea
+    la mayor por un margen amplio, que es como se presenta el unico caso real
+    (Madrid, 1.152 km2 frente a 6,3 de Distrito Centro).
+
+    El criterio anterior miraba solo el tamano absoluto, y dejaba la ZBE
+    Rondes de Barcelona pintada en gris casi transparente pese a ser ella
+    misma la que restringe: no tiene ninguna zona dentro.
+    """
+    if len(areas) < 2:
+        return None
+    orden = sorted(range(len(areas)), key=lambda i: -areas[i])
+    mayor, segunda = areas[orden[0]], areas[orden[1]]
+    if segunda <= 0 or mayor < segunda * FACTOR_ENVOLVENTE:
+        return None
+    return orden[0]
+
+
 def construir_geojson(tolerancia=None):
     """
     Monta la coleccion completa: UNA FEATURE POR ZONA, no por municipio.
@@ -227,9 +255,11 @@ def construir_geojson(tolerancia=None):
 
         url, estado = _ficha_de(slug)
         varias = len(zonas) > 1
+        areas = [extension_km2(z) for z in zonas]
+        envolvente = indice_envolvente(areas)
 
-        for zona in zonas:
-            km2 = extension_km2(zona)
+        for indice_zona, zona in enumerate(zonas):
+            km2 = areas[indice_zona]
             anillos = zona["anillos"]
             if tolerancia:
                 anillos = [simplificar(a, tolerancia) for a in anillos]
@@ -256,6 +286,10 @@ def construir_geojson(tolerancia=None):
                     "zona": zona["nombre"] if varias else "",
                     "provincia": m.get("provincia", ""),
                     "km2": round(km2, 2),
+                    # Marca la zona que solo sirve de contexto: el mapa la
+                    # dibuja con trazo discontinuo para no dar a entender que
+                    # toda la ciudad esta cerrada.
+                    "envolvente": indice_zona == envolvente,
                     "estado_dato": estado,
                     "url_ficha": url,
                     "fuente_nombre": m.get("fuente_nombre", ""),
