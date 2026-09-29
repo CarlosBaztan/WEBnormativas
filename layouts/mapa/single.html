@@ -23,10 +23,39 @@
 
   <div class="post-content md-content">{{ .Content }}</div>
 
+  {{- /* Los recuentos salen de data/zbe_resumen.json, que escribe el propio
+         pipeline. Escritos a mano se quedaron viejos: la pagina decia "45
+         zonas" despues de que Madrid pasara a tener tres. */}}
+  {{- with site.Data.zbe_resumen }}
+  <p class="mapa-recuento">
+    <strong>{{ .zonas }} zonas</strong> repartidas en <strong>{{ .municipios }} municipios</strong>.
+    {{ .municipios_con_varias_zonas }} de ellos tienen más de una zona, con reglas
+    distintas dentro de la misma ciudad.
+  </p>
+  {{- end }}
+
+  {{- /* Va oculto hasta que el JavaScript lo llena con los municipios: un
+         desplegable vacio seria peor que no tenerlo. */}}
+  <div class="mapa-ir" hidden>
+    <label for="mapa-ir-select">Ir a un municipio</label>
+    <select id="mapa-ir-select">
+      <option value="">Elige un municipio…</option>
+    </select>
+    <button type="button" class="mapa-ir__todo">Ver toda España</button>
+  </div>
+
   <div id="mapa-zbe" class="mapa-zbe" role="region"
        aria-label="Mapa de las zonas de bajas emisiones de Espana">
     <p class="mapa-zbe__cargando">Cargando el mapa…</p>
   </div>
+
+  <p class="mapa-ayuda">
+    Para ampliar el mapa: rueda del ratón con <kbd>Ctrl</kbd> pulsado
+    (<kbd>Cmd</kbd> en Mac), doble clic, o los botones <kbd>+</kbd> y
+    <kbd>−</kbd>. En el móvil, pellizca con dos dedos, y con dos dedos
+    también se mueve. El botón de las cuatro esquinas lo abre a pantalla
+    completa.
+  </p>
 
   <ul class="mapa-leyenda" aria-label="Leyenda del mapa">
     <li><span class="mapa-leyenda__muestra mapa-leyenda__muestra--verificado"></span> Reglas verificadas: la ficha responde si puedes circular</li>
@@ -58,8 +87,8 @@
          noscript: si el mapa no carga, o si alguien prefiere una tabla,
          el dato sigue estando a un clic. */}}
   <p class="mapa-alternativa">
-    ¿Prefieres una lista? Tienes los 45 municipios con su fuente oficial y su
-    estado de verificación en <a href="{{ "/zbe/" | relURL }}">el listado de
+    ¿Prefieres una lista? Tienes los {{ with site.Data.zbe_resumen }}{{ .municipios }}{{ end }}
+    municipios con su fuente oficial y su estado de verificación en <a href="{{ "/zbe/" | relURL }}">el listado de
     municipios con ZBE</a>.
   </p>
 
@@ -79,5 +108,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
         integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="{{ (resources.Get "js/mapa-gestos.js" | minify | fingerprint).RelPermalink }}" defer></script>
 <script src="{{ (resources.Get "js/mapa-zbe.js" | minify | fingerprint).RelPermalink }}" defer></script>
 {{- end }}

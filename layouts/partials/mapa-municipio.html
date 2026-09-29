@@ -16,12 +16,17 @@
 */ -}}
 
 {{- $slug := .File.ContentBaseName }}
-{{- $geo := resources.Get "../static/datos/zbe-simplificado.geojson" }}
 
 <div id="mapa-municipio" class="mapa-municipio" data-slug="{{ $slug }}"
      role="region" aria-label="Perimetro de la zona de bajas emisiones de {{ .Params.municipio | default .Title }}">
   <p class="mapa-zbe__cargando">Cargando el perímetro…</p>
 </div>
+
+<p class="mapa-ayuda">
+  Puedes moverlo y ampliarlo: rueda con <kbd>Ctrl</kbd> pulsado
+  (<kbd>Cmd</kbd> en Mac), doble clic, o dos dedos en el móvil. El botón de
+  las cuatro esquinas lo abre a pantalla completa.
+</p>
 
 <p class="mapa-atribucion">
   Perímetro:
@@ -37,4 +42,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
         integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="{{ (resources.Get "js/mapa-gestos.js" | minify | fingerprint).RelPermalink }}" defer></script>
 <script src="{{ (resources.Get "js/mapa-municipio.js" | minify | fingerprint).RelPermalink }}" defer></script>

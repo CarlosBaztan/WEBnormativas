@@ -4,6 +4,8 @@
    plantilla, para no meterlo en el bundle global. */
 
 .mapa-zbe {
+  /* Ancla del rotulo de gestos y de la clase que amplia a pantalla completa. */
+  position: relative;
   height: min(70vh, 560px);
   margin: 1.5rem 0 1rem;
   border: 1px solid var(--border);
@@ -119,6 +121,7 @@
 /* --- Mapa dentro de una ficha ------------------------------------------ */
 
 .mapa-municipio {
+  position: relative;
   height: 320px;
   margin: 1.25rem 0 0.5rem;
   border: 1px solid var(--border);
@@ -150,4 +153,142 @@
 .mapa-leyenda--tipos .mapa-leyenda__muestra--especial {
   color: var(--secondary);
   background: color-mix(in srgb, currentColor 38%, transparent);
+}
+
+/* --- Gestos, pantalla completa y buscador ------------------------------ */
+
+/* Rotulo que aparece cuando alguien usa la rueda o un solo dedo sobre el
+   mapa. Es decorativo: el mismo texto esta escrito en la pagina. */
+.mapa-gesto {
+  position: absolute;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+  pointer-events: none;
+}
+
+.mapa-gesto--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mapa-gesto { transition: none; }
+}
+
+/* Pantalla completa sin la API del navegador: Safari en iPhone no la admite
+   fuera de los videos. */
+.mapa--ampliado {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+body.mapa-ampliado-activo {
+  overflow: hidden;
+}
+
+/* Los botones propios, con el mismo aspecto que los de Leaflet. */
+.mapa-ampliar a,
+.mapa-volver a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: #333;
+}
+
+:root[data-theme="dark"] .mapa-ampliar a,
+:root[data-theme="dark"] .mapa-volver a {
+  background: var(--entry);
+  color: var(--primary);
+  border-color: var(--border);
+}
+
+/* Buscador de municipio. Va oculto hasta que el JavaScript lo llena: un
+   desplegable vacio seria peor que no tenerlo. */
+.mapa-ir {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 1.5rem 0 0;
+}
+
+.mapa-ir label {
+  font-weight: 600;
+}
+
+.mapa-ir select {
+  flex: 1 1 14rem;
+  min-width: 0;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+  color: var(--primary);
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.mapa-ir__todo {
+  padding: 0.45rem 0.8rem;
+  font: inherit;
+  color: var(--primary);
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.mapa-ir__todo:hover {
+  border-color: var(--secondary);
+}
+
+/* Instrucciones de manejo. Siempre visibles, tambien para quien no llega a
+   ver el rotulo flotante. */
+.mapa-ayuda {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin: 0.4rem 0 0;
+}
+
+@media print {
+  .mapa-ir,
+  .mapa-ayuda { display: none; }
+}
+
+/* `display: flex` de autor gana al `display: none` que el navegador aplica a
+   [hidden], asi que el buscador se veria vacio antes de llenarse. */
+.mapa-ir[hidden] {
+  display: none;
+}
+
+.mapa-recuento {
+  margin: 1.5rem 0 0;
+}
+
+.mapa-ayuda kbd {
+  padding: 0.05em 0.35em;
+  font-family: inherit;
+  font-size: 0.9em;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--code-bg);
 }

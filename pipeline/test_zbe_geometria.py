@@ -249,6 +249,32 @@ def test_cada_zona_sabe_de_que_municipio_es():
         assert z["slug_municipio"] == "madrid", z
 
 
+def test_el_resumen_distingue_zonas_de_municipios():
+    """
+    La pagina del mapa decia "45 zonas" cuando hay 57 zonas en 45 municipios.
+    El numero se escribia a mano y se quedo viejo al separar las zonas de
+    Madrid. El resumen existe para que la plantilla no tenga que escribirlo.
+    """
+    r = zg.resumen(zg.construir_geojson(zg.TOLERANCIA_MAPA))
+    assert r["zonas"] > r["municipios"],         "si fueran iguales el resumen no aportaria nada: %r" % r
+    assert r["municipios"] == 45, "el NAP publica 45 municipios, no %d" % r["municipios"]
+
+
+def test_el_resumen_cuenta_las_zonas_que_hay_en_la_coleccion():
+    coleccion = zg.construir_geojson(zg.TOLERANCIA_MAPA)
+    r = zg.resumen(coleccion)
+    assert r["zonas"] == len(coleccion["features"]),         "%d contadas frente a %d en el fichero" % (r["zonas"], len(coleccion["features"]))
+
+
+def test_el_resumen_cuenta_aparte_las_zonas_dentro_de_un_municipio():
+    """
+    Las ZBEDEP de Madrid son las que de verdad restringen. Saber cuantas hay
+    permite decirlo en la pagina sin volver a escribir el numero a mano.
+    """
+    r = zg.resumen(zg.construir_geojson(zg.TOLERANCIA_MAPA))
+    assert r["municipios_con_varias_zonas"] >= 2,         "Madrid y Las Rozas tienen varias zonas: %r" % r
+
+
 def _ejecutar():
     fallos = 0
     for nombre, fn in sorted(globals().items()):

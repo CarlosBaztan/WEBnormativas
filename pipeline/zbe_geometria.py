@@ -413,6 +413,33 @@ SALIDA_COMPLETA = os.path.join(RAIZ, "static", "datos", "zbe.geojson")
 SALIDA_MAPA = os.path.join(RAIZ, "static", "datos", "zbe-simplificado.geojson")
 
 
+import datetime
+
+SALIDA_RESUMEN = os.path.join(RAIZ, "data", "zbe_resumen.json")
+
+
+def resumen(coleccion):
+    """
+    Cuenta lo que hay en la coleccion para que la plantilla no tenga que
+    escribir el numero a mano.
+
+    La pagina del mapa decia "45 zonas" porque ese era el numero cuando cada
+    municipio era una sola figura. Al separar las tres zonas de Madrid pasaron
+    a ser 57 en 45 municipios, y el texto se quedo viejo sin que nada avisara.
+    """
+    zonas = coleccion["features"]
+    por_municipio = {}
+    for f in zonas:
+        slug = f["properties"]["slug"]
+        por_municipio[slug] = por_municipio.get(slug, 0) + 1
+    return {
+        "zonas": len(zonas),
+        "municipios": len(por_municipio),
+        "municipios_con_varias_zonas": sum(1 for n in por_municipio.values() if n > 1),
+        "generado": datetime.date.today().isoformat(),
+    }
+
+
 def _escribir(ruta, coleccion, compacto):
     separadores = (",", ":") if compacto else (", ", ": ")
     with io.open(ruta, "w", encoding="utf-8", newline="\n") as fh:
@@ -430,6 +457,11 @@ def main():
     # descarga el navegador en cada visita, asi que va compacta.
     a = _escribir(SALIDA_COMPLETA, completa, compacto=False)
     b = _escribir(SALIDA_MAPA, simple, compacto=True)
+
+    # El resumen va a data/ para que Hugo lo lea sin plugins: es la unica via
+    # de que los numeros de la pagina del mapa no se queden viejos.
+    with io.open(SALIDA_RESUMEN, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(resumen(simple), ensure_ascii=False, indent=2))
 
     puntos = lambda c: sum(
         len(anillo)
