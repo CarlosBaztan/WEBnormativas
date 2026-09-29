@@ -91241,13 +91241,13 @@
       "properties": {
         "slug": "rondas-de-barcelona", 
         "id_zona": "rondas-de-barcelona-0", 
-        "municipio": "Rondas de Barcelona", 
+        "municipio": "Barcelona (ZBE Rondas)", 
         "zona": "", 
         "provincia": "", 
         "km2": 179.43, 
         "envolvente": false, 
         "estado_dato": "verificado", 
-        "url_ficha": "/zbe/rondas-de-barcelona/", 
+        "url_ficha": "/zbe/barcelona/", 
         "fuente_nombre": "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)", 
         "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/RondasDeBarcelona.xml", 
         "fecha_descarga": "2026-09-23"

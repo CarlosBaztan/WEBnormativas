@@ -212,6 +212,12 @@ Al 28/09/2026.
 - [x] Fase 4: GitHub y Cloudflare Workers. En producción en
       `webnormativas.bi-ia-carlosbaz.workers.dev`, con `noindex` puesto.
 - [x] Estudio de palabras clave (ver la sección de datos de búsqueda)
+- [x] Mapa: gestos, pantalla completa y chinchetas por municipio. Los
+      recuentos de `/mapa/` salen de `data/zbe_resumen.json`, que escribe el
+      pipeline, para que no vuelvan a quedarse viejos.
+- [x] Ficha de Barcelona reescrita con la ordenanza de 2023 leída en el BOPB
+      (21/02/2023, CVE 202310032045), artículo por artículo. Publicada en
+      `/zbe/barcelona/`.
 - [x] Hoja de ruta de tres días:
       `docs/superpowers/plans/2026-09-25-hoja-de-ruta-3-dias.md`
 - [ ] **Dominio: elegido, sin comprar.** Ver abajo. Es lo único que bloquea
@@ -304,6 +310,21 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   en el futuro, y `buildFuture = false` descarta la página **en silencio**:
   no aparece, no hay aviso, y el build termina en verde. Pasó con Granada y
   Barcelona. Resuelto con `timeZone = "Europe/Madrid"`.
+- **Renombrar una ficha rompe tres cruces, y los tres en silencio.** El slug
+  de `data/zbe.json` sale del nombre del fichero XML del NAP, que la DGT pone
+  a su gusto: la ZBE de Barcelona viene como `rondas-de-barcelona` y la ficha
+  se publica en `/zbe/barcelona/`. Tres sitios cruzan ficha y dato y ninguno
+  avisa cuando dejan de encajar: `_ficha_de()` en `zbe_geometria.py` (el mapa
+  enlaza a un 404), `$verificadas` en `layouts/zbe/list.html` (la fila pierde
+  el enlace y la marca de verificada) y el `data-slug` de
+  `partials/mapa-municipio.html` (la ficha se queda sin mapa). Resuelto con
+  `slug_nap` en el front matter y la tabla `FICHAS` del pipeline. El build
+  termina en verde en los tres casos.
+- **El GeoJSON se sirve en una URL fija, sin huella.** Al regenerarlo, el
+  navegador sigue dando el anterior hasta que caduca su copia. Si una prueba
+  en local no refleja un cambio del pipeline, recargar sin cache antes de
+  buscar el fallo en el codigo.
+
 - **`disableKinds` debe ir en la raíz de `hugo.toml`**, antes de cualquier cabecera
   `[tabla]`. Si va después, TOML la anida dentro de esa tabla y deja de aplicarse
   en silencio.

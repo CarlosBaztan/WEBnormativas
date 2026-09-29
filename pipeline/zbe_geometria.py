@@ -175,6 +175,23 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(RAIZ, "pipeline", "estado", "cache")
 
 
+# El NAP nombra sus ficheros como le conviene a la DGT y de ahi sale el slug
+# de cada zona. Cuando la ficha se publica con otro nombre, la equivalencia va
+# aqui: si no, el mapa enlaza a un 404.
+FICHAS = {
+    # RondasDeBarcelona.xml. La pagina se llama Barcelona porque es como la
+    # busca la gente, y porque la ordenanza que se cita es la de la ciudad.
+    "rondas-de-barcelona": "barcelona",
+}
+
+# Nombre con el que sale la zona en el mapa. El selector ordena los 45
+# municipios alfabeticamente, y con el nombre del NAP la segunda ciudad del
+# pais quedaba en la erre, donde nadie la busca.
+NOMBRES = {
+    "rondas-de-barcelona": "Barcelona (ZBE Rondas)",
+}
+
+
 def _ficha_de(slug):
     """
     Devuelve (url, estado_dato) de la ficha publicada de ese municipio, o
@@ -183,6 +200,7 @@ def _ficha_de(slug):
     La URL no se construye a ciegas: si el fichero no existe o es borrador, el
     mapa enlazaria a un 404. Preferible que la zona salga sin enlace.
     """
+    slug = FICHAS.get(slug, slug)
     ruta = os.path.join(RAIZ, "content", "zbe", slug + ".md")
     if not os.path.exists(ruta):
         return None, "pendiente"
@@ -280,7 +298,7 @@ def construir_geojson(tolerancia=None):
                 "properties": {
                     "slug": slug,
                     "id_zona": "%s-%d" % (slug, zona["indice"]),
-                    "municipio": m.get("municipio", slug),
+                    "municipio": NOMBRES.get(slug, m.get("municipio", slug)),
                     # El nombre que le da el ayuntamiento. Solo se muestra
                     # aparte cuando el municipio tiene mas de una.
                     "zona": zona["nombre"] if varias else "",

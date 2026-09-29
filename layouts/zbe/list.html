@@ -14,11 +14,18 @@
 
 {{- define "main" }}
 
-{{- /* Fichas verificadas, indexadas por slug. */ -}}
+{{- /* Fichas verificadas, indexadas por el slug que usa data/zbe.json.
+
+       Normalmente coincide con el nombre del fichero, pero el NAP llama a sus
+       ficheros como le conviene a la DGT: la ZBE de Barcelona viene como
+       "rondas-de-barcelona" y la ficha se publica en /zbe/barcelona/. Cuando
+       no coinciden, la ficha lo declara con slug_nap. Sin esto, la fila de la
+       tabla pierde el enlace y la marca de verificada, en silencio. */ -}}
 {{- $verificadas := dict }}
 {{- range where (where site.RegularPages "Section" "zbe") "Params.estado_dato" "verificado" }}
   {{- if eq (.Params.tipo | default "municipio") "municipio" }}
-    {{- $verificadas = merge $verificadas (dict .File.ContentBaseName .) }}
+    {{- $clave := .Params.slug_nap | default .File.ContentBaseName }}
+    {{- $verificadas = merge $verificadas (dict $clave .) }}
   {{- end }}
 {{- end }}
 

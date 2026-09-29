@@ -15,7 +15,10 @@
   o el navegador bloquea el recurso.
 */ -}}
 
-{{- $slug := .File.ContentBaseName }}
+{{- /* El slug que cruza con el GeoJSON es el del NAP, que no siempre coincide
+       con el nombre del fichero: la ZBE de Barcelona viene como
+       "rondas-de-barcelona" y la ficha se publica en /zbe/barcelona/. */ -}}
+{{- $slug := .Params.slug_nap | default .File.ContentBaseName }}
 
 <div id="mapa-municipio" class="mapa-municipio" data-slug="{{ $slug }}"
      role="region" aria-label="Perimetro de la zona de bajas emisiones de {{ .Params.municipio | default .Title }}">

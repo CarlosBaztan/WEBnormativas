@@ -314,6 +314,30 @@ def test_zonas_hermanas_no_son_envolventes():
     assert not any(z["properties"]["envolvente"] for z in zonas),         "ninguna de las cinco contiene a las otras"
 
 
+def test_el_mapa_enlaza_la_ficha_de_barcelona_por_el_nombre_de_la_ciudad():
+    """
+    El NAP publica el fichero como RondasDeBarcelona.xml y de ahi salia el
+    slug de la ficha. Pero la pagina se publica en /zbe/barcelona/, que es
+    como la busca la gente, asi que el enlace del mapa tiene que apuntar ahi
+    o sera un 404.
+    """
+    zonas = _por_slug(zg.construir_geojson(zg.TOLERANCIA_MAPA), "rondas-de-barcelona")
+    assert zonas, "el NAP publica la zona de las Rondas"
+    assert zonas[0]["properties"]["url_ficha"] == "/zbe/barcelona/",         zonas[0]["properties"]["url_ficha"]
+
+
+def test_barcelona_se_encuentra_por_la_B_en_el_selector():
+    """
+    El selector del mapa ordena los 45 municipios alfabeticamente. Con el
+    nombre que trae el NAP, "Rondas de Barcelona", la segunda ciudad del pais
+    quedaba en la erre y no habia forma de dar con ella.
+    """
+    zonas = _por_slug(zg.construir_geojson(zg.TOLERANCIA_MAPA), "rondas-de-barcelona")
+    nombre = zonas[0]["properties"]["municipio"]
+    assert nombre.startswith("Barcelona"), nombre
+    assert "Rondas" in nombre, "no se puede perder el nombre que le da la DGT: %s" % nombre
+
+
 def _ejecutar():
     fallos = 0
     for nombre, fn in sorted(globals().items()):
