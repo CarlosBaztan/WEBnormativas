@@ -461,7 +461,10 @@ a.pc-vz__zona:focus-visible {
   box-shadow: inset 3px 0 0 var(--primary);
 }
 
-.pc-distintivo--itv .pc-distintivo__valor { font-size: 1.6rem; }
+/* Estaba en 1,6rem (25,6 px), por encima del titular del veredicto: la
+   premisa pesaba mas que la respuesta, igual que pasaba con el distintivo
+   en la herramienta de las ZBE. */
+.pc-distintivo--itv .pc-distintivo__valor { font-size: var(--txt-lg); }
 
 /* --- "¿Está mi calle dentro de una ZBE?" ------------------------------ */
 
@@ -582,4 +585,39 @@ a.pc-vz__zona:focus-visible {
 .itv-tramo--actual {
   background: transparent;
   box-shadow: inset 4px 0 0 var(--caja-acento);
+}
+
+/* ------------------------------------------------------------------------
+   BLOQUE "QUE HACE Y QUE NO HACE ESTA HERRAMIENTA"
+
+   Aparece en /itv/pegatina/, /itv/cuando-me-toca/ y /zbe/mi-calle/, y no
+   tenia ni una regla: su <h2> caia al valor por defecto del navegador, 27 px,
+   mientras el resto de titulos de la misma pagina estaban a 32. Era el mismo
+   fallo que la clase md-content ausente, pero por otra via.
+
+   No es un titulo de articulo, es el rotulo de un bloque que habla de la
+   herramienta, asi que va por debajo de los de la prosa y por encima del
+   cuerpo. Y lleva filete arriba, que es lo que lo separa: no hace falta
+   meterlo en una caja.
+   ------------------------------------------------------------------------ */
+
+.pc-descargo {
+  margin: var(--sp-8) 0 var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--caja-borde);
+}
+
+.pc-descargo h2 {
+  margin: 0 0 var(--sp-3);
+  font-size: var(--txt-xl);
+  line-height: var(--lh-titular);
+}
+
+.pc-descargo p {
+  margin: 0 0 var(--sp-3);
+  line-height: var(--lh-lectura);
+}
+
+.pc-descargo p:last-child {
+  margin-bottom: 0;
 }

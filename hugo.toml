@@ -54,6 +54,12 @@ disableKinds = ["taxonomy", "term"]
   author = "Normativa del vehículo"
   defaultTheme = "auto"
   ShowReadingTime = false
+  # Bajo cada tarjeta de las listas salia "23 de septiembre de 2026 ·
+  # Normativa del vehiculo": el nombre del propio sitio en el que ya estas, y
+  # una fecha que NO es la de verificacion, que es la unica que importa aqui y
+  # que va en su recuadro dentro de cada ficha. Dos datos que no aportan y una
+  # fecha que se puede confundir con la que si cuenta.
+  hideMeta = true
   ShowShareButtons = false
   ShowPostNavLinks = true
   ShowBreadCrumbs = true

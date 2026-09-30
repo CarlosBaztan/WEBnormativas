@@ -95,11 +95,21 @@
     var primerTramo = noExentos.length ? noExentos[0] : null;
     var primeraITV = primerTramo ? sumaAnios(matriculacion, primerTramo.desde_anios) : null;
 
+    /*
+     * Este bloque es la PREMISA, no la respuesta.
+     *
+     * Antes repetia aqui la periodicidad (per.nombre) y la volvia a decir el
+     * veredicto tres lineas mas abajo, ademas con un cuerpo mayor: la copia
+     * pesaba mas que el original. Con los recuadros de antes parecian dos
+     * cosas distintas; en cuanto se quitaron, la duplicacion quedo a la
+     * vista. Aqui va lo que se ha deducido del formulario, y la respuesta
+     * se da una sola vez.
+     */
     var partes = ['<div class="pc-distintivo pc-distintivo--itv"><div class="pc-distintivo__texto">'];
-    partes.push('<p class="pc-distintivo__etiqueta">' + esc(cat.nombre) +
-      ' (' + esc(cat.categoria_legal) + '), matriculado hace ' + Math.floor(anios) + ' años</p>');
-    partes.push('<p class="pc-distintivo__valor">' + esc(per.nombre) + '</p>');
-    partes.push('<p class="pc-distintivo__color">' + esc(per.explicacion) + '</p>');
+    partes.push('<p class="pc-distintivo__etiqueta">Tu vehículo</p>');
+    partes.push('<p class="pc-distintivo__valor">' + esc(cat.nombre) + '</p>');
+    partes.push('<p class="pc-distintivo__color">' + esc(cat.categoria_legal) +
+      ', matriculado hace ' + Math.floor(anios) + ' años</p>');
     partes.push('</div></div>');
 
     if (exento && primeraITV) {
@@ -114,6 +124,9 @@
       partes.push('<div class="pc-veredicto pc-veredicto--cond">');
       partes.push('<p class="pc-veredicto__pregunta">¿Cuándo te toca?</p>');
       partes.push('<p class="pc-veredicto__titular">' + esc(per.nombre) + '</p>');
+      if (per.explicacion) {
+        partes.push('<p class="pc-veredicto__detalle">' + esc(per.explicacion) + '</p>');
+      }
       partes.push('<p class="pc-veredicto__nota"><strong>La fecha exacta está en la tarjeta ITV de tu vehículo.</strong> ' +
         'Se cuenta desde la última inspección que pasaste, no desde la matriculación, ' +
         'así que esta herramienta no puede saberla: lo que te dice es cada cuánto te toca.</p>');
