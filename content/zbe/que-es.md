@@ -56,12 +56,15 @@ Es también la razón por la que verificamos ordenanza por ordenanza en vez de p
 
 ## Qué pasa si entras sin poder
 
-Es una **infracción grave** de tráfico. Lo explicamos en detalle en **[multas por entrar en una ZBE](/multas/zbe/)**.
+Es una **infracción grave** de tráfico, de 200 euros y sin pérdida de puntos. Lo explicamos en detalle en **[multas por entrar en una ZBE](/multas/zbe/)**.
+
+Y si te preguntas cómo se enteran, la respuesta es una cámara que lee tu matrícula y la coteja con el Registro de Vehículos: **[cómo funcionan las cámaras de las ZBE](/zbe/camaras/)**.
 
 ## Siguiente paso
 
 - **[Qué etiqueta tiene mi coche](/etiquetas/)**
 - **[Municipios con ZBE](/zbe/)**
+- **[Cómo funcionan las cámaras de las ZBE](/zbe/camaras/)**
 - **[Excepciones: residentes, movilidad reducida, históricos](/zbe/excepciones/)**
 
 ---

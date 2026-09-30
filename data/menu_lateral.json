@@ -24,6 +24,7 @@
         { "texto": "¿Está mi calle en una ZBE?", "url": "/zbe/mi-calle/" },
         { "texto": "Listado de municipios", "url": "/zbe/" },
         { "texto": "Qué es una ZBE", "url": "/zbe/que-es/" },
+        { "texto": "Cómo funcionan las cámaras", "url": "/zbe/camaras/" },
         { "texto": "Excepciones", "url": "/zbe/excepciones/" },
         { "texto": "ZBE de Madrid", "url": "/zbe/madrid/" }
       ]

@@ -60,7 +60,25 @@
 */ -}}
 {{- $porZonas := and $p.zonas (gt (len $p.zonas) 0) }}
 
-{{- $reglasSinVerificar := and (not $porZonas) (or (not $verificado) (eq (len $etiquetas) 0)) }}
+{{- /*
+  En la seccion zbe/ no solo viven fichas de municipio: conviven con articulos
+  («que es una ZBE», «excepciones», «camaras») y con paginas de herramienta
+  («mi calle»). Todas caen en esta plantilla, porque Hugo elige la plantilla
+  por seccion y no por lo que la pagina sea.
+
+  Sin esta distincion, un articulo salia coronado con el aviso «Las reglas de
+  acceso de esta ZBE no estan verificadas» y con la tabla «Lo que consta en la
+  normativa» rellena de «No consta». Es decir: el sitio proclamaba que no habia
+  verificado una zona que ni siquiera existia, en paginas que si estan
+  verificadas de cabo a rabo. Peor que feo, es exactamente el tipo de mensaje
+  que resta credibilidad a un sitio cuyo argumento es la fiabilidad.
+
+  `tipo` vale por defecto "municipio", como en layouts/index.html, para que
+  las fichas antiguas que no lo declaran (Madrid) sigan comportandose igual.
+*/ -}}
+{{- $esFicha := in (slice "municipio" "zona") ($p.tipo | default "municipio") }}
+
+{{- $reglasSinVerificar := and $esFicha (not $porZonas) (or (not $verificado) (eq (len $etiquetas) 0)) }}
 
 <article class="post-single ficha-zbe">
 
@@ -88,7 +106,7 @@
   {{- /* Solo con un valor explicito: un campo ausente es un dato que falta,
        no una afirmacion de que la zona no existe. Madrid no lo declaraba
        y con `ne "activa"` sus tres zonas activas salian como no vigentes. */ -}}
-  {{- $sinVigor := and $verificado (in (slice "prevista" "sin_zbe") $estadoZbe) }}
+  {{- $sinVigor := and $esFicha $verificado (in (slice "prevista" "sin_zbe") $estadoZbe) }}
   {{- $reglasSinVerificar = and $reglasSinVerificar (not $sinVigor) }}
 
   {{- if $sinVigor }}
@@ -109,7 +127,7 @@
 
   {{- /* El perimetro, debajo de la trazabilidad: primero de donde sale el
          dato, despues el dibujo. Se pinta solo si hay geometria. */}}
-  {{ partial "mapa-municipio.html" . }}
+  {{ if $esFicha }}{{ partial "mapa-municipio.html" . }}{{ end }}
 
   {{- if $reglasSinVerificar }}
   <aside class="aviso aviso--sin-datos" role="note" aria-label="Reglas no verificadas">
@@ -127,7 +145,7 @@
   </aside>
   {{- end }}
 
-  {{- if not $porZonas }}
+  {{- if and $esFicha (not $porZonas) }}
   <section class="ficha-datos" aria-labelledby="titulo-datos">
     <h2 id="titulo-datos">Lo que consta en la normativa</h2>
 
