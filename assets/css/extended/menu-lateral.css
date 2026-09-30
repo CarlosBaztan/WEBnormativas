@@ -157,7 +157,7 @@
   text-decoration: none;
 }
 
-.boton-buscar__texto { font-size: 0.9rem; }
+.boton-buscar__texto { font-size: var(--txt-sm); }
 
 /* Por debajo del punto en que aparece la columna, la cabecera se queda en
    una sola fila: el menú de secciones se consulta desde el panel, que ya
@@ -291,7 +291,7 @@
 /* Una sola tipografía en todo el menú: mismo tamaño y misma caja para los
    títulos de grupo y para los enlaces. Solo cambian el peso y el sangrado. */
 .menu-lateral__grupos {
-  font-size: 0.95rem;
+  font-size: var(--txt-sm);
   line-height: 1.4;
 }
 

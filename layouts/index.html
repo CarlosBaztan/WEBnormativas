@@ -6,7 +6,7 @@
     <p class="post-description">{{ .Description }}</p>
   </header>
 
-  <div class="post-content">
+  <div class="post-content md-content">
 
     {{/*
       ------------------------------------------------------------------
@@ -133,8 +133,13 @@
     {{- $imgs := dict }}
     {{- range $clave, $d := site.Data.etiquetas_dgt.distintivos }}
       {{- with resources.Get (printf "img/distintivos/%s.png" (lower $clave)) }}
-        {{- $x1 := .Resize "72x png Lanczos" }}
-        {{- $x2 := .Resize "144x png Lanczos" }}
+        {{- /* 48 px, no 72: la pegatina sostenia visualmente un recuadro que
+               ya no existe. Ahora acompana al rotulo en vez de anunciarlo.
+               El tamano se cambia AQUI y no solo en el CSS porque los
+               atributos width y height del <img> salen de estas medidas y
+               son los que reservan el hueco contra los saltos de maqueta. */}}
+        {{- $x1 := .Resize "48x png Lanczos" }}
+        {{- $x2 := .Resize "96x png Lanczos" }}
         {{- $imgs = merge $imgs (dict $clave (dict
               "src"    $x1.RelPermalink
               "src2x"  $x2.RelPermalink

@@ -60,13 +60,9 @@
   min-width: 0;
 }
 
-/* --- Recuadro del resultado de la herramienta ---------------------------- */
-
-.pc-distintivo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+/* --- Resultado de la herramienta ----------------------------------------
+   La maqueta de .pc-distintivo vive en herramienta.css, que es donde esta
+   el resto del resultado. Aqui solo queda lo propio de la imagen. */
 
 .pc-distintivo__texto {
   min-width: 0;
@@ -74,7 +70,7 @@
 
 @media (max-width: 26rem) {
   .distintivo-img--resultado {
-    width: 54px;
+    width: 40px;
     height: auto;
   }
 }
@@ -96,7 +92,7 @@
    descolgado del cuerpo de la página. */
 .figura-imagen figcaption {
   margin-top: 0.6rem;
-  font-size: 0.88rem;
+  font-size: var(--txt-sm);
   opacity: 0.8;
   text-align: left;
 }

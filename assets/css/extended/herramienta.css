@@ -5,7 +5,7 @@
 }
 
 .pc-form fieldset {
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 8px;
   padding: 1rem 1.25rem 1.25rem;
   margin: 0 0 1rem;
@@ -34,7 +34,7 @@
   font: inherit;
   color: var(--primary);
   background: var(--theme);
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 6px;
 }
 
@@ -54,7 +54,7 @@
 }
 
 .pc-ayuda {
-  font-size: 0.9rem;
+  font-size: var(--txt-sm);
   opacity: 0.85;
   margin: 0.4rem 0 0;
 }
@@ -110,25 +110,30 @@
 
 /* --- Veredicto: la respuesta a "¿puedo circular?" ---------------------- */
 
+/* La unica caja del resultado. La barra de acento medía 8 px y estaba
+   pintada en var(--caja-borde): una franja invisible en los dos temas, justo en
+   el elemento que tiene que marcar la respuesta. */
 .pc-veredicto {
-  border: 2px solid var(--border);
-  border-left-width: 8px;
-  border-radius: 8px;
-  padding: 1.1rem 1.3rem;
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  border: 1px solid var(--caja-borde);
+  border-left: 4px solid var(--caja-acento);
+  border-radius: var(--caja-radio);
 }
 
 .pc-veredicto__pregunta {
   margin: 0;
-  font-size: 0.95rem;
-  opacity: 0.85;
+  font-size: var(--txt-sm);
+  color: var(--secondary);
+  opacity: 1;
 }
 
 .pc-veredicto__titular {
-  margin: 0.15rem 0 0.9rem;
-  font-size: 1.55rem;
+  margin: var(--sp-1) 0 var(--sp-3);
+  font-size: var(--txt-xl);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: var(--lh-titular);
+  overflow-wrap: anywhere;
 }
 
 .pc-veredicto__zonas {
@@ -136,17 +141,20 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.4rem;
+  gap: var(--sp-2);
 }
 
+/* Un recuadro dentro de otro recuadro duplica el borde sin anadir nada: la
+   lista ya se lee como lista. Queda la barra de estado, que si significa. */
 .pc-vz {
   display: grid;
   grid-template-columns: 1.6rem 1fr auto;
   align-items: baseline;
-  gap: 0.5rem;
-  padding: 0.5rem 0.7rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
+  gap: var(--sp-2);
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-3);
+  border: 0;
+  border-left: 4px solid currentColor;
+  border-radius: 0;
 }
 
 .pc-vz__icono {
@@ -173,23 +181,27 @@
 
 /* El significado no se confía solo al color: cada estado lleva su texto
    ("Sí", "No", "Solo con condiciones") y un símbolo propio. */
-.pc-vz--si    { border-left: 4px solid currentColor; }
-.pc-vz--cond  { border-left: 4px solid currentColor; border-style: dashed; }
-.pc-vz--no    { border-left: 4px solid currentColor; }
-.pc-vz--pend  { border-left: 4px dotted currentColor; opacity: 0.85; }
+/* "Si" y "No" llevaban el mismo borde: la diferencia estaba solo en el
+   glifo y en la palabra. Se mantienen los dos (no depender del color) y se
+   anade grosor, que si se ve de un vistazo. */
+.pc-vz--cond  { border-left-style: dashed; }
+.pc-vz--no    { border-left-width: 6px; }
+.pc-vz--pend  { border-left-style: dotted; color: var(--secondary); opacity: 1; }
 
 /* Explicacion corta debajo del titular, cuando el municipio no tiene zonas
    que listar: el "por que" de la respuesta, sin competir con ella. */
 .pc-veredicto__detalle {
   margin: 0;
   max-width: 46ch;
-  line-height: 1.5;
+  line-height: var(--lh-lectura);
 }
 
 .pc-veredicto__nota {
-  margin: 0.9rem 0 0;
-  font-size: 0.92rem;
-  opacity: 0.9;
+  margin: var(--sp-3) 0 0;
+  font-size: var(--txt-sm);
+  line-height: var(--lh-corto);
+  color: var(--secondary);
+  opacity: 1;
 }
 
 /* El nombre de la zona enlaza a la pagina que explica sus condiciones. Se
@@ -211,26 +223,34 @@ a.pc-vz__zona:focus-visible {
    sin ocupar una fila que no responde nada. */
 .pc-veredicto__omitidas,
 .pc-veredicto__sigla {
-  margin: 0.6rem 0 0;
-  font-size: 0.82rem;
+  margin: var(--sp-2) 0 0;
+  font-size: var(--txt-xs);
+  line-height: var(--lh-corto);
+  color: var(--secondary);
   opacity: 0.75;
 }
 
 /* --- Acceso a la ficha completa ---------------------------------------- */
 
+/* Era una barra de 720 px a todo el ancho, con 15,29:1 de contraste contra
+   el fondo, mientras los cinco recuadros de alrededor estaban en 1,06:1. O
+   sea que en tema claro era literalmente el unico objeto visible del
+   resultado, y ademas el que menos importa. Ahora tiene ancho propio.
+   El relleno solido se mantiene: es la accion principal, y al final del
+   argumento un boton de su tamano ya no compite con la respuesta. */
 .pc-cta {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin: 0 0 1.25rem;
-  padding: 0.85rem 1.2rem;
-  font-weight: 700;
+  gap: var(--sp-3);
+  margin: var(--sp-2) 0 var(--sp-6);
+  padding: var(--sp-3) var(--sp-5);
+  font-size: var(--txt-md);
+  font-weight: 600;
   text-decoration: none;
   color: var(--theme);
   background: var(--primary);
   border: 2px solid var(--primary);
-  border-radius: 8px;
+  border-radius: var(--caja-radio);
 }
 
 .pc-cta:hover,
@@ -243,35 +263,57 @@ a.pc-vz__zona:focus-visible {
   font-size: 1.15rem;
 }
 
+/* El distintivo es la premisa de la respuesta, no la respuesta.
+   Era un recuadro de 124 px de alto con el valor a 30,4 px, un 23 % mas
+   grande que el titular del veredicto: el dato deducido pesaba mas que la
+   respuesta, y encima iba primero. Ahora es un rotulo de una linea. */
 .pc-distintivo {
-  border: 2px solid var(--border);
-  border-left-width: 6px;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 var(--sp-3);
+  margin: 0 0 var(--sp-3);
+  padding: 0;
+  border: 0;
 }
 
 .pc-distintivo__etiqueta {
   margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
+  /* El rotulo ocupa su propia linea; el valor y el color comparten la de
+     abajo, junto a la pegatina. Tres parrafos apilados daban 115 px de alto
+     para decir tres palabras. */
+  flex-basis: 100%;
+  font-size: var(--txt-sm);
+  color: var(--secondary);
+  /* El color ya atenua. Encadenar opacidad encima es lo que igualaba todo
+     lo secundario al mismo gris, y entonces nada es mas secundario que nada. */
+  opacity: 1;
+}
+
+.pc-distintivo__texto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--sp-2);
+  min-width: 0;
 }
 
 .pc-distintivo__valor {
-  margin: 0.2rem 0 0;
-  font-size: 1.9rem;
+  margin: 0;
+  font-size: var(--txt-lg);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: var(--lh-titular);
 }
 
 .pc-distintivo__color {
-  margin: 0.3rem 0 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
+  margin: 0;
+  font-size: var(--txt-sm);
+  color: var(--secondary);
+  opacity: 1;
 }
 
 .pc-aviso {
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 8px;
   padding: 1rem 1.25rem;
   margin: 0 0 1rem;
@@ -288,36 +330,56 @@ a.pc-vz__zona:focus-visible {
   margin-bottom: 0;
 }
 
+/* Antes: caja (.pc-ordenanza) dentro de la cual otra caja (.pc-zona) dentro
+   de la cual otra con fondo (.pc-cruce). Tres bordes para un bloque de prosa.
+   Ahora se separa con un rotulo y espacio, que es lo que hace falta. */
 .pc-ordenanza {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin: 0 0 1rem;
+  margin: 0 0 var(--sp-4);
+  padding: 0;
+  border: 0;
 }
 
 .pc-ordenanza h3 {
-  margin-top: 0;
+  margin: 0 0 var(--sp-3);
+  font-size: var(--txt-lg);
+  line-height: var(--lh-titular);
 }
 
+.pc-ordenanza p {
+  line-height: var(--lh-lectura);
+}
+
+/* El cruce entre tu distintivo y la ordenanza si es el dato clave del
+   bloque, asi que conserva marca. Pero el fondo era --code-bg, que en la
+   portada es exactamente el color de la pagina: no existia. */
 .pc-cruce {
-  border-left: 6px solid var(--border);
-  padding: 0.75rem 1rem;
-  margin: 0 0 1rem;
-  background: var(--code-bg);
-  border-radius: 0 8px 8px 0;
+  margin: var(--sp-3) 0;
+  padding: var(--sp-1) 0 var(--sp-1) var(--sp-3);
+  border-left: 4px solid var(--caja-acento);
+  border-radius: 0;
+  background: transparent;
+  line-height: var(--lh-lectura);
 }
 
-/* Una zona por bloque: un municipio puede tener varias con reglas distintas. */
+/* Una zona por bloque: un municipio puede tener varias con reglas distintas.
+   Lo que las separa es un filete, no una caja. */
 .pc-zona {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.9rem 1.1rem;
-  margin: 0 0 1rem;
+  margin: 0 0 var(--sp-5);
+  padding: 0;
+  border: 0;
 }
 
+.pc-zona + .pc-zona {
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--caja-borde);
+}
+
+/* Estaba a 16,8 px, mas pequeno que el parrafo de 18 que lleva debajo: un
+   rotulo de seccion menor que su propio contenido. */
 .pc-zona h4 {
-  margin: 0 0 0.5rem;
-  font-size: 1.05rem;
+  margin: 0 0 var(--sp-2);
+  font-size: var(--txt-lg);
+  line-height: var(--lh-titular);
 }
 
 .pc-zona__pendiente {
@@ -326,7 +388,7 @@ a.pc-vz__zona:focus-visible {
 }
 
 .pc-articulo {
-  font-size: 0.88rem;
+  font-size: var(--txt-sm);
   opacity: 0.85;
   margin: 0.6rem 0 0;
 }
@@ -337,13 +399,13 @@ a.pc-vz__zona:focus-visible {
 
 .pc-nota,
 .pc-oficial {
-  font-size: 0.92rem;
+  font-size: var(--txt-sm);
   opacity: 0.9;
 }
 
 .pc-fuente {
-  font-size: 0.9rem;
-  border-top: 1px solid var(--border);
+  font-size: var(--txt-sm);
+  border-top: 1px solid var(--caja-borde);
   padding-top: 0.6rem;
   margin-top: 0.8rem;
 }
@@ -353,7 +415,7 @@ a.pc-vz__zona:focus-visible {
 }
 
 .pc-explicacion {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--caja-borde);
   padding-top: 1.25rem;
   margin-top: 2rem;
 }
@@ -386,7 +448,7 @@ a.pc-vz__zona:focus-visible {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--caja-borde);
 }
 
 .itv-tramos li:last-child { border-bottom: 0; }
@@ -411,7 +473,7 @@ a.pc-vz__zona:focus-visible {
 
 .mi-calle-zonas li {
   padding: 0.45rem 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--caja-borde);
 }
 
 .mi-calle-zonas li:last-child { border-bottom: 0; }
@@ -428,6 +490,96 @@ a.pc-vz__zona:focus-visible {
   padding: 0.6rem 0.8rem;
   border-radius: 6px;
   background: var(--code-bg);
-  font-size: 0.92rem;
+  font-size: var(--txt-sm);
   line-height: 1.45;
+}
+
+
+/* ------------------------------------------------------------------------
+   NORMALIZACION
+
+   Todo lo secundario se atenua con color, no con opacidad. La opacidad era
+   el mecanismo dominante del fichero (ocho valores distintos) y es lo que
+   producia la sensacion de gris apilado: si todo lo secundario acaba del
+   mismo gris, nada es mas secundario que nada.
+   ------------------------------------------------------------------------ */
+
+.pc-ayuda,
+.pc-nota,
+.pc-oficial,
+.pc-articulo {
+  font-size: var(--txt-sm);
+  line-height: var(--lh-corto);
+  color: var(--secondary);
+  opacity: 1;
+}
+
+.pc-fuente {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--caja-borde);
+  font-size: var(--txt-xs);
+  line-height: var(--lh-corto);
+  color: var(--secondary);
+  opacity: 1;
+}
+
+.pc-veredicto__caduca {
+  margin: var(--sp-3) 0 0;
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-3);
+  border-left: 4px solid var(--nv-warn-line);
+  border-radius: 0;
+  background: transparent;
+  font-size: var(--txt-sm);
+  line-height: var(--lh-corto);
+}
+
+.pc-zona__pendiente {
+  padding-left: var(--sp-3);
+  border-left: 4px solid var(--nv-warn-line);
+}
+
+/* El rotulo del grupo tiene que pesar mas que el de cada campo. Estaban
+   practicamente iguales. */
+.pc-form fieldset {
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-4) var(--sp-5) var(--sp-5);
+  border-color: var(--caja-borde);
+  border-radius: var(--caja-radio);
+}
+
+.pc-form legend {
+  padding: 0 var(--sp-2);
+  font-size: var(--txt-lg);
+  font-weight: 700;
+}
+
+.pc-campo { margin: 0 0 var(--sp-4); }
+
+.pc-campo label {
+  margin-bottom: var(--sp-1);
+  font-size: var(--txt-md);
+  font-weight: 600;
+}
+
+.pc-boton {
+  padding: var(--sp-3) var(--sp-6);
+  font-size: var(--txt-md);
+}
+
+.pc-aviso {
+  padding: var(--sp-4);
+  border-color: var(--caja-borde);
+  border-radius: var(--caja-radio);
+}
+
+.pc-aviso__titulo {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--txt-md);
+}
+
+/* Era un resaltado con fondo --code-bg, invisible en tema claro. */
+.itv-tramo--actual {
+  background: transparent;
+  box-shadow: inset 4px 0 0 var(--caja-acento);
 }

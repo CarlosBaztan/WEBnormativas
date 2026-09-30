@@ -8,7 +8,7 @@
   position: relative;
   height: min(70vh, 560px);
   margin: 1.5rem 0 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 8px;
   overflow: hidden;
   /* Reserva el hueco antes de que Leaflet pinte: sin esto el contenido de
@@ -33,7 +33,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.2rem;
-  font-size: 0.9rem;
+  font-size: var(--txt-sm);
 }
 
 .mapa-leyenda li {
@@ -60,13 +60,13 @@
 
 .mapa-alternativa {
   padding: 0.9rem 1.1rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 8px;
   margin: 0 0 1rem;
 }
 
 .mapa-atribucion {
-  font-size: 0.85rem;
+  font-size: var(--txt-xs);
   opacity: 0.8;
   margin: 0 0 2rem;
 }
@@ -81,7 +81,7 @@
 }
 
 .globo-provincia {
-  font-size: 0.85rem;
+  font-size: var(--txt-xs);
   opacity: 0.8;
 }
 
@@ -91,14 +91,14 @@
 
 .globo-nota,
 .globo-aviso {
-  font-size: 0.8rem;
+  font-size: var(--txt-xs);
   opacity: 0.85;
   line-height: 1.35;
 }
 
 .globo-aviso {
   padding-top: 0.35rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--caja-borde);
 }
 
 /* Leaflet trae su propio fondo blanco. En tema oscuro, los controles y el
@@ -111,7 +111,7 @@
   color: var(--primary);
 }
 
-:root[data-theme="dark"] .leaflet-control-zoom a { border-color: var(--border); }
+:root[data-theme="dark"] .leaflet-control-zoom a { border-color: var(--caja-borde); }
 
 @media (max-width: 30rem) {
   .mapa-zbe { height: min(60vh, 420px); }
@@ -127,7 +127,7 @@
   position: relative;
   height: 320px;
   margin: 1.25rem 0 0.5rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 8px;
   overflow: hidden;
   background: var(--code-bg);
@@ -143,11 +143,11 @@
 
 .globo-zona {
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: var(--txt-sm);
 }
 
 .mapa-nota-zonas {
-  font-size: 0.9rem;
+  font-size: var(--txt-sm);
   margin: 0 0 1rem;
 }
 
@@ -215,7 +215,7 @@ body.mapa-ampliado-activo {
 :root[data-theme="dark"] .mapa-volver a {
   background: var(--entry);
   color: var(--primary);
-  border-color: var(--border);
+  border-color: var(--caja-borde);
 }
 
 /* Buscador de municipio. Va oculto hasta que el JavaScript lo llena: un
@@ -239,7 +239,7 @@ body.mapa-ampliado-activo {
   font: inherit;
   color: var(--primary);
   background: var(--entry);
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 6px;
 }
 
@@ -248,7 +248,7 @@ body.mapa-ampliado-activo {
   font: inherit;
   color: var(--primary);
   background: var(--entry);
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 6px;
   cursor: pointer;
 }
@@ -260,7 +260,7 @@ body.mapa-ampliado-activo {
 /* Instrucciones de manejo. Siempre visibles, tambien para quien no llega a
    ver el rotulo flotante. */
 .mapa-ayuda {
-  font-size: 0.85rem;
+  font-size: var(--txt-xs);
   opacity: 0.8;
   margin: 0.4rem 0 0;
 }
@@ -284,7 +284,7 @@ body.mapa-ampliado-activo {
   padding: 0.05em 0.35em;
   font-family: inherit;
   font-size: 0.9em;
-  border: 1px solid var(--border);
+  border: 1px solid var(--caja-borde);
   border-radius: 4px;
   background: var(--code-bg);
 }

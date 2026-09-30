@@ -604,14 +604,8 @@
     }
 
     // El veredicto va fuera del recuadro de la ordenanza: es la respuesta,
-    // no el detalle. Y justo después, el acceso a la ficha completa.
+    // no el detalle.
     var salida = [pintarVeredicto(m, distintivoUsuario)];
-
-    if (m.url) {
-      salida.push('<a class="pc-cta" href="' + esc(m.url) + '">' +
-        'Ficha completa de ' + esc(m.municipio) +
-        '<span class="pc-cta__flecha" aria-hidden="true">→</span></a>');
-    }
 
     var partes = ['<div class="pc-ordenanza">'];
     partes.push('<h3>Lo que dice la ordenanza de ' + esc(m.municipio) + '</h3>');
@@ -657,6 +651,26 @@
 
     partes.push('</div>');
     salida.push(partes.join(''));
+
+    /*
+     * El acceso a la ficha va AL FINAL, despues de la prueba.
+     *
+     * Estaba entre la respuesta y su justificacion, o sea partiendo en dos
+     * el unico argumento de la pagina: primero la afirmacion, luego un boton
+     * negro a todo el ancho, y solo despues el articulo, el horario y la
+     * fuente que la sostienen.
+     *
+     * Se mueve aqui y no con `order` en el CSS a proposito: `order` cambia
+     * el orden visual pero no el del DOM, asi que un lector de pantalla y la
+     * navegacion por teclado seguirian encontrandolo en medio. Es lo que
+     * desaconseja el criterio 2.4.3 de las WCAG.
+     */
+    if (m.url) {
+      salida.push('<a class="pc-cta" href="' + esc(m.url) + '">' +
+        'Ficha completa de ' + esc(m.municipio) +
+        '<span class="pc-cta__flecha" aria-hidden="true">→</span></a>');
+    }
+
     return salida.join('');
   }
 
