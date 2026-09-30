@@ -283,7 +283,9 @@ body.mapa-ampliado-activo {
 .mapa-ayuda kbd {
   padding: 0.05em 0.35em;
   font-family: inherit;
-  font-size: 0.9em;
+  /* 0.9em del parrafo de ayuda daba 11,7 px, fuera de la escala y por debajo
+     de lo comodo. Con 1em el nombre de la tecla se lee igual que el texto. */
+  font-size: 1em;
   border: 1px solid var(--caja-borde);
   border-radius: 4px;
   background: var(--code-bg);

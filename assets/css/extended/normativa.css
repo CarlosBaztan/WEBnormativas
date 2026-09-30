@@ -20,13 +20,13 @@
        de 18 px. Por eso "0.9rem" no era el 90 % del texto, era el 80 %.
        Los valores de abajo estan elegidos por su resultado en pixeles.
        ================================================================== */
-    --txt-xs:  0.875rem;  /* 14 px: fuente, fecha de verificacion, atribucion */
-    --txt-sm:  1rem;      /* 16 px: notas, ayudas de formulario, tablas */
-    --txt-md:  1.125rem;  /* 18 px: cuerpo, el mismo que PaperMod */
-    --txt-lg:  1.25rem;   /* 20 px: rotulo de bloque, h4 */
-    --txt-xl:  1.5rem;    /* 24 px: h3 y titular de la respuesta */
-    --txt-2xl: 2rem;      /* 32 px: h2 de articulo, el mismo que md-content */
-    --txt-3xl: 2.5rem;    /* 40 px: h1, el mismo que PaperMod */
+    --txt-xs:  0.8125rem; /* 13 px: fuente, fecha de verificacion, atribucion */
+    --txt-sm:  0.9375rem; /* 15 px: notas, ayudas de formulario, tablas */
+    --txt-md:  1.0625rem; /* 17 px: cuerpo */
+    --txt-lg:  1.1875rem; /* 19 px: rotulo de bloque, h4 */
+    --txt-xl:  1.375rem;  /* 22 px: h3 y titular de la respuesta */
+    --txt-2xl: 1.625rem;  /* 26 px: h2 de articulo */
+    --txt-3xl: 2.125rem;  /* 34 px: h1 */
 
     --lh-titular: 1.2;
     --lh-corto:   1.45;   /* fichas, tablas, notas, celdas */
@@ -228,7 +228,8 @@
 
 .aviso__titulo {
     font-weight: 700;
-    font-size: 1.02rem;
+    font-size: var(--txt-lg);
+    line-height: var(--lh-titular);
 }
 
 /* ------------------------- Ficha: lista de datos -------------------------- */
@@ -418,7 +419,7 @@
     margin: 0 0 10px;
     padding-bottom: 6px;
     border-bottom: 2px solid var(--caja-borde);
-    font-size: 1.25rem;
+    font-size: var(--txt-xl);
 }
 
 .municipios {
@@ -464,8 +465,9 @@
 }
 
 .leyenda__titulo {
-    margin: 0 0 8px;
-    font-size: 1rem;
+    margin: 0 0 var(--sp-2);
+    font-size: var(--txt-lg);
+    line-height: var(--lh-titular);
 }
 
 .leyenda__lista {
@@ -504,7 +506,7 @@
 
 .anuncio__etiqueta {
     margin: 0 0 6px;
-    font-size: 0.72rem;
+    font-size: var(--txt-xs);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--secondary);
@@ -572,4 +574,102 @@
         font-size: 0.8em;
         word-break: break-all;
     }
+}
+
+
+/* ========================================================================
+   ESCALA DEL TEMA, REDUCIDA
+
+   PaperMod viene con 18 px de cuerpo y 40/32/24 para h1, h2 y h3. Es una
+   escala de blog de lectura larga, y este sitio es de consulta: se entra
+   con una pregunta concreta, se busca una respuesta y se sale. Con esos
+   tamanos, un h2 ocupaba la mitad del ancho de lectura y cada seccion
+   parecia un articulo nuevo.
+
+   La escala baja a 17 de cuerpo y 34/26/22, con una razon de 1,22 entre
+   escalones. Se reduce mas los titulos que el cuerpo (un 19 % el h2 frente
+   a un 6 % el texto): lo que sobraba era el contraste de tamano, no la
+   legibilidad del parrafo. 17 px sigue por encima del valor por defecto de
+   los navegadores, que son 16.
+
+   Va aqui y no en themes/ porque el tema es un submodulo de git.
+   ======================================================================== */
+
+body {
+  font-size: var(--txt-md);
+}
+
+.post-title,
+.md-content h1 {
+  font-size: var(--txt-3xl);
+  line-height: var(--lh-titular);
+}
+
+.md-content h2 {
+  font-size: var(--txt-2xl);
+  line-height: var(--lh-titular);
+}
+
+.md-content h3 {
+  font-size: var(--txt-xl);
+  line-height: var(--lh-titular);
+}
+
+/* El tema los pone en 16, 14 y 12 px: por debajo del cuerpo. Un h4 mas
+   pequeno que su propio parrafo no es una jerarquia, es un error. */
+.md-content h4 {
+  font-size: var(--txt-lg);
+  line-height: var(--lh-titular);
+}
+
+.md-content h5,
+.md-content h6 {
+  font-size: var(--txt-md);
+  line-height: var(--lh-titular);
+}
+
+/* Tarjetas de las paginas de listado. */
+.first-entry .entry-header h1 { font-size: var(--txt-3xl); }
+.post-entry .entry-header h2 { font-size: var(--txt-xl); }
+.entry-content { font-size: var(--txt-sm); }
+
+/* Restos del tema que se quedaron fuera de la escala: las migas de pan a
+   16 px (casi el cuerpo, cuando son navegacion secundaria) y los enlaces de
+   anterior y siguiente a 12,8. */
+.breadcrumbs,
+.breadcrumbs a {
+  font-size: var(--txt-sm);
+}
+
+.post-single .breadcrumbs {
+  margin-bottom: var(--sp-2);
+}
+
+/* A 13 px el nivel AA pide 4,5:1 y el gris del tema se quedaba en 4,25.
+   El tamano ya dice que es secundario; no hace falta apagar tambien el
+   color por debajo de lo legible. */
+.paginav .title,
+.post-nav .title {
+  font-size: var(--txt-xs);
+  color: var(--content);
+}
+
+.paginav .prev,
+.paginav .next {
+  font-size: var(--txt-sm);
+}
+
+/* El menu de cabecera a 16 px competia con el cuerpo de 17. Es navegacion. */
+.menu a,
+.lang-menu a {
+  font-size: var(--txt-sm);
+}
+
+/* Ultimo h2 que se quedaba fuera de la escala: esta fuera de md-content y
+   caia al valor por defecto del navegador. Es hermano de los titulos de la
+   prosa de la ficha, asi que pesa lo mismo. */
+.zonas-relacionadas > h2 {
+  margin: var(--sp-8) 0 var(--sp-4);
+  font-size: var(--txt-2xl);
+  line-height: var(--lh-titular);
 }

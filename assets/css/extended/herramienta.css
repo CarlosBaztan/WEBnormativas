@@ -260,7 +260,7 @@ a.pc-vz__zona:focus-visible {
 }
 
 .pc-cta__flecha {
-  font-size: 1.15rem;
+  font-size: var(--txt-lg);
 }
 
 /* El distintivo es la premisa de la respuesta, no la respuesta.

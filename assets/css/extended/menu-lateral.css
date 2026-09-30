@@ -69,7 +69,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-size: 1.2rem;
+  font-size: var(--txt-lg);
   font-weight: 700;
   line-height: 1.2;
   text-decoration: none;
@@ -172,7 +172,7 @@
     height: var(--cabecera-alto);
   }
   .nav-propia .logo { min-width: 0; }
-  .logo a.marca { font-size: 1.1rem; }
+  .logo a.marca { font-size: var(--txt-md); }
 
   /* Solo la lupa: el texto se come el poco ancho que hay. Ancho y alto
      fijos, o el círculo sale ovalado. */
@@ -190,7 +190,7 @@
 
 @media (max-width: 26rem) {
   /* Pantallas muy estrechas: el título cede antes que los botones. */
-  .logo a.marca { font-size: 1rem; }
+  .logo a.marca { font-size: var(--txt-sm); }
   .logo-senal { width: 30px; height: 30px; }
 }
 
@@ -367,7 +367,9 @@
 
 .menu-lateral__badge {
   flex: 0 0 auto;
-  font-size: 0.65rem;
+  /* Estaba en 0,65rem, que son 10,4 px: por debajo de lo que se lee comodo
+     y fuera de la escala. */
+  font-size: var(--txt-xs);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   border: 1px solid currentColor;

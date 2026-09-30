@@ -59,13 +59,29 @@
     mapa.addControl(new Volver());
   }
 
+  /* Quita el mapa y todo lo que solo tiene sentido con el delante. */
+  function quitarBloque(contenedor) {
+    var acompanan = ['mapa-ayuda', 'mapa-atribucion'];
+    var siguiente = contenedor.nextElementSibling;
+    while (siguiente) {
+      var pertenece = acompanan.some(function (c) {
+        return siguiente.classList.contains(c);
+      });
+      if (!pertenece) break;
+      var aBorrar = siguiente;
+      siguiente = siguiente.nextElementSibling;
+      aBorrar.remove();
+    }
+    contenedor.remove();
+  }
+
   function arranca() {
     var contenedor = document.getElementById('mapa-municipio');
     if (!contenedor) return;
 
     var slug = contenedor.getAttribute('data-slug');
     if (!slug || typeof L === 'undefined') {
-      contenedor.remove();
+      quitarBloque(contenedor);
       return;
     }
 
@@ -79,11 +95,15 @@
         zona.sort(function (a, b) { return (b.properties.km2 || 0) - (a.properties.km2 || 0); });
 
         // Sin geometria para este municipio no se deja un hueco vacio: se
-        // quita el bloque entero, atribucion incluida.
+        // quita el bloque entero, ayuda y atribucion incluidas.
+        //
+        // Se recorren TODOS los hermanos que pertenecen al mapa, no solo el
+        // siguiente: al anadir el parrafo de ayuda entre el contenedor y la
+        // atribucion, la comprobacion de nextElementSibling dejo de
+        // encontrarla, y en las paginas sin mapa (/zbe/que-es/) quedaban a la
+        // vista las instrucciones de un mapa que no existe.
         if (!zona.length) {
-          var att = contenedor.nextElementSibling;
-          if (att && att.classList.contains('mapa-atribucion')) att.remove();
-          contenedor.remove();
+          quitarBloque(contenedor);
           return;
         }
 
@@ -129,7 +149,7 @@
         if (aviso) aviso.remove();
       })
       .catch(function () {
-        contenedor.remove();
+        quitarBloque(contenedor);
       });
   }
 
