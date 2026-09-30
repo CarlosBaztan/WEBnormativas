@@ -22,6 +22,13 @@
       el listado de /zbe/, no para responder "¿puedo circular?".
       ------------------------------------------------------------------
     */}}
+    {{/*
+      Paginas de zona, para poder enlazar cada zona con la pagina que explica
+      sus condiciones. Un veredicto de "solo con condiciones" sin un sitio
+      donde leer cuales son esas condiciones no le sirve a nadie.
+    */}}
+    {{- $paginasZona := where (where site.RegularPages "Section" "zbe") "Params.tipo" "zona" }}
+
     {{- $verificados := slice }}
     {{- range where (where site.RegularPages "Section" "zbe") "Params.estado_dato" "verificado" }}
       {{- $p := .Params }}
@@ -72,6 +79,24 @@
               "caducan"                ($p.caducan | default dict)
             ) }}
       {{- end }}
+
+      {{/*
+        Cada zona lleva la URL de su propia pagina cuando existe, cruzando
+        municipio y zona_id. No se construye a mano: si alguien renombra una
+        pagina de zona, el enlace desaparece en vez de romperse.
+      */}}
+      {{- $muni := $p.municipio | default .Title }}
+      {{- $conUrl := slice }}
+      {{- range $z := $zonas }}
+        {{- $urlZona := "" }}
+        {{- range $pz := $paginasZona }}
+          {{- if and (eq ($pz.Params.municipio | default "") $muni) (eq ($pz.Params.zona_id | default "") (index $z "id")) }}
+            {{- $urlZona = $pz.RelPermalink }}
+          {{- end }}
+        {{- end }}
+        {{- $conUrl = $conUrl | append (merge $z (dict "url" $urlZona)) }}
+      {{- end }}
+      {{- $zonas = $conUrl }}
 
       {{- $verificados = $verificados | append (dict
             "slug"               .File.ContentBaseName

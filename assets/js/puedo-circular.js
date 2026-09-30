@@ -283,6 +283,20 @@
    * Veredicto de una zona para un distintivo concreto.
    * Devuelve: "permitido" | "condicionado" | "no_figura" | "pendiente" | "sin_distintivo_usuario"
    */
+  /*
+   * Una zona esta verificada cuando alguien ha leido su ordenanza y ha
+   * anotado que distintivos nombra. Mientras no lo este, la herramienta no
+   * la saca: una fila que dice "Sin verificar" no es una respuesta, ocupa
+   * sitio y deja al lector sin saber si le afecta.
+   *
+   * El front matter marca las no verificadas con la cadena "pendiente" en
+   * lugar de una lista. Es el caso de Madrid ZBE (todo el municipio).
+   */
+  function zonaVerificada(zona) {
+    var p = zona.distintivos_permitidos;
+    return !!(p && typeof p !== 'string' && p.length);
+  }
+
   function veredictoZona(zona, distintivoUsuario) {
     var permitidos = zona.distintivos_permitidos;
     if ((typeof permitidos === 'string') || !permitidos || !permitidos.length) return 'pendiente';
@@ -427,16 +441,43 @@
     partes.push('<p class="pc-veredicto__pregunta">¿Puedes circular por ' + esc(m.municipio) + '?</p>');
     partes.push('<p class="pc-veredicto__titular">' + titular + '</p>');
 
+    /*
+     * Solo se listan las zonas cuya ordenanza hemos leido.
+     *
+     * Madrid declara su termino municipal entero como zona, pero su regimen
+     * no lo fija la ordenanza que hemos verificado. Sacarla en la lista
+     * ponia una fila que decia "Sin verificar", que no es una respuesta:
+     * ocupa sitio, empuja hacia abajo las dos zonas que si responden y deja
+     * al lector con la duda de si le afecta o no.
+     *
+     * No se oculta que existe: va anotada debajo, en pequeno, con el enlace
+     * a la ficha, que es donde cabe explicarla.
+     */
+    var omitidas = 0;
     partes.push('<ul class="pc-veredicto__zonas">');
     for (var i = 0; i < zonas.length; i++) {
+      if (!zonaVerificada(zonas[i])) { omitidas++; continue; }
       var t = TEXTO_VEREDICTO[veredictos[i]];
+      var nombre = esc(zonas[i].nombre || zonas[i].id);
+      // Cada zona con pagina propia enlaza a ella: es donde estan las
+      // condiciones concretas que la fila solo puede resumir.
       partes.push('<li class="pc-vz pc-vz--' + t.clase + '">' +
         '<span class="pc-vz__icono" aria-hidden="true">' + t.icono + '</span>' +
-        '<span class="pc-vz__zona">' + esc(zonas[i].nombre || zonas[i].id) + '</span>' +
+        (zonas[i].url
+          ? '<a class="pc-vz__zona" href="' + esc(zonas[i].url) + '">' + nombre + '</a>'
+          : '<span class="pc-vz__zona">' + nombre + '</span>') +
         '<span class="pc-vz__valor">' + t.etiqueta + '</span>' +
         '</li>');
     }
     partes.push('</ul>');
+
+    if (omitidas) {
+      partes.push('<p class="pc-veredicto__omitidas">' +
+        (omitidas === 1
+          ? 'Este municipio declara además otra zona cuya ordenanza todavía no hemos leído, así que no la listamos aquí.'
+          : 'Este municipio declara además ' + omitidas + ' zonas cuya ordenanza todavía no hemos leído, así que no las listamos aquí.') +
+        ' Está' + (omitidas === 1 ? '' : 'n') + ' en la ficha completa.</p>');
+    }
 
     // Un distintivo que hoy entra pero tiene fecha de salida: es el dato mas
     // accionable que puede dar esta herramienta, y se pierde si no se dice.
@@ -458,10 +499,29 @@
       }
     }
 
+    /*
+     * "Solo con condiciones" no vale de nada si el lector no puede averiguar
+     * cuales son esas condiciones. Se enlaza la pagina de cada zona, que es
+     * donde estan escritas con su articulo, y la de excepciones comunes.
+     */
     if (hay('condicionado')) {
-      partes.push('<p class="pc-veredicto__nota">«Solo con condiciones» significa que tu distintivo figura, ' +
-        'pero la ordenanza exige algo más: ser residente, tener actividad en la zona o acreditar un destino concreto. ' +
-        'Lo detallamos debajo.</p>');
+      var conCondiciones = [];
+      for (var c = 0; c < zonas.length; c++) {
+        if (veredictos[c] !== 'condicionado') continue;
+        var nz = esc(zonas[c].nombre || zonas[c].id);
+        conCondiciones.push(zonas[c].url
+          ? '<a href="' + esc(zonas[c].url) + '">' + nz + '</a>'
+          : nz);
+      }
+      var donde = zonas.some(function (z, k) { return veredictos[k] === 'condicionado' && z.url; })
+        ? 'Las de tu caso están en ' + conCondiciones.join(' y ') + '.'
+        : 'Las de tu caso están en la ficha completa.';
+      partes.push('<p class="pc-veredicto__nota"><strong>«Solo con condiciones»</strong> significa que tu ' +
+        'distintivo sí figura en la ordenanza, pero exige algo más: estar empadronado dentro de la zona, ' +
+        'tener local o actividad dentro, o acreditar que vas a un aparcamiento de dentro. ' +
+        donde +
+        ' Las excepciones que se repiten en toda España, en ' +
+        '<a href="/zbe/excepciones/">excepciones a las ZBE</a>.</p>');
     }
 
     // La sigla aparece en los nombres oficiales de las zonas y no se explica sola.
@@ -556,10 +616,13 @@
     var partes = ['<div class="pc-ordenanza">'];
     partes.push('<h3>Lo que dice la ordenanza de ' + esc(m.municipio) + '</h3>');
 
-    var zonas = m.zonas || [];
+    // El mismo criterio que arriba: solo lo que hemos leido. Si no, el
+    // recuento decia "3 zonas" y debajo aparecia una que no responde nada.
+    var todas = m.zonas || [];
+    var zonas = todas.filter(zonaVerificada);
     if (zonas.length > 1) {
       partes.push('<p class="pc-nota">' + esc(m.municipio) + ' tiene ' + zonas.length +
-        ' zonas con reglas distintas. Estas son las de cada una.</p>');
+        ' zonas verificadas, con reglas distintas. Estas son las de cada una.</p>');
     }
 
     if (!zonas.length) {

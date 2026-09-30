@@ -192,6 +192,24 @@
   opacity: 0.9;
 }
 
+/* El nombre de la zona enlaza a la pagina que explica sus condiciones. Se
+   marca como enlace, pero sin robarle peso al veredicto de la derecha. */
+a.pc-vz__zona {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+a.pc-vz__zona:hover,
+a.pc-vz__zona:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+/* Nota de las zonas que no se listan por no estar verificadas. Va en el
+   mismo tono discreto que la aclaracion de la sigla: informa de que existen
+   sin ocupar una fila que no responde nada. */
+.pc-veredicto__omitidas,
 .pc-veredicto__sigla {
   margin: 0.6rem 0 0;
   font-size: 0.82rem;
