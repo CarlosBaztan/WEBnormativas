@@ -1,7 +1,7 @@
 """
 Auditoria de frescura y coherencia del contenido.
 
-Comprueba tres cosas y devuelve codigo de salida 1 si encuentra algo:
+Comprueba cinco cosas y devuelve codigo de salida 1 si encuentra algo:
 
   1. Fichas cuya `fecha_verificacion` tiene mas de 6 meses.
   2. Desincronizacion entre `estado_dato` y `draft`.
@@ -10,6 +10,10 @@ Comprueba tres cosas y devuelve codigo de salida 1 si encuentra algo:
   3. Fichas marcadas como verificadas a las que les falta la trazabilidad
      (fuente_nombre, fuente_url o fecha_verificacion). El flag por si solo
      no basta para afirmar nada.
+  4. Fichas de municipio verificadas que no declaran ninguna regla de acceso.
+  5. Notas internas ({{VERIFICAR}}, "pendiente de verificar") que se quedan
+     en el cuerpo de una pagina publicada. Hugo no las interpreta: se
+     imprimen tal cual y las lee el visitante.
 
 Uso:
     python pipeline/auditoria.py
@@ -73,6 +77,60 @@ def incoherente(fm: dict) -> bool:
     if estado in ESTADOS_PUBLICABLES and draft:
         return True
     return False
+
+
+# Notas internas que nunca pueden llegar al lector.
+#
+# `{{VERIFICAR}}` es la marca que se deja en el cuerpo cuando un dato no esta
+# contrastado todavia. Parece una plantilla, pero Hugo no la interpreta:
+# Goldmark imprime las llaves tal cual, asi que la nota se publica. Estuvo
+# cuatro veces a la vista en /multas/zbe/ y dos mas en otras paginas sin que
+# nada avisara, porque ninguna comprobacion miraba el cuerpo del texto.
+#
+# Solo se vigila la marca literal, a proposito.
+#
+# El primer intento incluia tambien la frase "pendiente de verificar", y daba
+# un falso positivo en la ficha de Madrid, donde cinco celdas de la tabla de
+# distintivos dicen exactamente eso. Ahi no es un descuido: es la respuesta
+# honesta que exigen las reglas de publicacion del proyecto cuando una zona no
+# se ha podido contrastar. Distinguir por el texto entre "no lo sabemos y lo
+# decimos" y "nota que se me olvido borrar" no se puede hacer con una busqueda,
+# asi que la comprobacion se queda con lo que no admite duda.
+MARCADORES = (
+    "{{VERIFICAR}}",
+)
+
+
+def cuerpo(texto: str) -> str:
+    """
+    Lo que ve el lector: todo lo que va despues del front matter.
+
+    La distincion importa. Una nota en el front matter es para nosotros y no
+    se publica; la misma frase tres lineas mas abajo si.
+    """
+    m = re.match(r"^---\s*\n.*?\n---\s*\n", texto, re.S)
+    return texto[m.end():] if m else texto
+
+
+def marcadores_sin_resolver(texto: str) -> list[str]:
+    """Marcas de MARCADORES que se han quedado en el cuerpo de la pagina."""
+    visible = cuerpo(texto).lower()
+    return [m for m in MARCADORES if m.lower() in visible]
+
+
+def paginas_publicadas():
+    """
+    Cada pagina que llega a produccion, como (ruta relativa, texto completo).
+
+    Incluye los `_index.md`, al reves que el recorrido de fichas de `main`:
+    son paginas de seccion con texto propio, y una nota olvidada ahi se ve
+    igual de bien. El primer caso real fue el de /etiquetas/.
+    """
+    for ruta in sorted(CONTENIDO.rglob("*.md")):
+        texto = ruta.read_text(encoding="utf-8")
+        if str(front_matter(texto).get("draft", "")).lower() == "true":
+            continue
+        yield ruta.relative_to(RAIZ).as_posix(), texto
 
 
 def declara_reglas(texto: str) -> bool:
@@ -239,11 +297,21 @@ def main() -> int:
                 sin_reglas.append(
                     f"{rel}: verificada pero no declara etiquetas_permitidas ni zonas")
 
+    # 5. Notas internas publicadas. Se recorre aparte porque esto no mira el
+    #    front matter sino el cuerpo, y afecta a cualquier pagina que se
+    #    publique, tenga estado_dato o no.
+    con_marcadores = [
+        f"{rel}: {', '.join(marcas)}"
+        for rel, texto in paginas_publicadas()
+        if (marcas := marcadores_sin_resolver(texto))
+    ]
+
     print(f"Fichas con estado_dato revisadas: {revisadas}\n")
 
     problemas = 0
     for titulo, lista in (
         ("INCOHERENCIAS estado_dato / draft", incoherentes),
+        ("NOTAS INTERNAS PUBLICADAS", con_marcadores),
         ("TRAZABILIDAD INCOMPLETA", sin_trazabilidad),
         ("VERIFICADAS PERO SIN REGLAS", sin_reglas),
         (f"PENDIENTES DE REVISAR (mas de {args.meses} meses)", caducadas),

@@ -31,7 +31,7 @@ El distintivo ambiental clasifica los vehículos según sus emisiones. Hay **cua
 
 Los años son de **turismos y furgonetas ligeras**. Los vehículos de ocho o más plazas y los pesados tienen umbrales propios, que explicamos en cada página.
 
-**Motocicletas y ciclomotores:** se rigen por criterios distintos que todavía no hemos contrastado con la fuente oficial, así que no los publicamos aquí. {{VERIFICAR}} Si tienes una moto, consulta directamente tu matrícula en la [sede electrónica de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/).
+**Motocicletas y ciclomotores:** se rigen por criterios distintos que todavía no hemos contrastado con la fuente oficial, así que no los publicamos aquí. Si tienes una moto, consulta directamente tu matrícula en la [sede electrónica de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/).
 
 ## Cómo saber el tuyo
 

@@ -124,6 +124,58 @@ def test_verificada_activa_si_tiene_que_declarar_reglas():
                             "codigo_ine": "28079"})
 
 
+def test_un_marcador_de_verificar_se_detecta():
+    """
+    {{VERIFICAR}} es la nota que me dejo a mi mismo cuando un dato no esta
+    contrastado. No es una plantilla de Hugo: Goldmark la imprime tal cual, o
+    sea que llega al lector. Aparecio cuatro veces en /multas/zbe/ sin que
+    nada avisara.
+    """
+    texto = '---\nestado_dato: "verificado"\n---\nImporte: {{VERIFICAR}} en el art. 80.1.\n'
+    assert au.marcadores_sin_resolver(texto) == ["{{VERIFICAR}}"]
+
+
+def test_pendiente_de_verificar_en_una_tabla_es_legitimo():
+    """
+    El falso positivo que tuvo la primera version de esta comprobacion.
+
+    La ficha de Madrid tiene cinco celdas que dicen "Pendiente de verificar",
+    y son correctas: las reglas de publicacion del proyecto obligan a decir en
+    voz alta lo que no se ha contrastado, en vez de callarlo. Marcarlo como
+    incidencia empujaria justo a lo contrario.
+    """
+    texto = ('---\nestado_dato: "verificado"\n---\n'
+             '| Distintivo | ZBE |\n|:---|:---|\n| B | Pendiente de verificar |\n')
+    assert au.marcadores_sin_resolver(texto) == []
+
+
+def test_el_front_matter_no_cuenta_como_marcador():
+    """
+    Solo importa lo que ve el lector. Una nota en el front matter no se
+    publica, asi que no es una incidencia.
+    """
+    texto = '---\nestado_dato: "verificado"\nnota: "pendiente de verificar el importe"\n---\nTexto limpio.\n'
+    assert au.marcadores_sin_resolver(texto) == []
+
+
+def test_una_pagina_limpia_no_da_marcadores():
+    texto = '---\nestado_dato: "verificado"\n---\nLa multa son 200 euros (art. 80.1 LTSV).\n'
+    assert au.marcadores_sin_resolver(texto) == []
+
+
+def test_ninguna_pagina_publicada_lleva_marcadores():
+    """
+    La comprobacion de verdad, sobre el contenido real del sitio. Si esto
+    falla, hay una nota interna publicada.
+    """
+    sucias = []
+    for ruta, texto in au.paginas_publicadas():
+        marcas = au.marcadores_sin_resolver(texto)
+        if marcas:
+            sucias.append("%s: %s" % (ruta, ", ".join(marcas)))
+    assert not sucias, "paginas con notas sin resolver:\n   " + "\n   ".join(sucias)
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0

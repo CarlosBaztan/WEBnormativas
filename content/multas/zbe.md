@@ -6,7 +6,7 @@ date: 2026-09-23
 estado_dato: "verificado"
 fuente_nombre: "Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial (LTSV)"
 fuente_url: "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722"
-fecha_verificacion: "2026-09-23"
+fecha_verificacion: "2026-10-01"
 draft: false
 ---
 
@@ -14,23 +14,36 @@ Entrar en una zona de bajas emisiones incumpliendo sus restricciones es **infrac
 
 ## Cómo se tipifica
 
-| Aspecto | Norma |
-|:---|:---|
-| **Tipificación** | Art. **76.z3)** LTSV, infracción grave |
-| **Cuantía** | Art. **80.1** LTSV |
-| **Graduación** | Art. **81** LTSV |
+| Aspecto | Norma | Qué dice |
+|:---|:---|:---|
+| **Tipificación** | Art. **76.z3)** LTSV | Infracción grave |
+| **Cuantía** | Art. **80.1** LTSV | **200 euros** |
+| **Pronto pago** | Art. **94** LTSV | **50 %** si pagas en 20 días |
+| **Puntos** | Anexo II LTSV | **No quita puntos** |
 
 El importe no lo fija el ayuntamiento, sino la ley estatal. El ayuntamiento decide quién puede entrar; la sanción por no cumplirlo viene de arriba.
 
-**Importe concreto: {{VERIFICAR}} en el art. 80.1 de la Ley de Tráfico.** No lo publicamos hasta haberlo leído en el texto consolidado del BOE.
+El artículo 80.1 fija la cuantía por tipo de infracción, y a las graves les corresponden 200 euros. Es la misma cifra en Madrid que en Málaga: lo que cambia de una ciudad a otra es quién puede entrar, no lo que cuesta entrar sin poder.
 
-**Reducción por pronto pago: {{VERIFICAR}}.** La Ley de Tráfico contempla una reducción si se paga dentro de plazo, pero no publicamos ni el porcentaje ni los días hasta verificarlos en el articulado.
+### Si pagas pronto, 100 euros
+
+El artículo 94 reduce la sanción un **50 %** si se abona en el acto o dentro de los **veinte días naturales** siguientes a la notificación.
+
+Ese descuento tiene una contrapartida que conviene saber antes de pulsar el botón, porque el propio artículo 94 la enumera: **pagar es renunciar a alegar**. Las alegaciones que presentes se tendrán por no presentadas, el procedimiento termina ese mismo día sin resolución expresa y la vía administrativa queda agotada, de forma que después solo cabría acudir a los tribunales.
+
+Así que la pregunta no es si 100 euros es mejor que 200, sino si tienes algo que alegar. Si crees que te correspondía una excepción o que tu vehículo está mal clasificado, pagar cierra la puerta.
+
+### No quita puntos
+
+El Anexo II de la Ley de Tráfico enumera las infracciones que llevan aparejada pérdida de puntos, y la del artículo 76.z3) no está entre ellas. Entrar en una ZBE sin poder cuesta dinero, no carné.
 
 ## Cómo se detecta
 
-Con **cámaras con lector de matrículas**. No hay barreras ni agente que te pare: la denuncia llega después, por correo o al Tablón Edictal.
+Con **cámaras con lector de matrículas**. No hay barreras ni agente que te pare, y la ley lo contempla expresamente: el artículo 89.2.c) permite no notificar la denuncia en el acto cuando la infracción se ha conocido «a través de medios de captación y reproducción de imágenes». Por eso llega después.
 
 Eso tiene una consecuencia práctica: puedes entrar sin darte cuenta y enterarte semanas más tarde. Pasa sobre todo en vías de paso que atraviesan una zona, como el tramo de la A-42 dentro de [Plaza Elíptica](/zbe/madrid/plaza-eliptica/).
+
+**[Cómo funcionan las cámaras de las ZBE](/zbe/camaras/)**: qué leen, con qué base de datos lo cotejan y por dónde te llega la notificación.
 
 ## Cómo alegar
 
@@ -67,6 +80,6 @@ Alegar que no viste la señal rara vez prospera: la señalización es requisito 
 
 ---
 
-**Fuente:** [Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722), arts. 76.z3), 80.1 y 81 · **Verificado el 23 de septiembre de 2026**
+**Fuente:** [Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722), arts. 76.z3), 80.1, 81, 89.2.c), 94 y anexo II · **Verificado el 1 de octubre de 2026**
 
 *Esta página resume la norma con fines informativos; no es asesoramiento jurídico. Para un caso concreto, consulta con un profesional.*

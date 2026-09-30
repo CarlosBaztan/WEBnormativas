@@ -110,9 +110,9 @@ Calle Faro, avenida de Abrantes, calle Portalegre, avenida de Oporto, travesía 
 
 Entrar incumpliendo las restricciones es **infracción grave** de tráfico, tipificada en el artículo 76.z3) de la Ley de Tráfico y sancionada conforme a sus artículos 80.1 y 81. El importe no lo fija el Ayuntamiento, sino la ley estatal.
 
-*Importe concreto: pendiente de verificar en el art. 80.1 de la Ley de Tráfico.*
+*Importe: 200 euros, que es lo que el art. 80.1 de la Ley de Tráfico señala para las infracciones graves. No quita puntos. Ver [multas por entrar en una ZBE](/multas/zbe/).*
 
-El control se hace con cámaras con lector de matrículas (art. 22.10 de la ordenanza).
+El control se hace con cámaras con lector de matrículas (art. 22.10 de la ordenanza). Ver [cómo funcionan las cámaras](/zbe/camaras/).
 
 ## Excepciones y autorizaciones
 
