@@ -1,0 +1,27 @@
+{{- /*
+  render-link.html — como se pintan los enlaces escritos en Markdown.
+
+  Existe por una regla del proyecto: todo enlace que saque al visitante del
+  sitio se abre en una pestaña nueva, para no perderlo. Las plantillas y el
+  JavaScript ya lo hacían (ver partials/fuente-verificacion.html), pero el
+  Markdown del contenido no, y ahí es donde están casi todos los enlaces al
+  BOE. Quien pulsaba la fuente de una ficha se iba y no volvía.
+
+  Un enlace se considera externo solo si su destino es http o https Y su
+  anfitrión no es el del sitio. La doble condición importa: comprobar solo que
+  la URL sea absoluta marcaría como externos los `mailto:` y los `tel:`, que no
+  abren ninguna pestaña. Y los internos (/zbe/, #ancla) se quedan como están,
+  porque abrir el propio sitio en otra pestaña estorba y deja inútil el botón
+  de atrás.
+
+  El aviso «se abre en una ventana nueva» va oculto a la vista y disponible
+  para un lector de pantalla, igual que en las plantillas. Sin él, quien no ve
+  la pantalla cambia de sitio sin enterarse.
+*/ -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $externo := and (in (slice "http" "https") $u.Scheme) (ne $u.Host (urls.Parse site.BaseURL).Host) -}}
+{{- if $externo -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }} rel="noopener external" target="_blank">{{ .Text | safeHTML }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>
+{{- else -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- end -}}
