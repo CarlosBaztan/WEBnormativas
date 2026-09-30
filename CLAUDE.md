@@ -220,43 +220,50 @@ Al 28/09/2026.
       `/zbe/barcelona/`.
 - [x] Hoja de ruta de tres días:
       `docs/superpowers/plans/2026-09-25-hoja-de-ruta-3-dias.md`
-- [ ] **Dominio: elegido, sin comprar.** Ver abajo. Es lo único que bloquea
-      arrancar la hoja de ruta.
+- [ ] **Dominio: `papelesdelcoche.com`, en Cloudflare.** Ver abajo.
 - [ ] Fase 5: pre-AdSense (legales y CMP). Bloqueada hasta tener los datos de
       identidad de Carlos, que exige el art. 10 LSSI.
 
-### Dominio (28/09/2026)
+### Dominio (30/09/2026)
 
-**Elegido: `cocheenregla`.** Carlos estuvo a punto de comprar
-`cocheenregla.com` en OVH por 7,99 € el primer año y 13,49 €/año de
-renovación, y lo dejó para otro momento. **No comprado todavía.**
+**Elegido: `papelesdelcoche.com`, en Cloudflare Registrar por 9,50 €.
+TODAVIA NO COMPRADO**: Carlos lo compra el 30/09 por la tarde. Cambia la decisión del 28/09, que era `cocheenregla.com` en OVH.
 
-Por qué ese: «tener el coche en regla» describe el servicio entero (ITV,
-impuesto, etiqueta, ZBE, multas, trámites) sin atarse a ninguna vertical, y
-suena serio. Segundo candidato: `papelesdelcoche`, más memorable pero con la
-sombra de «sin papeles».
+Lo comprobado el 30/09: los dos dominios seguían libres (RDAP de Verisign,
+404 en ambos), así que la elección fue de gusto, no de disponibilidad. Yo
+había puesto una pega a `papelesdelcoche` («la sombra de sin papeles») y
+Carlos eligió ese igualmente. Decisión suya, decisión tomada: no volver a
+sacar el tema.
 
-Disponibilidad comprobada el 28/09 (`.com` por RDAP, autoritativo; `.es` por
-ausencia de NS, que es indicio fuerte pero hay que confirmarlo al pagar).
-Libres en las dos extensiones: cocheenregla, papelesdelcoche,
-normativadelcoche, vehiculoenregla, normativauto, reglasdelcoche,
-micochelegal, tucochealdia, cocheenregla, conductorenregla, datosdelcoche.
-Cogidos: cochelegal, autolegal, autonorma, enregla, autoenregla, vialibre,
-luzverde, sinmultas, todoenregla, etiquetacoche, mivehiculo.
+**Comprarlo en Cloudflare y no en OVH cambia el procedimiento entero**, y a
+mejor. Verificado en la documentación de Cloudflare:
+
+- Los dominios registrados ahí **nacen con los servidores de nombres de
+  Cloudflare**. Desaparecen el cambio de servidores, el aviso del DNSSEC (que
+  era el único paso capaz de dejar el dominio inaccesible) y la espera de
+  propagación. De cinco fases se queda en tres, y ninguna con riesgo.
+- **Vende a precio de coste, también al renovar.** En OVH la renovación subía
+  a 13,49 €/año desde el segundo; aquí se queda en el precio del registro.
+- Incluye ocultación del titular en el WHOIS, DNSSEC en un clic y SSL.
+
+Contrapartida menor: mientras esté en Cloudflare Registrar no se pueden usar
+servidores de nombres de otro proveedor. Para este proyecto da igual.
+
+**Lo que Cloudflare NO da es buzón de correo**, solo reenvío (Email Routing).
+`contacto@papelesdelcoche.com` reenvía al Gmail de Carlos. Para el art. 10 de
+la LSSI vale, porque lo que exige es una dirección de contacto que funcione;
+para *responder* desde ella haría falta configurar «Enviar como» en Gmail.
+
+El procedimiento está en [docs/conectar-dominio.md](docs/conectar-dominio.md).
+
+Sobre ampliar a otros países: ni «coche» ni el `.es` valen fuera de España,
+pero el activo del proyecto es el dataset español y no se transfiere. Si
+alguna vez se quiere esa puerta, la decisión es `.com` (ya tomada) más
+carpetas por país, no cambiar el nombre.
 
 Descartado a propósito `codigocirculacion` pese a ser el de más gancho: hace
 parecer que el sitio es oficial, y todo el argumento del proyecto es el
 contrario.
-
-Sobre ampliar a otros países: ni «coche» ni el `.es` valen fuera de España, pero
-el activo del proyecto es el dataset español y no se transfiere. Si alguna vez
-se quiere esa puerta, la decisión es `.com` (ya tomada) más carpetas por país,
-no cambiar el nombre.
-
-El procedimiento de conexión con Cloudflare está escrito paso a paso en
-[docs/conectar-dominio.md](docs/conectar-dominio.md). **Lo crítico:** desactivar
-el DNSSEC en OVH ANTES de cambiar los servidores de nombres, o el dominio
-puede quedarse inaccesible.
 
 ### Hallazgo crítico sobre el NAP-DGT (22/09/2026)
 
