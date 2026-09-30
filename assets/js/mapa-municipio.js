@@ -30,6 +30,23 @@
   }
 
   /*
+   * El color del perimetro sale del CSS, igual que en el mapa general.
+   *
+   * El valor de reserva es para el caso en que la hoja de estilos no haya
+   * llegado todavia: sin el, getPropertyValue devuelve cadena vacia y Leaflet
+   * pinta la zona de negro sin avisar de nada.
+   */
+  function colorDeZonaVerificada() {
+    try {
+      var v = getComputedStyle(document.documentElement)
+                .getPropertyValue('--mapa-verificado').trim();
+      return v || '#d6006e';
+    } catch (e) {
+      return '#d6006e';
+    }
+  }
+
+  /*
    * Boton para volver al encuadre de partida.
    *
    * Desde que el mapa se puede mover, es facil acabar perdido en mitad de la
@@ -119,13 +136,14 @@
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(mapa);
 
-        /* El mismo magenta del mapa general: no aparece en el mapa base de
-           OpenStreetMap, asi que el perimetro no se confunde con un parque
-           ni con una carretera. */
+        /* El mismo magenta del mapa general, leido de sistema.css para que no
+           haya dos verdades. No aparece en el mapa base de OpenStreetMap, asi
+           que el perimetro no se confunde con un parque ni con una carretera. */
+        var magenta = colorDeZonaVerificada();
         var capa = L.geoJSON(zona, {
           style: function () {
-            return { color: '#d6006e', weight: 3, opacity: 0.95,
-                     fillColor: '#d6006e', fillOpacity: 0.3 };
+            return { color: magenta, weight: 3, opacity: 0.95,
+                     fillColor: magenta, fillOpacity: 0.3 };
           },
           onEachFeature: function (f, c) {
             if (f.properties.zona) c.bindTooltip(f.properties.zona, { sticky: true });

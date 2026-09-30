@@ -48,15 +48,24 @@
   height: 0.9rem;
   border-radius: 3px;
   border: 2px solid currentColor;
+  background-color: var(--mapa-suelo);
 }
 
-/* Los mismos colores que usa el JavaScript. Si cambian alli, cambian aqui.
-   Son tonos que no aparecen en el mapa base de OpenStreetMap: con el verde y
-   el gris de antes, las zonas se confundian con los parques y el casco
-   urbano. */
-.mapa-leyenda__muestra--verificado { color: #d6006e; background: #d6006e59; }
-.mapa-leyenda__muestra--parcial    { color: #ff6d00; background: #ff6d0059; }
-.mapa-leyenda__muestra--pendiente  { color: #7209b7; background: #7209b759; }
+/* Los colores salen de sistema.css, que es de donde los lee tambien el
+   JavaScript del mapa. Antes estaban escritos aqui y alli, con un comentario
+   pidiendo que se cambiaran a la vez. */
+.mapa-leyenda__muestra--verificado {
+  color: var(--mapa-verificado);
+  background: color-mix(in srgb, var(--mapa-verificado) var(--mapa-relleno), var(--mapa-suelo));
+}
+.mapa-leyenda__muestra--parcial {
+  color: var(--mapa-parcial);
+  background: color-mix(in srgb, var(--mapa-parcial) var(--mapa-relleno), var(--mapa-suelo));
+}
+.mapa-leyenda__muestra--pendiente {
+  color: var(--mapa-pendiente);
+  background: color-mix(in srgb, var(--mapa-pendiente) var(--mapa-relleno), var(--mapa-suelo));
+}
 
 .mapa-alternativa {
   padding: 0.9rem 1.1rem;

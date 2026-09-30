@@ -1,0 +1,143 @@
+/* ------------------------------------------------------------------
+   sistema.css — los tokens del sistema visual. Un solo sitio.
+
+   Aqui vive TODA decision de diseno que se repite: tamanos de letra,
+   interlineados, espaciado, cajas, colores de estado y paleta del mapa.
+   Los demas ficheros de extended/ consumen estas variables y no vuelven a
+   decidir nada.
+
+   Por que un fichero aparte y no dentro de normativa.css, donde estaban:
+   porque ahi no se encontraban. Un token que no se encuentra se reinventa,
+   y asi es como se llega a 26 tamanos de letra distintos.
+
+   ORDEN DE CARGA: PaperMod concatena assets/css/extended/*.css por nombre de
+   fichero, asi que este entra el ultimo y sus declaraciones de :root ganan a
+   cualquier otra de la misma especificidad. Es lo que se quiere de un fichero
+   de tokens. Lo que NO se puede hacer aqui es escribir reglas normales
+   (.clase { ... }) esperando que las pise otro fichero: desde aqui ya no
+   pisa nadie. Este fichero declara variables, nada mas.
+
+   AVISO heredado de CLAUDE.md: las variables CSS solo se heredan hacia
+   abajo. Por eso van en :root y no en el componente que las usa.
+   ------------------------------------------------------------------ */
+
+:root {
+    /* ==================================================================
+       SISTEMA TIPOGRAFICO Y DE ESPACIADO
+
+       Antes habia 26 tamanos de letra distintos, diez de ellos entre
+       12,5 y 15,2 pixeles. Nadie distingue 14,08 de 14,4, pero el
+       conjunto se percibe como desorden. Lo mismo con 31 valores de
+       espaciado y 10 de interlineado.
+
+       AVISO: 1rem son 16 px (el <html>), pero el cuerpo de PaperMod es
+       de 18 px. Por eso "0.9rem" no era el 90 % del texto, era el 80 %.
+       Los valores de abajo estan elegidos por su resultado en pixeles.
+       ================================================================== */
+    --txt-xs:  0.8125rem; /* 13 px: fuente, fecha de verificacion, atribucion */
+    --txt-sm:  0.9375rem; /* 15 px: notas, ayudas de formulario, tablas */
+    --txt-md:  1.0625rem; /* 17 px: cuerpo */
+    --txt-lg:  1.1875rem; /* 19 px: rotulo de bloque, h4 */
+    --txt-xl:  1.375rem;  /* 22 px: h3 y titular de la respuesta */
+    --txt-2xl: 1.625rem;  /* 26 px: h2 de articulo */
+    --txt-3xl: 2.125rem;  /* 34 px: h1 */
+
+    --lh-titular: 1.2;
+    --lh-corto:   1.45;   /* fichas, tablas, notas, celdas */
+    --lh-lectura: 1.65;   /* parrafos largos */
+
+    /* Espaciado en multiplos de 4 px */
+    --sp-1: 0.25rem;  --sp-2: 0.5rem;  --sp-3: 0.75rem;  --sp-4: 1rem;
+    --sp-5: 1.25rem;  --sp-6: 1.5rem;  --sp-8: 2rem;     --sp-12: 3rem;
+
+    /* ------------------------------------------------------------------
+       CAJAS
+
+       --border del tema es #eee, y las paginas de tipo "list" (la portada
+       y /zbe/) llevan de fondo --code-bg, que es #f5f5f5. Un borde de #eee
+       sobre #f5f5f5 da un contraste de 1,06:1, o sea que no se ve. Ahi
+       estaba el origen del problema: quedaban los rellenos y los margenes
+       de cinco cajas, o sea el ruido, pero sin agrupar nada, o sea sin
+       jerarquia, y el unico elemento visible era el boton, que es lo que
+       menos importa.
+       ------------------------------------------------------------------ */
+    --caja-radio: 8px;
+    --caja-borde: var(--tertiary);   /* claro: #d6d6d6 */
+    --caja-acento: var(--content);   /* 15:1 en claro, 12:1 en oscuro */
+
+    /* Verificado (verde) */
+    --nv-ok-bg: #eaf5ec;
+    --nv-ok-fg: #14532d;
+    --nv-ok-line: #7fae8c;
+
+    /* Aviso / pendiente de revisión (ámbar) */
+    --nv-warn-bg: #fdf3e3;
+    --nv-warn-fg: #6b3d05;
+    --nv-warn-line: #c9962f;
+
+    /* Sin verificar (rojo apagado) */
+    --nv-stop-bg: #fbecec;
+    --nv-stop-fg: #7a1f1f;
+    --nv-stop-line: #c07070;
+
+    /* Neutro / informativo */
+    --nv-neutral-bg: #f1f3f6;
+    --nv-neutral-fg: #333a44;
+    --nv-neutral-line: #b9c0cb;
+}
+
+:root[data-theme="dark"] {
+    /* #333 sobre #1d1e20 tampoco se ve. */
+    --caja-borde: #4a4c52;
+
+    --nv-ok-bg: #16251b;
+    --nv-ok-fg: #a9dcb8;
+    --nv-ok-line: #3d6b4b;
+
+    --nv-warn-bg: #2a2010;
+    --nv-warn-fg: #f0cb8d;
+    --nv-warn-line: #7a5f22;
+
+    --nv-stop-bg: #2b1718;
+    --nv-stop-fg: #eda9a9;
+    --nv-stop-line: #7a3b3b;
+
+    --nv-neutral-bg: #26282d;
+    --nv-neutral-fg: #c9ced6;
+    --nv-neutral-line: #454a52;
+}
+
+:root {
+    /* ------------------------------------------------------------------
+       PALETA DEL MAPA
+
+       Estos tres colores no son decorativos: son el unico sitio donde el
+       mapa dice si puedes fiarte de una zona. Magenta, la ordenanza esta
+       leida; naranja, consta la zona pero no sus reglas; morado, ni eso.
+
+       Estaban escritos cuatro veces: en las tres muestras de la leyenda y en
+       los dos ficheros de JavaScript del mapa, con un comentario que decia
+       "si cambian alli, cambian aqui". Ese contrato se cumple hasta el dia
+       que no, y el dia que no, la leyenda miente sobre lo unico que el mapa
+       tiene que comunicar. Ahora el JavaScript los lee de aqui.
+
+       Son tonos que NO aparecen en el mapa base de OpenStreetMap: con el
+       verde y el gris de antes, las zonas se confundian con los parques y
+       con el casco urbano.
+       ------------------------------------------------------------------ */
+    --mapa-verificado: #d6006e;
+    --mapa-parcial:    #d35400;
+    --mapa-pendiente:  #7209b7;
+
+    /* El color del suelo en las teselas de OpenStreetMap. La muestra de
+       la leyenda se pinta encima de el, no sobre el fondo de la pagina,
+       por dos razones. La primera es que asi ensena exactamente lo que se
+       ve en el mapa, que siempre es claro porque las teselas no cambian
+       con el tema del sitio. La segunda es de accesibilidad: sobre el
+       fondo oscuro, el morado daba 1,94:1 y no se distinguia del panel. */
+    --mapa-suelo: #f2efe9;
+
+    /* Relleno del poligono y de la muestra de la leyenda: el mismo color al
+       35 %, para que se vea la calle por debajo. */
+    --mapa-relleno: 35%;
+}

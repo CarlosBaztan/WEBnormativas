@@ -36,10 +36,39 @@
    * Estos tres tonos no aparecen en el mapa base, asi que una ZBE se
    * distingue de una ciudad de un vistazo, que es para lo que esta la pagina.
    */
-  var COLORES = {
+  /*
+   * Los colores se leen del CSS (sistema.css), no se escriben aqui.
+   *
+   * Estaban en cuatro sitios: las tres muestras de la leyenda y los dos
+   * ficheros de mapa, con un comentario pidiendo cambiarlos a la vez. El dia
+   * que uno se quede atras, la leyenda dira que una zona es de un color y el
+   * mapa la pintara de otro, y la leyenda es lo unico que traduce el color a
+   * "puedes fiarte de este dato".
+   *
+   * El valor de reserva no sobra: si la hoja de estilos todavia no ha llegado
+   * cuando arranca este script, getPropertyValue devuelve cadena vacia y
+   * Leaflet pintaria las zonas de negro sin avisar.
+   */
+  var RESERVA = {
     verificado: '#d6006e',
-    parcial:    '#ff6d00',
+    parcial:    '#d35400',
     pendiente:  '#7209b7'
+  };
+
+  function token(nombre, reserva) {
+    try {
+      var v = getComputedStyle(document.documentElement)
+                .getPropertyValue('--mapa-' + nombre).trim();
+      return v || reserva;
+    } catch (e) {
+      return reserva;
+    }
+  }
+
+  var COLORES = {
+    verificado: token('verificado', RESERVA.verificado),
+    parcial:    token('parcial',    RESERVA.parcial),
+    pendiente:  token('pendiente',  RESERVA.pendiente)
   };
 
   function color(estado) {
