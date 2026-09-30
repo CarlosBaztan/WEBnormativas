@@ -342,9 +342,49 @@
    * Resumen arriba del todo: la respuesta a "¿puedo circular?", zona por zona.
    * Sigue siendo atribuida a la ordenanza, no una autorización nuestra.
    */
+  /*
+   * Respuesta cuando el municipio no tiene ninguna zona con reglas.
+   *
+   * Antes esto devolvia cadena vacia y la herramienta se quedaba sin
+   * veredicto justo en el caso en que la respuesta es mas clara. En Valencia
+   * se veia el recuadro del distintivo, debajo un boton negro enorme, y la
+   * respuesta de verdad escondida dentro del detalle de la ordenanza.
+   *
+   * Hay tres motivos muy distintos para no tener zonas y al usuario le cambia
+   * la vida cual sea el suyo: que la ordenanza no este aprobada (no hay nada
+   * que cumplir), que no haya ZBE (tampoco), o que no la hayamos comprobado
+   * (que es lo unico que no responde).
+   */
+  function veredictoSinZonas(m) {
+    var clase, titular, detalle;
+
+    if (m.estado_zbe === 'prevista') {
+      clase = 'si';
+      titular = 'Hoy no hay ninguna restricción que cumplir';
+      detalle = 'El municipio tiene una ordenanza redactada pero sin aprobación ' +
+        'definitiva, así que todavía no hay restricción exigible ni sanción posible. ' +
+        'Puede cambiar en cualquier pleno.';
+    } else if (m.estado_zbe === 'sin_zbe') {
+      clase = 'si';
+      titular = 'No consta una zona de bajas emisiones';
+      detalle = 'En este municipio no nos consta ninguna zona de bajas emisiones en vigor.';
+    } else {
+      clase = 'pend';
+      titular = 'Todavía no podemos responder';
+      detalle = 'No hemos leído la ordenanza de este municipio. Preferimos no decir ' +
+        'nada a decir algo sin comprobar.';
+    }
+
+    return '<div class="pc-veredicto pc-veredicto--' + clase + '">' +
+      '<p class="pc-veredicto__pregunta">¿Puedes circular por ' + esc(m.municipio) + '?</p>' +
+      '<p class="pc-veredicto__titular">' + titular + '</p>' +
+      '<p class="pc-veredicto__detalle">' + detalle + '</p>' +
+      '</div>';
+  }
+
   function pintarVeredicto(m, distintivoUsuario) {
     var zonas = m.zonas || [];
-    if (!zonas.length) return '';
+    if (!zonas.length) return veredictoSinZonas(m);
 
     var veredictos = zonas.map(function (z) { return veredictoZona(z, distintivoUsuario); });
     var hay = function (v) { return veredictos.indexOf(v) !== -1; };
@@ -526,15 +566,13 @@
       // Dos motivos muy distintos para no tener zonas, y el usuario necesita
       // saber cual es el suyo: que no lo hayamos comprobado, o que no haya
       // nada que cumplir todavia. Valencia es el segundo caso.
+      // La respuesta ya esta arriba, en el veredicto. Aqui solo lo que
+      // aporta ademas: donde leerlo entero.
       if (m.estado_zbe === 'prevista') {
-        partes.push('<p class="pc-zona__pendiente"><strong>Esta zona todavía no está en vigor.</strong> ' +
-          'El municipio tiene una ordenanza redactada pero sin aprobación definitiva, ' +
-          'así que hoy no hay restricción exigible ni sanción posible. ' +
-          'Lo explicamos en la ficha completa.</p>');
-      } else if (m.estado_zbe === 'sin_zbe') {
-        partes.push('<p class="pc-zona__pendiente">No consta una zona de bajas emisiones en este municipio.</p>');
+        partes.push('<p class="pc-zona__pendiente">El texto de la ordenanza y el calendario ' +
+          'que prevé están en la ficha completa.</p>');
       } else {
-        partes.push('<p class="pc-zona__pendiente">No consta ninguna zona verificada para este municipio.</p>');
+        partes.push('<p class="pc-zona__pendiente">No hay ninguna zona verificada que detallar.</p>');
       }
     } else {
       for (var i = 0; i < zonas.length; i++) {

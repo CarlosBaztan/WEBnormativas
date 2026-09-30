@@ -178,6 +178,14 @@
 .pc-vz--no    { border-left: 4px solid currentColor; }
 .pc-vz--pend  { border-left: 4px dotted currentColor; opacity: 0.85; }
 
+/* Explicacion corta debajo del titular, cuando el municipio no tiene zonas
+   que listar: el "por que" de la respuesta, sin competir con ella. */
+.pc-veredicto__detalle {
+  margin: 0;
+  max-width: 46ch;
+  line-height: 1.5;
+}
+
 .pc-veredicto__nota {
   margin: 0.9rem 0 0;
   font-size: 0.92rem;

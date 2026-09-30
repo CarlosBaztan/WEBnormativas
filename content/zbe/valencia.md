@@ -1,10 +1,10 @@
 ---
-title: "Zona de Bajas Emisiones (ZBE) de València: qué dice la ordenanza y por qué todavía no multa"
-description: "La ordenanza de la ZBE de València está aprobada solo inicialmente: el propio ayuntamiento dice que la aprobación definitiva sigue pendiente. Qué prevé el texto y desde cuándo afectaría a cada vehículo."
+title: "Zona de Bajas Emisiones (ZBE) de Valencia: qué dice la ordenanza y por qué todavía no multa"
+description: "La ordenanza de la ZBE de Valencia está aprobada solo inicialmente: el propio ayuntamiento dice que la aprobación definitiva sigue pendiente. Qué prevé el texto y desde cuándo afectaría a cada vehículo."
 date: 2026-09-28
 
 tipo: "municipio"
-municipio: "València"
+municipio: "Valencia"
 codigo_ine: "46250"
 provincia: "Valencia"
 ccaa: "Comunitat Valenciana"
@@ -19,7 +19,7 @@ etiquetas_permitidas: []
 horario_restriccion: ""
 excepciones: []
 
-fuente_nombre: "Ordenanza Reguladora de la Zona de Bajas Emisiones de la ciudad de València, aprobada inicialmente por el Pleno el 25 de febrero de 2025"
+fuente_nombre: "Ordenanza Reguladora de la Zona de Bajas Emisiones de la ciudad de Valencia, aprobada inicialmente por el Pleno el 25 de febrero de 2025"
 fuente_url: "https://www.valencia.es/cas/pagina-de-categoria/-/asset_publisher/JzpZn9jBadjS/content/zona-bajas-emisiones"
 fecha_verificacion: "2026-09-28"
 
@@ -27,13 +27,13 @@ estado_dato: "verificado"
 draft: false
 ---
 
-**A fecha de hoy, la Zona de Bajas Emisiones de València no está en vigor y no se están imponiendo multas por acceder a ella.**
+**A fecha de hoy, la Zona de Bajas Emisiones de Valencia no está en vigor y no se están imponiendo multas por acceder a ella.**
 
-Lo dice el propio Ayuntamiento de València en su página de la ZBE: la ordenanza fue aprobada **inicialmente** por el Pleno el 25 de febrero de 2025, y desde entonces está en trámite de exposición pública, *«estando pendiente el acuerdo plenario de aprobación definitiva»*.
+Lo dice el propio Ayuntamiento de Valencia en su página de la ZBE: la ordenanza fue aprobada **inicialmente** por el Pleno el 25 de febrero de 2025, y desde entonces está en trámite de exposición pública, *«estando pendiente el acuerdo plenario de aprobación definitiva»*.
 
 Sin esa aprobación definitiva y su publicación en el boletín, la ordenanza no ha entrado en vigor. Y sin ordenanza en vigor no hay restricción exigible ni sanción posible.
 
-Merece la pena decirlo claro porque se ha publicado mucha información dando por hecho que la ZBE de València arrancó en diciembre de 2025. Esa fecha está en el texto, pero es la fecha que *preveía* un texto que todavía no es norma.
+Merece la pena decirlo claro porque se ha publicado mucha información dando por hecho que la ZBE de Valencia arrancó en diciembre de 2025. Esa fecha está en el texto, pero es la fecha que *preveía* un texto que todavía no es norma.
 
 ## Qué prevé el texto aprobado inicialmente
 
@@ -59,7 +59,7 @@ El texto añade dos supuestos más: los vehículos que no tengan información en
 
 ### El perímetro
 
-Una sola zona, **València ZBE**, de unos 27,8 km², que abarca casi toda la ciudad. El anexo I la delimita calle por calle, con el tramo exacto de portales cuando la vía solo entra en parte. Las vías del perímetro **no forman parte** de la zona.
+Una sola zona, **Valencia ZBE**, de unos 27,8 km², que abarca casi toda la ciudad. El anexo I la delimita calle por calle, con el tramo exacto de portales cuando la vía solo entra en parte. Las vías del perímetro **no forman parte** de la zona.
 
 A grandes rasgos queda cerrada por la Ronda Nord, la avenida dels Tarongers, el carrer de la Serradora y el Bulevard Sud.
 
@@ -76,7 +76,7 @@ La disposición transitoria primera escalona la entrada del régimen sancionador
 | Hasta el 30 de noviembre de 2025 | Fase informativa: sin sanciones, solo avisos |
 | Después de esa fecha | Vehículos más contaminantes registrados **fuera de la provincia de Valencia** |
 | 1 de enero de 2027 | Se suma el resto de la **provincia de Valencia** |
-| 1 de enero de 2028 | Se suman los registrados en el **municipio de València** |
+| 1 de enero de 2028 | Se suman los registrados en el **municipio de Valencia** |
 
 Encima de ese calendario hay una **moratoria por la DANA de octubre de 2024**: hasta el 31 de diciembre de 2027 para los vehículos registrados en los municipios afectados que recoge el Decreto 164/2024 del Consell, y hasta el 31 de diciembre de 2028 para los registrados en las pedanías afectadas.
 
@@ -96,7 +96,7 @@ La ordenanza no inventa una sanción propia: se remite a la ley estatal. El art�
 
 ## Qué hacer mientras tanto
 
-Si conduces por València con un vehículo sin distintivo, hoy no tienes una restricción que cumplir. Pero el estado de esta ordenanza puede cambiar en cualquier pleno, así que **compruébalo en la fuente oficial antes de fiarte de esta página**, sobre todo si la fecha de verificación de arriba tiene ya unos meses.
+Si conduces por Valencia con un vehículo sin distintivo, hoy no tienes una restricción que cumplir. Pero el estado de esta ordenanza puede cambiar en cualquier pleno, así que **compruébalo en la fuente oficial antes de fiarte de esta página**, sobre todo si la fecha de verificación de arriba tiene ya unos meses.
 
 Si tu vehículo lleva distintivo 0, ECO, C o B, el texto que hay sobre la mesa no te afectaría ni aunque se aprobara mañana.
 
