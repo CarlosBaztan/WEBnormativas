@@ -187,8 +187,18 @@ FICHAS = {
 # Nombre con el que sale la zona en el mapa. El selector ordena los 45
 # municipios alfabeticamente, y con el nombre del NAP la segunda ciudad del
 # pais quedaba en la erre, donde nadie la busca.
+#
+# Los tres topominos bilingues estan por el mismo motivo, y ademas van en
+# castellano a secas: aqui el visitante ya sabe que ciudad quiere, asi que la
+# forma doble ("Gerona / Girona") solo alarga el desplegable. La forma doble,
+# que es la que atiende las dos busquedas, vive en data/zbe.json y sale en el
+# listado de /zbe/ y en las descargas de /datos/. La tabla de alla es
+# NOMBRES_BILINGUES, en pipeline/zbe_nap.py.
 NOMBRES = {
     "rondas-de-barcelona": "Barcelona (ZBE Rondas)",
+    "girona": "Gerona",
+    "lleida": "Lérida",
+    "donostia-san-sebastian": "San Sebastián",
 }
 
 

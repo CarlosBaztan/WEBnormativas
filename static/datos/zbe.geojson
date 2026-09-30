@@ -113485,7 +113485,7 @@
       "properties": {
         "slug": "sant-cugat-del-valles", 
         "id_zona": "sant-cugat-del-valles-0", 
-        "municipio": "Sant Cugat Del Vallès", 
+        "municipio": "Sant Cugat del Vallès", 
         "zona": "", 
         "provincia": "", 
         "km2": 6.6, 
@@ -133581,7 +133581,7 @@
       "properties": {
         "slug": "girona", 
         "id_zona": "girona-0", 
-        "municipio": "Girona", 
+        "municipio": "Gerona", 
         "zona": "", 
         "provincia": "", 
         "km2": 2.96, 
@@ -137195,7 +137195,7 @@
       "properties": {
         "slug": "donostia-san-sebastian", 
         "id_zona": "donostia-san-sebastian-0", 
-        "municipio": "Donostia - San Sebastián", 
+        "municipio": "San Sebastián", 
         "zona": "", 
         "provincia": "", 
         "km2": 2.35, 
@@ -143099,7 +143099,7 @@
       "properties": {
         "slug": "lleida", 
         "id_zona": "lleida-0", 
-        "municipio": "Lleida", 
+        "municipio": "Lérida", 
         "zona": "ZBE Lleida", 
         "provincia": "", 
         "km2": 1.35, 
@@ -146751,7 +146751,7 @@
       "properties": {
         "slug": "lleida", 
         "id_zona": "lleida-1", 
-        "municipio": "Lleida", 
+        "municipio": "Lérida", 
         "zona": "ZBE Terrassa", 
         "provincia": "", 
         "km2": 0.83, 

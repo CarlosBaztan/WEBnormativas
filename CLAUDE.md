@@ -173,6 +173,31 @@ acrónimo. No hay medición del racimo completo de la expresión larga (la
 consulta del 28/09 salió filtrada a preguntas), así que se toma la decisión
 conservadora de cubrir ambas.
 
+**Topónimos bilingües: castellano primero, lengua propia después.** Decisión
+de Carlos del 30/09/2026, por el mismo motivo que la convención de títulos: no
+perder ninguna de las dos búsquedas. Se publica «Gerona / Girona», «Lérida /
+Lleida» y «San Sebastián / Donostia», en ese orden, porque la mayoría escribe
+la forma castellana pero la oficial es la que aparece en la ordenanza, en el
+NAP y en la prensa local.
+
+**En los desplegables va solo la forma castellana, corta.** En el selector del
+mapa la forma doble alarga la lista sin aportar nada: quien lo abre ya sabe qué
+ciudad quiere. Además, con el nombre oficial Gerona quedaba ordenada por la i y
+Lérida por la elle, donde nadie las busca.
+
+Son dos tablas, una por sitio, y las dos están comentadas:
+
+| Dónde | Tabla | Qué sale |
+|---|---|---|
+| Dataset, listado de `/zbe/`, descargas | `NOMBRES_BILINGUES` en `pipeline/zbe_nap.py` | `Gerona / Girona` |
+| Mapa y selector | `NOMBRES` en `pipeline/zbe_geometria.py` | `Gerona` |
+
+Aplica a los casos del mismo tipo que vayan saliendo. **`A Coruña` es el
+siguiente**, y debería pasar a «La Coruña / A Coruña» cuando se toque. No
+confundirlo con `Vitoria-Gasteiz`, que es un nombre oficial compuesto, ni con
+`Palma`, donde «Palma de Mallorca» no es otra lengua sino una precisión
+geográfica.
+
 **Cuánto respaldo tiene el mapa, dicho con precisión.** Conviene no inflarlo:
 
 - El grupo «mapa» son **849 variantes de escritura de 5.755**, una de cada
@@ -327,6 +352,12 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   `partials/mapa-municipio.html` (la ficha se queda sin mapa). Resuelto con
   `slug_nap` en el front matter y la tabla `FICHAS` del pipeline. El build
   termina en verde en los tres casos.
+  Por lo mismo, **el nombre que se muestra no puede alimentar al slug**: la
+  tabla de topónimos bilingües se aplica en `analizar()`, despues de calcular
+  el slug, y no en `url_xml_de_recurso()` como `CORRECCIONES_NOMBRE`. Si se
+  aplicara antes, `girona` pasaría a `gerona-girona` y cambiarían de golpe la
+  clave de `data/zbe.json`, el nombre del fichero de caché y el slug del
+  GeoJSON. Lo vigila `test_ningun_nombre_bilingue_cambia_el_slug`.
 - **El GeoJSON se sirve en una URL fija, sin huella.** Al regenerarlo, el
   navegador sigue dando el anterior hasta que caduca su copia. Si una prueba
   en local no refleja un cambio del pipeline, recargar sin cache antes de

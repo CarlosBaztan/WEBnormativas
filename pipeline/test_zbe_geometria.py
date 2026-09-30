@@ -351,6 +351,30 @@ def test_el_resumen_cuenta_aparte_las_zonas_que_de_verdad_restringen():
     assert r["zonas_con_restriccion"] == r["zonas"] - r["envolventes"], r
 
 
+def test_el_selector_del_mapa_usa_el_nombre_castellano_corto():
+    """
+    En el desplegable "Ir a un municipio" van las formas castellanas y solas.
+    Dos motivos: quien busca Gerona no la encuentra bajo la I, y la ficha
+    completa ("Gerona / Girona") alarga la lista sin aportar nada, porque ahi
+    el visitante ya sabe que ciudad quiere.
+
+    El nombre largo, con las dos formas, sigue en data/zbe.json y es el que
+    sale en el listado de /zbe/ y en las descargas.
+    """
+    coleccion = zg.construir_geojson(zg.TOLERANCIA_MAPA)
+    esperados = {
+        "girona": "Gerona",
+        "lleida": "Lérida",
+        "donostia-san-sebastian": "San Sebastián",
+    }
+    for slug, esperado in esperados.items():
+        zonas = _por_slug(coleccion, slug)
+        assert zonas, "no hay ninguna zona con slug %s" % slug
+        nombre = zonas[0]["properties"]["municipio"]
+        assert nombre == esperado, "%s sale como %r y deberia ser %r" % (
+            slug, nombre, esperado)
+
+
 def _ejecutar():
     fallos = 0
     for nombre, fn in sorted(globals().items()):

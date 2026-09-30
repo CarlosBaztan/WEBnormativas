@@ -77,6 +77,30 @@ CORRECCIONES_NOMBRE = {
     "Sevilla-Cartuja": "Sevilla (Cartuja)",
     "Gasteiz": "Vitoria-Gasteiz",
     "Pamplona Ensanche": "Pamplona (Ensanche)",
+    "Sant Cugat Del Vallès": "Sant Cugat del Vallès",
+}
+
+# Municipios con dos nombres: primero el castellano, despues el de la lengua
+# propia. No es una correccion como las de arriba, porque el nombre del NAP es
+# el oficial y no esta mal; es una decision de publicacion.
+#
+# El motivo es de busqueda: la mayoria escribe "ZBE Gerona", pero "Girona" es
+# lo que aparece en la ordenanza, en el NAP y en la prensa local. Llevar las
+# dos formas en el texto atiende las dos consultas sin duplicar paginas.
+#
+# CUIDADO: esta tabla NO puede tocar el slug. El slug sale del nombre, y de el
+# salen la clave de data/zbe.json, el nombre del fichero de cache y el slug de
+# cada zona del GeoJSON, que es por donde el mapa encuentra la ficha. Por eso
+# se aplica en `analizar`, despues de calcular el slug, y no en
+# `url_xml_de_recurso` como CORRECCIONES_NOMBRE. Lo comprueba
+# test_ningun_nombre_bilingue_cambia_el_slug.
+#
+# En el mapa se usa la forma corta, que es otra tabla: NOMBRES en
+# pipeline/zbe_geometria.py.
+NOMBRES_BILINGUES = {
+    "Girona": "Gerona / Girona",
+    "Lleida": "Lérida / Lleida",
+    "Donostia - San Sebastián": "San Sebastián / Donostia",
 }
 
 
@@ -187,6 +211,42 @@ def horarios_de(raiz: ET.Element) -> list[str]:
     return unicos
 
 
+def fechas_de_descarga_previas() -> dict[str, str]:
+    """
+    Fecha de descarga que ya tiene cada municipio en data/zbe.json.
+
+    Existe para --sin-red: ahi no se baja nada, asi que la fecha de la ultima
+    descarga de verdad es la que hay que conservar.
+    """
+    ruta = RAIZ / "data" / "zbe.json"
+    if not ruta.exists():
+        return {}
+    try:
+        datos = json.loads(ruta.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return {}
+    return {s: m["fecha_descarga"]
+            for s, m in datos.get("municipios", {}).items()
+            if m.get("fecha_descarga")}
+
+
+def conservar_fecha_de_descarga(reg: dict, previas: dict[str, str]) -> None:
+    """
+    Devuelve a un registro la fecha de descarga que ya tenia.
+
+    `analizar` estampa siempre la fecha de hoy, que es lo correcto cuando se
+    acaba de bajar el fichero. Con --sin-red no se baja nada: el XML es el de
+    la ultima descarga, y dejar la fecha de hoy equivaldria a decir que el dato
+    se ha vuelto a comprobar. En este sitio cada dato se publica con su fecha
+    de verificacion a la vista, asi que esa fecha no puede avanzar sola.
+
+    Un municipio que no estaba antes se queda con la de hoy: no hay otra.
+    """
+    previa = previas.get(reg["slug"])
+    if previa:
+        reg["fecha_descarga"] = previa
+
+
 def analizar(xml: str, municipio: str, url: str) -> dict:
     """
     Extrae permitidos/prohibidos de un fichero DATEX2 de ZBE.
@@ -196,7 +256,7 @@ def analizar(xml: str, municipio: str, url: str) -> dict:
       pendiente_verificacion  algo no encaja; no se publica nada sobre stickers
     """
     base = {
-        "municipio": municipio,
+        "municipio": NOMBRES_BILINGUES.get(municipio, municipio),
         "slug": slug(municipio),
         "fuente_nombre": FUENTE_NOMBRE,
         "fuente_url": url,
@@ -377,6 +437,9 @@ def main() -> int:
 
     municipios: dict[str, dict] = {}
     fallos = 0
+    # Con --sin-red no se descarga nada, asi que la fecha de descarga de cada
+    # municipio sigue siendo la que ya estaba publicada.
+    fechas_previas = fechas_de_descarga_previas() if usar_cache else {}
 
     for n, id_recurso in enumerate(ids, 1):
         info = url_xml_de_recurso(id_recurso, usar_cache)
@@ -393,6 +456,8 @@ def main() -> int:
             continue
 
         reg = analizar(xml, nombre, url)
+        if usar_cache:
+            conservar_fecha_de_descarga(reg, fechas_previas)
         municipios[reg["slug"]] = reg
         marca = "ok " if reg["confianza"] == "oficial" else "-- "
         detalle = ",".join(reg["etiquetas_permitidas"]) or (reg["incidencias"][0] if reg["incidencias"] else "")
