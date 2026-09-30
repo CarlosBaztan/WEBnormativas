@@ -39,7 +39,7 @@ Málaga no aplicó su Zona de Bajas Emisiones de golpe: la escalona **año a añ
 ## Qué distintivos pueden entrar hoy
 
 | Distintivo | Puede acceder ahora |
-|---|---|
+|:---|:---|
 | **[0 emisiones](/etiquetas/0-emisiones/)** | Sí |
 | **[ECO](/etiquetas/eco/)** | Sí |
 | **[C](/etiquetas/c/)** | Sí |
@@ -57,7 +57,7 @@ Los CERO, ECO y C siguen entrando sin restricción, estén domiciliados donde es
 ## El calendario completo
 
 | Desde | Qué cambió |
-|---|---|
+|:---|:---|
 | **30 de noviembre de 2024** | Entra en vigor la ordenanza. Primer año: circulan todos, incluidos los que no tienen distintivo |
 | **30 de noviembre de 2025** | Segundo año. Se restringen los vehículos **sin distintivo** que no estuvieran domiciliados en Málaga antes del 30/11/2024 |
 | **30 de noviembre de 2026** | Tercer año. Se restringe además el distintivo **B** no domiciliado en Málaga |

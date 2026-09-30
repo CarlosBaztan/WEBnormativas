@@ -21,13 +21,13 @@ El distintivo ambiental clasifica los vehículos según sus emisiones. Hay **cua
 
 ## Los cinco casos
 
-| Distintivo | Color | Quién lo lleva |
-|---|---|---|
-| **[0 emisiones](0-emisiones/)** | Azul | Eléctricos, hidrógeno e híbridos enchufables de 40 km o más de autonomía |
-| **[ECO](eco/)** | Verde y azul | Híbridos enchufables de menos de 40 km, híbridos no enchufables, y vehículos de gas |
-| **[C](c/)** | Verde | Gasolina desde enero de 2006 y diésel desde septiembre de 2015 |
-| **[B](b/)** | Amarillo | Gasolina desde enero de 2001 y diésel desde 2006 |
-| **[Sin distintivo](sin-distintivo/)** | Ninguno | Gasolina anteriores a 2001 y diésel anteriores a 2006 |
+| Pegatina | Distintivo | Quién lo lleva |
+|:---:|:---|:---|
+| {{< distintivo clave="0" alt="Pegatina del distintivo 0 emisiones, azul" >}} | **[0 emisiones](0-emisiones/)** | Eléctricos, hidrógeno e híbridos enchufables de 40 km o más de autonomía |
+| {{< distintivo clave="ECO" alt="Pegatina del distintivo ECO, verde y azul" >}} | **[ECO](eco/)** | Híbridos enchufables de menos de 40 km, híbridos no enchufables, y vehículos de gas |
+| {{< distintivo clave="C" alt="Pegatina del distintivo C, verde" >}} | **[C](c/)** | Gasolina desde enero de 2006 y diésel desde septiembre de 2015 |
+| {{< distintivo clave="B" alt="Pegatina del distintivo B, amarillo" >}} | **[B](b/)** | Gasolina desde enero de 2001 y diésel desde 2006 |
+| *No lleva* | **[Sin distintivo](sin-distintivo/)** | Gasolina anteriores a 2001 y diésel anteriores a 2006 |
 
 Los años son de **turismos y furgonetas ligeras**. Los vehículos de ocho o más plazas y los pesados tienen umbrales propios, que explicamos en cada página.
 

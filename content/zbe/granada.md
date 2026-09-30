@@ -38,7 +38,7 @@ Granada tiene la Zona de Bajas Emisiones **más permisiva** de las que llevamos 
 ## Qué distintivos pueden entrar
 
 | Distintivo | Puede acceder |
-|---|---|
+|:---|:---|
 | **[0 emisiones](/etiquetas/0-emisiones/)** | Sí |
 | **[ECO](/etiquetas/eco/)** | Sí |
 | **[C](/etiquetas/c/)** | Sí |

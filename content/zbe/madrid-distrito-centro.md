@@ -25,7 +25,7 @@ Se puede **circular libremente por las calles del perímetro**, pero no atravesa
 ## Quién puede entrar
 
 | Caso | Distintivos |
-|---|---|
+|:---|:---:|
 | Cualquiera | **0 y ECO** |
 | Personas **empadronadas** dentro de la zona, y sus invitados | 0, ECO, **C y B** |
 | **Empresas y autónomos** con local u oficina dentro (turismos) | 0, ECO, **C y B** |
@@ -39,7 +39,7 @@ Si tienes un vehículo B o C y no encajas en ninguno de esos supuestos, no puede
 **Vehículos industriales** que prestan servicios o hacen reparto:
 
 | Distintivo | Horario |
-|---|---|
+|:---|:---|
 | **0 emisiones** | 24 horas |
 | **ECO** | De 7:00 a 21:00 |
 | **C** | De 7:00 a 15:00 |

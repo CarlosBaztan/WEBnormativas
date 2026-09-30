@@ -15,7 +15,7 @@ Aproximadamente **la mitad del parque de vehículos español no tiene distintivo
 ## Qué vehículos quedan fuera
 
 | Combustible | Matriculado antes de |
-|---|---|
+|:---|:---:|
 | **Gasolina** | Enero de **2001** |
 | **Diésel** | **2006** |
 

@@ -18,7 +18,7 @@ El distintivo **B** es el amarillo, el más bajo de los cuatro. Por debajo ya no
 ## Turismos y furgonetas ligeras
 
 | Combustible | Matriculado entre |
-|---|---|
+|:---|:---|
 | **Gasolina** | 1 de enero de **2001** y diciembre de **2005** |
 | **Diésel** | **2006** y agosto de **2015** |
 
@@ -27,7 +27,7 @@ Si tu vehículo es posterior, le corresponde la [etiqueta C](../c/). Si es anter
 ## Vehículos de ocho o más plazas y pesados
 
 | Combustible | Matriculado entre |
-|---|---|
+|:---|:---:|
 | **Gasolina** | **2006** y 2013 |
 | **Diésel** | **2006** y 2013 |
 

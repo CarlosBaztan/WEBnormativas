@@ -18,7 +18,7 @@ El distintivo **0 emisiones** es el azul, el de la categoría más alta. Lo llev
 ## Qué vehículos la llevan
 
 | Tipo de vehículo | ¿Lleva el 0? |
-|---|---|
+|:---|:---|
 | **Eléctrico de batería** (BEV) | Sí, con independencia del año |
 | **Eléctrico de autonomía extendida** (REEV) | Sí |
 | **Pila de combustible** (hidrógeno) | Sí |

@@ -18,7 +18,7 @@ El distintivo **ECO** es el verde y azul. Lo llevan vehículos que combinan un m
 ## Qué vehículos la llevan
 
 | Tipo de vehículo | ¿Lleva la ECO? |
-|---|---|
+|:---|:---|
 | **Híbrido enchufable** (PHEV) con **menos de 40 km** de autonomía eléctrica | Sí |
 | **Híbrido enchufable** con **40 km o más** | No: le corresponde la [0 emisiones](../0-emisiones/) |
 | **Híbrido no enchufable** (HEV) | Sí |

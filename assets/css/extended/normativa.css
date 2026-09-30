@@ -673,3 +673,114 @@ body {
   font-size: var(--txt-2xl);
   line-height: var(--lh-titular);
 }
+
+/* ========================================================================
+   TABLAS
+
+   El tema pinta los bordes de las celdas en var(--border), que es #eee. Sobre
+   el blanco de una ficha da 1,07:1 y sobre el #f5f5f5 de las paginas de
+   listado, 1,06: o sea que la reticula no se veia en ninguna parte y las
+   filas se leian como parrafos sueltos.
+
+   Los tintes van con color-mix sobre el color del texto, no con un color
+   fijo: asi funcionan igual sobre el fondo blanco de una ficha, sobre el
+   gris de un listado y en tema oscuro, sin tener que declarar tres veces lo
+   mismo. Si el navegador no entiende color-mix, la declaracion se descarta y
+   queda la reticula, que es lo que de verdad importa.
+   ======================================================================== */
+
+.md-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--sp-5) 0 var(--sp-6);
+  font-size: var(--txt-sm);
+  line-height: var(--lh-corto);
+}
+
+.md-content table th,
+.md-content table:not(.highlighttable, .highlight table, .gist .highlight) td {
+  min-width: 0;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--caja-borde);
+  vertical-align: middle;
+}
+
+/* La cabecera se separa del cuerpo con un filete grueso, no con un fondo:
+   un fondo de color fijo se pierde en cuanto la pagina no es blanca. */
+.md-content table thead th {
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+  border-bottom: 2px solid var(--caja-acento);
+  font-size: var(--txt-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  vertical-align: bottom;
+}
+
+/* Rayado para seguir la fila con la vista en tablas anchas. */
+.md-content table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--primary) 3.5%, transparent);
+}
+
+/* La alineacion por columna se pone en el propio Markdown con :---, :---: y
+   ---:. Goldmark no la emite como atributo align sino como style en linea,
+   que gana a cualquier hoja de estilos, asi que aqui no hace falta nada. */
+
+/* Las tablas anchas se desplazan en horizontal en vez de desbordar. */
+.md-content table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 46rem) {
+  .md-content table { display: table; }
+}
+
+/* La pegatina dentro de una celda: centrada y sin sostener la altura. */
+.distintivo-img--tabla {
+  display: block;
+  margin: 0 auto;
+}
+
+/* ------------------------------------------------------------------------
+   RECUADROS QUE SE QUEDABAN SIN BORDE
+
+   Los mismos 1,16:1 de las tablas: el tema los dibuja con var(--border).
+   ------------------------------------------------------------------------ */
+
+.paginav,
+details.toc {
+  border-color: var(--caja-borde);
+}
+
+/* Los desplegables del cuerpo del articulo (el perimetro exacto de una zona,
+   por ejemplo) no tenian ni una regla: se leian como un parrafo suelto con
+   una flechita, y no se veia donde empezaban ni donde acababan. */
+.md-content details {
+  margin: var(--sp-5) 0;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--caja-borde);
+  border-radius: var(--caja-radio);
+}
+
+.md-content details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style-position: outside;
+}
+
+.md-content details[open] > summary {
+  margin-bottom: var(--sp-3);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--caja-borde);
+}
+
+.md-content details > summary:focus-visible {
+  outline: 2px solid var(--caja-acento);
+  outline-offset: 2px;
+}
+
+.md-content details > *:last-child {
+  margin-bottom: 0;
+}

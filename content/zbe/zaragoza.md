@@ -38,7 +38,7 @@ La Zona de Bajas Emisiones de Zaragoza es de las **más permisivas en cuanto a d
 ## Qué distintivos pueden entrar
 
 | Distintivo | Puede acceder |
-|---|---|
+|:---|:---|
 | **[0 emisiones](/etiquetas/0-emisiones/)** | Sí, acceso libre |
 | **[ECO](/etiquetas/eco/)** | Sí, acceso libre |
 | **[C](/etiquetas/c/)** | Sí, acceso libre |

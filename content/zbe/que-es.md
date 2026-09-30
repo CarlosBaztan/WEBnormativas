@@ -16,7 +16,7 @@ Una **Zona de Bajas Emisiones (ZBE)** es un área delimitada de un municipio don
 ## Quién está obligado a tener una
 
 | Municipio | ¿Obligado? |
-|---|---|
+|:---|:---|
 | Más de **50.000 habitantes** | Sí |
 | Más de 20.000 habitantes con **superación de los valores límite** de calidad del aire | Sí |
 | Territorios insulares | Sí |

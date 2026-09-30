@@ -12,7 +12,7 @@ Esta web responde a preguntas donde equivocarse cuesta dinero: una multa por ent
 No todas las fuentes valen lo mismo. Usamos este orden, y nunca bajamos un escalón si podemos quedarnos en uno más alto.
 
 | Nivel | Fuente | ¿Publicable? |
-|---|---|---|
+|:---|:---|:---|
 | **1** | Boletín oficial: BOE, boletín autonómico, BOP | Sí, es la referencia |
 | **2** | Registro o sede oficial: DGT, MITECO, Hacienda, ayuntamiento | Sí, citando el organismo |
 | **3** | Nota de prensa institucional | Solo como indicio, nunca como norma |
@@ -48,7 +48,7 @@ Que esté verificado no significa que sea asesoramiento jurídico, ni que te aut
 No todo lo que sabemos tiene la misma solidez, y nos parece más honesto decirlo que igualarlo todo hacia arriba.
 
 | Nivel | Qué tenemos | Qué publicamos |
-|---|---|---|
+|:---|:---|:---|
 | **A** | Dato oficial legible por máquina | La respuesta completa |
 | **B** | Ordenanza leída a mano, con artículo citado | La respuesta completa, con su fecha |
 | **C** | Sabemos que la zona existe, no sus reglas | Que existe, con enlace oficial. **No respondemos** «¿puedo entrar?» |

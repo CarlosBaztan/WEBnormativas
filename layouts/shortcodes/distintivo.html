@@ -1,0 +1,28 @@
+{{- /*
+  distintivo.html — la pegatina del distintivo, dentro de un texto en Markdown.
+
+  Uso:
+    {{< distintivo clave="ECO" alt="Distintivo ECO, verde y azul" >}}
+
+  Existe porque desde Markdown no se puede llamar a un partial, y la tabla de
+  /etiquetas/ necesita la pegatina real en cada fila en lugar del nombre del
+  color escrito a mano.
+
+  Va dentro de celdas de tabla, asi que tiene que ser en linea: el partial
+  emite un <img> y nada mas, sin saltos ni envoltorios de bloque.
+
+  El `alt` SI se escribe aqui, al reves que en los otros tres sitios donde se
+  usa la pegatina. En el menu, en el titulo y en el resultado de la
+  herramienta el nombre del distintivo esta escrito justo al lado y repetirlo
+  solo estorba; aqui la imagen es el contenido de la celda, y el color (azul,
+  verde y azul, verde, amarillo) es informacion que solo esta en la imagen.
+
+  "Sin distintivo" no tiene fichero: el partial no emite nada y la celda se
+  rellena con texto desde el Markdown.
+*/ -}}
+{{- partial "distintivo.html" (dict
+      "clave" (.Get "clave")
+      "ancho" (.Get "ancho" | default 44)
+      "clase" (printf "distintivo-img--tabla %s" (.Get "clase" | default ""))
+      "alt"   (.Get "alt" | default "")
+    ) -}}

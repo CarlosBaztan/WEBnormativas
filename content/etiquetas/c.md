@@ -18,7 +18,7 @@ El distintivo **C** es el verde. Lo llevan los gasolina y diésel modernos: los 
 ## Turismos y furgonetas ligeras
 
 | Combustible | Matriculado desde |
-|---|---|
+|:---|:---|
 | **Gasolina** | 1 de enero de **2006** |
 | **Diésel** | **Septiembre de 2015** |
 
@@ -27,7 +27,7 @@ Si tu vehículo es anterior a esas fechas, le corresponde la [etiqueta B](../b/)
 ## Vehículos de ocho o más plazas y pesados
 
 | Combustible | Matriculado desde |
-|---|---|
+|:---|:---:|
 | **Gasolina** | **2014** |
 | **Diésel** | **2014** |
 

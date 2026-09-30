@@ -35,7 +35,7 @@ La Zona de Bajas Emisiones de Bilbao **está en vigor desde el 15 de junio de 20
 ## Qué distintivos pueden entrar
 
 | Distintivo | Puede acceder |
-|---|---|
+|:---|:---|
 | **[0 emisiones](/etiquetas/0-emisiones/)** | Sí, sin restricción |
 | **[ECO](/etiquetas/eco/)** | Sí, sin restricción |
 | **[C](/etiquetas/c/)** | Sí, sin restricción |

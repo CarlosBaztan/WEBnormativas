@@ -42,7 +42,7 @@ Valladolid tiene la particularidad de haber publicado **el calendario completo d
 ## Qué distintivos pueden entrar hoy
 
 | Distintivo | Puede acceder ahora |
-|---|---|
+|:---|:---|
 | **[0 emisiones](/etiquetas/0-emisiones/)** | Sí |
 | **[ECO](/etiquetas/eco/)** | Sí |
 | **[C](/etiquetas/c/)** | Sí. Queda restringido el **1 de enero de 2030** |
@@ -54,7 +54,7 @@ Valladolid tiene la particularidad de haber publicado **el calendario completo d
 La disposición transitoria única fija tres fechas para la caducidad de las exenciones:
 
 | Fecha | Qué pasa |
-|---|---|
+|:---|:---|
 | **30 de junio de 2025** | Quedan restringidos el acceso, la circulación y el aparcamiento de los vehículos **sin etiqueta** |
 | **31 de diciembre de 2027** | Lo mismo para los vehículos con distintivo **B** |
 | **1 de enero de 2030** | Lo mismo para los vehículos con distintivo **C** |

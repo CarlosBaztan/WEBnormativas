@@ -20,7 +20,7 @@ Hay una cosa, y conviene distinguirla de una cookie.
 La herramienta para consultar si puedes circular guarda **los datos de tu vehículo** (tipo, combustible, año) en el **almacenamiento local** (`localStorage`) del navegador, para que no tengas que repetirlos.
 
 | | Cookie | Almacenamiento local (lo que usamos) |
-|---|---|---|
+|:---|:---|:---|
 | ¿Se envía al servidor? | Sí, en cada petición | **No, nunca** |
 | ¿Puede leerlo un tercero? | Según su configuración | **No** |
 | ¿Sirve para seguirte? | Puede | **No** |

@@ -44,7 +44,7 @@ Los ficheros de la DGT sí traen condiciones de acceso por distintivo. El proble
 Tres ejemplos reales, comprobados el 22 de septiembre de 2026 sobre los 45 ficheros:
 
 | Municipio | `negate` | Distintivos declarados |
-|---|---|---|
+|:---|:---|:---|
 | A Coruña | `true` | 0, ECO, C, B |
 | Madrid | `true` | Sin distintivo |
 | Bilbao | `true` | 0, ECO, C, B, Sin distintivo |

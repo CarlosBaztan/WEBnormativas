@@ -51,7 +51,7 @@ Lo primero que conviene entender es que **no es una ZBE municipal**. Ocupa más 
 ## Qué distintivos pueden entrar
 
 | Distintivo | Puede acceder |
-|---|---|
+|:---|:---|
 | **[0 emisiones](/etiquetas/0-emisiones/)** | Sí |
 | **[ECO](/etiquetas/eco/)** | Sí |
 | **[C](/etiquetas/c/)** | Sí |
@@ -89,7 +89,7 @@ Esto es lo que más cuesta encontrar bien contado, y lo que más te puede afecta
 La ZBE Rondas nació como una zona única acordada entre cinco ayuntamientos, pero **jurídicamente son cinco ordenanzas distintas**, y los tribunales las han ido tumbando por separado. Desde entonces cada ayuntamiento ha ido rehaciendo la suya a su ritmo.
 
 | Municipio | Qué nos consta | Cómo lo hemos comprobado |
-|---|---|---|
+|:---|:---|:---|
 | **Barcelona** | Ordenanza de 2023 en vigor | Leída entera en el BOPB |
 | **Cornellà de Llobregat** | Su ZBE **abarca todo el término municipal**, no solo la parte de dentro de las rondas | Página oficial del ayuntamiento, consultada el 29/09/2026 |
 | **L'Hospitalet de Llobregat** | Ordenanza nueva tras la anulación | Sin verificar: su web remite al Área Metropolitana y no hemos leído el texto en el boletín |
@@ -132,7 +132,7 @@ La ordenanza de 2023 añadió dos vías que la anterior no tenía.
 **Por renta** (artículo 15.1.c.ii). Si los ingresos anuales de la unidad familiar quedan por debajo del umbral, se obtiene autorización por un año, renovable:
 
 | Unidad familiar | Límite, en veces el IPREM |
-|---|---|
+|:---|:---:|
 | 1 persona | 2 |
 | 2 personas | 2,5 |
 | 3 personas | 2,9 |
@@ -157,7 +157,7 @@ Es el error más común entre quien llega de fuera de España: se da por hecho q
 La restricción alcanzó a cada tipo de vehículo en un momento distinto, y es un detalle que se pierde en casi todos los resúmenes:
 
 | Tipo de vehículo | Restringido desde | Cuáles |
-|---|---|---|
+|:---|:---|:---|
 | **Turismos (M1)** | 1 de enero de 2020 | Gasolina anteriores a Euro 3, normalmente matriculados antes de 2000, y diésel anteriores a Euro 4, antes de 2005 o 2006 |
 | **Motos y ciclomotores (L)** | 1 de enero de 2020 | Anteriores a Euro 2, normalmente matriculados antes de 2003 |
 | **Furgonetas (N1)** | 1 de abril de 2021 | Mismos umbrales que los turismos |

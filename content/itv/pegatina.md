@@ -39,7 +39,7 @@ Si tu vehículo no está catalogado como histórico por la Administración, no h
 Aquí está el origen de casi toda la confusión, porque son dos pegatinas distintas que van en el mismo cristal.
 
 | | Distintivo V-19 (ITV) | [Etiqueta ambiental](/etiquetas/) (DGT) |
-|---|---|---|
+|:---|:---|:---|
 | ¿Obligatorio llevarla? | **Sí** | **No** |
 | Qué acredita | Que el vehículo pasó la ITV | La clasificación por emisiones |
 | Dónde se obtiene | En la estación de ITV | En Correos, por 5 euros |

@@ -16,7 +16,7 @@ Aunque tu vehículo no tenga el distintivo que exige una zona, puede haber una e
 ## Las excepciones habituales
 
 | Excepción | Qué exige normalmente |
-|---|---|
+|:---|:---|
 | **Movilidad reducida** | Tarjeta de estacionamiento (TEPMR) dada de alta en el sistema municipal |
 | **Residentes** | Estar empadronado dentro del perímetro de la zona |
 | **Vehículos históricos** | Reconocimiento oficial como tal, no solo antigüedad |

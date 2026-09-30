@@ -25,7 +25,7 @@ Es la más simple de las tres zonas de Madrid: **los vehículos sin distintivo a
 ## Quién entra y quién no
 
 | Tu distintivo | ¿Puede circular? |
-|---|---|
+|:---|:---:|
 | **0 emisiones** | Sí |
 | **ECO** | Sí |
 | **C** | Sí |

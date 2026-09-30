@@ -15,7 +15,7 @@ Entrar en una zona de bajas emisiones incumpliendo sus restricciones es **infrac
 ## Cómo se tipifica
 
 | Aspecto | Norma |
-|---|---|
+|:---|:---|
 | **Tipificación** | Art. **76.z3)** LTSV, infracción grave |
 | **Cuantía** | Art. **80.1** LTSV |
 | **Graduación** | Art. **81** LTSV |

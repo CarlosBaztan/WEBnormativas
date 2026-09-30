@@ -44,7 +44,7 @@ Lo que sigue describe el contenido de la ordenanza aprobada inicialmente. **No e
 Aquí está el detalle que más se malinterpreta. La ordenanza no habla de distintivos en el artículo de restricciones: el artículo 7 prohíbe el acceso a los «vehículos más contaminantes», y hay que seguir la remisión hasta el artículo 3.4, que los define con **tres requisitos que se tienen que dar a la vez**, según el anexo II del Reglamento General de Vehículos:
 
 | Criterio | Qué tiene que ser |
-|---|---|
+|:---|:---|
 | Construcción | Turismo (código 10), ciclomotor (03) o motocicleta (04) |
 | Utilización | Sin especificar (00), familiar (02) o todo terreno (33) |
 | Potencial contaminante | **Vehículos A (código S/D)**, es decir, sin distintivo ambiental |
@@ -72,7 +72,7 @@ Las autorizaciones tienen validez durante **las 24 horas naturales del día**, a
 La disposición transitoria primera escalona la entrada del régimen sancionador:
 
 | Desde | A quién afectaría |
-|---|---|
+|:---|:---|
 | Hasta el 30 de noviembre de 2025 | Fase informativa: sin sanciones, solo avisos |
 | Después de esa fecha | Vehículos más contaminantes registrados **fuera de la provincia de Valencia** |
 | 1 de enero de 2027 | Se suma el resto de la **provincia de Valencia** |

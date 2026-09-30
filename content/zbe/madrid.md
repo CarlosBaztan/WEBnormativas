@@ -54,7 +54,7 @@ Madrid no tiene una zona de bajas emisiones, sino **tres, con reglas distintas**
 ## Respuesta rápida
 
 | Tu distintivo | Madrid ciudad | Distrito Centro | Plaza Elíptica |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **0 emisiones** | Pendiente de verificar | Sí | Sí |
 | **ECO** | Pendiente de verificar | Sí (industriales, de 7:00 a 21:00) | Sí |
 | **C** | Pendiente de verificar | Solo en casos concretos | Sí |
