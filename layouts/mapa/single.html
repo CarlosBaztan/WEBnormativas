@@ -28,9 +28,9 @@
          zonas" despues de que Madrid pasara a tener tres. */}}
   {{- with site.Data.zbe_resumen }}
   <p class="mapa-recuento">
-    <strong>{{ .zonas }} zonas</strong> repartidas en <strong>{{ .municipios }} municipios</strong>.
-    {{ .municipios_con_varias_zonas }} de ellos tienen más de una zona, con reglas
-    distintas dentro de la misma ciudad.
+    <strong>{{ .zonas_con_restriccion }} zonas</strong> con restricciones propias, repartidas
+    en <strong>{{ .municipios }} municipios</strong>. {{ .municipios_con_varias_zonas }} de ellos
+    tienen más de una, con reglas distintas dentro de la misma ciudad.
   </p>
   {{- end }}
 
@@ -63,17 +63,15 @@
     <li><span class="mapa-leyenda__muestra mapa-leyenda__muestra--pendiente"></span> Solo consta que la zona existe</li>
   </ul>
 
-  <ul class="mapa-leyenda mapa-leyenda--tipos" aria-label="Tipos de zona">
-    <li><span class="mapa-leyenda__muestra mapa-leyenda__muestra--especial"></span> Zona con restricciones propias</li>
-    <li><span class="mapa-leyenda__muestra mapa-leyenda__muestra--ciudad"></span> Zona que solo sirve de contexto porque contiene otras más estrictas: trazo discontinuo</li>
-  </ul>
-
   <p class="mapa-nota-zonas">
-    Algunos municipios tienen varias zonas. Madrid, por ejemplo, declara su
-    término municipal entero como zona de bajas emisiones y dentro tiene dos
-    <abbr title="Zona de Bajas Emisiones de Especial Protección">ZBEDEP</abbr>,
-    Distrito Centro y Plaza Elíptica, con reglas bastante más estrictas. Son las
-    que ves marcadas con trazo sólido encima.
+    <strong>Solo se pintan las zonas donde te pueden multar.</strong> Madrid declara
+    además su término municipal entero como zona de bajas emisiones, pero
+    dibujarlo cubría media comunidad y daba a entender que la ciudad está
+    cerrada al tráfico, que no es el caso: lo que restringe de verdad son sus
+    dos <abbr title="Zona de Bajas Emisiones de Especial Protección">ZBEDEP</abbr>,
+    Distrito Centro y Plaza Elíptica. Ese dato sigue en el
+    <a href="{{ "/datos/" | relURL }}">fichero abierto</a> y explicado en
+    <a href="{{ "/zbe/madrid/" | relURL }}">la ficha de Madrid</a>.
   </p>
 
   <p class="mapa-atribucion">

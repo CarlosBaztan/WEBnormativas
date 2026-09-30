@@ -18,10 +18,12 @@
   var DATOS = '/datos/zbe-simplificado.geojson';
 
   /*
-   * Un municipio puede declarar una zona que envuelve a las demas. Madrid
-   * tiene el termino municipal entero (1.152 km2) y dentro dos ZBEDEP de 6,3
-   * y 1,6: pintadas igual, las pequenas no se ven. La marca la pone el
-   * pipeline, que es quien sabe cuantas zonas tiene cada municipio.
+   * Aqui se pintan solo las zonas con restricciones propias.
+   *
+   * Madrid declara ademas el termino municipal entero (1.152 km2) como zona
+   * de bajas emisiones, pero dibujarlo tapaba la ciudad de lado a lado y daba
+   * a entender que esta cerrada por completo. Lo que restringe de verdad son
+   * las dos ZBEDEP, y eso es lo que se ve. El resto lo cuenta la ficha.
    */
   function esContexto(p) {
     return !!p.envolvente;
@@ -71,7 +73,7 @@
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (datos) {
         var zona = (datos.features || []).filter(function (f) {
-          return f.properties && f.properties.slug === slug;
+          return f.properties && f.properties.slug === slug && !esContexto(f.properties);
         });
         // Las grandes primero: se dibujan debajo.
         zona.sort(function (a, b) { return (b.properties.km2 || 0) - (a.properties.km2 || 0); });
@@ -97,29 +99,20 @@
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(mapa);
 
+        /* El mismo magenta del mapa general: no aparece en el mapa base de
+           OpenStreetMap, asi que el perimetro no se confunde con un parque
+           ni con una carretera. */
         var capa = L.geoJSON(zona, {
-          style: function (f) {
-            return esContexto(f.properties)
-              ? { color: '#57606a', weight: 1.5, dashArray: '6 5',
-                  fillColor: '#57606a', fillOpacity: 0.06 }
-              : { color: '#1a7f37', weight: 2.5,
-                  fillColor: '#1a7f37', fillOpacity: 0.3 };
+          style: function () {
+            return { color: '#d6006e', weight: 3, opacity: 0.95,
+                     fillColor: '#d6006e', fillOpacity: 0.3 };
           },
           onEachFeature: function (f, c) {
             if (f.properties.zona) c.bindTooltip(f.properties.zona, { sticky: true });
-            if (!esContexto(f.properties)) c.bringToFront();
           }
         }).addTo(mapa);
 
-        /*
-         * Se encuadra en las zonas pequenas cuando las hay: encuadrar en la
-         * municipal dejaria las ZBEDEP como dos puntos invisibles, que es
-         * justo el problema que este encuadre viene a resolver.
-         */
-        var restrictivas = zona.filter(function (f) { return !esContexto(f.properties); });
-        var referencia = restrictivas.length
-          ? L.geoJSON(restrictivas).getBounds()
-          : capa.getBounds();
+        var referencia = capa.getBounds();
 
         function encuadra() {
           mapa.fitBounds(referencia, { padding: [16, 16] });

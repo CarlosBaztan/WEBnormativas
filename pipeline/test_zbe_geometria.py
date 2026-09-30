@@ -338,6 +338,19 @@ def test_barcelona_se_encuentra_por_la_B_en_el_selector():
     assert "Rondas" in nombre, "no se puede perder el nombre que le da la DGT: %s" % nombre
 
 
+def test_el_resumen_cuenta_aparte_las_zonas_que_de_verdad_restringen():
+    """
+    El mapa dejo de pintar las zonas envolventes: la de Madrid abarcaba el
+    termino municipal entero, El Pardo incluido, y daba a entender que toda la
+    ciudad esta cerrada. Si la pagina sigue diciendo "57 zonas" mientras se
+    ven 56, el recuento miente.
+    """
+    coleccion = zg.construir_geojson(zg.TOLERANCIA_MAPA)
+    r = zg.resumen(coleccion)
+    assert r["envolventes"] == 1, "solo Madrid: %r" % r
+    assert r["zonas_con_restriccion"] == r["zonas"] - r["envolventes"], r
+
+
 def _ejecutar():
     fallos = 0
     for nombre, fn in sorted(globals().items()):

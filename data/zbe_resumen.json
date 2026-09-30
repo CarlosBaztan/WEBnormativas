@@ -1,6 +1,8 @@
 {
   "zonas": 57,
+  "envolventes": 1,
+  "zonas_con_restriccion": 56,
   "municipios": 45,
   "municipios_con_varias_zonas": 5,
-  "generado": "2026-09-29"
+  "generado": "2026-09-30"
 }

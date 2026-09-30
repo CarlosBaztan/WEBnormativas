@@ -50,10 +50,13 @@
   border: 2px solid currentColor;
 }
 
-/* Los mismos colores que usa el JavaScript. Si cambian alli, cambian aqui. */
-.mapa-leyenda__muestra--verificado { color: #1a7f37; background: #1a7f3740; }
-.mapa-leyenda__muestra--parcial    { color: #9a6700; background: #9a670040; }
-.mapa-leyenda__muestra--pendiente  { color: #57606a; background: #57606a40; }
+/* Los mismos colores que usa el JavaScript. Si cambian alli, cambian aqui.
+   Son tonos que no aparecen en el mapa base de OpenStreetMap: con el verde y
+   el gris de antes, las zonas se confundian con los parques y el casco
+   urbano. */
+.mapa-leyenda__muestra--verificado { color: #d6006e; background: #d6006e59; }
+.mapa-leyenda__muestra--parcial    { color: #ff6d00; background: #ff6d0059; }
+.mapa-leyenda__muestra--pendiente  { color: #7209b7; background: #7209b759; }
 
 .mapa-alternativa {
   padding: 0.9rem 1.1rem;
@@ -143,16 +146,9 @@
   font-size: 0.92rem;
 }
 
-/* Leyenda de tipos de zona, distinta de la de estado del dato. */
-.mapa-leyenda--tipos .mapa-leyenda__muestra--ciudad {
-  color: var(--secondary);
-  background: transparent;
-  border-style: dashed;
-}
-
-.mapa-leyenda--tipos .mapa-leyenda__muestra--especial {
-  color: var(--secondary);
-  background: color-mix(in srgb, currentColor 38%, transparent);
+.mapa-nota-zonas {
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
 }
 
 /* --- Gestos, pantalla completa y buscador ------------------------------ */

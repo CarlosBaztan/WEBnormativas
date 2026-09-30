@@ -26,10 +26,20 @@
   var CENTRO = [40.0, -3.7];
   var ZOOM = 6;
 
+  /*
+   * Paleta.
+   *
+   * Los colores anteriores eran verde, ambar y gris, que es justo la paleta
+   * del mapa base de OpenStreetMap: los parques son verdes, las carreteras
+   * ambar y el suelo urbano gris. Las zonas se confundian con el fondo.
+   *
+   * Estos tres tonos no aparecen en el mapa base, asi que una ZBE se
+   * distingue de una ciudad de un vistazo, que es para lo que esta la pagina.
+   */
   var COLORES = {
-    verificado: '#1a7f37',
-    parcial:    '#9a6700',
-    pendiente:  '#57606a'
+    verificado: '#d6006e',
+    parcial:    '#ff6d00',
+    pendiente:  '#7209b7'
   };
 
   function color(estado) {
@@ -37,19 +47,25 @@
   }
 
   /*
-   * Zonas de contexto.
+   * Zonas envolventes: NO se pintan.
    *
-   * Madrid declara el termino municipal entero (1.152 km2) y dentro tiene dos
-   * ZBEDEP de 6,3 y 1,6. Pintadas igual, las pequenas desaparecen debajo de
-   * la grande y el mapa da a entender que toda la ciudad esta restringida,
-   * que no es lo que pasa. La grande va con trazo discontinuo y relleno casi
-   * transparente; las pequenas, solidas y por encima.
+   * Madrid declara el termino municipal entero (1.152 km2) como zona de bajas
+   * emisiones, y dentro tiene dos ZBEDEP de 6,3 y 1,6 km2 que son las que de
+   * verdad restringen. Dibujar la grande, por tenue que fuera, tapaba media
+   * comunidad, El Pardo incluido, y daba a entender que la ciudad entera esta
+   * cerrada al trafico. No lo esta.
    *
-   * La marca la pone el pipeline, que sabe cuantas zonas tiene cada
-   * municipio. Antes se decidia aqui por tamano, y eso dejaba descolorida la
-   * ZBE Rondes de Barcelona, que es enorme pero no contiene ninguna otra: es
-   * ella misma la que restringe.
+   * El mapa pinta solo las zonas con restricciones propias. Que Madrid
+   * declare ademas todo su termino sigue estando en el dato abierto y contado
+   * en su ficha, que es donde cabe explicarlo.
    */
+  function esContexto(p) {
+    return !!p.envolvente;
+  }
+
+  function seDibuja(f) {
+    return !esContexto(f.properties);
+  }
 
   /*
    * Por encima de este nivel de zoom se retiran las chinchetas: ya se esta
@@ -57,17 +73,9 @@
    */
   var ZOOM_SIN_CHINCHETAS = 11;
 
-  function esContexto(p) {
-    return !!p.envolvente;
-  }
-
   function estilo(f) {
-    var p = f.properties;
-    var c = color(p.estado_dato);
-    if (esContexto(p)) {
-      return { color: c, weight: 1.5, dashArray: '6 5', fillColor: c, fillOpacity: 0.06 };
-    }
-    return { color: c, weight: 2.5, fillColor: c, fillOpacity: 0.38 };
+    var c = color(f.properties.estado_dato);
+    return { color: c, weight: 3, opacity: 0.95, fillColor: c, fillOpacity: 0.35 };
   }
 
   function esc(s) {
@@ -83,10 +91,6 @@
     }
     if (p.provincia && p.provincia !== p.municipio) {
       partes.push('<span class="globo-provincia">' + esc(p.provincia) + '</span>');
-    }
-    if (esContexto(p)) {
-      partes.push('<span class="globo-nota">Esta zona abarca todo el municipio. ' +
-        'Dentro hay otras con reglas más estrictas: son las que se ven marcadas encima.</span>');
     }
 
     if (p.url_ficha) {
@@ -134,23 +138,10 @@
       .sort(function (a, b) { return a.municipio.localeCompare(b.municipio, 'es'); });
   }
 
-  /*
-   * Encuadre de un municipio.
-   *
-   * Cuando tiene zonas pequenas se encuadra en ellas: encuadrar en la
-   * municipal dejaria las ZBEDEP como dos puntos invisibles, que es justo el
-   * problema que se quiere evitar.
-   */
-  function zonasQueImportan(grupo) {
-    var restrictivas = grupo.capas.filter(function (c) {
-      return !esContexto(c.feature.properties);
-    });
-    return restrictivas.length ? restrictivas : grupo.capas;
-  }
-
+  /* Encuadre de un municipio, sobre las zonas que se pintan. */
   function limitesDe(grupo) {
     var limites = null;
-    zonasQueImportan(grupo).forEach(function (c) {
+    grupo.capas.forEach(function (c) {
       limites = limites ? limites.extend(c.getBounds()) : L.latLngBounds(c.getBounds());
     });
     return limites;
@@ -159,13 +150,12 @@
   /*
    * Zona cuyo globo se abre al llegar.
    *
-   * Es la mayor de las que han decidido el encuadre, no la mas pequena del
-   * municipio: en Madrid, el encuadre lo manda Distrito Centro y abrir el
-   * globo de Plaza Eliptica dejaba el cartel hablando de una zona distinta de
-   * la que se estaba viendo.
+   * Es la mayor de las que se pintan, no la mas pequena: en Madrid el
+   * encuadre lo manda Distrito Centro, y abrir el globo de Plaza Eliptica
+   * dejaba el cartel hablando de una zona distinta de la que se veia.
    */
   function zonaPrincipal(grupo) {
-    return zonasQueImportan(grupo).reduce(function (a, b) {
+    return grupo.capas.reduce(function (a, b) {
       return (a.feature.properties.km2 || 0) >= (b.feature.properties.km2 || 0) ? a : b;
     });
   }
@@ -193,8 +183,8 @@
       var limites = limitesDe(g);
       if (!limites || !limites.isValid()) return;
       var punto = L.circleMarker(limites.getCenter(), {
-        radius: 6,
-        weight: 2,
+        radius: 7,
+        weight: 2.5,
         color: '#fff',
         fillColor: color(g.estado),
         fillOpacity: 1
@@ -292,6 +282,7 @@
       .then(function (datos) {
         var capas = [];
         var capa = L.geoJSON(datos, {
+          filter: seDibuja,
           style: estilo,
           onEachFeature: function (f, capaZona) {
             capaZona.bindPopup(globo(f.properties));
@@ -300,9 +291,6 @@
               ? f.properties.municipio + ': ' + f.properties.zona
               : f.properties.municipio;
             capaZona.bindTooltip(rotulo, { sticky: true });
-            // Las pequenas al frente: si no, quedan tapadas por la municipal
-            // y no se pueden ni pulsar.
-            if (!esContexto(f.properties)) capaZona.bringToFront();
             capas.push(capaZona);
           }
         }).addTo(mapa);

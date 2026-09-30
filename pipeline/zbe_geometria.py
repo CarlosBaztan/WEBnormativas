@@ -484,8 +484,13 @@ def resumen(coleccion):
     for f in zonas:
         slug = f["properties"]["slug"]
         por_municipio[slug] = por_municipio.get(slug, 0) + 1
+    envolventes = sum(1 for f in zonas if f["properties"].get("envolvente"))
     return {
         "zonas": len(zonas),
+        # Las envolventes no se pintan: la de Madrid abarca el termino
+        # municipal entero y hacia creer que toda la ciudad esta cerrada.
+        "envolventes": envolventes,
+        "zonas_con_restriccion": len(zonas) - envolventes,
         "municipios": len(por_municipio),
         "municipios_con_varias_zonas": sum(1 for n in por_municipio.values() if n > 1),
         "generado": datetime.date.today().isoformat(),
