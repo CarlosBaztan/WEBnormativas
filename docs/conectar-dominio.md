@@ -112,6 +112,44 @@ con un relé SMTP. No es urgente y no bloquea nada.
 
 ---
 
+## Pendiente · Que `www` redirija al dominio principal **[Carlos]**
+
+**No corre prisa y no bloquea nada.** Apuntado el 01/10/2026 para hacerlo con
+calma.
+
+**El problema.** Con `cocheapto.com` y `www.cocheapto.com` conectados los dos
+como dominio personalizado del Worker, el sitio **responde igual en las dos
+direcciones**: no son la misma página servida desde un sitio, son dos copias
+idénticas en dos direcciones distintas. Lo correcto es que una sea la buena y
+la otra lleve a ella.
+
+**Por qué no urge.** Las etiquetas canónicas de todas las páginas apuntan ya a
+`https://cocheapto.com/` sin `www`, porque es lo que dice `baseURL`, así que
+un buscador sabría cuál es la buena. Y además el `noindex` sigue puesto, o sea
+que ahora mismo no hay ningún buscador mirando. **Lo que sí conviene es
+hacerlo antes de quitar el `noindex`**, para que Google no llegue a ver nunca
+las dos.
+
+**Cómo se hace** (gratis, incluido en el plan, unos dos minutos):
+
+- [ ] En el panel de Cloudflare, entrar en el dominio `cocheapto.com` (no en
+      el proyecto de Workers: en el dominio).
+- [ ] **Rules** → **Redirect Rules** → **Create rule**.
+- [ ] Ponerle un nombre reconocible, por ejemplo `www al dominio principal`.
+- [ ] Condición: que el **Hostname** sea igual a `www.cocheapto.com`.
+- [ ] Acción: redirección **dinámica**, para conservar la ruta. La expresión
+      es `concat("https://cocheapto.com", http.request.uri.path)`.
+- [ ] Código de estado: **301** (permanente). **Preserve query string**
+      activado, para no perder los parámetros de la URL.
+
+**Comprobarlo después, que es la parte que se olvida:** pedir
+`https://www.cocheapto.com/zbe/madrid/` y ver que contesta un 301 hacia
+`https://cocheapto.com/zbe/madrid/`, con la ruta intacta. Si redirige a la
+portada y se come el `/zbe/madrid/`, la redirección está puesta como estática
+en vez de dinámica.
+
+---
+
 ## Lo que NO se hace todavía
 
 **El `noindex` se queda puesto.** Tener el dominio no es motivo para abrirlo a

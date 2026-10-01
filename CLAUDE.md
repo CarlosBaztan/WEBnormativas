@@ -259,6 +259,12 @@ Al 28/09/2026.
 - [x] T14: rendimiento. `static/_headers` con caché de un año para lo que
       lleva huella, y `preconnect` a cdnjs en las páginas con mapa.
 - [ ] **Dominio: sin decidir.** Carlos lo cierra el 02/10. Ver abajo.
+- [ ] **Redirect Rule para que `www` lleve al dominio principal.** Con los dos
+      conectados al Worker, el sitio responde igual en las dos direcciones.
+      No urge (los canónicos ya apuntan al dominio sin `www` y el `noindex`
+      sigue puesto), pero **hay que hacerlo antes de quitar el `noindex`**.
+      Los pasos exactos están en
+      [docs/conectar-dominio.md](docs/conectar-dominio.md).
 - [ ] Fase 5: pre-AdSense (legales y CMP). Bloqueada hasta tener los datos de
       identidad de Carlos, que exige el art. 10 LSSI.
 
