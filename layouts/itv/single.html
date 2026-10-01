@@ -1,5 +1,23 @@
 {{- /*
-  layouts/itv/single.html — herramienta "¿Cuándo me toca la ITV?".
+  layouts/itv/single.html — plantilla de la sección /itv/.
+
+  OJO: Hugo elige plantilla POR SECCIÓN, no por lo que la página sea. Esta
+  plantilla se escribió para la herramienta «¿Cuándo me toca la ITV?», pero al
+  vivir en layouts/itv/ se aplica a TODAS las páginas de /itv/. El resultado
+  fue que /itv/pegatina/, que responde si el distintivo V-19 es obligatorio,
+  mostraba además la calculadora de periodicidad y su bloque de «qué hace esta
+  herramienta», que habla de otra cosa. Lo detectó Carlos el 02/10/2026.
+
+  Es la misma trampa que ya estaba anotada en CLAUDE.md por /zbe/, y se
+  resuelve igual: con una marca en el front matter.
+
+    tipo: "herramienta"   ->  lleva la calculadora
+    cualquier otra cosa   ->  artículo normal, solo su contenido
+
+  El valor por defecto es "articulo" A PROPÓSITO, al revés que en /zbe/: así
+  una página nueva de esta sección nunca hereda la calculadora sin pedirla.
+  Si algún día hay una segunda herramienta de ITV, necesitará su propia
+  plantilla, porque esta trae un formulario concreto.
 
   La tabla de periodicidad viene de data/itv_periodicidad.json, extraída del
   artículo 6.1 del RD 920/2017 consolidado. Se inyecta como JSON y el
@@ -10,6 +28,7 @@
 */ -}}
 
 {{- define "main" }}
+{{- $esHerramienta := eq (.Params.tipo | default "articulo") "herramienta" }}
 <article class="post-single">
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}
@@ -21,6 +40,7 @@
 
   <div class="post-content md-content">{{ .Content }}</div>
 
+  {{- if $esHerramienta }}
   {{/* safeJS es imprescindible: sin él html/template serializa el JSON como
        cadena escapada y el script recibe texto en vez de datos. */}}
   <script type="application/json" id="datos-itv">{{ site.Data.itv_periodicidad | jsonify | safeJS }}</script>
@@ -30,7 +50,7 @@
       <legend>Tu vehículo</legend>
 
       <p id="itv-recuperado" class="pc-ayuda" hidden>
-        Hemos recuperado los datos que guardaste en este navegador.
+        Hemos rellenado el formulario con el vehículo que ya consultaste en esta web.
       </p>
 
       <div class="pc-campo">
@@ -91,9 +111,12 @@
       tener además inspecciones no periódicas.
     </p>
   </section>
+  {{- end }}
 
   {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "completa") }}
 </article>
 
+{{- if $esHerramienta }}
 <script src="{{ (resources.Get "js/itv.js" | minify | fingerprint).RelPermalink }}" defer></script>
+{{- end }}
 {{- end }}

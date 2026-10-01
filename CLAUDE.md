@@ -430,6 +430,15 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   salían coronados con «Las reglas de acceso de esta ZBE no están verificadas»
   y una tabla llena de «No consta». Resuelto con `$esFicha`, que mira `tipo`
   con `"municipio"` por defecto.
+  **Volvió a pasar el 02/10/2026 en `/itv/`**, y nadie lo vio en una semana:
+  `layouts/itv/single.html` es la herramienta «¿Cuándo me toca la ITV?», así
+  que `/itv/pegatina/`, que responde si el distintivo V-19 es obligatorio,
+  salía con la calculadora de periodicidad y con su bloque de «qué hace esta
+  herramienta», que habla de otra cosa. Lo detectó Carlos. Resuelto igual, con
+  `$esHerramienta`, pero con el valor por defecto **al revés que en `/zbe/`**:
+  `"articulo"`, de modo que una página nueva de la sección no hereda la
+  herramienta sin pedirla. **Al escribir una plantilla de sección, preguntarse
+  siempre qué pasa con la segunda página que caiga ahí.**
 - **La hoja de Leaflet se carga DESPUÉS que la nuestra.** Trae
   `.leaflet-container a { color: #0078A8 }`, que empata en especificidad con
   `.leaflet-control-attribution a`, y a igualdad gana la última. Hace falta

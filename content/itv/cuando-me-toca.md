@@ -3,6 +3,10 @@ title: "¿Cuándo me toca la ITV? Calcula la periodicidad de tu vehículo"
 description: "Cada cuánto hay que pasar la ITV según el tipo de vehículo y su edad, con la tabla del Real Decreto 920/2017. Turismos, furgonetas, motos, ciclomotores, autobuses y caravanas."
 date: 2026-09-29
 
+# Esta pagina SI lleva la calculadora. Sin esta marca, layouts/itv/single.html
+# la trata como un articulo normal. Ver el comentario de esa plantilla.
+tipo: "herramienta"
+
 fuente_nombre: "Real Decreto 920/2017, de 23 de octubre, por el que se regula la inspección técnica de vehículos, artículo 6.1"
 fuente_url: "https://www.boe.es/buscar/act.php?id=BOE-A-2017-12841"
 fuente_boletin: "Texto consolidado, última modificación de 18 de septiembre de 2024"
