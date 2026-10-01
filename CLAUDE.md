@@ -437,9 +437,32 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
 ` dentro de un heredoc de Python.** Se convierte en un
   salto de línea real y rompe el fichero generado. Usar la herramienta de
   escritura, o construirlo con `chr(10)` y `chr(92)`.
-- **`disableKinds` debe ir en la raíz de `hugo.toml`**, antes de cualquier cabecera
-  `[tabla]`. Si va después, TOML la anida dentro de esa tabla y deja de aplicarse
-  en silencio.
+- **En TOML, una cabecera `[tabla]` se traga todo lo que venga detrás.** Abre un
+  ámbito que dura hasta la siguiente cabecera, así que cualquier `clave = valor`
+  escrito después pertenece a esa tabla, aunque esté al mismo nivel visual que
+  el resto y aunque el fichero se lea perfectamente bien. **Esta trampa se ha
+  pisado dos veces**, y la segunda fue cara:
+  - `disableKinds` colocado tras una cabecera y dejó de aplicarse. Por eso va
+    en la raíz de `hugo.toml`, antes de cualquier `[tabla]`.
+  - El 01/10/2026 el bloque `[params.fuseOpts]` del buscador se insertó justo
+    detrás de `[params]`, y los **diecisiete ajustes siguientes** quedaron
+    dentro del tercer `[[params.fuseOpts.keys]]`. `[params]` pasó de 18 claves
+    a 2. Las 37 páginas se desplegaron sin migas de navegación, sin enlaces de
+    anterior/siguiente, con `<meta name=author>` vacío, con la descripción
+    vacía en el JSON-LD y con el título del logotipo partido en
+    «Coche Apto:  (Alt + H)». El build terminó en verde.
+
+  **Regla: los ajustes sueltos de `[params]` van arriba; las tablas, al final.**
+  Y como el daño no se ve leyendo el fichero (hay que parsearlo), lo vigila
+  `pipeline/test_configuracion.py`.
+- **Los iconos del sitio no se editan a mano.** Salen de `LogoCocheApto.png`
+  por `pipeline/marca_favicon.py`, que reconstruye las tres piezas por máscaras
+  de color. Reducir el PNG tal cual no vale: es un render con ruido, y a 16 px
+  ese ruido se promedia y deja el coche gris. El fotograma de 16 del `.ico` es
+  **distinto** de los de 32 y 48 (coche macizo, sin bujes ni ventanilla), y eso
+  es deliberado. Las cuatro URL no se renombran: Google pide que la dirección
+  del icono sea estable y tarda de días a semanas en releer una nueva.
+  Lo vigila `pipeline/test_marca_favicon.py`.
 - **`params.env = "production"` fijo** fuerza `index, follow` en todos los builds,
   incluidas las previsualizaciones. No fijarlo: PaperMod ya usa `hugo.Environment`.
 - **`public/` no se limpia sola** entre builds. Para verificar que algo dejó de
