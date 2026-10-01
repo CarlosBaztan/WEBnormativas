@@ -150,6 +150,41 @@ en vez de dinámica.
 
 ---
 
+## Pendiente · Dos ajustes del panel de Cloudflare **[Carlos]**
+
+Apuntados el 01/10/2026 al leer el correo de registro, que los ofrece los dos
+en la misma pantalla. **Uno hay que activarlo y el otro NO**, y el que no es
+el que suena mejor.
+
+### Early Hints: SÍ, cuando abramos a Google
+
+Es gratis y en el plan Free. Permite que el navegador empiece a descargar la
+hoja de estilos antes de que llegue el HTML entero, lo que adelanta el pintado.
+Encaja con lo que ya se hizo en la T14 (caché de un año para lo que lleva
+huella, `preconnect` a cdnjs).
+
+No corre prisa mientras el `noindex` esté puesto, porque la velocidad importa
+cuando hay visitantes. Está en **Speed** → **Optimization** dentro del dominio.
+
+### Bot Fight Mode: NO
+
+Cloudflare lo ofrece como protección gratuita y describe que gestiona el
+tráfico de bots **«incluidos los bots de IA»**. Ahí está el problema: parte de
+la estrategia del proyecto es que ChatGPT, Perplexity, Claude y compañía
+puedan leer el sitio para citarlo como fuente. Activar eso sería bloquear
+justo a los visitantes que más interesan, y además en silencio: no hay aviso,
+simplemente dejan de aparecer las citas.
+
+**Si alguna vez hay que frenar bots**, el criterio es a la inversa del
+habitual: bloquear raspadores de contenido comercial, nunca los rastreadores
+de los buscadores ni los de las IA generativas.
+
+Tampoco hacen falta los planes Pro (20 $/mes) ni Business (200 $/mes) que
+ofrece ese mismo correo. El sitio es estático, pesa menos de 10 KB por página
+comprimida y lo sirve la red de Cloudflare. No hay nada que optimizar ahí.
+
+---
+
 ## Lo que NO se hace todavía
 
 **El `noindex` se queda puesto.** Tener el dominio no es motivo para abrirlo a
