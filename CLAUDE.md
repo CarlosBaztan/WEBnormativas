@@ -287,8 +287,21 @@ los buscadores y con las páginas legales publicadas.**
       así que Google consolida y no penaliza, pero lo limpio es la
       redirección. Pasos en [docs/conectar-dominio.md](docs/conectar-dominio.md).
 - [ ] **Early Hints** en Cloudflare, gratis. Mismo documento.
+- [ ] **Google Search Console.** La web ya cumple todo lo que pide
+      (comprobado el 02/10/2026: las 37 URL del sitemap en HTTP 200 e
+      indexables, canónicos consistentes, robots.txt abierto). Falta el alta,
+      que es en la cuenta de Google de Carlos. **Propiedad de tipo Dominio**,
+      verificada con un TXT en Cloudflare, para que cubra el ápex y el `www`
+      de una vez mientras la redirección sigue pendiente. Pasos en
+      [docs/search-console.md](docs/search-console.md).
+      **No pone cookies**, así que no toca nada de las páginas legales.
+      Es lo que falta para saber por qué palabras nos encuentran, que hoy no
+      se sabe.
 - [ ] **Solicitar AdSense.** Ya se puede: el sitio es accesible y tiene las
       legales. Lo tiene que hacer Carlos.
+      **Ojo al orden:** AdSense trae cookies de terceros y obliga a banner de
+      consentimiento y a reescribir `/legal/cookies/`, que hoy dice que el
+      sitio no usa ninguna y lo promete por escrito. Search Console no.
 - [ ] **Más fichas de municipio verificadas.** 13 de 45 con ZBE registrada en
       el NAP. **Es el cuello de botella real del proyecto**: sin contenido no
       hay tráfico, y sin tráfico no hay ingresos.
