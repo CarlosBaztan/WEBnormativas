@@ -1,0 +1,66 @@
+{{- /*
+  render-table.html — las tablas escritas en Markdown, dentro de un envoltorio
+  que se puede desplazar con el teclado.
+
+  El problema: una tabla ancha se desplaza en horizontal para no desbordar la
+  pagina, y eso se conseguia poniendo overflow-x en la propia <table>. Un
+  contenedor con desplazamiento al que no se puede llegar con el tabulador
+  deja el contenido de la derecha fuera del alcance de quien no usa raton.
+  Lo canto axe-core como scrollable-region-focusable en la ficha de Madrid.
+
+  La solucion es el envoltorio: el desplazamiento se mueve ahi (ver
+  .tabla-envoltorio en normativa.css) y el envoltorio lleva tabindex="0", que
+  es lo que permite enfocarlo y recorrerlo con las flechas.
+
+  Por que role="group" y no role="region": una region es un landmark, y con
+  varias tablas en la misma pagina saldrian varios landmarks llamados igual,
+  que es el problema que acabamos de arreglar en los <nav>. Un grupo no es
+  landmark y aun asi da nombre a lo que se enfoca.
+
+  El nombre sale de la fila de cabecera, que es lo que de verdad describe la
+  tabla. Si no hay cabecera, queda "Tabla" a secas, que no es gran cosa pero
+  es mejor que enfocar algo que no se anuncia.
+
+  La alineacion por columna se emite como style en linea, que es lo que hacia
+  Goldmark por su cuenta y lo que espera el CSS del sitio. Si esto se pierde,
+  las seis columnas cortas que se centraron vuelven a la izquierda.
+*/ -}}
+{{- $cabeceras := slice -}}
+{{- range .THead -}}
+  {{- range . -}}
+    {{- with (.Text | plainify | strings.TrimSpace) -}}
+      {{- $cabeceras = $cabeceras | append . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $nombre := "Tabla" -}}
+{{- with $cabeceras -}}
+  {{- $nombre = printf "Tabla: %s" (delimit (first 4 .) ", ") -}}
+{{- end -}}
+<div class="tabla-envoltorio" role="group" tabindex="0" aria-label="{{ $nombre }}">
+<table
+  {{- range $k, $v := .Attributes }}{{ if $v }} {{ $k }}="{{ $v }}"{{ end }}{{ end }}>
+  {{- with .THead }}
+  <thead>
+    {{- range . }}
+    <tr>
+      {{- range . }}
+      <th{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</th>
+      {{- end }}
+    </tr>
+    {{- end }}
+  </thead>
+  {{- end }}
+  {{- with .TBody }}
+  <tbody>
+    {{- range . }}
+    <tr>
+      {{- range . }}
+      <td{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</td>
+      {{- end }}
+    </tr>
+    {{- end }}
+  </tbody>
+  {{- end }}
+</table>
+</div>

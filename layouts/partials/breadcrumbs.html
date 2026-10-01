@@ -1,0 +1,37 @@
+{{- /*
+  breadcrumbs.html — copia del partial de PaperMod con dos arreglos.
+
+  1. El tema pone aria-label="Breadcrumb", en ingles, en un sitio cuyo <html>
+     declara lang="es". Un lector de pantalla configurado en espanol lo lee
+     con foneticas espanolas y sale un ruido. Aqui va en espanol.
+
+  2. Las flechas entre migas son decorativas y no aportan nada al que no ve la
+     pantalla: aria-hidden y focusable="false" para que no se anuncien ni
+     entren en la tabulacion (Internet Explorer y algunos lectores meten los
+     SVG en el recorrido si no se les dice lo contrario).
+
+  Se copia el fichero entero, que es como se sobreescribe un partial del tema,
+  porque themes/PaperMod es un submodulo de git y no se toca.
+*/ -}}
+{{- if (.Param "ShowBreadCrumbs") -}}
+<nav class="breadcrumbs" aria-label="Ruta de navegación">
+    {{- $ancestors := .Ancestors.Reverse -}}
+    {{- range $i, $bc := $ancestors }}
+        {{- if eq $i 0 }}
+            <a href="{{ $bc.RelPermalink }}">{{ i18n "home" | default "Inicio" }}</a>
+        {{- else }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"
+                aria-hidden="true" focusable="false">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="{{ $bc.RelPermalink }}">{{ $bc.Title }}</a>
+        {{- end }}
+    {{- end }}
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"
+        aria-hidden="true" focusable="false">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+{{- end -}}

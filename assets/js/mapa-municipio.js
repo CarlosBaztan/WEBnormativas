@@ -160,6 +160,7 @@
         if (window.MapaGestos) {
           MapaGestos.cooperativo(mapa, contenedor);
           MapaGestos.botonAmpliar(mapa, contenedor);
+          MapaGestos.traducirZoom(contenedor);
         }
         botonVolver(mapa, encuadra);
 

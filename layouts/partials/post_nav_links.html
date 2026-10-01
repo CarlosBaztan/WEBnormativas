@@ -1,0 +1,31 @@
+{{- /*
+  post_nav_links.html — copia del partial de PaperMod con un arreglo.
+
+  El <nav> del tema no tiene nombre accesible, y la cabecera tampoco lo tenia:
+  dos regiones de navegacion sin nombre en la misma pagina. Un lector de
+  pantalla las lista como "navegacion" y "navegacion", y quien salta entre
+  regiones no sabe a cual va. Lo canto axe-core como landmark-unique en la
+  ficha de Madrid.
+
+  El nombre dice lo que hay dentro, que son las fichas anterior y siguiente,
+  no "paginacion", que sugiere paginas de un listado.
+
+  Se copia entero porque themes/PaperMod es un submodulo y no se toca.
+*/ -}}
+{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- if and (gt (len $pages) 1) (in $pages . ) }}
+<nav class="paginav" aria-label="Página anterior y siguiente">
+  {{- with $pages.Next . }}
+  <a class="prev" href="{{ .Permalink }}">
+    <span class="title">« {{ i18n "prev_page" }}</span>
+    <span>{{- .Name -}}</span>
+  </a>
+  {{- end }}
+  {{- with $pages.Prev . }}
+  <a class="next" href="{{ .Permalink }}">
+    <span class="title">{{ i18n "next_page" }} »</span>
+    <span>{{- .Name -}}</span>
+  </a>
+  {{- end }}
+</nav>
+{{- end }}

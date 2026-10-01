@@ -216,12 +216,22 @@
   transform: translateX(-100%);
   /* visibility evita que el panel cerrado siga siendo tabulable. */
   visibility: hidden;
-  transition: transform 0.2s ease, visibility 0.2s;
+  /* Al CERRAR, visibility espera a que termine el deslizamiento: si cambiara
+     al instante, el panel desapareceria de golpe en vez de salirse. */
+  transition: transform 0.2s ease, visibility 0s linear 0.2s;
 }
 
 .menu-lateral[data-abierto] {
   transform: none;
   visibility: visible;
+  /* Al ABRIR, en cambio, visibility cambia en el acto y sin esperar.
+     Con la transicion de 0,2 s que habia antes, el panel no admitia el foco
+     hasta que terminaba de deslizarse, y el JavaScript intentaba metérselo
+     nada mas abrir: no pasaba nada y el teclado se quedaba en el boton de la
+     cabecera, detras del panel. Comprobado el 1 de octubre de 2026 con una
+     pulsacion real, y no con un click() de prueba, que es lo que lo
+     disimulaba. */
+  transition: transform 0.2s ease, visibility 0s linear 0s;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -363,7 +373,12 @@
   box-shadow: inset 3px 0 0 var(--primary);
 }
 
-.menu-lateral__item--pendiente { opacity: 0.5; }
+/* Apagado, pero legible. Al 0,5 el texto quedaba en 4,0:1 sobre el fondo
+   oscuro, por debajo del 4,5:1 que pide WCAG 1.4.3 para texto normal, y lo
+   canto axe-core. Al 0,65 pasa en los dos temas y se sigue distinguiendo a
+   la primera de una entrada activa. Ademas del color, cada una lleva su
+   distintivo "Proximamente" escrito al lado, asi que nada depende del tono. */
+.menu-lateral__item--pendiente { opacity: 0.65; }
 
 .menu-lateral__badge {
   flex: 0 0 auto;

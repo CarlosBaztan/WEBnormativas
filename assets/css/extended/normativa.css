@@ -22,7 +22,73 @@
     border: 0;
 }
 
-/* Foco visible y consistente en todo el sitio */
+/* ------------------------------------------------------------------
+   SALTAR AL CONTENIDO
+
+   Medido el 1 de octubre de 2026 en la ficha de Madrid: 34 de los 59
+   elementos tabulables de la pagina van ANTES del contenido, y son los
+   mismos en todas. Quien navega con teclado tenia que atravesar la
+   cabecera, el buscador y las veinticinco entradas del menu lateral en
+   cada pagina que abriera. Es el criterio 2.4.1 de WCAG, nivel A.
+
+   Oculto hasta que recibe el foco, y entonces aparece arriba a la
+   izquierda. No se usa .visually-hidden porque esa clase lo mantendria
+   de 1x1 px tambien al enfocarlo: aqui hace falta que se vea.
+
+   Lo pinta layouts/_default/baseof.html como primer elemento del body.
+   ------------------------------------------------------------------ */
+.saltar-al-contenido {
+    position: absolute;
+    top: var(--sp-2);
+    left: var(--sp-2);
+    z-index: 100;
+    padding: var(--sp-2) var(--sp-4);
+    background: var(--theme);
+    color: var(--content);
+    border: 2px solid var(--caja-acento);
+    border-radius: var(--caja-radio);
+    font-size: var(--txt-sm);
+    text-decoration: none;
+    /* Fuera de la pantalla, no `display: none`: un enlace oculto asi no
+       es enfocable y no serviria de nada. */
+    transform: translateY(-200%);
+}
+
+.saltar-al-contenido:focus {
+    transform: translateY(0);
+}
+
+/* El <main> recibe el foco al saltar (tabindex="-1" en baseof.html). Sin
+   esto, Chrome le pinta su anillo de foco alrededor de toda la pagina, que
+   asusta y no informa de nada: el salto ya se nota porque la pagina se
+   mueve. */
+body .main:focus {
+    outline: none;
+}
+
+/* ------------------------------------------------------------------
+   FOCO VISIBLE
+
+   La regla general va primero y las de componente la afinan. Antes solo
+   habia reglas de componente, asi que los enlaces del cuerpo del
+   articulo, la cabecera, las migas y el pie dependian del anillo que
+   pinta el navegador por su cuenta, que sobre fondo oscuro se ve mal y
+   cambia segun el navegador.
+   ------------------------------------------------------------------ */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--caja-acento);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* Estos usan currentColor porque van sobre fondos de color propios, donde
+   el acento general no siempre contrasta. */
 .ficha-zbe a:focus-visible,
 .municipios a:focus-visible,
 .indice-provincias a:focus-visible,
@@ -641,15 +707,29 @@ body {
    ---:. Goldmark no la emite como atributo align sino como style en linea,
    que gana a cualquier hoja de estilos, asi que aqui no hace falta nada. */
 
-/* Las tablas anchas se desplazan en horizontal en vez de desbordar. */
-.md-content table {
-  display: block;
+/* Las tablas anchas se desplazan en horizontal en vez de desbordar.
+
+   El desplazamiento va en el envoltorio, no en la <table>. Estaba en la tabla
+   y eso la convertia en un contenedor con scroll al que no se llegaba con el
+   tabulador: quien no usa raton no podia ver las columnas de la derecha.
+   El envoltorio lo pone layouts/_default/_markup/render-table.html con
+   tabindex="0". */
+.tabla-envoltorio {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-@media (min-width: 46rem) {
-  .md-content table { display: table; }
+/* El foco tiene que verse: es el unico indicio de que ese bloque se recorre
+   con las flechas. */
+.tabla-envoltorio:focus-visible {
+  outline: 2px solid var(--caja-acento);
+  outline-offset: 3px;
+}
+
+/* La tabla vuelve a ser una tabla y deja de gobernar su propio scroll. */
+.md-content table {
+  display: table;
+  overflow-x: visible;
 }
 
 /* La pegatina dentro de una celda: centrada y sin sostener la altura. */

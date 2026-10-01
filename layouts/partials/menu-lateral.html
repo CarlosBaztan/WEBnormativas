@@ -87,13 +87,38 @@
     var abiertosDeInicio = [];
     grupos.forEach(function (g) { abiertosDeInicio.push(g.open); });
 
+    /*
+      El foco tiene que entrar al panel. Si no, el teclado se queda detrás del
+      fondo oscuro: quien abre el menú con el teclado lo ve abierto y sigue
+      tabulando por la página que hay debajo, que ni siquiera puede ver.
+
+      Por qué no basta con llamar a focus() y ya: el panel está en
+      `visibility: hidden` mientras está cerrado, y un elemento invisible no
+      admite el foco. Entre que se le pone `data-abierto` y que el navegador
+      lo da por visible pasa un rato que no se puede predecir, y ni un
+      requestAnimationFrame llega a tiempo de forma fiable. Comprobado el
+      1 de octubre de 2026 con pulsaciones reales, no con click() de prueba,
+      que es lo que lo venía disimulando.
+
+      Así que se intenta a la primera y, si no ha colado, se reintenta cuando
+      termine la transición. Esto no depende de cuántos milisegundos tarde.
+    */
+    function enfocarElPanel() {
+      var destino = cerrar || nav;
+      destino.focus();
+      if (document.activeElement === destino) return;
+      nav.addEventListener('transitionend', function reintento() {
+        nav.removeEventListener('transitionend', reintento);
+        destino.focus();
+      });
+    }
+
     function abrir() {
       nav.setAttribute('data-abierto', '');
       boton.setAttribute('aria-expanded', 'true');
       fondo.hidden = false;
       document.body.style.overflow = 'hidden';
-      // El foco entra al panel: si no, el teclado se queda detrás del fondo.
-      (cerrar || nav).focus();
+      enfocarElPanel();
     }
 
     function cerrarPanel(devolverFoco) {

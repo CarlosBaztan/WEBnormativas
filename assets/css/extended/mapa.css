@@ -120,6 +120,23 @@
   color: var(--primary);
 }
 
+/* Los enlaces de la atribucion (Leaflet, OpenStreetMap) traen el azul de serie
+   de Leaflet, #0078a8, que sobre el panel oscuro da 2,73:1 y no llega al 4,5:1
+   que pide WCAG 1.4.3. Lo canto axe-core en /mapa/ y en la ficha de Madrid.
+
+   Heredan el color del texto de la atribucion, que si pasa, y se distinguen
+   por el subrayado en lugar de por el tono. Que un enlace se reconozca sin
+   depender del color es ademas lo que pide el criterio 1.4.1.
+
+   Doble clase en el selector a proposito: la hoja de Leaflet se carga
+   DESPUES que la nuestra y trae `.leaflet-container a { color: #0078A8 }`,
+   que tiene la misma especificidad que `.leaflet-control-attribution a`.
+   A igualdad de especificidad gana la ultima, o sea la suya. */
+.leaflet-container .leaflet-control-attribution a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 :root[data-theme="dark"] .leaflet-control-zoom a { border-color: var(--caja-borde); }
 
 @media (max-width: 30rem) {

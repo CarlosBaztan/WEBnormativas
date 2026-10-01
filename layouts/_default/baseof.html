@@ -1,0 +1,84 @@
+{{- /*
+  baseof.html — copia del baseof de PaperMod con dos anadidos.
+
+  1. ENLACE PARA SALTAR AL CONTENIDO.
+
+     Medido el 1 de octubre de 2026 en la ficha de Madrid: 34 de los 59
+     elementos tabulables de la pagina van antes del contenido. Son la
+     cabecera, el buscador y las veinticinco entradas del menu lateral, y se
+     repiten identicas en cada pagina. Quien navega con teclado, o con un
+     conmutador, tenia que atravesarlas enteras cada vez.
+
+     Es el criterio 2.4.1 de WCAG, nivel A, y axe-core no lo detecta: su regla
+     "bypass" se da por satisfecha con que haya landmarks y encabezados, que
+     los hay. El fallo solo aparece usando el teclado de verdad.
+
+     El enlace es el primer elemento del body, esta oculto hasta que recibe el
+     foco y entonces aparece arriba a la izquierda.
+
+  2. `id` y `tabindex="-1"` en <main>.
+
+     El id es el destino del enlace. El tabindex="-1" es lo que hace que el
+     salto mueva de verdad el foco del teclado: sin el, Chrome y Safari
+     desplazan la pagina pero dejan el foco donde estaba, de modo que el
+     siguiente tabulador vuelve al menu y el enlace no sirve de nada. No lo
+     hace tabulable, solo enfocable por programa.
+
+  Se copia el fichero entero porque themes/PaperMod es un submodulo de git y
+  no se toca. Si el tema cambia su baseof, hay que traer el cambio a mano.
+*/ -}}
+{{- if lt hugo.Version "0.146.0" }}
+{{- errorf "=> hugo v0.146.0 or greater is required for hugo-PaperMod to build " }}
+{{- end -}}
+
+<!DOCTYPE html>
+{{- $theme := site.Params.defaultTheme | default "auto" }}
+{{- if eq $theme "dark" }}
+<html lang="{{ site.Language }}" dir="{{ .Language.LanguageDirection | default "auto" }}" data-theme="dark">
+{{- else if eq $theme "light" }}
+<html lang="{{ site.Language }}" dir="{{ .Language.LanguageDirection | default "auto" }}" data-theme="light">
+{{- else }}
+<html lang="{{ site.Language }}" dir="{{ .Language.LanguageDirection | default "auto" }}" data-theme="auto">
+{{- end }}
+
+<head>
+    {{- partial "head.html" . }}
+</head>
+
+{{- if (or (ne .Kind `page` ) (eq .Layout `archives`) (eq .Layout `search`)) }}
+<body class="list" id="top">
+{{- else }}
+<body id="top">
+{{- end }}
+    <a class="saltar-al-contenido" href="#contenido">Saltar al contenido</a>
+    {{ partialCached "header.html" . .Page -}}
+    <main class="main" id="contenido" tabindex="-1">
+        {{- block "main" . }}{{ end }}
+    </main>
+    {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
+    {{- /*
+      Cinco lineas de JavaScript, y hacen falta.
+
+      El patron habitual del enlace para saltar (href a un id con
+      tabindex="-1") deberia mover el foco del teclado por si solo. Comprobado
+      el 1 de octubre de 2026 con una pulsacion real de Intro: la URL cambia a
+      #contenido y la pagina se desplaza, pero el foco se queda en el enlace, y
+      el siguiente tabulador vuelve al logotipo. O sea que sin esto el enlace
+      es decorativo y no se salta nada, que es peor que no tenerlo porque
+      aparenta cumplir.
+
+      Va en linea y al final del body: no anade ninguna peticion de red ni
+      retrasa el pintado, que es la razon por la que el resto del sitio
+      funciona sin JavaScript.
+    */ -}}
+    <script>
+      document.addEventListener('click', function (ev) {
+        var enlace = ev.target.closest && ev.target.closest('.saltar-al-contenido');
+        if (!enlace) return;
+        var destino = document.getElementById('contenido');
+        if (destino) destino.focus();
+      });
+    </script>
+</body>
+
+</html>

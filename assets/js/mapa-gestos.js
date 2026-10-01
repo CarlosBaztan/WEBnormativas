@@ -176,6 +176,31 @@ window.MapaGestos = (function () {
     mapa.addControl(new Ampliar());
   }
 
+  /*
+   * Los botones de zoom de Leaflet, en espanol.
+   *
+   * Vienen con title="Zoom in" y "Zoom out" y no hay forma de cambiarlos
+   * cuando el control lo crea el propio mapa (zoomControl: true). En un sitio
+   * con <html lang="es">, un lector de pantalla los lee con fonetica
+   * espanola y sale un ruido en vez de una palabra.
+   *
+   * aria-label ademas del title porque el title solo no es un nombre
+   * accesible fiable: algunos lectores lo ignoran si hay contenido dentro del
+   * enlace, y aqui lo hay (el signo + y el signo -).
+   */
+  function traducirZoom(contenedor) {
+    var nombres = {
+      'leaflet-control-zoom-in': 'Acercar el mapa',
+      'leaflet-control-zoom-out': 'Alejar el mapa'
+    };
+    Object.keys(nombres).forEach(function (clase) {
+      var boton = contenedor.querySelector('.' + clase);
+      if (!boton) return;
+      boton.title = nombres[clase];
+      boton.setAttribute('aria-label', nombres[clase]);
+    });
+  }
+
   return { cooperativo: cooperativo, botonAmpliar: botonAmpliar,
-           tecla: TECLA, paso: PASO };
+           traducirZoom: traducirZoom, tecla: TECLA, paso: PASO };
 })();

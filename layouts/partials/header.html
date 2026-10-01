@@ -13,7 +13,12 @@
 */ -}}
 
 <header class="header header--fijo">
-  <nav class="header-nav nav-propia">
+  {{- /* El nombre no es decorativo: esta pagina tiene hasta cinco regiones de
+         navegacion (esta, el menu lateral, las migas, las zonas del municipio
+         y el anterior/siguiente). Sin nombre, un lector de pantalla las lista
+         todas como "navegacion" y saltar entre ellas no lleva a ningun sitio
+         reconocible. */ -}}
+  <nav class="header-nav nav-propia" aria-label="Principal">
 
     <div class="logo">
       <a class="marca" href="{{ "" | absLangURL }}" accesskey="h"
