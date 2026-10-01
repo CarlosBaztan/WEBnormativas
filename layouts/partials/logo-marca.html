@@ -28,7 +28,7 @@
   necesitaría dos ficheros (bastaría `currentColor`), así que si algún día
   hay una versión vectorial del logotipo, merece la pena cambiarlo.
 */ -}}
-{{- $alto := 30 -}}
+{{- $alto := 44 -}}
 {{- with resources.Get "img/marca/logo-claro.png" }}
   {{- $x1 := .Resize (printf "x%d png Lanczos" $alto) }}
   {{- $x2 := .Resize (printf "x%d png Lanczos" (mul $alto 2)) }}

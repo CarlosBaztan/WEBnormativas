@@ -7,7 +7,16 @@ defaultContentLanguage = "es"
 # madrugada queda "en el futuro" y buildFuture = false la descarta en
 # silencio: la pagina no se genera y nadie se entera.
 timeZone = "Europe/Madrid"
-title = "Normativa del vehículo en España"
+# La marca, desde el 01/10/2026. Antes era "Normativa del vehiculo en Espana",
+# que describia bien pero no se recordaba ni se citaba. Esa frase no se pierde:
+# sigue siendo la descripcion del sitio y el titulo que ve quien pasa el raton
+# por el logotipo.
+#
+# OJO: el <title> de la portada lo arma layouts/partials/head.html, que es una
+# copia del de PaperMod con un unico cambio. El original ponia solo site.Title
+# en la portada, y eso dejaria la pagina mas importante del sitio titulada
+# "Coche Apto" a secas, sin una palabra de lo que se hace aqui.
+title = "Coche Apto"
 theme = "PaperMod"
 
 enableRobotsTXT = true

@@ -21,11 +21,14 @@
   <nav class="header-nav nav-propia" aria-label="Principal">
 
     <div class="logo">
-      {{- /* El logotipo sustituye al titulo escrito desde el 01/10/2026. El
-             `title` del enlace conserva el nombre completo del sitio, que es
-             lo que ve quien pasa el raton por encima. */ -}}
+      {{- /* El logotipo sustituye al titulo escrito desde el 01/10/2026.
+
+             El `title` lleva la descripcion del sitio y no site.Title: desde
+             que la marca ES el titulo, poner las dos cosas daba "Coche Apto:
+             Coche Apto". Quien pasa el raton por el logotipo ya ve la marca
+             dibujada; lo que le falta es saber de que va esto. */ -}}
       <a class="marca" href="{{ "" | absLangURL }}" accesskey="h"
-         title="Coche Apto: {{ site.Title }} (Alt + H)">
+         title="{{ site.Title }}: {{ site.Params.description }} (Alt + H)">
         {{ partial "logo-marca.html" . }}
       </a>
     </div>

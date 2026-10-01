@@ -8,7 +8,11 @@
    de margen quedaría inválida, y en silencio. */
 :root {
   --ml-ancho: 16rem;
-  --cabecera-alto: 3.25rem;
+  /* 3.75rem = 60 px. Eran 3.25rem (52) y el logotipo de 44 px se quedaba con
+     4 px de aire arriba y abajo, que es ahogarlo. Con 60 le quedan 8 a cada
+     lado. La variable tambien posiciona el menu lateral, asi que el menu baja
+     solo. */
+  --cabecera-alto: 3.75rem;
 }
 
 /* --- Cabecera fija ------------------------------------------------------ */
@@ -114,7 +118,12 @@
 .marca__logo {
   flex: 0 0 auto;
   display: block;
-  height: 30px;
+  /* 44 px, no 30. A 30 las letras salian a 13,5 px, por debajo del cuerpo de
+     texto de la pagina, y se veian diminutas. El motivo es que en esta imagen
+     el texto ocupa solo el 45 % de la altura: el icono es mas alto que las
+     letras y manda sobre la escala. A 44 px las letras llegan a 20, que ya
+     pesa como marca. */
+  height: 44px;
   width: auto;
 }
 
@@ -231,7 +240,7 @@
   .logo a.marca { font-size: var(--txt-sm); }
   .logo-senal { width: 30px; height: 30px; }
   /* El logotipo encoge un punto para dejar sitio a la lupa y al menu. */
-  .marca__logo { height: 26px; }
+  .marca__logo { height: 34px; }
 }
 
 /* --- Menú lateral -------------------------------------------------------- */
