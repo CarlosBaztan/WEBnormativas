@@ -75,6 +75,6 @@ Por los umbrales de fecha y el asunto del mes en 2015, aquí deducir es arriesga
 
 ---
 
-**Fuente:** [Distintivo ambiental de la DGT](https://www.dgt.es/nuestros-servicios/tu-vehiculo/tus-vehiculos/distintivo-ambiental/) · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Distintivo ambiental de la DGT · **Verificado el 23 de septiembre de 2026**
 
-*Esta página resume criterios oficiales con fines informativos. El distintivo que consta en el Registro de Vehículos de la DGT es el que vale.*
+*Esta página resume criterios oficiales con fines informativos.*

@@ -738,6 +738,31 @@ body {
    ---:. Goldmark no la emite como atributo align sino como style en linea,
    que gana a cualquier hoja de estilos, asi que aqui no hace falta nada. */
 
+/* ------------------------------------------------------------------
+   PIE DE FUENTE DEL ARTICULO
+
+   El bloque que cierra cada pagina: la linea "Fuente: ... Verificado el ..."
+   y el descargo en cursiva, los dos detras de la ultima regla horizontal.
+
+   Van mas pequenos que el cuerpo a peticion de Carlos, y tiene sentido: son
+   trazabilidad, no lectura. Tienen que estar siempre y poder comprobarse,
+   pero no competir con el texto que la persona vino a leer.
+
+   Se seleccionan por posicion y no por una clase porque ese bloque se escribe
+   en Markdown al final de cada fichero, y no hay donde colgar una clase sin
+   meter HTML en el contenido. `hr:last-of-type ~ p` coge los parrafos que van
+   detras de la ULTIMA regla horizontal, que es justo ese bloque. Si algun dia
+   una pagina termina con otra cosa detras de una regla, habra que darle una
+   clase de verdad.
+
+   Solo cambia el tamano, no el color: el gris lo dejaria por debajo del
+   contraste minimo, y una fuente que no se lee no sirve de nada.
+   ------------------------------------------------------------------ */
+.md-content > hr:last-of-type ~ p {
+  font-size: var(--txt-sm);
+  line-height: var(--lh-corto);
+}
+
 /* Las tablas anchas se desplazan en horizontal en vez de desbordar.
 
    El desplazamiento va en el envoltorio, no en la <table>. Estaba en la tabla
