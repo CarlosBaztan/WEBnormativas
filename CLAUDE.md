@@ -429,6 +429,26 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   `.leaflet-container a { color: #0078A8 }`, que empata en especificidad con
   `.leaflet-control-attribution a`, y a igualdad gana la última. Hace falta
   doblar la clase: `.leaflet-container .leaflet-control-attribution a`.
+- **Los z-index de Leaflet se escapan del mapa si el contenedor no es un
+  contexto de apilamiento.** Leaflet usa 200 (teselas), 400 (dibujo), 600
+  (marcadores), 700 (globos) y 1000 (controles) para ordenarse **por dentro**.
+  El contenedor tenía `position: relative` **sin** z-index, y eso no crea
+  contexto: esos números competían con la página y el mapa tapaba la cabecera
+  fija (que vale 20) al desplazarse. Resuelto con `isolation: isolate` en
+  `.mapa-zbe` y `.mapa-municipio`. Se usa `isolation` y no `z-index: 0` porque
+  `.mapa--ampliado` necesita su z-index 1100 para la pantalla completa.
+- **`elementFromPoint()` no dice quién pinta encima.** Ignora lo que lleva
+  `pointer-events: none`, y los paneles de Leaflet lo llevan: devolvía la
+  cabecera mientras en pantalla se veía el mapa tapándola. Mide clics, no
+  pintura. **Para una pregunta de orden de pintado, mirar una captura.**
+- **PaperMod pinta de gris las páginas de tipo «list».**
+  `.list { background: var(--code-bg) }` deja la portada, `/zbe/`,
+  `/etiquetas/`, `/multas/`, `/legal/`, `/datos/` y el buscador en
+  `rgb(245,245,245)` y el resto en blanco, así que el fondo cambiaba de tono
+  al navegar. En oscuro no pasaba porque el tema ya lo iguala. Resuelto con
+  `body.list { background: var(--theme) }` en `normativa.css`. **Al igualarlo
+  hay que subir el borde de las tarjetas `.post-entry`** a `--tertiary`: eran
+  blancas sobre gris y su borde de `--border` ya no las delimita.
 - **El enlace para saltar al contenido no mueve el foco por sí solo.** El
   patrón habitual (href a un id con `tabindex="-1"`) cambia la URL y desplaza
   la página, pero el siguiente tabulador vuelve al principio. Comprobado
