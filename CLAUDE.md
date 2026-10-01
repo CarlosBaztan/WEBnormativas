@@ -256,6 +256,13 @@ los buscadores y con las páginas legales publicadas.**
       (no está en el anexo II).
 - [x] T12: sistema visual. Tokens en `assets/css/extended/sistema.css` y
       documentado en [docs/sistema-visual.md](docs/sistema-visual.md).
+- [x] **Maqueta: el contenido ocupa la franja central** (02/10/2026, decisión
+      de Carlos). El margen derecho vale lo mismo que el menú lateral
+      (`--ml-ancho`, 16 rem) y el contenido se queda con todo lo de en medio,
+      sin el tope de 720 px del tema. **Ninguna página lleva tope de ancho
+      propio**: si algún día hay que limitar la longitud de línea se hace en un
+      solo sitio y para todo el sitio. El porqué y las medidas por ancho de
+      ventana están en el comentario de `menu-lateral.css`.
 - [x] T13: accesibilidad. Ocho plantillas sin incidencias de axe-core, enlace
       para saltar al contenido y foco que entra de verdad en el panel móvil.
 - [x] T14: rendimiento. `static/_headers` con caché de un año para lo que
@@ -378,12 +385,10 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   El tema trae `.main { margin: auto }`. Al poner `margin-left: var(--ml-ancho)`
   para dejar sitio al menú lateral, el margen derecho se quedaba en `auto` y se
   comía todo el sobrante: en 1366 px el texto arrancaba pegado al menú y
-  quedaban 327 px muertos a la derecha, en todas las páginas. **Para reservar
-  el ancho de un elemento fijo se usa `padding`, no `margin`**, y los dos
-  márgenes se dejan en `auto`; así el contenido queda centrado en el espacio
-  libre. Depende de `box-sizing: border-box`, que el reset del tema ya aplica.
-  Y al mover una columna hay que mirar quién más debería seguirla: el pie se
-  centraba por su cuenta y no coincidía con el cuerpo.
+  quedaban 327 px muertos a la derecha, en todas las páginas. Si se fija un
+  margen, **hay que fijar los dos**. Y al mover una columna hay que mirar quién
+  más debería seguirla: el pie se centraba por su cuenta y no coincidía con el
+  cuerpo, así que va en la misma regla.
 - **No editar contenido con `Get-Content`/`Set-Content` de PowerShell 5.1.**
   Lee como ANSI y reescribe como UTF-8: corrompe todos los acentos. Usar las
   herramientas de edición o Python.
