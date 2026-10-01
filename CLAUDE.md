@@ -227,7 +227,8 @@ El mayor riesgo del proyecto es abandonarlo en el mes cuatro.
 
 ## Estado actual
 
-Al 28/09/2026.
+Al 01/10/2026. **El sitio está en producción, en `cocheapto.com`, abierto a
+los buscadores y con las páginas legales publicadas.**
 
 - [x] Investigación de nicho y competencia
 - [x] Plan de negocio
@@ -235,8 +236,9 @@ Al 28/09/2026.
 - [x] Fase 2: herramienta «¿Puedo circular?»
 - [x] Fase 3: pipeline de datos (`pipeline/zbe_nap.py`, 45 municipios)
 - [x] Fase 4: GitHub y Cloudflare Workers. En producción en
-      `webnormativas.bi-ia-carlosbaz.workers.dev`, con `noindex` puesto.
-      Desde el 01/10 el dominio propio es `cocheapto.com`.
+      **`cocheapto.com`** (y en `www`), con certificado y caché de un año
+      para lo que lleva huella. El Worker sigue llamándose `webnormativas`
+      a propósito: renombrarlo crearía uno nuevo y rompería el despliegue.
 - [x] Estudio de palabras clave (ver la sección de datos de búsqueda)
 - [x] Mapa: gestos, pantalla completa y chinchetas por municipio. Los
       recuentos de `/mapa/` salen de `data/zbe_resumen.json`, que escribe el
@@ -258,15 +260,31 @@ Al 28/09/2026.
       para saltar al contenido y foco que entra de verdad en el panel móvil.
 - [x] T14: rendimiento. `static/_headers` con caché de un año para lo que
       lleva huella, y `preconnect` a cdnjs en las páginas con mapa.
-- [ ] **Dominio: sin decidir.** Carlos lo cierra el 02/10. Ver abajo.
-- [ ] **Redirect Rule para que `www` lleve al dominio principal.** Con los dos
-      conectados al Worker, el sitio responde igual en las dos direcciones.
-      No urge (los canónicos ya apuntan al dominio sin `www` y el `noindex`
-      sigue puesto), pero **hay que hacerlo antes de quitar el `noindex`**.
-      Los pasos exactos están en
-      [docs/conectar-dominio.md](docs/conectar-dominio.md).
-- [ ] Fase 5: pre-AdSense (legales y CMP). Bloqueada hasta tener los datos de
-      identidad de Carlos, que exige el art. 10 LSSI.
+- [x] **Dominio `cocheapto.com`**, comprado y conectado el 01/10. Ver abajo.
+- [x] **Fase 5: páginas legales.** Aviso legal, privacidad, cookies y
+      contacto, con los datos reales del titular, enlazadas desde el pie de
+      todas las páginas. Leído el art. 10 LSSI en el BOE para publicar lo que
+      pide y nada más.
+      **No hay banner de consentimiento, y es correcto**: el sitio no pone ni
+      una cookie. Solo tres claves de almacenamiento local, las tres exentas
+      por el art. 22.2 LSSI al ser servicio solicitado por el usuario. Cuando
+      entre la publicidad habrá que ponerlo.
+- [x] **Abierto a los buscadores** el 01/10: `noindex = false`, robots.txt en
+      `Allow` y 37 URL en el sitemap. Antes se comprobó que no hubiera títulos
+      ni descripciones duplicadas, que no hubiera enlaces rotos y que no
+      quedaran páginas delgadas (`/guias/` estaba vacía y pasó a borrador).
+- [x] **Marca: Coche Apto.** Logotipo en la cabecera, en dos versiones para
+      tema claro y oscuro, y `site.Title` cambiado en todo el sitio.
+- [ ] **Redirect Rule para que `www` lleve al dominio principal.** Los dos
+      hosts sirven lo mismo. Los canónicos apuntan todos al dominio sin `www`,
+      así que Google consolida y no penaliza, pero lo limpio es la
+      redirección. Pasos en [docs/conectar-dominio.md](docs/conectar-dominio.md).
+- [ ] **Early Hints** en Cloudflare, gratis. Mismo documento.
+- [ ] **Solicitar AdSense.** Ya se puede: el sitio es accesible y tiene las
+      legales. Lo tiene que hacer Carlos.
+- [ ] **Más fichas de municipio verificadas.** 13 de 45 con ZBE registrada en
+      el NAP. **Es el cuello de botella real del proyecto**: sin contenido no
+      hay tráfico, y sin tráfico no hay ingresos.
 
 ### Dominio: `cocheapto.com` (comprado el 01/10/2026)
 
