@@ -1,0 +1,44 @@
+# Cabeceras de respuesta. Cloudflare Workers lo lee de la raiz de public/,
+# y Hugo copia static/ tal cual, asi que este fichero acaba ahi.
+#
+# POR QUE EXISTE
+#
+# Por defecto, Cloudflare sirve todos los assets con
+#   Cache-Control: public, max-age=0, must-revalidate
+# o sea: el navegador vuelve a preguntar por cada fichero en cada visita.
+# Responde 304 y no manda el cuerpo, asi que no son bytes, pero si una ida y
+# vuelta por recurso antes de poder pintar nada. En movil, con 200 ms de
+# latencia, eso se nota en cada pagina que se abre.
+#
+# Lo que si se puede cachear para siempre es lo que lleva huella en el nombre:
+# Hugo nombra la hoja de estilos y los scripts con el hash de su contenido
+# (stylesheet.8212d733....css), asi que si cambian, cambia la URL. Un fichero
+# cuyo nombre cambia al cambiar su contenido nunca puede quedarse viejo.
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Las imagenes de los distintivos tambien llevan huella (0_hu_ffc6bf....png).
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Los datos NO llevan huella: /datos/zbe-simplificado.geojson se sirve siempre
+# en la misma URL, y es una trampa ya documentada en CLAUDE.md (al regenerarlo,
+# el navegador sigue dando el anterior). Por eso aqui NO va `immutable` ni un
+# ano: cinco minutos es bastante para que quien recorre varias fichas seguidas
+# no vuelva a bajarse los 55 KB, y poco para que un dato corregido tarde en
+# llegar.
+#
+# La solucion de verdad seria ponerle huella al GeoJSON, igual que al CSS. Haria
+# falta inyectar la URL desde la plantilla al JavaScript, que hoy la lleva
+# escrita. Pendiente.
+/datos/*
+  Cache-Control: public, max-age=300
+
+# El HTML no se cachea: es lo que cambia cuando se publica una ficha nueva o se
+# corrige un dato, y este sitio presume de que sus datos estan al dia.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate

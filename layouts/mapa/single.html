@@ -100,6 +100,13 @@
 
        Si se cambia de version hay que recalcularlos, o el navegador bloquea
        el recurso y el mapa no carga. */}}
+{{- /* La hoja de Leaflet viene de otro dominio y bloquea el pintado, asi que
+       antes de pedirla se abre la conexion: DNS, TCP y TLS por adelantado.
+       En movil eso son dos o tres idas y vueltas que se dejan de esperar
+       justo en el camino critico. `crossorigin` no sobra: sin el se abre
+       una conexion distinta de la que luego usan el CSS y el JS, que van
+       con integridad y por tanto en modo CORS, y no se reaprovecha nada. */ -}}
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
       integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
       crossorigin="anonymous" referrerpolicy="no-referrer">
