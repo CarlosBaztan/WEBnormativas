@@ -475,12 +475,33 @@
     transition: none;
   }
 
-  body .main { margin-left: var(--ml-ancho); }
-}
+  /* El contenido se CENTRA en el hueco que deja el menú, no se pega a él.
 
-/* Pantallas muy anchas: hay sitio de sobra, el contenido vuelve al centro. */
-@media (min-width: 100rem) {
-  body .main { margin-left: auto; }
+     Antes esto era `margin-left: var(--ml-ancho)`. Como PaperMod trae
+     `.main { margin: auto }`, fijar solo el margen izquierdo dejaba el
+     derecho en `auto`, y ese margen automático se quedaba con todo el
+     sobrante: en una pantalla de 1366 el texto empezaba pegado al menú y
+     sobraban 327 px a la derecha. En vertical panorámico se notaba en todas
+     las páginas.
+
+     El truco es reservar el ancho del menú con `padding-left` en vez de con
+     `margin-left`, y dejar los dos márgenes en `auto`. Así la caja se centra
+     en la ventana completa y el relleno empuja el texto justo lo que mide el
+     menú, que es lo mismo que centrarlo en el espacio que queda libre.
+
+     Depende de `box-sizing: border-box`, que el reset del tema ya aplica a
+     todo: sin él, `max-width` no incluiría el relleno y la caja se iría
+     16 rem de más.
+
+     El pie va en la misma regla porque si no, no coincide: lo centra el tema
+     en la ventana entera y quedaba 36 px a la derecha de su propio texto. */
+  body .main,
+  body .footer {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: calc(var(--main-width) + var(--gap) * 2 + var(--ml-ancho));
+    padding-left: calc(var(--gap) + var(--ml-ancho));
+  }
 }
 
 @media print {
