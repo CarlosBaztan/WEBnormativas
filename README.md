@@ -1,4 +1,4 @@
-# WEBnormativas
+# Coche Apto
 
 Portal de normativa y fiscalidad del vehículo en España. Sitio estático con Hugo.
 
@@ -13,7 +13,7 @@ Contexto de negocio: [PLAN-NEGOCIO.md](PLAN-NEGOCIO.md) · Reglas del proyecto: 
 
 ```powershell
 git clone --recurse-submodules <url-del-repo>
-cd WEBnormativas
+cd webCocheApto
 hugo server
 ```
 

@@ -231,7 +231,7 @@ def _codigo_http(url: str) -> int:
     import urllib.request
 
     peticion = urllib.request.Request(url, method="HEAD", headers={
-        "User-Agent": "WEBnormativas/auditoria (+https://github.com/CarlosBaztan/WEBnormativas)"})
+        "User-Agent": "CocheApto/auditoria (+https://cocheapto.com)"})
     with urllib.request.urlopen(peticion, timeout=20) as r:
         return r.status
 

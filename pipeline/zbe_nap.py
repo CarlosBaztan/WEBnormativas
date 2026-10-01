@@ -57,7 +57,7 @@ FUENTE_NOMBRE = "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (D
 LICENCIA = "CC-BY (Direccion General de Trafico)"
 
 PAUSA_SEGUNDOS = 0.5  # cortesia con el servidor
-AGENTE = "WEBnormativas/0.1 (proyecto de datos abiertos sobre normativa del vehiculo)"
+AGENTE = "CocheApto/0.1 (+https://cocheapto.com; datos abiertos sobre normativa del vehiculo)"
 
 NS = {
     "com": "http://levelC/schema/3/common",
