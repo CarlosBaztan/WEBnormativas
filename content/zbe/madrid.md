@@ -15,7 +15,7 @@ fuente_nombre: "Ordenanza 2/2026, de 24 de marzo, que modifica la Ordenanza de M
 fuente_url: "https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF"
 fuente_boletin: "BOCM núm. 80, de 6 de abril de 2026, págs. 129-219"
 fecha_vigor_ordenanza: "2026-04-07"
-fecha_verificacion: "2026-09-23"
+fecha_verificacion: "2026-10-01"
 verificado_por: "Carlos Baztán"
 
 zonas:
@@ -118,7 +118,7 @@ El control se hace con cámaras con lector de matrículas (art. 22.10 de la orde
 
 Si crees que te corresponde una excepción (residencia, movilidad reducida, vehículo histórico, actividad profesional dentro de la zona), se tramita en la sede electrónica del Ayuntamiento. Dos detalles útiles:
 
-- El alta de una tarjeta de movilidad reducida **vale para todas las zonas de bajas emisiones de Madrid**, no hay que repetirla por zona.
+- **Una sola alta para toda la ciudad si tienes la TEPMR.** Con independencia de la categoría ambiental del vehículo, se garantiza la circulación de los conducidos por titulares de la tarjeta de estacionamiento para personas con movilidad reducida, o empleados para transportarlas, por todas las ZBE, y basta **una única alta** en el sistema de gestión municipal: vale a la vez para Madrid ZBE, Distrito Centro y Plaza Elíptica. **El vehículo asociado se puede cambiar una vez al día**, que es lo que resuelve el caso de quien no siempre va en el mismo coche.
 - El Ayuntamiento se compromete a responder en **10 días naturales**. Si no responde, se entiende permitida provisionalmente la circulación.
 
 ## Un apunte sobre la situación legal
@@ -127,7 +127,7 @@ La regulación anterior de estas dos zonas, aprobada en 2021, fue **anulada por 
 
 ---
 
-**Fuente:** Ordenanza 2/2026, de 24 de marzo, por la que se modifica la Ordenanza de Movilidad Sostenible de 5 de octubre de 2018 · [BOCM núm. 80, de 6 de abril de 2026](https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF) · En vigor desde el 7 de abril de 2026 · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Ordenanza 2/2026, de 24 de marzo, por la que se modifica la Ordenanza de Movilidad Sostenible de 5 de octubre de 2018 · [BOCM núm. 80, de 6 de abril de 2026](https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF) · En vigor desde el 7 de abril de 2026 · El régimen de la TEPMR, además, en [Ordenanza de Movilidad Sostenible y PMR](https://www.madrid.es/portales/munimadrid/es/Inicio/Movilidad-y-transportes/Personas-con-movilidad-reducida/?vgnextfmt=default&vgnextchannel=220e31d3b28fe410VgnVCM1000000b205a0aRCRD) (Ayuntamiento de Madrid) · **Verificado el 1 de octubre de 2026**
 
 *Esta página resume la norma con fines informativos; no es asesoramiento jurídico. Ante cualquier duda, consulta el texto oficial.*
 

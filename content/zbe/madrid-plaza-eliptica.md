@@ -65,7 +65,7 @@ Con cámaras con lector de matrículas (art. 22.10 de la ordenanza).
 
 ## Si te corresponde una excepción
 
-Se tramita en la sede electrónica del Ayuntamiento. El alta de la tarjeta de movilidad reducida vale para todas las zonas de bajas emisiones de Madrid, y el Ayuntamiento se compromete a responder en 10 días naturales; si no responde, se entiende permitida provisionalmente la circulación.
+Se tramita en la sede electrónica del Ayuntamiento. Si tienes la tarjeta de estacionamiento para personas con movilidad reducida (TEPMR), basta **una única alta** en el sistema de gestión municipal y vale para todas las ZBE de Madrid a la vez, esta incluida; el vehículo asociado se puede cambiar una vez al día. El Ayuntamiento se compromete a responder en 10 días naturales; si no responde, se entiende permitida provisionalmente la circulación.
 
 ## Las otras zonas de Madrid
 

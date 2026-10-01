@@ -35,18 +35,28 @@ disableKinds = ["taxonomy", "term"]
   minifyOutput = true
 
 [params]
-  # Mientras esté en true: meta noindex + robots.txt que lo bloquea todo.
+  # ABIERTO A LOS BUSCADORES desde el 01/10/2026.
   #
-  # El dominio propio ya está (cocheapto.com, comprado el 01/10/2026) y
-  # baseURL actualizado, así que la primera de las dos condiciones está
-  # cumplida. SIGUE EN TRUE por la segunda: hay 13 fichas verificadas de 45
-  # municipios con ZBE registrada, y abrirlo ahora haría que Google conociera
-  # el sitio a medias. La primera impresión de un dominio nuevo conviene
-  # cuidarla, y solo se tiene una.
+  # Decisión de Carlos, que pidió tener la web activa ese mismo día. Yo había
+  # recomendado esperar a más fichas verificadas; con lo que hay medido, su
+  # criterio se sostiene y el mío era conservador de más.
   #
-  # Poner en false cuando haya fichas verificadas suficientes y las páginas
-  # legales estén publicadas. Es un cambio de una línea y un despliegue.
-  noindex = true
+  # Lo que se comprobó antes de abrir, y conviene repetirlo si algún día se
+  # vuelve a cerrar y abrir:
+  #
+  #   - 37 páginas en el sitemap, 29.292 palabras, mediana de 589 por página.
+  #     No es un sitio delgado.
+  #   - Ni un título duplicado, ni una descripción duplicada, ni una página
+  #     sin <title>.
+  #   - 1.208 enlaces internos y ninguno roto.
+  #   - Páginas legales publicadas, con los datos reales del titular.
+  #   - La sección /guias/ estaba vacía (trece palabras) y se pasó a borrador,
+  #     y se quitó su entrada del menú.
+  #   - El buscador interno salió del sitemap: emitía noindex y a la vez se
+  #     pedía su rastreo.
+  #
+  # Si hay que volver a cerrarlo, esto a true y desplegar.
+  noindex = false
 
   # El feed de portada solo muestra estas secciones. Sin esto, las páginas
   # legales (aviso legal, cookies, contacto) aparecen como si fueran artículos.
@@ -100,15 +110,12 @@ disableKinds = ["taxonomy", "term"]
     name = "Datos abiertos"
     url = "/datos/"
     weight = 30
-  [[menu.main]]
-    identifier = "guias"
-    name = "Guías"
-    url = "/guias/"
-    weight = 40
+  # La entrada de "Guías" estuvo aquí y se ha quitado el 01/10/2026, al abrir
+  # el sitio a Google. La sección existe pero está vacía: un enlace del menú
+  # principal que lleva a una página con trece palabras es malo para quien
+  # navega y es justo el tipo de página delgada que conviene no publicar.
+  # Se devuelve cuando haya guías que enseñar.
 
-  # Metodología y Sobre ya no están aquí: viven en el menú lateral, en el
-  # grupo "El proyecto". La cabecera se reserva para las secciones de
-  # contenido y para el buscador.
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
