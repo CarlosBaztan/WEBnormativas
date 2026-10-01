@@ -8,6 +8,41 @@
    ------------------------------------------------------------------ */
 
 
+/* ------------------------------------------------------------------
+   UN SOLO FONDO EN TODO EL SITIO
+
+   PaperMod pinta de gris las paginas de tipo «list»:
+
+       .list { background: var(--code-bg); }   // rgb(245,245,245)
+
+   El resto de paginas quedan blancas. O sea que la portada, /zbe/,
+   /etiquetas/, /multas/, /legal/, /datos/ y el buscador salian grises y las
+   fichas blancas, y al navegar de una a otra el fondo cambiaba de tono. En
+   tema oscuro no pasaba: ahi el propio tema ya iguala los dos con
+   `[data-theme="dark"] .list { background: var(--theme) }`.
+
+   Esto hace lo mismo para el tema claro. `body.list` y no `.list` a
+   proposito: la regla del tema tiene la misma especificidad y entonces
+   decidiria el orden de concatenacion, que es justo la clase de detalle que
+   se rompe sin avisar (ya esta anotado en CLAUDE.md).
+
+   CONSECUENCIA QUE HAY QUE VIGILAR: las tarjetas `.post-entry` de /etiquetas/,
+   /legal/, /multas/ y /datos/ son blancas sobre el gris. Al igualar el fondo
+   dejan de recortarse por color y se quedan solo con su borde de 1 px, asi
+   que ese borde pasa a ser lo unico que las delimita. Ver mas abajo.
+   ------------------------------------------------------------------ */
+body.list {
+    background: var(--theme);
+}
+
+/* El borde era `var(--border)`, rgb(238,238,238), pensado para una tarjeta
+   blanca sobre fondo gris: con el fondo tambien blanco apenas se ve. Se sube
+   a `--tertiary`, que es el color que el propio tema usa para el borde de
+   estas tarjetas al pasar el raton, asi que no inventa nada nuevo. */
+body.list .post-entry {
+    border-color: var(--tertiary);
+}
+
 /* Texto solo para lectores de pantalla */
 .visually-hidden {
     position: absolute;
