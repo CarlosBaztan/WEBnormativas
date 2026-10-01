@@ -86,6 +86,8 @@
    le faltaba, y en movil la señal del logotipo se montaba encima de la lupa. */
 .logo a.marca { min-width: 0; }
 
+/* El logotipo sustituye al titulo escrito desde el 01/10/2026.
+   .marca__texto y .logo-senal se quedan por si vuelve el titulo en texto. */
 .marca__texto {
   min-width: 0;
   flex: 0 1 auto;
@@ -97,6 +99,42 @@
 .logo-senal {
   flex: 0 0 auto;
   display: block;
+}
+
+/* --- Logotipo ------------------------------------------------------------
+
+   Dos ficheros, uno con el texto en negro y otro en blanco, porque la
+   cabecera es clara u oscura segun el tema del visitante y el logotipo
+   original viene con el texto negro. El CSS ensena uno y esconde el otro.
+
+   `height` en el CSS y ademas width/height en el HTML: lo segundo reserva el
+   hueco antes de que la imagen cargue y evita el salto de maquetacion, que es
+   la causa mas comun de CLS y la que ya mordio con las pegatinas de la DGT.
+   -------------------------------------------------------------------------- */
+.marca__logo {
+  flex: 0 0 auto;
+  display: block;
+  height: 30px;
+  width: auto;
+}
+
+.marca__logo--oscuro { display: none; }
+
+:root[data-theme="dark"] .marca__logo--claro { display: none; }
+:root[data-theme="dark"] .marca__logo--oscuro { display: block; }
+
+/* El caso que se escapa si solo se mira data-theme: el tema por defecto es
+   "auto", y hasta que el JavaScript de PaperMod decide y escribe "dark" en el
+   atributo, el valor es "auto" y no coincide con la regla de arriba. En esa
+   fraccion de segundo, y en un navegador sin JavaScript, saldria el logotipo
+   negro sobre la cabecera oscura, o sea nada.
+
+   `:not([data-theme="light"])` es necesario: sin el, a quien tenga el sistema
+   en oscuro pero haya elegido tema claro a mano le saldria el logotipo blanco
+   sobre fondo blanco, que es el mismo fallo al reves. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .marca__logo--claro { display: none; }
+  :root:not([data-theme="light"]) .marca__logo--oscuro { display: block; }
 }
 
 .nav-derecha {
@@ -192,6 +230,8 @@
   /* Pantallas muy estrechas: el título cede antes que los botones. */
   .logo a.marca { font-size: var(--txt-sm); }
   .logo-senal { width: 30px; height: 30px; }
+  /* El logotipo encoge un punto para dejar sitio a la lupa y al menu. */
+  .marca__logo { height: 26px; }
 }
 
 /* --- Menú lateral -------------------------------------------------------- */

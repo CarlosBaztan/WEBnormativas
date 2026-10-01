@@ -1,0 +1,49 @@
+{{- /*
+  logo-marca.html — el logotipo de Coche Apto en la cabecera.
+
+  POR QUÉ DOS IMÁGENES Y NO UNA
+
+  El logotipo que nos pasa Carlos lleva el texto en negro. La cabecera de este
+  sitio es clara o es casi negra según el tema que tenga puesto el visitante,
+  así que una sola versión sería invisible en uno de los dos. Se sirven dos,
+  idénticas salvo por el color de la tinta del texto, y las alterna el CSS
+  (ver .marca__logo en normativa.css).
+
+  El rojo del icono es el mismo en las dos: funciona sobre blanco y sobre
+  negro, y es el único color de la marca.
+
+  ACCESIBILIDAD
+
+  Solo una de las dos se muestra; la otra lleva `display: none` y por tanto
+  sale del árbol de accesibilidad, así que el nombre «Coche Apto» se anuncia
+  una sola vez aunque el `alt` esté en las dos.
+
+  El `alt` dice el nombre de la marca y no «logotipo de Coche Apto»: quien
+  escucha la página con un lector de pantalla ya sabe que es una imagen,
+  porque el lector se lo dice.
+
+  POR QUÉ NO ES UN SVG
+
+  Porque el original es un PNG. Un SVG escalaría sin pesar nada y no
+  necesitaría dos ficheros (bastaría `currentColor`), así que si algún día
+  hay una versión vectorial del logotipo, merece la pena cambiarlo.
+*/ -}}
+{{- $alto := 30 -}}
+{{- with resources.Get "img/marca/logo-claro.png" }}
+  {{- $x1 := .Resize (printf "x%d png Lanczos" $alto) }}
+  {{- $x2 := .Resize (printf "x%d png Lanczos" (mul $alto 2)) }}
+  <img class="marca__logo marca__logo--claro"
+       src="{{ $x1.RelPermalink }}"
+       srcset="{{ $x1.RelPermalink }} 1x, {{ $x2.RelPermalink }} 2x"
+       width="{{ $x1.Width }}" height="{{ $x1.Height }}"
+       alt="Coche Apto" fetchpriority="high" decoding="async">
+{{- end }}
+{{- with resources.Get "img/marca/logo-oscuro.png" }}
+  {{- $x1 := .Resize (printf "x%d png Lanczos" $alto) }}
+  {{- $x2 := .Resize (printf "x%d png Lanczos" (mul $alto 2)) }}
+  <img class="marca__logo marca__logo--oscuro"
+       src="{{ $x1.RelPermalink }}"
+       srcset="{{ $x1.RelPermalink }} 1x, {{ $x2.RelPermalink }} 2x"
+       width="{{ $x1.Width }}" height="{{ $x1.Height }}"
+       alt="Coche Apto" fetchpriority="high" decoding="async">
+{{- end }}

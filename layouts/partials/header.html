@@ -21,10 +21,12 @@
   <nav class="header-nav nav-propia" aria-label="Principal">
 
     <div class="logo">
+      {{- /* El logotipo sustituye al titulo escrito desde el 01/10/2026. El
+             `title` del enlace conserva el nombre completo del sitio, que es
+             lo que ve quien pasa el raton por encima. */ -}}
       <a class="marca" href="{{ "" | absLangURL }}" accesskey="h"
-         title="{{ site.Title }} (Alt + H)">
-        <span class="marca__texto">{{ site.Title }}</span>
-        {{ partial "logo-senal.html" . }}
+         title="Coche Apto: {{ site.Title }} (Alt + H)">
+        {{ partial "logo-marca.html" . }}
       </a>
     </div>
 
