@@ -45,57 +45,6 @@ disableKinds = ["taxonomy", "term"]
 
 [params]
 
-  # ------------------------------------------------------------------
-  # BUSCADOR INTERNO (Fuse.js)
-  #
-  # Sin esta seccion corria con los valores de serie de PaperMod, y buscar
-  # "granada" devolvia la ficha de Malaga (correcto, la menciona) pero tambien
-  # "Etiqueta C", "Etiqueta 0 emisiones", Barcelona y Madrid Distrito Centro,
-  # que NO contienen esa palabra por ningun lado.
-  #
-  # La causa es `threshold = 0.4`: Fuse admite coincidencias con hasta un 40 %
-  # de diferencia. En un buscador de prosa general eso perdona erratas; en un
-  # sitio donde se buscan nombres de municipio y de distintivo, convierte
-  # cualquier consulta en una lista de casi todo.
-  #
-  # threshold 0.2        tolera una errata corta, no media palabra.
-  # minMatchCharLength 3 una o dos letras ya no disparan resultados.
-  # ignoreLocation       que la palabra este al final de una ficha larga no
-  #                      la penaliza: aqui importa si aparece, no donde.
-  # keys con peso        el titulo manda. Que una ficha se LLAME "Granada"
-  #                      pesa mucho mas que mencionarlo de pasada, y eso es
-  #                      justo lo que no ordenaba bien.
-  #
-  # Los pesos se eligieron midiendo, no a ojo. Con 0,6 / 0,25 / 0,15 la
-  # busqueda "multa" ponia la ficha de Valencia por delante de la pagina que
-  # SE LLAMA "Multa por entrar en una ZBE". Con 0,8 / 0,15 / 0,05 eso se
-  # arregla y el resto de consultas no empeora. El contenido sigue contando:
-  # una pagina que menciona Granada de pasada aparece, pero debajo.
-  #
-  # Y threshold 0,2 sigue perdonando erratas: "granda" encuentra Granada y
-  # "malaga" sin tilde encuentra Malaga. Comprobado contra el indice real.
-  # ------------------------------------------------------------------
-  [params.fuseOpts]
-    isCaseSensitive = false
-    shouldSort = true
-    ignoreLocation = true
-    threshold = 0.2
-    minMatchCharLength = 3
-    distance = 200
-    limit = 12
-
-    [[params.fuseOpts.keys]]
-      name = "title"
-      weight = 0.8
-
-    [[params.fuseOpts.keys]]
-      name = "summary"
-      weight = 0.15
-
-    [[params.fuseOpts.keys]]
-      name = "content"
-      weight = 0.05
-
   # ABIERTO A LOS BUSCADORES desde el 01/10/2026.
   #
   # Decisión de Carlos, que pidió tener la web activa ese mismo día. Yo había
@@ -150,6 +99,75 @@ disableKinds = ["taxonomy", "term"]
   # Hueco de anuncio: SOLO debajo del resultado de la herramienta.
   # Regla dura 4: cero anuncios encima del formulario.
   adsEnabled = false
+
+  # ------------------------------------------------------------------
+  # OJO, LEER ANTES DE TOCAR NADA DE AQUI ABAJO
+  #
+  # A partir de esta linea empiezan las cabeceras [params.loquesea]. En
+  # TOML, una cabecera abre un ambito que dura hasta la siguiente, asi que
+  # cualquier `clave = valor` suelto que se escriba de aqui en adelante NO
+  # sera un ajuste de [params]: quedara dentro de la ultima tabla abierta.
+  #
+  # Paso el 01/10/2026. Este bloque del buscador se inserto arriba, justo
+  # detras de [params], y se trago los diecisiete ajustes que lo seguian.
+  # La web se desplego sin migas de navegacion ni enlaces de anterior y
+  # siguiente en sus 37 paginas, con el autor vacio y con el titulo del
+  # logotipo partido en "Coche Apto:  (Alt + H)". El build salio en verde.
+  #
+  # Regla: los ajustes sueltos van ARRIBA; las tablas, aqui abajo.
+  # Lo vigila pipeline/test_configuracion.py.
+  # ------------------------------------------------------------------
+
+  # ------------------------------------------------------------------
+  # BUSCADOR INTERNO (Fuse.js)
+  #
+  # Sin esta seccion corria con los valores de serie de PaperMod, y buscar
+  # "granada" devolvia la ficha de Malaga (correcto, la menciona) pero tambien
+  # "Etiqueta C", "Etiqueta 0 emisiones", Barcelona y Madrid Distrito Centro,
+  # que NO contienen esa palabra por ningun lado.
+  #
+  # La causa es `threshold = 0.4`: Fuse admite coincidencias con hasta un 40 %
+  # de diferencia. En un buscador de prosa general eso perdona erratas; en un
+  # sitio donde se buscan nombres de municipio y de distintivo, convierte
+  # cualquier consulta en una lista de casi todo.
+  #
+  # threshold 0.2        tolera una errata corta, no media palabra.
+  # minMatchCharLength 3 una o dos letras ya no disparan resultados.
+  # ignoreLocation       que la palabra este al final de una ficha larga no
+  #                      la penaliza: aqui importa si aparece, no donde.
+  # keys con peso        el titulo manda. Que una ficha se LLAME "Granada"
+  #                      pesa mucho mas que mencionarlo de pasada, y eso es
+  #                      justo lo que no ordenaba bien.
+  #
+  # Los pesos se eligieron midiendo, no a ojo. Con 0,6 / 0,25 / 0,15 la
+  # busqueda "multa" ponia la ficha de Valencia por delante de la pagina que
+  # SE LLAMA "Multa por entrar en una ZBE". Con 0,8 / 0,15 / 0,05 eso se
+  # arregla y el resto de consultas no empeora. El contenido sigue contando:
+  # una pagina que menciona Granada de pasada aparece, pero debajo.
+  #
+  # Y threshold 0,2 sigue perdonando erratas: "granda" encuentra Granada y
+  # "malaga" sin tilde encuentra Malaga. Comprobado contra el indice real.
+  # ------------------------------------------------------------------
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    ignoreLocation = true
+    threshold = 0.2
+    minMatchCharLength = 3
+    distance = 200
+    limit = 12
+
+    [[params.fuseOpts.keys]]
+      name = "title"
+      weight = 0.8
+
+    [[params.fuseOpts.keys]]
+      name = "summary"
+      weight = 0.15
+
+    [[params.fuseOpts.keys]]
+      name = "content"
+      weight = 0.05
 
   [params.homeInfoParams]
     Title = "¿Puedes circular por la ZBE de tu ciudad?"
