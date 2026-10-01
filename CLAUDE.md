@@ -245,20 +245,55 @@ Al 28/09/2026.
       `/zbe/barcelona/`.
 - [x] Hoja de ruta de tres días:
       `docs/superpowers/plans/2026-09-25-hoja-de-ruta-3-dias.md`
-- [ ] **Dominio: `papelesdelcoche.com`, en Cloudflare.** Ver abajo.
+- [x] T11: página de cámaras (`/zbe/camaras/`), con el circuito completo
+      leído en la Ley de Tráfico: art. 89.2.c) (por qué la multa tarda),
+      arts. 90-92 (DEV, domicilio, BOE, TESTRA) y art. 84.4 (sanciona el
+      Alcalde, no la DGT). Importe y reducción cerrados: 200 € (art. 80.1),
+      50 % si se paga en 20 días naturales (art. 94), sin pérdida de puntos
+      (no está en el anexo II).
+- [x] T12: sistema visual. Tokens en `assets/css/extended/sistema.css` y
+      documentado en [docs/sistema-visual.md](docs/sistema-visual.md).
+- [x] T13: accesibilidad. Ocho plantillas sin incidencias de axe-core, enlace
+      para saltar al contenido y foco que entra de verdad en el panel móvil.
+- [x] T14: rendimiento. `static/_headers` con caché de un año para lo que
+      lleva huella, y `preconnect` a cdnjs en las páginas con mapa.
+- [ ] **Dominio: sin decidir.** Carlos lo cierra el 02/10. Ver abajo.
 - [ ] Fase 5: pre-AdSense (legales y CMP). Bloqueada hasta tener los datos de
       identidad de Carlos, que exige el art. 10 LSSI.
 
-### Dominio (30/09/2026)
+### Dominio (01/10/2026, sin cerrar)
 
-**Elegido: `papelesdelcoche.com`, en Cloudflare Registrar por 9,50 €.
-TODAVIA NO COMPRADO**: Carlos lo compra el 30/09 por la tarde. Cambia la decisión del 28/09, que era `cocheenregla.com` en OVH.
+**Carlos lo decide el 02/10.** Reabrió la elección el 01/10 pidiendo más
+nombres, así que el `papelesdelcoche.com` del 30/09 ya no es firme. **No
+comprado, y nada en el repositorio apunta todavía a ningún dominio.**
 
-Lo comprobado el 30/09: los dos dominios seguían libres (RDAP de Verisign,
-404 en ambos), así que la elección fue de gusto, no de disponibilidad. Yo
-había puesto una pega a `papelesdelcoche` («la sombra de sin papeles») y
-Carlos eligió ese igualmente. Decisión suya, decisión tomada: no volver a
-sacar el tema.
+Los tres que quedan sobre la mesa, los tres `.com` y los tres libres
+(comprobado por RDAP de Verisign el 01/10):
+
+| Dominio | A favor | En contra |
+|---|---|---|
+| `laventanilla.com` | Doble sentido exacto (la del coche y el mostrador de trámites), 12 caracteres, alcance completo | Roza el tono administrativo |
+| `bajoelcapo.com` | El más corto, 10 caracteres | Hay un pódcast de motor que ya se llama así; «bajo el capó» suena a mecánica, no a papeles |
+| `papelesdelcoche.com` | Literal, cero ambigüedad | El más largo; describe documentos, y el racimo que trae el tráfico (ZBE, 221.010 búsquedas) no va de documentos |
+
+**Marcas comprobadas en TMview** (base de la EUIPO, que cubre España y la UE;
+el buscador propio de la OEPM rechaza el acceso automático con un 403):
+ninguna marca registrada para `papeles del coche`, `bajo el capo` ni
+`coche apto`. De `ventanilla` hay doce, pero ninguna que choque: ocho son
+«Ventanilla Única» de la administración pública y dos no pintan nada (una
+bodega y una yeguada).
+
+**Lección del proceso, y vale para cualquier nombre futuro: que el dominio
+esté libre no significa que el nombre lo esté.** `tuguantera.com` estaba
+libre y era el favorito de Carlos hasta que miramos qué había al lado:
+`laguantera.com` es una gestoría online de trámites de vehículos en marcha
+(ITV, informes de la DGT, transferencias, distintivo ambiental, multas), con
+75.000 clientes declarados y una solicitud de marca en la OEPM, la M4297581.
+Mismo sector, cuatro de las seis verticales del proyecto. **Antes de comprar,
+mirar TMview y buscar el nombre en la web, no solo el RDAP.**
+
+Descartado `cocheenregla.com` (la opción del 28/09, sigue libre) y
+`tucocheok.com`, que está ocupado.
 
 **Comprarlo en Cloudflare y no en OVH cambia el procedimiento entero**, y a
 mejor. Verificado en la documentación de Cloudflare:
@@ -363,6 +398,38 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   en local no refleja un cambio del pipeline, recargar sin cache antes de
   buscar el fallo en el codigo.
 
+- **`{{VERIFICAR}}` no es una plantilla de Hugo.** Parece una, pero Goldmark
+  imprime las llaves tal cual y la nota interna acaba publicada. Estuvo cuatro
+  veces a la vista en `/multas/zbe/`. Lo vigila ahora `auditoria.py`, que
+  además del front matter mira el cuerpo de cada página publicada.
+- **Hugo elige plantilla por sección, no por lo que la página sea.** En
+  `content/zbe/` conviven fichas de municipio con artículos y con una página
+  de herramienta, y las tres caían en `layouts/zbe/single.html`: los artículos
+  salían coronados con «Las reglas de acceso de esta ZBE no están verificadas»
+  y una tabla llena de «No consta». Resuelto con `$esFicha`, que mira `tipo`
+  con `"municipio"` por defecto.
+- **La hoja de Leaflet se carga DESPUÉS que la nuestra.** Trae
+  `.leaflet-container a { color: #0078A8 }`, que empata en especificidad con
+  `.leaflet-control-attribution a`, y a igualdad gana la última. Hace falta
+  doblar la clase: `.leaflet-container .leaflet-control-attribution a`.
+- **El enlace para saltar al contenido no mueve el foco por sí solo.** El
+  patrón habitual (href a un id con `tabindex="-1"`) cambia la URL y desplaza
+  la página, pero el siguiente tabulador vuelve al principio. Comprobado
+  pulsando Intro de verdad. Necesita cinco líneas de JavaScript, y están en
+  `layouts/_default/baseof.html`.
+- **Un elemento en `visibility: hidden` no admite foco, y la transición de
+  `visibility` retrasa cuándo deja de estarlo.** El panel del menú en móvil
+  abría sin llevarse el foco dentro, y ni un `requestAnimationFrame` llegaba a
+  tiempo. Se arregla por los dos lados: la transición es instantánea al abrir
+  y solo espera al cerrar, y el JavaScript reintenta en `transitionend`.
+- **Los fallos de teclado no salen con `click()` de prueba.** Los tres de
+  arriba pasaban las comprobaciones automáticas y solo aparecieron pulsando
+  teclas reales. axe-core tampoco detecta el primero: su regla `bypass` se da
+  por satisfecha con que haya landmarks y encabezados.
+- **No escribir `
+` dentro de un heredoc de Python.** Se convierte en un
+  salto de línea real y rompe el fichero generado. Usar la herramienta de
+  escritura, o construirlo con `chr(10)` y `chr(92)`.
 - **`disableKinds` debe ir en la raíz de `hugo.toml`**, antes de cualquier cabecera
   `[tabla]`. Si va después, TOML la anida dentro de esa tabla y deja de aplicarse
   en silencio.
