@@ -374,6 +374,16 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
 - **PaperMod gana por especificidad en cosas que parecen nuestras.** `.main`
   y `.logo a` del tema pisan a `.main` y `.marca`. Usar `body .main` y
   `.logo a.marca`.
+- **Fijar un solo margen sobre algo que tiene `margin: auto` lo descentra.**
+  El tema trae `.main { margin: auto }`. Al poner `margin-left: var(--ml-ancho)`
+  para dejar sitio al menú lateral, el margen derecho se quedaba en `auto` y se
+  comía todo el sobrante: en 1366 px el texto arrancaba pegado al menú y
+  quedaban 327 px muertos a la derecha, en todas las páginas. **Para reservar
+  el ancho de un elemento fijo se usa `padding`, no `margin`**, y los dos
+  márgenes se dejan en `auto`; así el contenido queda centrado en el espacio
+  libre. Depende de `box-sizing: border-box`, que el reset del tema ya aplica.
+  Y al mover una columna hay que mirar quién más debería seguirla: el pie se
+  centraba por su cuenta y no coincidía con el cuerpo.
 - **No editar contenido con `Get-Content`/`Set-Content` de PowerShell 5.1.**
   Lee como ANSI y reescribe como UTF-8: corrompe todos los acentos. Usar las
   herramientas de edición o Python.
