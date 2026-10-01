@@ -114,7 +114,11 @@
 <link rel="icon" type="image/png" sizes="16x16" href="{{ site.Params.assets.favicon16x16 | default "favicon-16x16.png" | absURL }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ site.Params.assets.favicon32x32 | default "favicon-32x32.png" | absURL }}">
 <link rel="apple-touch-icon" href="{{ site.Params.assets.apple_touch_icon | default "apple-touch-icon.png" | absURL }}">
-<link rel="mask-icon" href="{{ site.Params.assets.safari_pinned_tab | default "safari-pinned-tab.svg" | absURL }}">
+{{- /* El `mask-icon` de Safari pide un SVG monocromo, y el logotipo es un PNG
+       de tres colores: no se puede derivar uno decente sin redibujarlo. Se
+       quita el enlace en vez de dejarlo apuntando a un fichero que no existe,
+       que es lo que hacia hasta hoy: los cinco iconos estaban declarados y
+       ninguno existia, y por eso la pestana mostraba el globo generico. */ -}}
 <meta name="theme-color" content="{{ site.Params.assets.theme_color | default "#2e2e33" }}">
 <meta name="msapplication-TileColor" content="{{ site.Params.assets.msapplication_TileColor | default "#2e2e33" }}">
 
