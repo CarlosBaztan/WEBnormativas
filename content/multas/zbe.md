@@ -66,7 +66,7 @@ Alegar que no viste la señal rara vez prospera: la señalización es requisito 
 <details>
 <summary>Antes de alegar, comprueba dos cosas</summary>
 
-**Tu distintivo real.** Consúltalo por matrícula en la [sede electrónica de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/). Si tu coche está mal clasificado, eso se corrige en Tráfico y es un argumento sólido.
+**Tu distintivo.** Lo asigna la DGT y se consulta por matrícula en su sede electrónica. Si tu coche está mal clasificado, eso se corrige en Tráfico y es un argumento sólido.
 
 **La ordenanza aplicable en esa fecha.** Las ordenanzas cambian. La que cuenta es la que estaba en vigor el día de la infracción, no la de hoy.
 

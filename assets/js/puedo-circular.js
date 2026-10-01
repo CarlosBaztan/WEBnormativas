@@ -208,13 +208,22 @@
     });
   }
 
-  var enlaceDGT = (ETIQUETAS._meta && ETIQUETAS._meta.consulta_oficial) || '';
-
+  /*
+   * Aviso de que el distintivo es deducido, no consultado.
+   *
+   * Sin enlace de salida, a proposito. Antes mandaba a la sede electronica de
+   * la DGT, y la regla del sitio es que solo se enlaza fuera a la fuente
+   * normativa: una ordenanza, el BOE, el boletin donde esta el texto. Una sede
+   * de tramites no es una fuente, es un servicio, y sacar al visitante a
+   * hacer una consulta fuera es perderlo y dar a entender que la respuesta de
+   * aqui no vale.
+   *
+   * El aviso se queda, porque decir de donde sale el dato es obligatorio en
+   * este sitio. Lo que se quita es el enlace.
+   */
   function bloqueConsultaOficial() {
-    if (!enlaceDGT) return '';
-    return '<p class="pc-oficial">El distintivo real lo asigna la DGT en el Registro de Vehículos. ' +
-      'Lo que ves aquí es una deducción a partir de los datos que has introducido: ' +
-      '<a href="' + esc(enlaceDGT) + '" rel="noopener" target="_blank">compruébalo en la sede electrónica de la DGT</a>.</p>';
+    return '<p class="pc-oficial">El distintivo lo asigna la DGT en el Registro de Vehículos. ' +
+      'Lo que ves aquí es una deducción a partir de los criterios de la DGT.</p>';
   }
 
   function nombreDistintivo(clave) {

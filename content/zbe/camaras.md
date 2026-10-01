@@ -22,7 +22,7 @@ Es la duda más repetida y conviene despejarla con una fuente delante. La [orden
 De ahí se siguen dos cosas:
 
 - **Una cámara no puede ver tu pegatina.** Lee caracteres de una matrícula, la busca en un registro y obtiene de ahí el distintivo. La pegatina no entra en la operación.
-- **Si tu coche está mal clasificado en la DGT, la cámara se equivocará contigo.** No porque falle, sino porque el dato del que tira está mal. Comprueba tu distintivo real [en la sede electrónica de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/) antes de dar nada por hecho.
+- **Si tu coche está mal clasificado en la DGT, la cámara se equivocará contigo.** No porque falle, sino porque el dato del que tira está mal. El distintivo que te consta se consulta por matrícula en la sede electrónica de la DGT, y conviene mirarlo antes de dar nada por hecho.
 
 Esto lo hemos leído en la ordenanza de Bilbao. **No afirmamos que las 45 ciudades con ZBE registrada funcionen igual**, porque no hemos leído las 45 ordenanzas. Donde sí lo hemos verificado, el mecanismo de fondo es el mismo: cotejo de la matrícula contra el Registro de Vehículos.
 

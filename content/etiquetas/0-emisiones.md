@@ -57,7 +57,7 @@ El alcance concreto lo fija cada ayuntamiento en su ordenanza fiscal, así que v
 
 ## Cómo confirmar el tuyo
 
-Deducirlo por el tipo de vehículo funciona casi siempre, pero el distintivo real lo asigna la DGT en su Registro. Compruébalo con tu matrícula en la [consulta oficial](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/).
+Deducirlo por el tipo de vehículo funciona casi siempre, pero quien lo asigna es la DGT en su Registro de Vehículos. Si quieres el dato exacto, se consulta por matrícula en la sede electrónica de la DGT.
 
 ---
 

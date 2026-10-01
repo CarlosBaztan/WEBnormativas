@@ -253,8 +253,20 @@ a.pc-vz__zona:focus-visible {
   border-radius: var(--caja-radio);
 }
 
+/* El subrayado del tema gana por especificidad: `.md-content a:not(.anchor)`
+   suma dos clases y un elemento, y `.pc-cta` solo una clase. Aqui se iguala la
+   especificidad, y como esta hoja se concatena DESPUES que la del tema, a
+   igualdad gana esta. Un boton con relleno solido no necesita subrayado: ya se
+   ve que se puede pulsar. */
+.md-content a.pc-cta,
+.post-content a.pc-cta {
+  text-decoration: none;
+}
+
 .pc-cta:hover,
-.pc-cta:focus-visible {
+.pc-cta:focus-visible,
+.md-content a.pc-cta:hover,
+.md-content a.pc-cta:focus-visible {
   opacity: 0.88;
   text-decoration: none;
 }

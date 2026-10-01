@@ -63,7 +63,7 @@ Un coche de 1985 sin ese reconocimiento es, a efectos de zonas de bajas emisione
 
 ## Cómo confirmar tu situación
 
-Compruébalo con tu matrícula en la [consulta oficial de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/). Si tu vehículo está cerca del umbral, merece la pena mirarlo: la diferencia entre la B y ninguna etiqueta es grande.
+El dato exacto se consulta por matrícula en la sede electrónica de la DGT. Si tu vehículo está cerca del umbral, merece la pena mirarlo: la diferencia entre la B y ninguna etiqueta es grande.
 
 ---
 

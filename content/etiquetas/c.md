@@ -71,7 +71,7 @@ Es el distintivo donde más importa mirar tu ciudad en concreto:
 
 ## Cómo confirmar el tuyo
 
-Por los umbrales de fecha y el asunto del mes en 2015, aquí deducir es arriesgado. Compruébalo con tu matrícula en la [consulta oficial de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/).
+Por los umbrales de fecha y el asunto del mes en 2015, aquí deducir es arriesgado: el dato exacto se consulta por matrícula en la sede electrónica de la DGT.
 
 ---
 

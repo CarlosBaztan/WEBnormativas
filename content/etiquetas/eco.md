@@ -54,7 +54,7 @@ Comprueba tu ciudad antes de circular:
 
 ## Cómo confirmar el tuyo
 
-Dado que la ECO depende de la tecnología **y** de la antigüedad, es de los distintivos donde más se falla al deducirlo. Compruébalo con tu matrícula en la [consulta oficial de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/).
+Dado que la ECO depende de la tecnología **y** de la antigüedad, es de los distintivos donde más se falla al deducirlo. El dato exacto se consulta por matrícula en la sede electrónica de la DGT.
 
 ---
 

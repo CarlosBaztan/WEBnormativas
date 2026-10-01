@@ -13,7 +13,7 @@
     ],
     "fecha_verificacion": "2026-09-22",
     "confianza": "oficial",
-    "ADVERTENCIA": "El distintivo real lo asigna la DGT en el Registro de Vehículos. Derivarlo del tipo, combustible y año es una APROXIMACIÓN: hay excepciones (importaciones, reclasificaciones, homologaciones especiales). Toda salida debe remitir a la consulta oficial.",
+    "ADVERTENCIA": "El distintivo lo asigna la DGT en el Registro de Vehículos. Derivarlo del tipo, combustible y año es una APROXIMACIÓN: hay excepciones (importaciones, reclasificaciones, homologaciones especiales). Toda salida tiene que decir que es una deducción y de qué criterios sale.",
     "consulta_oficial": "https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/"
   },
 

@@ -244,12 +244,20 @@
 
     {{/* Región anunciada por lectores de pantalla al aparecer el resultado. */}}
     <div id="resultado" class="pc-resultado" role="region" aria-live="polite" aria-label="Resultado de la consulta">
+      {{/* El respaldo sin JavaScript lleva a paginas propias, no fuera.
+
+           Antes mandaba a la sede electronica de la DGT. Ademas de romper la
+           regla de enlazar solo a fuentes normativas, era peor respaldo: la
+           sede te dice que distintivo tienes, pero no si puedes entrar en una
+           ciudad, que es a lo que viene quien abre esta pagina. Las dos
+           paginas de abajo si responden eso. */}}
       <noscript>
         <div class="pc-aviso">
           <p class="pc-aviso__titulo">Esta herramienta necesita JavaScript</p>
-          <p>Puedes consultar tu distintivo directamente en
-            <a href="https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/" rel="noopener">la sede electrónica de la DGT</a>,
-            y las fichas por municipio en <a href="{{ "zbe/" | relURL }}">Zonas de Bajas Emisiones</a>.</p>
+          <p>Sin él puedes seguir el mismo camino a mano:
+            averigua tu distintivo en <a href="{{ "etiquetas/" | relURL }}">las etiquetas de la DGT</a>,
+            que explican los cinco casos posibles, y después mira tu ciudad en
+            <a href="{{ "zbe/" | relURL }}">Zonas de Bajas Emisiones</a>.</p>
         </div>
       </noscript>
     </div>
@@ -262,7 +270,7 @@
     <section class="pc-explicacion">
       <h2>Cómo funciona</h2>
       <p>Esta herramienta deduce el distintivo ambiental a partir del tipo de vehículo, su combustible y su fecha de matriculación, siguiendo los criterios publicados por la DGT. Después contrasta ese distintivo con la ordenanza del municipio que elijas.</p>
-      <p><strong>Es una deducción, no un dato oficial.</strong> El distintivo real lo asigna la DGT en el Registro de Vehículos, y hay excepciones: importaciones, reclasificaciones y homologaciones especiales. Compruébalo siempre en la sede electrónica.</p>
+      <p><strong>Es una deducción, no un dato oficial.</strong> El distintivo lo asigna la DGT en el Registro de Vehículos, y hay excepciones: importaciones, reclasificaciones y homologaciones especiales. El dato que consta para tu matrícula lo da la propia DGT en su sede electrónica.</p>
       <p>De los municipios solo publicamos lo que hemos leído en su ordenanza, citando el artículo y la fecha en que lo verificamos. Si no aparece, es que aún no lo hemos comprobado.</p>
     </section>
 

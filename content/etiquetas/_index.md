@@ -31,7 +31,7 @@ El distintivo ambiental clasifica los vehículos según sus emisiones. Hay **cua
 
 Los años son de **turismos y furgonetas ligeras**. Los vehículos de ocho o más plazas y los pesados tienen umbrales propios, que explicamos en cada página.
 
-**Motocicletas y ciclomotores:** se rigen por criterios distintos que todavía no hemos contrastado con la fuente oficial, así que no los publicamos aquí. Si tienes una moto, consulta directamente tu matrícula en la [sede electrónica de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/).
+**Motocicletas y ciclomotores:** se rigen por criterios distintos que todavía no hemos contrastado con la fuente oficial, así que no los publicamos aquí. Si tienes una moto, el dato lo da la DGT consultando tu matrícula en su sede electrónica.
 
 ## Cómo saber el tuyo
 
@@ -39,7 +39,7 @@ La fecha que cuenta es la de **matriculación**, no la de fabricación ni la de 
 
 Pero deducirlo por el año es solo una aproximación: el distintivo real lo asigna la DGT en su Registro de Vehículos, y hay excepciones (importaciones, reclasificaciones, homologaciones especiales).
 
-**Compruébalo con tu matrícula** en la [consulta oficial de la DGT](https://sede.dgt.gob.es/es/vehiculos/informacion-de-vehiculos/distintivo-ambiental/). Es gratis y es el único dato que vale ante una multa.
+**El dato exacto se consulta por matrícula** en la sede electrónica de la DGT. Es gratis, y es el único que vale ante una multa.
 
 <details>
 <summary>Tener el distintivo no es lo mismo que poder circular</summary>
