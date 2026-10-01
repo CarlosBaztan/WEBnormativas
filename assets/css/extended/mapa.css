@@ -6,6 +6,8 @@
 .mapa-zbe {
   /* Ancla del rotulo de gestos y de la clase que amplia a pantalla completa. */
   position: relative;
+  /* Encierra los z-index de Leaflet. Ver la nota al final del fichero. */
+  isolation: isolate;
   height: min(70vh, 560px);
   margin: 1.5rem 0 1rem;
   border: 1px solid var(--caja-borde);
@@ -151,6 +153,8 @@
 
 .mapa-municipio {
   position: relative;
+  /* Encierra los z-index de Leaflet. Ver la nota al final del fichero. */
+  isolation: isolate;
   height: 320px;
   margin: 1.25rem 0 0.5rem;
   border: 1px solid var(--caja-borde);
@@ -316,3 +320,27 @@ body.mapa-ampliado-activo {
   border-radius: 4px;
   background: var(--code-bg);
 }
+
+/* --- Nota sobre el apilamiento (por que `isolation: isolate`) ------------
+
+   Leaflet reparte z-index altos entre sus piezas: 200 las teselas, 400 el
+   panel de dibujo, 600 los marcadores, 700 los globos y 1000 los controles
+   de zoom. Son numeros pensados para ordenar el mapa POR DENTRO.
+
+   El contenedor tenia `position: relative` sin z-index, y eso NO crea un
+   contexto de apilamiento: aquellos numeros salian del mapa y competian con
+   el resto de la pagina. La cabecera fija vale 20, asi que al desplazarse,
+   el mapa le pasaba por encima y tapaba el menu y el buscador. Pasaba en
+   /mapa/ y en todas las fichas de municipio.
+
+   `isolation: isolate` crea el contexto y encierra esos valores: por fuera,
+   el mapa entero cuenta como un solo elemento en el sitio que le toque.
+
+   Se usa `isolation` y no `z-index: 0` a proposito: `.mapa--ampliado` fija
+   z-index 1100 para ponerse delante de todo en pantalla completa, y con
+   `isolation` esa declaracion no compite con la de aqui.
+
+   OJO al depurar esto: `elementFromPoint()` NO sirve para saber quien pinta
+   encima. Ignora lo que lleva `pointer-events: none`, y los paneles de
+   Leaflet lo llevan, asi que devuelve la cabecera aunque en pantalla se vea
+   el mapa tapandola. Mide clics, no pintura. Hay que mirar una captura. */
