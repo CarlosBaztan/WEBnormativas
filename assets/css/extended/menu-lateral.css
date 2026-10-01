@@ -475,32 +475,46 @@
     transition: none;
   }
 
-  /* El contenido se CENTRA en el hueco que deja el menú, no se pega a él.
+  /* El contenido ocupa la franja central, con la MISMA distancia a cada lado.
 
-     Antes esto era `margin-left: var(--ml-ancho)`. Como PaperMod trae
-     `.main { margin: auto }`, fijar solo el margen izquierdo dejaba el
-     derecho en `auto`, y ese margen automático se quedaba con todo el
-     sobrante: en una pantalla de 1366 el texto empezaba pegado al menú y
-     sobraban 327 px a la derecha. En vertical panorámico se notaba en todas
-     las páginas.
+     Decisión de Carlos del 02/10/2026, con la maqueta de la documentación de
+     Claude como referencia: «mide cuánto mide nuestro menú fijo lateral
+     izquierdo, y guarda la misma distancia para la parte derecha».
 
-     El truco es reservar el ancho del menú con `padding-left` en vez de con
-     `margin-left`, y dejar los dos márgenes en `auto`. Así la caja se centra
-     en la ventana completa y el relleno empuja el texto justo lo que mide el
-     menú, que es lo mismo que centrarlo en el espacio que queda libre.
+     Asi que el margen derecho vale lo mismo que el menú (`--ml-ancho`) y el
+     contenido se queda con todo lo de en medio, en vez de limitarse a los
+     720 px de `--main-width` del tema. El bloque queda centrado en la
+     ventana por construcción: menú (16rem) + contenido + banda libre (16rem).
 
-     Depende de `box-sizing: border-box`, que el reset del tema ya aplica a
-     todo: sin él, `max-width` no incluiría el relleno y la caja se iría
-     16 rem de más.
+     De dónde se viene, para no deshacerlo sin querer:
+
+       1. `margin-left: var(--ml-ancho)` a secas. Como PaperMod trae
+          `.main { margin: auto }`, dejar solo el izquierdo fijo ponía el
+          derecho en `auto` y ese se quedaba con todo el sobrante: el texto
+          salía pegado al menú con 327 px muertos a la derecha.
+       2. Centrado en el hueco libre, reservando el menú con `padding-left`.
+          Quedaba simétrico (188 / 187) pero el texto seguía en 720 px y
+          sobraba aire a los dos lados.
+       3. Esto.
+
+     `max-width: none` es imprescindible: sin él manda el
+     `max-width: calc(var(--main-width) + var(--gap) * 2)` del tema y los
+     márgenes no llegan a tocarse con el contenido.
+
+     CONTRAPARTIDA MEDIDA, por si algún día chirría: a 1366 px la línea sale
+     de unos 91 caracteres, por encima de los 45-75 que se recomiendan para
+     texto corrido, y crece con la pantalla. Si molesta, la solución NO es
+     volver a estrechar la caja (las tablas, el mapa y el formulario sí
+     quieren el ancho) sino ponerle un `max-width` en caracteres solo a los
+     párrafos de `.post-content`.
 
      El pie va en la misma regla porque si no, no coincide: lo centra el tema
-     en la ventana entera y quedaba 36 px a la derecha de su propio texto. */
+     en la ventana entera por su cuenta. */
   body .main,
   body .footer {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: calc(var(--main-width) + var(--gap) * 2 + var(--ml-ancho));
-    padding-left: calc(var(--gap) + var(--ml-ancho));
+    margin-left: var(--ml-ancho);
+    margin-right: var(--ml-ancho);
+    max-width: none;
   }
 }
 

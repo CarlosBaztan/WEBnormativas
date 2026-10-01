@@ -14,10 +14,23 @@
   padding-top: 0;
 }
 
+/* NOTA sobre los topes de ancho que habia aqui (02/10/2026).
+
+   Tres reglas de esta pagina llevaban `max-width: 62ch`: los parrafos del
+   cuerpo, las definiciones del glosario y los pies de las figuras. Se
+   quitaron al ensanchar la columna de contenido.
+
+   El motivo es que eran el UNICO sitio del sitio con un tope propio, asi que
+   /zbe/ se quedaba estrecha mientras el resto de paginas ocupaban la franja
+   entera, y dentro de la propia /zbe/ convivian parrafos anchos con parrafos
+   cortados a 62ch. Carlos revisa la web navegando entre paginas y eso canta.
+
+   Si algun dia hay que limitar la longitud de linea, se hace EN UN SOLO
+   SITIO y para todo el sitio, no pagina por pagina. */
+
 .pagina-zbe .post-content > p {
   margin: 0 0 1.1rem;
   line-height: 1.7;
-  max-width: 62ch;
 }
 
 /* El fondo era --code-bg, que en /zbe/ es exactamente el color de la pagina
@@ -152,7 +165,6 @@
   padding-left: 1rem;
   border-left: 3px solid var(--caja-borde);
   line-height: 1.65;
-  max-width: 62ch;
 }
 
 /* --- Señales ------------------------------------------------------------ */
@@ -184,7 +196,6 @@
   font-size: var(--txt-sm);
   opacity: 0.85;
   line-height: 1.6;
-  max-width: 62ch;
 }
 
 .fuente-lista {
