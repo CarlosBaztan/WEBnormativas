@@ -1,60 +1,97 @@
 ---
 title: "Política de cookies"
-description: "Qué cookies usa esta web (hoy, ninguna), qué guarda en tu navegador y qué cambiará cuando se active la publicidad."
-date: 2026-09-23
+description: "Qué se guarda en tu navegador al visitar cocheapto.com, para qué, y cómo borrarlo. Hoy: ninguna cookie."
+date: 2026-10-01
 draft: false
 ---
 
-*Última actualización: 23 de septiembre de 2026*
+**Este sitio no usa cookies.** Ni propias ni de terceros, ni de análisis ni de
+publicidad. Puedes comprobarlo tú mismo: abre las herramientas de desarrollo de
+tu navegador (F12), pestaña *Aplicación* o *Almacenamiento*, y mira la lista de
+cookies de este dominio. Está vacía.
 
-## Hoy esta web no usa cookies
+Lo que sí usa es **almacenamiento local**, que es otra cosa y conviene
+explicarla, porque la ley lo trata igual que a las cookies.
 
-Ni propias ni de terceros. No hay analítica, ni publicidad, ni botones de redes sociales, ni nada que deje una cookie en tu navegador.
+## Qué se guarda en tu navegador
 
-Por eso tampoco verás un aviso de consentimiento: no habría nada que consentir.
+El artículo 22.2 de la [LSSI](https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758)
+no habla solo de cookies: cubre cualquier «dispositivo de almacenamiento y
+recuperación de datos» en el equipo del usuario. El almacenamiento local entra
+ahí. Esto es todo lo que hay:
 
-## Lo que sí guarda en tu navegador
-
-Hay una cosa, y conviene distinguirla de una cookie.
-
-La herramienta para consultar si puedes circular guarda **los datos de tu vehículo** (tipo, combustible, año) en el **almacenamiento local** (`localStorage`) del navegador, para que no tengas que repetirlos.
-
-| | Cookie | Almacenamiento local (lo que usamos) |
+| Qué se guarda | Para qué | Cuánto dura |
 |:---|:---|:---|
-| ¿Se envía al servidor? | Sí, en cada petición | **No, nunca** |
-| ¿Puede leerlo un tercero? | Según su configuración | **No** |
-| ¿Sirve para seguirte? | Puede | **No** |
-| ¿Se puede borrar? | Sí | Sí, con el botón de la herramienta |
+| `perfil_vehiculo_v1` | El vehículo que introduces en las calculadoras, para no tener que repetirlo en cada herramienta | Hasta que lo borres |
+| `pref-theme` | Si has elegido tema claro u oscuro | Hasta que lo borres |
+| `menu-scroll-position` | La posición del menú superior, para que no salte al cambiar de página | Hasta que lo borres |
 
-Como no se transmite ni permite identificarte ni seguirte, **no requiere consentimiento previo**: es almacenamiento estrictamente necesario para la funcionalidad que has pedido al usar la herramienta.
+**Los tres se quedan en tu navegador y no se envían a ningún servidor.**
+Nosotros no los vemos ni podemos verlos. No identifican a nadie y no sirven
+para seguirte entre sitios.
 
-### Cómo borrarlo
+## Por qué no hay banner de consentimiento
 
-- Con el botón **«Borrar mis datos»** de la propia herramienta.
-- O borrando los datos del sitio desde la configuración de tu navegador.
+Porque hoy no hace falta, y poner uno sin necesidad sería ruido.
 
-## Qué cambiará cuando haya publicidad
+El mismo artículo 22.2 exime del consentimiento al almacenamiento que sea
+**estrictamente necesario para prestar un servicio expresamente solicitado por
+el usuario**. Los tres casos de arriba encajan ahí:
 
-<!-- Actualizar en la fase 5, al activar AdSense. Ver DESPLIEGUE.md. -->
-Está previsto que esta web muestre publicidad. Cuando ocurra:
+- **El perfil del vehículo** lo creas tú al rellenar una calculadora, y existe
+  para servirte a ti. Si no usas las herramientas, no se guarda nada.
+- **La preferencia de tema** la eliges tú pulsando el conmutador.
+- **La posición del menú** es un detalle de presentación de la propia página.
 
-1. Se actualizará esta página **antes**, detallando el proveedor y las cookies concretas.
-2. Aparecerá un **aviso de consentimiento** que te permitirá aceptarlas o rechazarlas.
-3. Las cookies publicitarias **no se instalarán hasta que decidas**.
+No hay nada de analítica, nada de publicidad y nada de terceros. Si lo
+hubiera, haría falta tu consentimiento y habría banner.
 
-No vamos a activar publicidad y explicarlo después. Primero el aviso, luego los anuncios.
+## Cómo borrar lo que hay
 
-## Cookies técnicas del alojamiento
+**El perfil del vehículo tiene su propio botón.** En la herramienta
+[«¿Puedo circular?»](/), debajo del formulario, hay un botón que pone
+**«Borrar mis datos»**. Es la forma más cómoda y no tienes que entrar en
+ningún menú del navegador.
 
-El sitio se sirve a través de **Cloudflare**, que en determinadas circunstancias puede utilizar cookies estrictamente técnicas de seguridad, destinadas a distinguir el tráfico legítimo de los ataques automatizados.
+**Para borrarlo todo**, incluidas las preferencias, usa la función de tu
+navegador para eliminar los datos de este sitio:
 
-No se usan para publicidad ni para seguimiento. Más información en la [política de privacidad de Cloudflare](https://www.cloudflare.com/privacypolicy/).
+- **Chrome y Edge:** candado de la barra de direcciones → *Cookies y datos del
+  sitio* → *Administrar datos del sitio* → eliminar.
+- **Firefox:** candado → *Borrar cookies y datos del sitio*.
+- **Safari:** *Ajustes* → *Privacidad* → *Gestionar datos de sitios web*.
 
-## Cómo controlar las cookies en general
+Borrarlos no rompe nada: el sitio vuelve a funcionar desde cero, y como mucho
+tendrás que volver a introducir tu vehículo.
 
-Todos los navegadores permiten bloquear o eliminar cookies desde sus ajustes de privacidad. Bloquearlas no afecta al funcionamiento de esta web, porque hoy no depende de ninguna.
+## Lo que pasará cuando haya publicidad
+
+Con honestidad por delante, porque el plan de este sitio es financiarse con
+publicidad: **cuando se incorpore, aparecerán cookies de terceros** y entonces
+sí hará falta tu consentimiento.
+
+Cuando llegue ese momento:
+
+- Se publicará **un aviso de consentimiento** que te permitirá aceptar,
+  rechazar o configurar, con el rechazo tan accesible como la aceptación.
+- **No se activará ninguna cookie de publicidad antes de que decidas.**
+- Esta página se actualizará **antes**, con la lista concreta de cookies, su
+  finalidad y su duración.
+
+Hasta entonces, lo que dice esta página es lo que hay.
+
+## Servicios externos que sí intervienen
+
+No ponen cookies, pero tu navegador se conecta a ellos y conviene saberlo:
+
+- **OpenStreetMap** sirve las imágenes de los mapas, y en la herramienta
+  [«¿Está mi calle en una ZBE?»](/zbe/mi-calle/) convierte la dirección que
+  escribes en coordenadas.
+- **Cloudflare** aloja el sitio y sirve la biblioteca de mapas.
+
+Está explicado con más detalle en la
+[política de privacidad](/legal/privacidad/).
 
 ---
 
-- **[Política de privacidad](/legal/privacidad/)**
-- **[Aviso legal](/legal/aviso-legal/)**
+*Última actualización: 1 de octubre de 2026.*

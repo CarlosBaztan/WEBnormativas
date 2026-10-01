@@ -27,6 +27,23 @@
         {{- print " · "}}
         {{ . | markdownify }}
     {{- end }}
+
+    {{- /*
+      Enlaces legales. Van en el pie de TODAS las páginas porque el artículo 10
+      de la LSSI exige que la información del titular sea accesible «de forma
+      permanente, fácil, directa y gratuita»: enterrada en una sola página no
+      cumpliría.
+
+      Son estáticos a propósito. Este partial se renderiza con partialCached
+      sin la página en la clave, así que aquí no puede ir nada que dependa de
+      en qué página estés.
+    */ -}}
+    <nav class="pie-legal" aria-label="Información legal">
+        <a href="{{ "legal/aviso-legal/" | relURL }}">Aviso legal</a>
+        <a href="{{ "legal/privacidad/" | relURL }}">Privacidad</a>
+        <a href="{{ "legal/cookies/" | relURL }}">Cookies</a>
+        <a href="mailto:contacto@cocheapto.com">Contacto</a>
+    </nav>
 </footer>
 {{- end }}
 

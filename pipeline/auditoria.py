@@ -96,8 +96,17 @@ def incoherente(fm: dict) -> bool:
 # se ha podido contrastar. Distinguir por el texto entre "no lo sabemos y lo
 # decimos" y "nota que se me olvido borrar" no se puede hacer con una busqueda,
 # asi que la comprobacion se queda con lo que no admite duda.
+# La segunda marca, `<!-- PENDIENTE`, es la nota que se deja en un comentario
+# de HTML. El visitante no la ve, pero viaja en el codigo fuente de la pagina
+# publicada y delata que algo quedo a medias. Habia tres sin cerrar el dia que
+# se conecto el dominio: dos en /sobre/ y una en /legal/contacto/, las tres
+# diciendo "antes de lanzar".
+#
+# Se busca con el comentario y en mayusculas a proposito, para no confundirla
+# con la palabra "pendiente" en prosa, que aqui es vocabulario corriente.
 MARCADORES = (
     "{{VERIFICAR}}",
+    "<!-- PENDIENTE",
 )
 
 

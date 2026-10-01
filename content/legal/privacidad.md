@@ -1,94 +1,145 @@
 ---
 title: "Política de privacidad"
-description: "Qué datos trata esta web, cuáles no, y qué derechos tienes. Escrita en claro y ajustada a lo que el sitio hace realmente."
-date: 2026-09-23
+description: "Qué datos personales trata cocheapto.com, con qué base jurídica, durante cuánto tiempo y cuáles son tus derechos."
+date: 2026-10-01
 draft: false
 ---
 
-*Última actualización: 23 de septiembre de 2026*
+**Resumen en una línea: este sitio no te pide datos, no tiene analítica y no
+te sigue.** Debajo está el detalle, porque la ley obliga a darlo y porque
+conviene poder comprobarlo.
 
-Esta política describe lo que **esta web hace realmente hoy**, no un texto genérico copiado de otro sitio. Si cambia, cambiará también esta página y su fecha.
+## Quién trata tus datos
 
-## Lo importante, primero
+El responsable del tratamiento es **Carlos Baztán Peiró**, NIF 73516600K, con
+domicilio en Calle Balbino Orensanz 41, 50014 Zaragoza (Zaragoza), España.
 
-- **No te pedimos ningún dato personal.** No hay registro, ni formularios de contacto con campos obligatorios, ni suscripción.
-- **Los datos de tu vehículo no salen de tu navegador.** Ni se envían, ni se almacenan en ningún servidor.
-- **No hacemos perfiles** ni seguimiento entre sitios.
+Para cualquier cosa relacionada con esta política:
+**[contacto@cocheapto.com](mailto:contacto@cocheapto.com)**.
 
-## Los datos de tu vehículo
+## Qué datos se tratan, y cuáles no
 
-Cuando usas la herramienta para consultar si puedes circular, introduces el tipo de vehículo, el combustible y el año de matriculación.
+### No hay formularios ni registro
 
-Esos datos **se procesan en tu propio navegador**, con código que se ejecuta en tu dispositivo. No viajan a ningún servidor: no llegan a nosotros en ningún momento.
+**No se puede crear una cuenta en este sitio, ni suscribirse a nada, ni dejar
+comentarios.** No hay ningún formulario que envíe datos a ningún servidor. Si
+nunca escribes al correo de contacto, aquí no queda ningún dato tuyo.
 
-Para no tener que repetirlos, se guardan en el **almacenamiento local** de tu navegador (`localStorage`). Eso significa:
+### Las herramientas funcionan en tu navegador
 
-- Se quedan **en tu dispositivo**, no en nuestros sistemas.
-- **No son accesibles** para nosotros ni para terceros.
-- Puedes **borrarlos cuando quieras**, con el botón «Borrar mis datos» de la propia herramienta, o limpiando los datos del sitio desde tu navegador.
+Las calculadoras («¿Puedo circular?», «¿Está mi calle en una ZBE?», las de la
+ITV) **se ejecutan enteras en tu dispositivo**. El tipo de vehículo, el
+combustible o la fecha de matriculación que introduces **no se envían a ningún
+sitio**: se procesan en tu navegador y, si eliges guardar el perfil del
+vehículo, se quedan en el almacenamiento local de tu propio navegador.
 
-Al no salir de tu equipo, no hay tratamiento de datos personales por nuestra parte en esta función.
+Eso significa que **ese dato nunca llega hasta nosotros**, y que lo borras tú
+cuando quieras. Está explicado en la [política de cookies](/legal/cookies/).
 
-## Quién trata los datos
+**Una excepción que conviene conocer**, y la señalamos porque es la única vez
+que algo tuyo sale del navegador sin que escribas un correo: la herramienta
+[«¿Está mi calle en una ZBE?»](/zbe/mi-calle/) necesita convertir la dirección
+que teclees en coordenadas, y para eso consulta **Nominatim**, el servicio de
+geocodificación de OpenStreetMap.
 
-<!-- PENDIENTE: completar con la identificación del responsable antes de lanzar. -->
-El responsable del sitio, cuya identificación figura en el **[aviso legal](/legal/aviso-legal/)**.
+Eso significa que **la dirección que escribas ahí viaja a OpenStreetMap**, que
+la trata según su propia [política de
+privacidad](https://wiki.osmfoundation.org/wiki/Privacy_Policy). Nosotros no la
+guardamos ni la vemos: la petición sale directamente de tu navegador al suyo.
 
-## Datos que se tratan por el hecho de visitar la web
+Dicho claro: para saber si una calle está dentro de una ZBE no hace falta tu
+número de portal. Escribe la calle y el municipio y basta.
 
-Como en cualquier sitio, el servidor que la sirve registra datos técnicos para funcionar y protegerse de ataques: dirección IP, tipo de navegador, páginas solicitadas y momento de la visita.
+### Si nos escribes un correo
 
-El alojamiento lo presta **Cloudflare**, que actúa como encargado del tratamiento. Puedes consultar su [política de privacidad](https://www.cloudflare.com/privacypolicy/).
+Tratamos tu dirección de correo y lo que nos cuentes, **solo para
+contestarte**. Lo conservamos mientras dure la conversación y el tiempo
+razonable después, por si hay seguimiento. No lo usamos para nada más y no se
+lo damos a nadie.
 
-La base jurídica es el **interés legítimo** en mantener el servicio disponible y seguro.
+- **Base jurídica:** tu consentimiento al escribirnos, y nuestro interés
+  legítimo en atender lo que nos preguntas (artículo 6.1.a y 6.1.f del RGPD).
 
-## Publicidad y medición
+Ese correo se recibe mediante el reenvío de **Cloudflare Email Routing**, que
+lo entrega en un buzón de **Google (Gmail)**.
 
-<!-- Actualizar cuando se activen anuncios o analítica. Ver DESPLIEGUE.md, fase 5. -->
-**Ahora mismo esta web no muestra publicidad ni utiliza herramientas de analítica.**
+### Registros del servidor
 
-Cuando se activen, esta página se actualizará **antes**, explicando qué proveedor se usa y qué datos trata, y se pedirá tu consentimiento mediante un aviso de cookies. No activaremos nada de eso sin ese paso previo.
+El sitio está alojado en **Cloudflare**, que como cualquier proveedor de
+alojamiento registra datos técnicos de las peticiones (dirección IP, fecha y
+hora, página solicitada, tipo de navegador) para prestar el servicio,
+mantenerlo seguro y defenderse de ataques.
 
-## Enlaces a otros sitios
+- **Base jurídica:** interés legítimo en que el sitio funcione y esté
+  protegido (artículo 6.1.f del RGPD).
 
-Enlazamos a boletines oficiales, sedes electrónicas y webs de ayuntamientos. Cuando sales de aquí, se aplica la política de privacidad del sitio al que llegas, no esta.
+Nosotros no accedemos a esos registros ni los usamos para perfilarte.
+
+### Lo que NO hacemos
+
+Y se dice expresamente porque es lo habitual en sitios como este:
+
+- **No hay Google Analytics** ni ninguna otra herramienta de analítica.
+- **No hay píxeles ni botones de redes sociales.**
+- **No hay publicidad**, ni por tanto cookies publicitarias.
+- **No se elabora ningún perfil** ni se toman decisiones automatizadas sobre ti.
+- **No se venden ni ceden tus datos** a nadie.
+
+## Encargados del tratamiento y transferencias internacionales
+
+| Proveedor | Para qué | Dónde |
+|:---|:---|:---|
+| **Cloudflare, Inc.** | Alojamiento, red de distribución, registro del dominio y reenvío de correo | EE. UU., con red en la UE |
+| **Google LLC** | Buzón de destino del correo de contacto (Gmail) | EE. UU. |
+| **OpenStreetMap Foundation** | Geocodificación de la dirección en «¿Está mi calle en una ZBE?», y las imágenes del mapa | Reino Unido |
+
+Las transferencias a Estados Unidos se amparan en el **Marco de Privacidad de
+Datos UE-EE. UU.**, al que Cloudflare y Google están adheridas, y en las
+cláusulas contractuales tipo aprobadas por la Comisión Europea. Las
+transferencias al Reino Unido se amparan en la **decisión de adecuación** de la
+Comisión Europea.
+
+Hay que añadir una cosa sobre los mapas: las **imágenes del mapa las sirve
+OpenStreetMap**, así que al abrir una página con mapa tu navegador se conecta
+a sus servidores y estos ven tu dirección IP, como cualquier servidor al que
+pidas una imagen. Es inevitable para mostrar un mapa y no implica cookies.
+
+## Cuánto se conserva
+
+- **Correos de contacto:** mientras dure la conversación y un tiempo razonable
+  después.
+- **Registros técnicos:** el que fije Cloudflare en su propia política.
+- **Datos del perfil de vehículo:** hasta que tú los borres, y siempre en tu
+  navegador.
 
 ## Tus derechos
 
-Aunque hoy no conservamos datos personales que te identifiquen, tienes en todo caso derecho a **acceder, rectificar, suprimir, limitar el tratamiento, oponerte y solicitar la portabilidad** de tus datos, conforme al Reglamento (UE) 2016/679 y a la Ley Orgánica 3/2018.
+Puedes ejercer los derechos de **acceso, rectificación, supresión, oposición,
+limitación del tratamiento y portabilidad** escribiendo a
+[contacto@cocheapto.com](mailto:contacto@cocheapto.com).
 
-Para ejercerlos, escríbenos a la dirección del aviso legal. También puedes reclamar ante la [Agencia Española de Protección de Datos](https://www.aepd.es/).
+Conviene ser realista sobre qué significan aquí: **si nunca nos has escrito,
+no tenemos ningún dato tuyo que acceder, rectificar o suprimir.** Si nos has
+escrito, lo que tenemos es ese correo.
+
+Si crees que no se han atendido tus derechos como corresponde, puedes
+reclamar ante la **[Agencia Española de Protección de Datos](https://www.aepd.es/)**
+(C/ Jorge Juan 6, 28001 Madrid).
 
 ## Menores
 
-Esta web no se dirige a menores de edad ni recoge deliberadamente datos de menores.
+Este sitio trata de normativa de vehículos y se dirige a personas adultas. No
+se recoge deliberadamente información de menores de edad.
 
-## Cambios
+## Cambios en esta política
 
-Si esta política cambia, se actualizará la fecha del encabezado. Los cambios relevantes, como activar publicidad o analítica, se anunciarán en la propia web antes de aplicarse.
+**Cuando el sitio incorpore publicidad, esta política cambiará**, porque
+aparecerán cookies de terceros y un tratamiento que hoy no existe. Se
+actualizará antes de que eso ocurra, no después, y se pedirá tu consentimiento
+para las cookies no necesarias.
+
+Cualquier cambio se publicará en esta misma página con su fecha.
 
 ---
 
-- **[Aviso legal](/legal/aviso-legal/)**
-- **[Política de cookies](/legal/cookies/)**
-## Búsqueda de direcciones
-
-La herramienta [«¿está mi calle dentro de una ZBE?»](/zbe/mi-calle/) necesita convertir
-la dirección que escribes en unas coordenadas. Eso lo hace **tu propio navegador**
-consultando a [Nominatim](https://nominatim.openstreetmap.org/), el servicio de
-direcciones de OpenStreetMap.
-
-Qué implica, en concreto:
-
-- **La dirección no pasa por ningún servidor nuestro.** Este sitio es estático y no
-  tiene backend: no hay dónde recibirla.
-- **No la guardamos** ni en el servidor ni en tu navegador.
-- **Sí llega a OpenStreetMap**, junto con la dirección IP de tu conexión, porque la
-  petición la hace tu navegador directamente. Se rige por
-  [su política de privacidad](https://wiki.osmfoundation.org/wiki/Privacy_Policy).
-- El cálculo de si esa dirección cae dentro de una zona se hace **en tu dispositivo**,
-  con los perímetros que ya se han descargado.
-
-Si prefieres no usar ese servicio, tienes el mismo dato en
-[el mapa](/mapa/), que no envía nada a ninguna parte.
-
+*Última actualización: 1 de octubre de 2026.*

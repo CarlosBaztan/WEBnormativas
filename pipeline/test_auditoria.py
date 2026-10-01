@@ -163,6 +163,27 @@ def test_una_pagina_limpia_no_da_marcadores():
     assert au.marcadores_sin_resolver(texto) == []
 
 
+def test_una_nota_pendiente_en_comentario_html_se_detecta():
+    """
+    Las notas que se dejan como comentario de HTML no las ve el visitante,
+    pero viajan en el codigo fuente de la pagina publicada y delatan que algo
+    quedo a medias. Habia tres: dos en /sobre/ y una en /legal/contacto/, con
+    el texto "completar con los datos del responsable antes de lanzar".
+
+    Se busca la marca exacta, en mayusculas y dentro del comentario, para no
+    confundirla con la palabra "pendiente" en prosa, que en este sitio es
+    legitima y frecuente: estado_dato pendiente, "pendiente de verificacion".
+    """
+    texto = '---\nestado_dato: "verificado"\n---\n<!-- PENDIENTE: poner el correo -->\nTexto.\n'
+    assert au.marcadores_sin_resolver(texto) == ["<!-- PENDIENTE"]
+
+
+def test_la_palabra_pendiente_en_prosa_no_es_una_nota():
+    """El caso que no se puede marcar: es vocabulario normal del proyecto."""
+    texto = '---\nestado_dato: "parcial"\n---\nEsta zona esta pendiente de verificacion.\n'
+    assert au.marcadores_sin_resolver(texto) == []
+
+
 def test_ninguna_pagina_publicada_lleva_marcadores():
     """
     La comprobacion de verdad, sobre el contenido real del sitio. Si esto

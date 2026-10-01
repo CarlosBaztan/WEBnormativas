@@ -23,6 +23,37 @@
 }
 
 /* ------------------------------------------------------------------
+   PIE LEGAL
+
+   Los enlaces al aviso legal, la privacidad y las cookies van en todas las
+   paginas porque el art. 10 de la LSSI exige que esa informacion sea
+   accesible «de forma permanente, facil, directa y gratuita».
+
+   Mas pequenos que el resto y en el color secundario: tienen que estar
+   siempre, no llamar la atencion. Aun asi el contraste se mantiene por
+   encima del minimo, que para eso se midio.
+   ------------------------------------------------------------------ */
+.pie-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-2) var(--sp-4);
+    margin-top: var(--sp-3);
+    font-size: var(--txt-xs);
+}
+
+.pie-legal a {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.pie-legal a:hover,
+.pie-legal a:focus-visible {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------
    SALTAR AL CONTENIDO
 
    Medido el 1 de octubre de 2026 en la ficha de Madrid: 34 de los 59

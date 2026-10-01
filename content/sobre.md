@@ -17,8 +17,9 @@ Lo que hacemos es leer esas normas, una a una, y publicarlas en un formato consu
 
 ## Quién hay detrás
 
-<!-- PENDIENTE: completar con los datos del responsable antes de lanzar. -->
-Un proyecto personal, no una empresa ni un despacho.
+**Carlos Baztán Peiró**, desde Zaragoza. Un proyecto personal, no una empresa ni un despacho.
+
+Los datos completos del titular, que exige el artículo 10 de la LSSI, están en el **[aviso legal](/legal/aviso-legal/)**.
 
 No somos abogados ni gestores. Somos alguien con formación en análisis de datos que se encontró con que esta información estaba dispersa y decidió ordenarla.
 
@@ -37,7 +38,7 @@ Por eso la lista de municipios tiene muchas filas que dicen «todavía no». Vam
 
 ## Cómo se sostiene
 
-La web lleva publicidad y, en el futuro, enlaces de afiliación. Es lo que permite dedicarle tiempo.
+**Hoy no lleva publicidad**, y se dice porque es fácil prometer lo contrario de lo que se hace. La previsión es financiarla con publicidad y, más adelante, con enlaces de afiliación. Es lo que permitirá dedicarle tiempo.
 
 Dos límites que nos imponemos:
 
@@ -46,8 +47,7 @@ Dos límites que nos imponemos:
 
 ## Contacto
 
-<!-- PENDIENTE: añadir la dirección de contacto antes de lanzar. -->
-Si detectas un error, tienes una duda o quieres proponer un municipio para verificar, escríbenos.
+Si detectas un error, tienes una duda o quieres proponer un municipio para verificar, escribe a **[contacto@cocheapto.com](mailto:contacto@cocheapto.com)**.
 
 Los avisos de errores tienen prioridad: si nos dices que algo está mal y tienes razón, lo corregimos y actualizamos la fecha de verificación.
 

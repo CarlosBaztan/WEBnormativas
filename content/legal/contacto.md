@@ -5,7 +5,11 @@ date: 2026-09-23
 draft: false
 ---
 
-<!-- PENDIENTE: añadir la dirección de correo antes de lanzar en el dominio definitivo. -->
+## Dónde escribirnos
+
+**[contacto@cocheapto.com](mailto:contacto@cocheapto.com)**
+
+Lee lo de abajo antes, que ayuda a que la respuesta sirva de algo.
 
 ## Si has visto un error
 
@@ -33,10 +37,13 @@ Lo que sí podemos es indicarte dónde está la norma aplicable. Para el resto, 
 
 ## Publicidad y propuestas comerciales
 
-La web lleva publicidad, pero los anunciantes no influyen en lo que se publica. Lo que dice una ordenanza no es negociable, así que no aceptamos contenido patrocinado que afecte a la información normativa.
+**Hoy esta web no lleva publicidad**, y cuando la lleve estará identificada como tal.
+
+El compromiso es este: los anunciantes no influyen en lo que se publica. Lo que dice una ordenanza no es negociable, así que no se acepta contenido patrocinado que afecte a la información normativa.
 
 ---
 
 - **[Sobre este proyecto](/sobre/)**
 - **[Metodología](/metodologia/)**: cómo verificamos
-- **[Aviso legal](/legal/aviso-legal/)**
+- **[Aviso legal](/legal/aviso-legal/)**: quién es el titular de este sitio
+- **[Política de privacidad](/legal/privacidad/)**: qué pasa con lo que nos escribas
