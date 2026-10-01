@@ -236,6 +236,7 @@ Al 28/09/2026.
 - [x] Fase 3: pipeline de datos (`pipeline/zbe_nap.py`, 45 municipios)
 - [x] Fase 4: GitHub y Cloudflare Workers. En producción en
       `webnormativas.bi-ia-carlosbaz.workers.dev`, con `noindex` puesto.
+      Desde el 01/10 el dominio propio es `cocheapto.com`.
 - [x] Estudio de palabras clave (ver la sección de datos de búsqueda)
 - [x] Mapa: gestos, pantalla completa y chinchetas por municipio. Los
       recuentos de `/mapa/` salen de `data/zbe_resumen.json`, que escribe el
@@ -261,69 +262,51 @@ Al 28/09/2026.
 - [ ] Fase 5: pre-AdSense (legales y CMP). Bloqueada hasta tener los datos de
       identidad de Carlos, que exige el art. 10 LSSI.
 
-### Dominio (01/10/2026, sin cerrar)
+### Dominio: `cocheapto.com` (comprado el 01/10/2026)
 
-**Carlos lo decide el 02/10.** Reabrió la elección el 01/10 pidiendo más
-nombres, así que el `papelesdelcoche.com` del 30/09 ya no es firme. **No
-comprado, y nada en el repositorio apunta todavía a ningún dominio.**
+**Comprado en Cloudflare Registrar**, con renovación automática, a 10,46 $/año
+de coste. `baseURL` en `hugo.toml` ya apunta ahí.
 
-Los tres que quedan sobre la mesa, los tres `.com` y los tres libres
-(comprobado por RDAP de Verisign el 01/10):
+Por qué este y no otro, para no volver a debatirlo: «apto» es el veredicto de
+la ITV, lo entiende cualquier conductor al instante, son nueve letras que se
+dictan sin deletrear y no ata el sitio a las ZBE, que es la decisión 5. Se
+descartó `tucocheapto.com` porque «tu coche apto» no es español natural (se
+dice «tu coche *es* apto») y porque tres letras más se pagan cada vez que se
+dice el nombre en voz alta.
 
-| Dominio | A favor | En contra |
-|---|---|---|
-| `laventanilla.com` | Doble sentido exacto (la del coche y el mostrador de trámites), 12 caracteres, alcance completo | Roza el tono administrativo |
-| `bajoelcapo.com` | El más corto, 10 caracteres | Hay un pódcast de motor que ya se llama así; «bajo el capó» suena a mecánica, no a papeles |
-| `papelesdelcoche.com` | Literal, cero ambigüedad | El más largo; describe documentos, y el racimo que trae el tráfico (ZBE, 221.010 búsquedas) no va de documentos |
+Comprobado antes de comprar: cero marcas en TMview para «coche apto» y
+«cocheapto», en España y en la UE. Las que hay de «APTO» a secas son de otros
+sectores (una bicicleta de 3T Cycling en la clase 12, software de TLS Corp.,
+centros de datos de Apto DC).
 
-**Marcas comprobadas en TMview** (base de la EUIPO, que cubre España y la UE;
-el buscador propio de la OEPM rechaza el acceso automático con un 403):
-ninguna marca registrada para `papeles del coche`, `bajo el capo` ni
-`coche apto`. De `ventanilla` hay doce, pero ninguna que choque: ocho son
-«Ventanilla Única» de la administración pública y dos no pintan nada (una
-bodega y una yeguada).
+**Contrapartida conocida:** «coche apto» es descriptivo, así que sería una
+marca difícil de registrar en exclusiva. Se acepta a cambio de que se entienda
+sin explicar nada.
 
-**Lección del proceso, y vale para cualquier nombre futuro: que el dominio
-esté libre no significa que el nombre lo esté.** `tuguantera.com` estaba
-libre y era el favorito de Carlos hasta que miramos qué había al lado:
-`laguantera.com` es una gestoría online de trámites de vehículos en marcha
-(ITV, informes de la DGT, transferencias, distintivo ambiental, multas), con
-75.000 clientes declarados y una solicitud de marca en la OEPM, la M4297581.
-Mismo sector, cuatro de las seis verticales del proyecto. **Antes de comprar,
-mirar TMview y buscar el nombre en la web, no solo el RDAP.**
-
-Descartado `cocheenregla.com` (la opción del 28/09, sigue libre) y
-`tucocheok.com`, que está ocupado.
-
-**Comprarlo en Cloudflare y no en OVH cambia el procedimiento entero**, y a
-mejor. Verificado en la documentación de Cloudflare:
-
-- Los dominios registrados ahí **nacen con los servidores de nombres de
-  Cloudflare**. Desaparecen el cambio de servidores, el aviso del DNSSEC (que
-  era el único paso capaz de dejar el dominio inaccesible) y la espera de
-  propagación. De cinco fases se queda en tres, y ninguna con riesgo.
-- **Vende a precio de coste, también al renovar.** En OVH la renovación subía
-  a 13,49 €/año desde el segundo; aquí se queda en el precio del registro.
-- Incluye ocultación del titular en el WHOIS, DNSSEC en un clic y SSL.
-
-Contrapartida menor: mientras esté en Cloudflare Registrar no se pueden usar
-servidores de nombres de otro proveedor. Para este proyecto da igual.
+**El correo del titular es un Gmail a propósito**, no `contacto@cocheapto.com`.
+Sería circular: si el dominio se queda en hold, ese correo deja de funcionar
+justo cuando ICANN necesita escribir. Cambiarlo después dispara un *Change of
+Registrant* con doble aprobación y 60 días de bloqueo de transferencias.
 
 **Lo que Cloudflare NO da es buzón de correo**, solo reenvío (Email Routing).
-`contacto@papelesdelcoche.com` reenvía al Gmail de Carlos. Para el art. 10 de
-la LSSI vale, porque lo que exige es una dirección de contacto que funcione;
-para *responder* desde ella haría falta configurar «Enviar como» en Gmail.
+`contacto@cocheapto.com` reenviará al Gmail. Para el art. 10 de la LSSI vale,
+porque lo que exige es una dirección de contacto que funcione.
 
-El procedimiento está en [docs/conectar-dominio.md](docs/conectar-dominio.md).
+**Lección del proceso, y vale para cualquier nombre futuro: que el dominio
+esté libre no significa que el nombre lo esté.** `tuguantera.com` estaba libre
+y era el favorito hasta que miramos qué había al lado: `laguantera.com` es una
+gestoría online de trámites de vehículos en marcha (ITV, informes de la DGT,
+transferencias, distintivo ambiental, multas), con 75.000 clientes declarados
+y la solicitud de marca M4297581 en la OEPM. Mismo sector, cuatro de las seis
+verticales. **Antes de comprar: TMview, búsqueda del nombre en la web, y solo
+después el RDAP.**
+
+El procedimiento de conexión está en [docs/conectar-dominio.md](docs/conectar-dominio.md).
 
 Sobre ampliar a otros países: ni «coche» ni el `.es` valen fuera de España,
 pero el activo del proyecto es el dataset español y no se transfiere. Si
 alguna vez se quiere esa puerta, la decisión es `.com` (ya tomada) más
 carpetas por país, no cambiar el nombre.
-
-Descartado a propósito `codigocirculacion` pese a ser el de más gancho: hace
-parecer que el sitio es oficial, y todo el argumento del proyecto es el
-contrario.
 
 ### Hallazgo crítico sobre el NAP-DGT (22/09/2026)
 

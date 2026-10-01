@@ -1,4 +1,4 @@
-baseURL = "https://webnormativas.bi-ia-carlosbaz.workers.dev/"
+baseURL = "https://cocheapto.com/"
 locale = "es-es"
 defaultContentLanguage = "es"
 
@@ -36,10 +36,16 @@ disableKinds = ["taxonomy", "term"]
 
 [params]
   # Mientras esté en true: meta noindex + robots.txt que lo bloquea todo.
-  # Estamos en dominio temporal y sin contenido verificado; indexar ahora
-  # obligaría a migrar con un 301 sobre un dominio joven.
-  # Poner en false cuando (1) el dominio propio esté conectado y baseURL
-  # actualizado, y (2) haya fichas verificadas publicadas.
+  #
+  # El dominio propio ya está (cocheapto.com, comprado el 01/10/2026) y
+  # baseURL actualizado, así que la primera de las dos condiciones está
+  # cumplida. SIGUE EN TRUE por la segunda: hay 13 fichas verificadas de 45
+  # municipios con ZBE registrada, y abrirlo ahora haría que Google conociera
+  # el sitio a medias. La primera impresión de un dominio nuevo conviene
+  # cuidarla, y solo se tiene una.
+  #
+  # Poner en false cuando haya fichas verificadas suficientes y las páginas
+  # legales estén publicadas. Es un cambio de una línea y un despliegue.
   noindex = true
 
   # El feed de portada solo muestra estas secciones. Sin esto, las páginas

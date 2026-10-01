@@ -37,15 +37,27 @@ un bloqueo de ICANN y lo tienen todos los registradores.
 
 ---
 
-## Fase 0 · Comprar **[Carlos]**
+## Fase 0 · Comprar **[Carlos]** · HECHO el 01/10/2026
 
-- [ ] En el panel de Cloudflare: **Domain Registration** → **Register Domains**.
-- [ ] Buscar `papelesdelcoche.com` y comprobar el precio antes de pagar.
-- [ ] **Activar la renovación automática.** Perder el dominio por un descuido
-      dentro de dos años, con el sitio ya posicionado, es el peor final
-      posible y el más tonto.
-- [ ] Los datos del titular son reales (ICANN lo exige), pero la ocultación en
-      el WHOIS viene puesta, así que no quedan públicos.
+- [x] Comprado `cocheapto.com` en Cloudflare Registrar, con renovación
+      automática activada (10,46 $/año, que es el precio de coste).
+- [ ] **Verificar el correo del titular.** Llega un correo a la dirección del
+      registrante y hay que pulsarlo. Por exigencia de ICANN, **si no se
+      verifica en 15 días se pone el dominio en hold y le cambian los
+      servidores de nombres por un servidor de aparcamiento**, o sea que la
+      web se cae. Es el fallo más tonto y más caro de todo este documento.
+
+**Sobre el correo del titular, para cuando se quiera cambiar:** no es el
+correo corporativo del sitio, es el contacto de titularidad ante ICANN, y no
+sale público porque la ocultación del WHOIS viene incluida. Cambiarlo después
+no es editar un campo: dispara un *Change of Registrant* que tienen que
+aprobar la dirección vieja y la nueva, se cancela solo si nadie aprueba en
+siete días, y al aceptarlo **el dominio queda bloqueado para transferencias
+60 días**.
+
+Por eso ahí va un Gmail y no `contacto@cocheapto.com`: sería circular. Si
+algún día el dominio se queda en hold, ese correo dejaría de funcionar justo
+cuando ICANN necesita escribir para arreglarlo.
 
 Al terminar, el dominio ya está en tu cuenta, con su zona creada y apuntando a
 Cloudflare. **No hay fase 1, 2 ni 3.**
@@ -58,8 +70,8 @@ Un minuto.
 
 - [ ] En Cloudflare: **Workers & Pages** → el proyecto **webnormativas**.
 - [ ] **Settings** → **Domains & Routes** → **Add** → **Custom Domain**.
-- [ ] Escribir `papelesdelcoche.com` y confirmar.
-- [ ] Repetir con `www.papelesdelcoche.com`, para que las dos formas funcionen.
+- [ ] Escribir `cocheapto.com` y confirmar.
+- [ ] Repetir con `www.cocheapto.com`, para que las dos formas funcionen.
 
 Cloudflare crea los registros DNS y emite el certificado él solo. No hay que
 configurar nada de HTTPS.
@@ -73,11 +85,11 @@ LSSI** obliga a publicarla, y AdSense no aprueba un sitio sin aviso legal.
 
 Cloudflare **no da buzones**, solo reenvío. Su Email Routing *«route[s]
 incoming emails sent to your domain to existing mailboxes»*, o sea que
-`contacto@papelesdelcoche.com` acabaría en tu Gmail de siempre. Para cumplir
+`contacto@cocheapto.com` acabaría en tu Gmail de siempre. Para cumplir
 la LSSI vale: lo que exige es una dirección de contacto que funcione.
 
 - [ ] En Cloudflare: **Email** → **Email Routing** → activarlo.
-- [ ] Crear la dirección `contacto@papelesdelcoche.com` y apuntarla a tu Gmail.
+- [ ] Crear la dirección `contacto@cocheapto.com` y apuntarla a tu Gmail.
 - [ ] Confirmar el correo de verificación que llega a esa cuenta.
 
 Cloudflare añade solo los registros MX, SPF y DKIM.

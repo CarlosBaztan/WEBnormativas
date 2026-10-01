@@ -4,14 +4,15 @@
 */ -}}
 {{- /*
   Mientras `noindex` siga en true, el sitio pide a los buscadores que no lo
-  indexen. Es deliberado: estamos en un dominio temporal (.workers.dev) y sin
-  contenido verificado. Indexar ahora obligaria a migrar con un 301 sobre un
-  dominio joven, que es justo lo que queremos evitar.
+  indexen.
 
-  QUITARLO cuando se cumplan las dos condiciones:
-    1. El dominio propio esta conectado y baseURL actualizado.
-    2. Hay contenido real publicado (fichas verificadas).
-  Basta con poner noindex = false en hugo.toml.
+  La condicion del dominio YA ESTA CUMPLIDA: cocheapto.com se compro el
+  01/10/2026 y baseURL apunta ahi. Lo que falta es la otra: contenido
+  verificado suficiente. Abrirlo ahora haria que Google conociera el sitio a
+  medias, y la primera impresion de un dominio nuevo solo se tiene una vez.
+
+  QUITARLO cuando haya fichas verificadas suficientes y las paginas legales
+  publicadas. Basta con poner noindex = false en hugo.toml.
 
   NOTA: PaperMod ya emite su propio <meta name="robots" content="index, follow">
   y no hay forma barata de suprimirlo sin sobrescribir head.html entero. Durante
