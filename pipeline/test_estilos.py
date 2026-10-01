@@ -102,6 +102,84 @@ def test_los_colores_del_mapa_son_variables_css():
         assert token in texto, "sistema.css no declara %s" % token
 
 
+# ---------------------------------------------------------------------------
+# ESCALA TIPOGRAFICA
+#
+# El sitio tiene siete tamanos de letra y ni uno mas: 13, 15, 17, 19, 22, 26
+# y 34 px, declarados como --txt-xs .. --txt-3xl en sistema.css.
+#
+# El 02/10/2026 se midieron 1.513 elementos de texto en 17 paginas y
+# aparecieron cuatro tamanos que no estaban en esa lista, los cuatro
+# heredados de PaperMod: titulares de listado a 40 px (mas grandes que los de
+# las fichas), pies de figura a 16 px (por encima de las notas, que van a 15)
+# y `code` en 0.78em, que dentro de una nota caia a 11,7 px.
+#
+# La leccion no es "revisar la escala de vez en cuando". Es que un tamano
+# fuera de escala no se ve leyendo el CSS propio, porque viene del tema, y
+# solo aparece midiendo la pagina ya montada. Lo que si puede vigilar una
+# maquina es que NOSOTROS no metamos valores absolutos nuevos.
+# ---------------------------------------------------------------------------
+
+TOKENS_DE_TEXTO = ("--txt-xs", "--txt-sm", "--txt-md", "--txt-lg",
+                   "--txt-xl", "--txt-2xl", "--txt-3xl")
+
+# Reglas del tema que estaban fuera de la escala y que pisamos a proposito.
+# Si alguien borra una de estas lineas, vuelve el tamano del tema sin avisar.
+RESCATES = {
+    ".page-header h1": "titulares de las paginas de listado, que venian a 40 px",
+    "figcaption": "pies de figura, que venian a 16 px",
+    "code": "`code`, que venia en 0.78em y caia a 11,7 px dentro de una nota",
+    ".breadcrumbs": "migas de pan, que venian a 16 px",
+}
+
+
+def test_la_escala_tiene_siete_pasos_y_vive_en_sistema():
+    """Los siete tokens, declarados y en un solo sitio."""
+    ruta = os.path.join(CSS, "sistema.css")
+    texto = _sin_comentarios(io.open(ruta, encoding="utf-8").read(), "css")
+    for token in TOKENS_DE_TEXTO:
+        assert ("%s:" % token) in texto,             "sistema.css no declara %s" % token
+    for nombre, otro in _ficheros(CSS, ".css"):
+        if nombre == "sistema.css":
+            continue
+        for token in TOKENS_DE_TEXTO:
+            assert ("%s:" % token) not in otro,                 "%s vuelve a declarar %s; los tokens van solo en sistema.css" % (nombre, token)
+
+
+def test_ningun_tamano_de_letra_absoluto_fuera_de_sistema():
+    """
+    Un `font-size: 16px` suelto se sale de la escala y nadie lo nota.
+
+    Se permiten los relativos (`1em`, `0.8em`): esos heredan del padre a
+    proposito, que es otra intencion distinta de fijar un tamano.
+    """
+    for nombre, texto in _ficheros(CSS, ".css"):
+        if nombre == "sistema.css":
+            continue
+        for valor in re.findall(r"font-size:\s*([^;}]+)", texto):
+            valor = valor.strip()
+            if valor.startswith("var(--txt-"):
+                continue
+            if re.fullmatch(r"[0-9.]+em", valor):
+                continue
+            raise AssertionError(
+                "%s fija font-size: %s. Usa uno de los siete tokens "
+                "(%s) o un valor en em si lo que quieres es heredar."
+                % (nombre, valor, ", ".join(TOKENS_DE_TEXTO)))
+
+
+def test_siguen_pisadas_las_reglas_del_tema_fuera_de_escala():
+    """
+    PaperMod trae tamanos que no son de nuestra escala. Estan corregidos, y
+    esto comprueba que las correcciones no se hayan borrado.
+    """
+    todo = "".join(t for _, t in _ficheros(CSS, ".css"))
+    for selector, porque in RESCATES.items():
+        assert selector in todo, (
+            "ya no se corrige %s (%s). Sin esa regla vuelve el tamano del "
+            "tema, que no esta en la escala del sitio." % (selector, porque))
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0

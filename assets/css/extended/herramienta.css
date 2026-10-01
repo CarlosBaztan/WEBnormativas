@@ -426,10 +426,31 @@ a.pc-vz__zona:focus-visible {
   font-weight: 600;
 }
 
+/* «Cómo funciona»: texto de apoyo, por debajo de la herramienta.
+
+   Estaba en 17 px, o sea EXACTAMENTE lo mismo que las etiquetas, los
+   desplegables y los botones de la calculadora, y con un h2 de 26 px encima.
+   Medido el 02/10/2026 a petición de Carlos, que lo veía más grande que la
+   propia herramienta. No lo era, pero tampoco era más pequeño, y ese es el
+   fallo: es un texto que explica la herramienta y competía de tú a tú con
+   ella siendo la portada, la página que más importa.
+
+   Ahora va en --txt-sm, el mismo tamaño que las ayudas del formulario
+   (.pc-ayuda), que son exactamente el mismo tipo de contenido: explicaciones
+   sobre cómo usar esto. Y su titular baja de --txt-2xl (26, el h2 de un
+   artículo) a --txt-xl (22), porque esto no es un artículo. */
 .pc-explicacion {
   border-top: 1px solid var(--caja-borde);
   padding-top: 1.25rem;
   margin-top: 2rem;
+  font-size: var(--txt-sm);
+}
+
+/* `.md-content` delante por necesidad, no por gusto: `.md-content h2` de
+   normativa.css empata en especificidad con `.pc-explicacion h2`, y a
+   igualdad gana el que se concatena después, que es normativa.css. */
+.md-content .pc-explicacion h2 {
+  font-size: var(--txt-xl);
 }
 
 /* Contraste suficiente en ambos temas sin depender del color para comunicar. */

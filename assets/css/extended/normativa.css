@@ -688,6 +688,39 @@ body {
   font-size: var(--txt-sm);
 }
 
+/* ------------------------------------------------------------------
+   Los tres restos que quedaban fuera de la escala, encontrados midiendo
+   1.513 elementos de texto en 17 páginas (02/10/2026). La escala del sitio
+   tiene siete pasos (13, 15, 17, 19, 22, 26 y 34) y estos usaban 40, 16 y
+   11,7, que no son ninguno de ellos.
+   ------------------------------------------------------------------ */
+
+/* El h1 de las páginas de LISTADO se quedaba en los 40 px del tema mientras
+   el de las fichas valía 34: el título de /etiquetas/, /legal/ y /datos/ era
+   más grande que el de cualquier artículo. Se arreglaba `.post-title` pero
+   nadie miró `.page-header h1`, que es el que usan los listados. */
+.page-header h1 {
+  font-size: var(--txt-3xl);
+  line-height: var(--lh-titular);
+}
+
+/* Pie de figura a 16 px: un píxel por debajo del cuerpo y POR ENCIMA de las
+   notas y ayudas, que van a 15. Es texto secundario describiendo una imagen,
+   no puede pesar más que una nota. */
+.md-content figure > figcaption {
+  font-size: var(--txt-sm);
+}
+
+/* `code` venía en 0.78em, o sea relativo a su padre. Dentro de un párrafo
+   normal daba 13 px, pero dentro de una nota de 15 px caía a 11,7, que no
+   está en la escala y además cuesta leerlo. Al ser nombres de claves de
+   almacenamiento en la política de cookies, son justo lo que el visitante
+   necesita poder copiar. Tamaño fijo. */
+.post-content code,
+.md-content code {
+  font-size: var(--txt-xs);
+}
+
 .post-single .breadcrumbs {
   margin-bottom: var(--sp-2);
 }
