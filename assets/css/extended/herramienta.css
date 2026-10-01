@@ -426,33 +426,6 @@ a.pc-vz__zona:focus-visible {
   font-weight: 600;
 }
 
-/* «Cómo funciona»: texto de apoyo, por debajo de la herramienta.
-
-   Estaba en 17 px, o sea EXACTAMENTE lo mismo que las etiquetas, los
-   desplegables y los botones de la calculadora, y con un h2 de 26 px encima.
-   Medido el 02/10/2026 a petición de Carlos, que lo veía más grande que la
-   propia herramienta. No lo era, pero tampoco era más pequeño, y ese es el
-   fallo: es un texto que explica la herramienta y competía de tú a tú con
-   ella siendo la portada, la página que más importa.
-
-   Ahora va en --txt-sm, el mismo tamaño que las ayudas del formulario
-   (.pc-ayuda), que son exactamente el mismo tipo de contenido: explicaciones
-   sobre cómo usar esto. Y su titular baja de --txt-2xl (26, el h2 de un
-   artículo) a --txt-xl (22), porque esto no es un artículo. */
-.pc-explicacion {
-  border-top: 1px solid var(--caja-borde);
-  padding-top: 1.25rem;
-  margin-top: 2rem;
-  font-size: var(--txt-sm);
-}
-
-/* `.md-content` delante por necesidad, no por gusto: `.md-content h2` de
-   normativa.css empata en especificidad con `.pc-explicacion h2`, y a
-   igualdad gana el que se concatena después, que es normativa.css. */
-.md-content .pc-explicacion h2 {
-  font-size: var(--txt-xl);
-}
-
 /* Contraste suficiente en ambos temas sin depender del color para comunicar. */
 .pc-aviso--incierto,
 .pc-aviso--sindatos {
@@ -623,24 +596,53 @@ a.pc-vz__zona:focus-visible {
 /* ------------------------------------------------------------------------
    BLOQUE "QUE HACE Y QUE NO HACE ESTA HERRAMIENTA"
 
-   Aparece en /itv/pegatina/, /itv/cuando-me-toca/ y /zbe/mi-calle/, y no
-   tenia ni una regla: su <h2> caia al valor por defecto del navegador, 27 px,
-   mientras el resto de titulos de la misma pagina estaban a 32. Era el mismo
-   fallo que la clase md-content ausente, pero por otra via.
+   LA CLASE DE TODO EL CONTENIDO QUE EXPLICA COMO TRABAJAMOS. Aparece en la
+   portada, /itv/pegatina/, /itv/cuando-me-toca/ y /zbe/mi-calle/. Si manana
+   hay otra herramienta con su parrafo de "que hace y que no hace", va aqui y
+   no en una clase nueva.
 
-   No es un titulo de articulo, es el rotulo de un bloque que habla de la
-   herramienta, asi que va por debajo de los de la prosa y por encima del
-   cuerpo. Y lleva filete arriba, que es lo que lo separa: no hace falta
-   meterlo en una caja.
+   Historia, porque explica por que esta escrito asi:
+
+   1. No tenia ni una regla: su <h2> caia al valor por defecto del navegador,
+      27 px, mientras el resto de titulos de la pagina estaban a 32.
+   2. La portada tenia su propio bloque identico con otro nombre,
+      `.pc-explicacion`, con los MISMOS valores escritos en rem en vez de con
+      tokens. Dos nombres para el mismo componente es como se llega a que uno
+      se arregle y el otro no, que es exactamente lo que paso el 02/10/2026:
+      se corrigio el tamano de la portada y los tres de las herramientas se
+      quedaron en 17 px. Fusionados.
+
+   EL TAMANO, que es la decision de fondo (Carlos, 02/10/2026):
+
+   Esto es texto SECUNDARIO. Explica la herramienta, no es la herramienta. En
+   17 px pesaba exactamente lo mismo que las etiquetas, los desplegables y los
+   botones del formulario, y competia con ellos. Va en --txt-sm, el mismo
+   tamano que `.pc-ayuda`, que es el mismo tipo de contenido: explicaciones
+   sobre como usar esto.
+
+   El titular no es un titulo de articulo, es el rotulo de un bloque: por
+   debajo de los de la prosa (--txt-xl, no --txt-2xl) y por encima del cuerpo.
+   Y lleva filete arriba, que es lo que lo separa: no hace falta una caja.
+
+   Lo que NO entra aqui: /metodologia/ y /sobre/. Ahi el como trabajamos es el
+   contenido principal de la pagina, lo que el visitante viene a leer, y
+   encogerlo seria el mismo error de jerarquia al reves.
    ------------------------------------------------------------------------ */
 
 .pc-descargo {
   margin: var(--sp-8) 0 var(--sp-6);
   padding-top: var(--sp-5);
   border-top: 1px solid var(--caja-borde);
+  /* Ver la nota de arriba: el cuerpo va en --txt-sm, igual que .pc-ayuda. */
+  font-size: var(--txt-sm);
 }
 
-.pc-descargo h2 {
+/* El segundo selector no es un adorno. En las paginas de herramienta el
+   bloque queda FUERA de `.md-content` y basta con `.pc-descargo h2`; en la
+   portada queda DENTRO, y ahi `.md-content h2` (normativa.css) empata en
+   especificidad y gana por ir despues en la concatenacion. */
+.pc-descargo h2,
+.md-content .pc-descargo h2 {
   margin: 0 0 var(--sp-3);
   font-size: var(--txt-xl);
   line-height: var(--lh-titular);

@@ -267,7 +267,10 @@
       {{ partial "anuncio.html" (dict "ubicacion" "bajo-resultado" "contexto" .) }}
     </div>
 
-    <section class="pc-explicacion">
+    {{/* Misma clase que el bloque equivalente de /itv/ y /zbe/mi-calle/.
+         Antes se llamaba `pc-explicacion` y tenia su propio CSS con valores
+         identicos: dos nombres para el mismo componente. */}}
+    <section class="pc-descargo">
       <h2>Cómo funciona</h2>
       <p>Esta herramienta deduce el distintivo ambiental a partir del tipo de vehículo, su combustible y su fecha de matriculación, siguiendo los criterios publicados por la DGT. Después contrasta ese distintivo con la ordenanza del municipio que elijas.</p>
       <p><strong>Es una deducción, no un dato oficial.</strong> El distintivo lo asigna la DGT en el Registro de Vehículos, y hay excepciones: importaciones, reclasificaciones y homologaciones especiales. El dato que consta para tu matrícula lo da la propia DGT en su sede electrónica.</p>
