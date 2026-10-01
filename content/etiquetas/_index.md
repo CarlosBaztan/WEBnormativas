@@ -15,9 +15,15 @@ draft: false
 
 El distintivo ambiental clasifica los vehículos según sus emisiones. Hay **cuatro distintivos y un quinto caso: no tener ninguno**. De él depende si puedes entrar en una zona de bajas emisiones.
 
-{{< imagen src="img/distintivos/todos.png" ancho="380"
-    alt="Los cuatro distintivos ambientales de la DGT: 0 emisiones (azul), ECO (verde y azul), C (verde) y B (amarillo)."
-    pie="Los distintivos que emite la DGT" >}}
+{{< tira-distintivos pie="Los distintivos que emite la DGT" >}}
+
+## ¿Cuál te corresponde a ti?
+
+Dilo aquí y te decimos qué distintivo deduce la DGT de tus datos. Es la misma
+deducción que hace [la herramienta de la portada](/), sin la parte del
+municipio.
+
+{{< herramienta-distintivo >}}
 
 ## Los cinco casos
 

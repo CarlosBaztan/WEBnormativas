@@ -76,6 +76,16 @@
   var selTipo = document.getElementById('tipo-vehiculo');
   var selMunicipio = document.getElementById('municipio');
 
+  /* Dos formularios usan este script: el completo de la portada y el reducido
+     de /etiquetas/, que solo deduce el distintivo y no pregunta municipio.
+     Lo distingue `data-modo="distintivo"` en el <form>, que pone el partial
+     herramienta-distintivo.html.
+
+     Se hace asi, y no con un segundo script, porque la deduccion del
+     distintivo es un criterio normativo: escrito dos veces acabaria diciendo
+     dos cosas distintas en cuanto alguien corrigiera solo una. */
+  var soloDistintivo = form && form.dataset.modo === 'distintivo';
+
   if (!form || !salida) return;
 
   // --- Almacenamiento local (puede fallar en incógnito) -------------------
@@ -739,7 +749,7 @@
     // pero no debe interponerse entre la pregunta y su respuesta.
     salida.innerHTML =
       pintarDistintivo(res) +
-      pintarMunicipio(slug, res.distintivo) +
+      (soloDistintivo ? '' : pintarMunicipio(slug, res.distintivo)) +
       bloqueConsultaOficial();
 
     var anclaAnuncio = document.getElementById('anuncio-bajo-resultado');

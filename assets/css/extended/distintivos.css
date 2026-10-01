@@ -96,3 +96,55 @@
   opacity: 0.8;
   text-align: left;
 }
+
+/* --- Los cuatro distintivos en fila ------------------------------------- */
+
+/* Sustituye a la rejilla 2x2 que venia dibujada dentro de todos.png.
+   Decision de Carlos del 02/10/2026: «las 4 seguidas horizontalmente, si
+   hace falta empequenecerlas para que cuadren en el espacio disponible».
+
+   `flex` con `min-width: 0` en los elementos y `max-width: 100%` en la
+   imagen: las cuatro se reparten el ancho y se encogen juntas cuando la
+   columna se estrecha, en vez de desbordar o saltar de linea a destiempo.
+   Es la cadena de encogido que ya esta anotada en CLAUDE.md: hace falta en
+   TODOS los eslabones, no solo en el ultimo. */
+.tira-distintivos {
+  margin: var(--sp-6) 0;
+}
+
+.tira-distintivos__lista {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--sp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tira-distintivos__lista > li {
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.tira-distintivos__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 150px;
+}
+
+/* Por debajo de unos 30rem las cuatro en fila quedan tan pequenas que el
+   codigo de barras y la letra se pierden. Ahi si vuelven a dos filas. */
+@media (max-width: 30rem) {
+  .tira-distintivos__lista {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-3);
+  }
+
+  .tira-distintivos__lista > li {
+    flex: 0 0 calc(50% - var(--sp-3));
+  }
+}

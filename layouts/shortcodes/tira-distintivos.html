@@ -1,0 +1,53 @@
+{{- /*
+  tira-distintivos.html — los cuatro distintivos en una fila horizontal.
+
+  Uso en un .md:
+    {{< tira-distintivos pie="Los distintivos que emite la DGT" >}}
+
+  POR QUE NO SE USA img/distintivos/todos.png
+
+  Ese fichero es un PNG con los cuatro en una rejilla de 2x2 ya dibujada, asi
+  que la disposicion estaba cocida dentro de la imagen y no habia forma de
+  ponerlos en fila sin volver a dibujarla. Ademas, al reducirlo para que
+  cupiera, se reducian los cuatro a la vez y el codigo de barras de cada
+  pegatina se volvia una mancha.
+
+  Aqui se montan desde las cuatro imagenes sueltas, que ya existen porque las
+  usa la tabla de /etiquetas/. Ventajas: cada una lleva su propio alt (el
+  color ES informacion y solo esta en la imagen), se sirven a 1x y 2x, y la
+  fila se adapta sola al ancho disponible.
+
+  Parametros:
+    pie    — texto del <figcaption>. Opcional.
+    ancho  — ancho de cada pegatina en px. Por defecto 150, que es lo que
+             cabe en la columna de contenido dejando aire entre las cuatro.
+*/ -}}
+
+{{- $ancho := int (.Get "ancho" | default 150) }}
+{{- $pie := .Get "pie" }}
+
+{{- /* El alt describe el color porque es lo unico que distingue un distintivo
+       de otro para quien no ve la imagen, y aqui la imagen ES el contenido.
+       En el menu o junto a un rotulo que ya dice "ECO" iria vacio. */ -}}
+{{- $alts := dict
+      "0"   "Distintivo 0 emisiones, azul"
+      "ECO" "Distintivo ECO, mitad verde y mitad azul"
+      "C"   "Distintivo C, verde"
+      "B"   "Distintivo B, amarillo" }}
+
+<figure class="tira-distintivos">
+  <ul class="tira-distintivos__lista">
+    {{- range slice "0" "ECO" "C" "B" }}
+    <li>
+      {{ partial "distintivo.html" (dict
+           "clave" .
+           "ancho" $ancho
+           "clase" "tira-distintivos__img"
+           "alt"   (index $alts .)) }}
+    </li>
+    {{- end }}
+  </ul>
+  {{- with $pie }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>

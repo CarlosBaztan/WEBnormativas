@@ -656,3 +656,45 @@ a.pc-vz__zona:focus-visible {
 .pc-descargo p:last-child {
   margin-bottom: 0;
 }
+
+/* ------------------------------------------------------------------------
+   VARIANTE COMPACTA DEL FORMULARIO
+
+   Para cuando la herramienta es un apoyo de la pagina y no su contenido
+   principal. Hoy solo la usa /etiquetas/, donde la calculadora va debajo de
+   las cuatro pegatinas y lo que manda es la explicacion de los distintivos.
+
+   QUE SE ENCOGE Y QUE NO, que esto tiene una trampa:
+
+   Se aprietan los huecos, se reduce el rotulo del bloque y se limita el
+   ancho, de modo que el conjunto ocupa menos y se lee como un accesorio.
+
+   NO se toca el tamano de letra de los campos. Por debajo de 16 px, Safari
+   en iPhone hace zoom automatico al enfocar un <input> o un <select>, y la
+   pagina se queda descuadrada hasta que el usuario la vuelve a alejar a
+   mano. Asi que los campos se quedan en --txt-md aunque el bloque sea
+   "ligeramente mas pequeno": el tamano pequeno que se pide es del conjunto,
+   no del texto que hay que poder escribir.
+   ------------------------------------------------------------------------ */
+
+.pc-form--compacta {
+  max-width: 34rem;
+  margin: var(--sp-5) 0 var(--sp-6);
+}
+
+.pc-form--compacta fieldset {
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  margin: 0 0 var(--sp-3);
+}
+
+.pc-form--compacta legend {
+  font-size: var(--txt-md);
+}
+
+.pc-form--compacta .pc-campo {
+  margin: 0 0 var(--sp-3);
+}
+
+.pc-form--compacta .pc-ayuda {
+  margin-top: var(--sp-1);
+}

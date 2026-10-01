@@ -1,0 +1,321 @@
+{{- /*
+  herramienta-distintivo.html — la calculadora del distintivo ambiental.
+
+  UN SOLO SITIO PARA LA HERRAMIENTA. Vive aqui, y no dentro de index.html,
+  desde el 02/10/2026: Carlos pidio ponerla tambien en /etiquetas/, y copiar
+  200 lineas de formulario habria dejado dos versiones de la misma cosa. Eso
+  ya paso hoy con `.pc-explicacion` y `.pc-descargo`, dos clases para el mismo
+  bloque, y el resultado fue que se arreglo una y la otra se quedo atras.
+
+  La DEDUCCION del distintivo no esta aqui ni se duplica: la hace derivar()
+  en assets/js/puedo-circular.js leyendo data/etiquetas_dgt.json. Un criterio
+  normativo escrito dos veces acaba diciendo dos cosas distintas.
+
+  PARAMETROS
+
+    conMunicipio  true  -> formulario completo: deduce el distintivo y lo
+                           contrasta con la ordenanza del municipio elegido.
+                           Es la portada.
+                  false -> solo el distintivo. El JavaScript lo detecta por
+                           `data-modo="distintivo"` en el <form> y se salta
+                           todo el bloque del municipio.
+
+    compacta      true  -> anade .pc-form--compacta, que aprieta un punto los
+                           huecos. Para cuando la herramienta es un apoyo de
+                           la pagina y no su contenido principal.
+
+    pagina        el contexto de pagina, que necesita partials/anuncio.html.
+
+  OJO con $verificados: se declara FUERA del `if`. Si se declara dentro, Hugo
+  la limita a ese ambito y el <script> de datos no la ve. El build falla con
+  "undefined variable", pero solo al compilar, no al leer la plantilla.
+
+  LO QUE NO ENTRA AQUI: el texto de "como funciona". Es prosa propia de cada
+  pagina y lo pone quien llama, con .pc-descargo.
+*/ -}}
+
+{{- $conMunicipio := .conMunicipio | default false }}
+{{- $compacta := .compacta | default false }}
+{{- $pagina := .pagina }}
+{{- $verificados := slice }}
+
+{{- if $conMunicipio }}
+{{/*
+  ------------------------------------------------------------------
+  MUNICIPIOS PUBLICABLES
+
+  La única fuente de verdad es el front matter de las fichas de
+  content/zbe/. Un municipio sale en el selector cuando su ficha
+  tiene estado_dato: "verificado". No hace falta tocar código ni
+  esta plantilla para publicar uno nuevo.
+
+  data/zbe.json (salida del pipeline) NO alimenta el selector: ahí
+  todos los municipios están en pendiente_verificacion, y sirve para
+  el listado de /zbe/, no para responder "¿puedo circular?".
+  ------------------------------------------------------------------
+*/}}
+{{/*
+  Paginas de zona, para poder enlazar cada zona con la pagina que explica
+  sus condiciones. Un veredicto de "solo con condiciones" sin un sitio
+  donde leer cuales son esas condiciones no le sirve a nadie.
+*/}}
+{{- $paginasZona := where (where site.RegularPages "Section" "zbe") "Params.tipo" "zona" }}
+
+{{- range where (where site.RegularPages "Section" "zbe") "Params.estado_dato" "verificado" }}
+  {{- $p := .Params }}
+
+  {{/*
+    En la sección zbe/ conviven tres cosas: fichas de municipio, páginas de
+    zona (/zbe/madrid/distrito-centro/) y artículos generales (/zbe/que-es/).
+    Solo las primeras van al selector y pasan por la validación de
+    codigo_ine. `tipo` lo distingue, y "municipio" es el valor por defecto.
+  */}}
+  {{- if ne ($p.tipo | default "municipio") "municipio" }}{{ continue }}{{ end }}
+  {{/* Se captura aquí: dentro de `with`, el contexto deja de ser la página. */}}
+  {{- $ruta := .File.Path }}
+
+  {{/*
+    Test que rompe el build: una ficha publicada sin trazabilidad
+    completa no puede llegar a producción. errorf aborta `hugo`.
+  */}}
+  {{- $faltan := slice }}
+  {{- range slice "codigo_ine" "fuente_url" "fecha_verificacion" }}
+    {{- if not (index $p .) }}{{ $faltan = $faltan | append . }}{{ end }}
+  {{- end }}
+  {{- with $faltan }}
+    {{- errorf "FICHA PUBLICADA INCOMPLETA: content/%s tiene estado_dato: verificado pero le faltan estos campos obligatorios: %s. O los rellenas, o pones estado_dato: pendiente y draft: true." $ruta (delimit . ", ") }}
+  {{- end }}
+
+  {{/*
+    La herramienta responde POR ZONA. Los municipios con varias (Madrid)
+    las declaran en `zonas`; los que tienen una sola (Bilbao) usan los
+    campos planos, que es lo natural y lo que genera el archetype.
+
+    Sin esto, una ficha plana perfectamente verificada haria que la
+    herramienta dijese "no consta ninguna zona verificada", que es
+    justo lo contrario de la verdad. Se sintetiza la zona unica.
+
+    Valencia queda fuera a proposito: su lista esta vacia porque no hay
+    reglas en vigor, y una lista vacia aqui es falsa.
+  */}}
+  {{- $zonas := $p.zonas | default slice }}
+  {{- if and (not $zonas) $p.etiquetas_permitidas }}
+    {{- $zonas = slice (dict
+          "id"                     .File.ContentBaseName
+          "nombre"                 ($p.municipio | default .Title)
+          "distintivos_permitidos" $p.etiquetas_permitidas
+          "horario"                ($p.horario_restriccion | default "")
+          "articulo"               ($p.articulo | default "")
+          "nota"                   ($p.nota_zona | default "")
+          "caducan"                ($p.caducan | default dict)
+        ) }}
+  {{- end }}
+
+  {{/*
+    Cada zona lleva la URL de su propia pagina cuando existe, cruzando
+    municipio y zona_id. No se construye a mano: si alguien renombra una
+    pagina de zona, el enlace desaparece en vez de romperse.
+  */}}
+  {{- $muni := $p.municipio | default .Title }}
+  {{- $conUrl := slice }}
+  {{- range $z := $zonas }}
+    {{- $urlZona := "" }}
+    {{- range $pz := $paginasZona }}
+      {{- if and (eq ($pz.Params.municipio | default "") $muni) (eq ($pz.Params.zona_id | default "") (index $z "id")) }}
+        {{- $urlZona = $pz.RelPermalink }}
+      {{- end }}
+    {{- end }}
+    {{- $conUrl = $conUrl | append (merge $z (dict "url" $urlZona)) }}
+  {{- end }}
+  {{- $zonas = $conUrl }}
+
+  {{- $verificados = $verificados | append (dict
+        "slug"               .File.ContentBaseName
+        "municipio"          ($p.municipio | default .Title)
+        "codigo_ine"         $p.codigo_ine
+        "provincia"          $p.provincia
+        "url"                .RelPermalink
+        "fuente_nombre"      $p.fuente_nombre
+        "fuente_url"         $p.fuente_url
+        "fuente_boletin"     ($p.fuente_boletin | default "")
+        "fecha_verificacion" $p.fecha_verificacion
+        "sancion"            ($p.sancion_tipificacion | default "")
+        "estado_zbe"         ($p.estado_zbe | default "")
+        "zonas"              $zonas
+      ) }}
+{{- end }}
+
+{{/*
+  Datos inyectados desde Hugo. Nunca se codifican en el JS.
+  safeJS es imprescindible: sin él, html/template trata el bloque como
+  contexto JS y serializa el JSON como cadena escapada.
+*/}}
+{{- end }}
+
+
+<script type="application/json" id="datos-etiquetas">{{ site.Data.etiquetas_dgt | jsonify | safeJS }}</script>
+{{- if $conMunicipio }}
+<script type="application/json" id="datos-municipios">{{ $verificados | jsonify | safeJS }}</script>
+{{- end }}
+
+
+
+{{/*
+  Imágenes de los distintivos para el recuadro del resultado.
+
+  Van aparte de datos-etiquetas y no dentro de él: aquel fichero son las
+  reglas de asignación de la DGT, y las rutas de las imágenes no son un
+  dato normativo sino una decisión de presentación que además depende del
+  procesado de Hugo (el nombre del fichero lleva un hash).
+*/}}
+{{- $imgs := dict }}
+{{- range $clave, $d := site.Data.etiquetas_dgt.distintivos }}
+  {{- with resources.Get (printf "img/distintivos/%s.png" (lower $clave)) }}
+    {{- /* 48 px, no 72: la pegatina sostenia visualmente un recuadro que
+           ya no existe. Ahora acompana al rotulo en vez de anunciarlo.
+           El tamano se cambia AQUI y no solo en el CSS porque los
+           atributos width y height del <img> salen de estas medidas y
+           son los que reservan el hueco contra los saltos de maqueta. */}}
+    {{- $x1 := .Resize "48x png Lanczos" }}
+    {{- $x2 := .Resize "96x png Lanczos" }}
+    {{- $imgs = merge $imgs (dict $clave (dict
+          "src"    $x1.RelPermalink
+          "src2x"  $x2.RelPermalink
+          "ancho"  $x1.Width
+          "alto"   $x1.Height)) }}
+  {{- end }}
+{{- end }}
+<script type="application/json" id="datos-distintivos-img">{{ $imgs | jsonify | safeJS }}</script>
+
+
+
+<form id="form-circular" novalidate
+      class="pc-form{{ if $compacta }} pc-form--compacta{{ end }}"
+      {{ if not $conMunicipio }}data-modo="distintivo"{{ end }}>
+  <fieldset>
+    <legend>Tu vehículo</legend>
+
+    <div class="pc-campo">
+      <label for="tipo-vehiculo">Tipo de vehículo</label>
+      <select id="tipo-vehiculo" name="tipo-vehiculo">
+        <option value="turismo">Turismo</option>
+        <option value="furgoneta_ligera">Furgoneta ligera</option>
+        <option value="ocho_plazas_o_pesado">Vehículo de 8 o más plazas, o pesado</option>
+        <option value="moto">Motocicleta o ciclomotor</option>
+      </select>
+    </div>
+
+    <div id="grupo-combustion">
+      <div class="pc-campo">
+        <label for="tecnologia">Combustible o tecnología</label>
+        <select id="tecnologia" name="tecnologia">
+          <option value="gasolina">Gasolina</option>
+          <option value="diesel">Diésel</option>
+          <option value="electrico_bateria">Eléctrico de batería</option>
+          <option value="electrico_autonomia_extendida">Eléctrico de autonomía extendida</option>
+          <option value="pila_combustible">Pila de combustible (hidrógeno)</option>
+          <option value="hibrido_enchufable">Híbrido enchufable</option>
+          <option value="hibrido_no_enchufable">Híbrido no enchufable</option>
+          <option value="gnc">Gas natural comprimido (GNC)</option>
+          <option value="gnl">Gas natural licuado (GNL)</option>
+          <option value="glp">Gas licuado del petróleo (GLP)</option>
+        </select>
+      </div>
+
+      <div class="pc-campo pc-campo--fecha">
+        <div>
+          <label for="anio">Año de matriculación</label>
+          <input type="number" id="anio" name="anio" min="1900" max="2100" step="1" inputmode="numeric" placeholder="2014">
+        </div>
+        <div>
+          <label for="mes">Mes <span class="pc-opcional">(si lo sabes)</span></label>
+          <select id="mes" name="mes">
+            <option value="">No lo sé</option>
+            <option value="1">Enero</option><option value="2">Febrero</option>
+            <option value="3">Marzo</option><option value="4">Abril</option>
+            <option value="5">Mayo</option><option value="6">Junio</option>
+            <option value="7">Julio</option><option value="8">Agosto</option>
+            <option value="9">Septiembre</option><option value="10">Octubre</option>
+            <option value="11">Noviembre</option><option value="12">Diciembre</option>
+          </select>
+        </div>
+      </div>
+      <p class="pc-ayuda">Cuenta la fecha de matriculación, no la de fabricación ni la de compra. El mes solo importa si tu año cae justo en un límite.</p>
+
+      <div class="pc-campo" id="campo-autonomia" hidden>
+        <label for="autonomia">Autonomía eléctrica homologada, en km</label>
+        <input type="number" id="autonomia" name="autonomia" min="0" max="1000" step="1" inputmode="numeric" placeholder="45">
+        <p class="pc-ayuda">A partir de 40 km corresponde el distintivo 0; por debajo, el ECO.</p>
+      </div>
+    </div>
+  </fieldset>
+
+{{- if $conMunicipio }}
+
+  <fieldset>
+    <legend>Municipio</legend>
+    <div class="pc-campo">
+      <label for="municipio">Municipio que quieres consultar</label>
+      <select id="municipio" name="municipio">
+        <option value="">Elige un municipio</option>
+        {{- range $verificados }}
+        <option value="{{ .slug }}">{{ .municipio }}</option>
+        {{- end }}
+      </select>
+
+      {{- /* Texto de cobertura: sale de data/cobertura.json, no del código. */}}
+      {{- with site.Data.cobertura }}
+      <p class="pc-ayuda pc-cobertura">
+        {{ .aviso_cobertura }}
+        {{- with .proximos }} {{ site.Data.cobertura.etiqueta_proximos }} {{ delimit . ", " " y " }}.{{ end }}
+      </p>
+      {{- end }}
+
+      {{- if not $verificados }}
+      <p class="pc-ayuda">Todavía no hay ninguna ordenanza municipal verificada. Estamos revisándolas una a una; hasta entonces no publicamos reglas de acceso.</p>
+      {{- end }}
+    </div>
+  </fieldset>
+{{- end }}
+
+
+
+  <div class="pc-acciones">
+    <button type="submit" class="pc-boton">Consultar</button>
+    <button type="button" id="borrar-perfil" class="pc-boton pc-boton--secundario">Borrar mis datos</button>
+  </div>
+
+  <p id="aviso-guardado" class="pc-ayuda" hidden>Hemos rellenado el formulario con el vehículo que ya consultaste en esta web.</p>
+  <p class="pc-ayuda pc-privacidad">Los datos del vehículo se guardan solo en tu navegador, para no tener que repetirlos. No se envían a ningún sitio.</p>
+</form>
+
+
+
+{{/* Región anunciada por lectores de pantalla al aparecer el resultado. */}}
+<div id="resultado" class="pc-resultado" role="region" aria-live="polite" aria-label="Resultado de la consulta">
+  {{/* El respaldo sin JavaScript lleva a paginas propias, no fuera.
+
+       Antes mandaba a la sede electronica de la DGT. Ademas de romper la
+       regla de enlazar solo a fuentes normativas, era peor respaldo: la
+       sede te dice que distintivo tienes, pero no si puedes entrar en una
+       ciudad, que es a lo que viene quien abre esta pagina. Las dos
+       paginas de abajo si responden eso. */}}
+  <noscript>
+    <div class="pc-aviso">
+      <p class="pc-aviso__titulo">Esta herramienta necesita JavaScript</p>
+      <p>Sin él puedes seguir el mismo camino a mano:
+        averigua tu distintivo en <a href="{{ "etiquetas/" | relURL }}">las etiquetas de la DGT</a>,
+        que explican los cinco casos posibles, y después mira tu ciudad en
+        <a href="{{ "zbe/" | relURL }}">Zonas de Bajas Emisiones</a>.</p>
+    </div>
+  </noscript>
+</div>
+
+{{/* Regla dura 4: el anuncio va SIEMPRE debajo del resultado, nunca encima del formulario. */}}
+<div id="anuncio-bajo-resultado" hidden>
+  {{ partial "anuncio.html" (dict "ubicacion" "bajo-resultado" "contexto" $pagina) }}
+</div>
+
+
+{{ $js := resources.Get "js/puedo-circular.js" | minify | fingerprint }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>

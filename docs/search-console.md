@@ -56,8 +56,17 @@ añadir el TXT son dos minutos.
 6. Guardar, volver a Search Console y pulsar **Verificar**. Cloudflare propaga
    en segundos, así que normalmente verifica a la primera. Si falla, esperar
    unos minutos y reintentar: el registro tarda en verse desde fuera.
-7. Ya dentro, en el menú lateral: **Sitemaps** → escribir `sitemap.xml` →
-   **Enviar**.
+7. Ya dentro, en el menú lateral: **Sitemaps** → escribir la **URL
+   completa**, `https://cocheapto.com/sitemap.xml` → **Enviar**.
+
+   **Ojo aquí, que es el paso donde falla todo el mundo.** En una propiedad de
+   Dominio el campo NO lleva el dominio escrito delante, porque la propiedad
+   cubre el ápex, el `www`, `http` y `https` a la vez y Google no puede
+   adivinar a cuál te refieres. Si escribes solo `sitemap.xml` responde
+   «Dirección de sitemap no válida». En las propiedades de prefijo de URL sí
+   sale el dominio delante del campo y ahí basta la ruta; de ahí viene la
+   confusión, y de ahí venía la instrucción equivocada que tenía este
+   documento el 02/10/2026.
 
 **No borrar el registro TXT después.** Google lo vuelve a comprobar cada
 cierto tiempo y, si no lo encuentra, retira la verificación.
