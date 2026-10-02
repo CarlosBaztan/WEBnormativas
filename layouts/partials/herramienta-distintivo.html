@@ -154,51 +154,79 @@
       <label for="municipio">Municipio que quieres consultar</label>
       <select id="municipio" name="municipio">
         <option value="">Elige un municipio</option>
-        {{- range $verificados }}
+        {{- /* Orden alfabetico (Carlos, 02/10/2026). Antes salia en el orden
+               en que Hugo devuelve las paginas, que es por fecha: quien busca
+               su ciudad en una lista de ocho que crecera a 45 no puede tener
+               que leerlas todas. */}}
+        {{- range sort $verificados "municipio" }}
         <option value="{{ .slug }}">{{ .municipio }}</option>
         {{- end }}
       </select>
 
-      {{- /* Texto de cobertura: sale de data/cobertura.json, no del código.
+      {{- /* LINEA DE COBERTURA, GENERADA DEL DATO (02/10/2026)
 
-             LOS NOMBRES DE MUNICIPIO SE ENLAZAN SOLOS (02/10/2026).
+             Antes era una frase escrita a mano en data/cobertura.json. Con el
+             fichero se podia actualizar sin tocar codigo, que era la idea,
+             pero es una lista que duplica algo calculable: cada municipio que
+             se verifique obliga a acordarse de editarla, y el dia que no se
+             haga, la web dira una cosa y el selector otra.
 
-             Por que aqui y no en un bloque aparte: la portada NO tenia ningun
-             enlace rastreable a siete de sus ocho fichas. El <option> del
-             selector no es un enlace, y los que pinta el resultado los crea
-             el JavaScript despues de pulsar, asi que no estan en el HTML que
-             recibe Google. Solo Madrid se enlazaba, y desde el menu lateral.
+             Ahora salen de las propias fichas y no pueden desincronizarse.
 
-             Se probo con un bloque de «acceso directo a tu ciudad» debajo de
-             la herramienta y Carlos lo rechazo con razon: para una persona es
-             un camino que ya existe (el selector lleva a la misma ficha), y
-             encima prometia respuesta de Valencia, que tiene la ficha
-             verificada pero la ZBE «prevista» y sin distintivos en vigor.
+             DOS GRUPOS, Y LA DIFERENCIA IMPORTA:
 
-             Asi que los enlaces van donde los nombres YA estaban escritos.
-             Cero interfaz nueva, y el enlace aparece justo donde se nombra.
+               Con respuesta  la ficha esta verificada Y alguna de sus zonas
+                              declara distintivos en vigor. Solo estos pueden
+                              responder «¿puedo entrar?».
+               Siguientes     tienen ficha publicada pero todavia no responden.
+                              Es el caso de Valencia (verificada, pero su ZBE
+                              esta «prevista» y con la lista vacia) y de
+                              Benidorm (estado_dato: parcial). Mas los que
+                              estan en cola y aun no tienen pagina, que siguen
+                              escritos a mano en el JSON porque no hay dato del
+                              que sacarlos.
 
-             El reemplazo va de nombre mas largo a mas corto para que un
-             municipio cuyo nombre contenga a otro no se parta por dentro. */}}
-      {{- with site.Data.cobertura }}
-      {{- $texto := .aviso_cobertura }}
-      {{- with .proximos }}
-        {{- $texto = printf "%s %s %s." $texto site.Data.cobertura.etiqueta_proximos (delimit . ", " " y ") }}
-      {{- end }}
-      {{- $fichas := where (where site.RegularPages "Section" "zbe") "Params.tipo" "!=" "zona" }}
-      {{- range sort $fichas "Params.municipio" "desc" }}
-        {{- /* Se captura AQUI: dentro del `with` de abajo el contexto deja de
-               ser la pagina, y `$` apunta al dict del partial, no a ella.
-               Ya esta anotado en el proyecto; vuelto a pisar el 02/10/2026. */}}
-        {{- $url := .RelPermalink }}
-        {{- with .Params.municipio }}
-          {{- if in $texto . }}
-            {{- $texto = replace $texto . (printf `<a href="%s">%s</a>` $url .) 1 }}
+             La comprobacion de «tiene respuesta» es la misma que hace
+             zonaVerificada() en puedo-circular.js: una lista de distintivos,
+             no la cadena "pendiente" que usa Madrid ZBE. */}}
+      {{- $conRespuesta := slice }}
+      {{- $sinRespuesta := slice }}
+      {{- range $verificados }}
+        {{- $responde := false }}
+        {{- range .zonas }}
+          {{- with .distintivos_permitidos }}
+            {{- if and (reflect.IsSlice .) (gt (len .) 0) }}{{ $responde = true }}{{ end }}
           {{- end }}
         {{- end }}
+        {{- if $responde }}
+          {{- $conRespuesta = $conRespuesta | append . }}
+        {{- else }}
+          {{- $sinRespuesta = $sinRespuesta | append . }}
+        {{- end }}
       {{- end }}
-      <p class="pc-ayuda pc-cobertura">{{ $texto | safeHTML }}</p>
+
+      {{- /* Las fichas de nivel C (estado_dato: parcial) no entran en
+             $verificados, asi que se recogen aparte. */}}
+      {{- range where (where (where site.RegularPages "Section" "zbe") "Params.tipo" "!=" "zona") "Params.estado_dato" "parcial" }}
+        {{- $sinRespuesta = $sinRespuesta | append (dict "municipio" (.Params.municipio | default .Title) "url" .RelPermalink) }}
       {{- end }}
+
+      {{- $enlaza := slice }}
+      {{- range sort $conRespuesta "municipio" }}
+        {{- $enlaza = $enlaza | append (printf `<a href="%s">%s</a>` .url .municipio) }}
+      {{- end }}
+      {{- $luego := slice }}
+      {{- range sort $sinRespuesta "municipio" }}
+        {{- $luego = $luego | append (printf `<a href="%s">%s</a>` .url .municipio) }}
+      {{- end }}
+      {{- range site.Data.cobertura.proximos }}
+        {{- $luego = $luego | append . }}
+      {{- end }}
+
+      <p class="pc-ayuda pc-cobertura">
+        {{- with $enlaza }}{{ site.Data.cobertura.etiqueta_verificados }} {{ delimit . ", " " y " | safeHTML }}.{{ end }}
+        {{- with $luego }} {{ site.Data.cobertura.etiqueta_proximos }} {{ delimit . ", " " y " | safeHTML }}.{{ end }}
+      </p>
 
       {{- if not $verificados }}
       <p class="pc-ayuda">Todavía no hay ninguna ordenanza municipal verificada. Estamos revisándolas una a una; hasta entonces no publicamos reglas de acceso.</p>

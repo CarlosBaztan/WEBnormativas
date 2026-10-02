@@ -1,13 +1,16 @@
 {
   "_meta": {
-    "descripcion": "Texto de cobertura que se muestra bajo el selector de municipios de la herramienta.",
-    "por_que": "Está aquí y no en la plantilla para poder actualizarlo sin tocar código, según se vayan verificando municipios."
+    "descripcion": "Textos y lista de la linea de cobertura que va bajo el selector de municipios.",
+    "ojo": "La LISTA DE MUNICIPIOS YA NO SE ESCRIBE AQUI. Desde el 02/10/2026 sale de las propias fichas: los que tienen respuesta verificada y los que tienen ficha pero todavia no responden se calculan en layouts/partials/herramienta-distintivo.html. Antes estaba escrita a mano y habia que acordarse de editarla cada vez que se verificaba un municipio.",
+    "que_queda_aqui": "Solo las dos etiquetas, para poder cambiar la redaccion sin tocar plantillas, y la lista de municipios EN COLA, que no tienen pagina todavia y por tanto no hay dato del que sacarlos."
   },
-  "aviso_cobertura": "Con respuesta verificada: Barcelona, Bilbao, Granada, Madrid, Málaga, Valladolid y Zaragoza. Valencia y Benidorm tienen ficha pero todavía no respuesta.",
+
+  "etiqueta_verificados": "Con respuesta verificada:",
+  "etiqueta_proximos": "Siguientes:",
+
   "proximos": [
     "A Coruña",
     "Palma",
     "Alicante"
-  ],
-  "etiqueta_proximos": "Siguientes:"
+  ]
 }
