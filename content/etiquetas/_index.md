@@ -19,9 +19,7 @@ El distintivo ambiental clasifica los vehículos según sus emisiones. Hay **cua
 
 ## ¿Cuál te corresponde a ti?
 
-Dilo aquí y te decimos qué distintivo deduce la DGT de tus datos. Es la misma
-deducción que hace [la herramienta de la portada](/), sin la parte del
-municipio.
+Dilo aquí y te decimos qué distintivo deduce la DGT de tus datos.
 
 {{< herramienta-distintivo >}}
 

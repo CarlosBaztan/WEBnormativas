@@ -1,0 +1,37 @@
+{{- /*
+  senales-madrid.html — las dos señales de la ZBE de Madrid, con su pie.
+
+  Estuvo hasta el 02/10/2026 dentro de layouts/zbe/list.html, o sea en
+  /zbe/, que es el LISTADO NACIONAL de municipios, bajo el titular «Cómo se
+  señaliza una ZBE». Lo detectó Carlos: una pregunta general ilustrada con
+  señales de un solo ayuntamiento, en la página que menos lo aclara. La
+  primera de las dos ni siquiera es señalización de tráfico, es el logotipo
+  de Madrid 360.
+
+  Se trae aquí, a /zbe/camaras/, porque esa página ya dice lo que la norma
+  manda sobre señalización (art. 14 del RD 1052/2022, que remite a la
+  Instrucción MOV 21/3) y no tenía con qué ilustrarlo, y porque la segunda
+  señal es justamente un aviso de captación de imágenes, que es el tema de
+  esa página entera.
+
+  Es un shortcode y no HTML suelto en el Markdown para que el contenido no
+  lleve marcado dentro, y para que el día que haya señales de otra ciudad se
+  vea que esto era de Madrid.
+*/ -}}
+
+<figure class="figura-senales">
+  <div class="figura-senales__imagenes">
+    <img src="{{ "img/senal-zbe-madrid-360.png" | relURL }}"
+         alt="Señal blanca con el logotipo de Madrid 360 y el texto «Zona de Bajas Emisiones»."
+         width="240" height="330" loading="lazy" decoding="async">
+    <img src="{{ "img/senal-zbe-madrid-acceso.png" | relURL }}"
+         alt="Señal de Madrid con aviso de captación de imágenes, símbolo de circulación prohibida y la leyenda «excepto distintivos 0, ECO, C y B y vehículos autorizados»."
+         width="240" height="330" loading="lazy" decoding="async">
+  </div>
+  <figcaption>
+    Señalización de la ZBE de <strong>Madrid</strong>, como ejemplo: cada
+    ayuntamiento la coloca según la Instrucción MOV 21/3. La segunda indica los
+    distintivos exceptuados y avisa de que el control se hace con cámaras
+    lectoras de matrículas.
+  </figcaption>
+</figure>

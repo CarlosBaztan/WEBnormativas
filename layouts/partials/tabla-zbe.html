@@ -1,4 +1,21 @@
 {{- /*
+  COLUMNA "FUENTE OFICIAL", RETIRADA EL 02/10/2026
+
+  Llevaba un enlace «Fichero DGT» al XML DATEX2 del Punto de Acceso Nacional,
+  uno por municipio. Los enlaces funcionaban (HTTP 200, comprobado), pero no
+  servian de nada a una persona: el de Madrid son 7,3 MB de XML en bruto, y el
+  navegador se queda en blanco o se descarga el fichero. Carlos lo describio
+  como «al pinchar no te lleva a ningun lado», que es exactamente el efecto.
+
+  Ademas la columna repetia el mismo texto en las 45 filas, asi que ocupaba
+  ancho sin distinguir una fila de otra.
+
+  LA TRAZABILIDAD NO SE PIERDE, que es lo que habia que comprobar antes de
+  quitarla: /datos/zbe.csv y /datos/zbe.json publican `fuente_url` por
+  municipio. El enlace sigue estando, en el sitio donde un fichero legible por
+  maquina le sirve a alguien.
+*/ -}}
+{{- /*
   partials/tabla-zbe.html — tabla de municipios con ZBE.
 
   Parámetros:
@@ -25,7 +42,6 @@
         <th scope="col">Municipio</th>
         <th scope="col">Provincia</th>
         <th scope="col">Estado</th>
-        <th scope="col">Fuente oficial</th>
         <th scope="col">¿Verificado?</th>
       </tr>
     </thead>
@@ -43,11 +59,6 @@
         </td>
         <td>
           {{- if .zbe_existe }}<span class="estado-registrada">Registrada</span>
-          {{- else }}<span class="dato-vacio">No consta</span>{{ end }}
-        </td>
-        <td>
-          {{- with .fuente_url }}
-          <a href="{{ . }}" rel="noopener nofollow" target="_blank">Fichero DGT</a>
           {{- else }}<span class="dato-vacio">No consta</span>{{ end }}
         </td>
         <td class="celda-verificado">

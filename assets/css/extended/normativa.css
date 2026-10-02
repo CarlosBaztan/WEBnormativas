@@ -903,3 +903,46 @@ details.toc {
 .md-content details > *:last-child {
   margin-bottom: 0;
 }
+
+/* ========================================================================
+   ENLACES DE PROSA QUE QUEDABAN INVISIBLES (02/10/2026)
+
+   El reset de PaperMod trae `a { text-decoration: none }` y SOLO
+   `.md-content a:not(.anchor)` recupera el subrayado. Todo enlace escrito
+   fuera del contenido Markdown, o sea los que ponen las plantillas, se
+   pintaba exactamente igual que el texto de alrededor: color rgb(30,30,30)
+   contra rgb(31,31,31) del cuerpo, y sin subrayado.
+
+   O sea que no tenian NINGUNA senal de ser pulsables, ni color ni subrayado.
+   Lo encontro Carlos en «Cada zona, en detalle» de /zbe/madrid/: los enlaces
+   a las dos zonas de Madrid, que son de los mas utiles de la ficha, parecian
+   texto suelto. Midiendo despues aparecieron 36 en quince paginas.
+
+   No es solo incomodidad: el criterio 1.4.1 de las WCAG pide que un enlace
+   identificable solo por color lleve ademas otra senal. Aqui no habia ni
+   color.
+
+   QUE SE SUBRAYA Y QUE NO
+
+   Solo los enlaces de PROSA: los que van dentro de un parrafo, un elemento
+   de lista, una definicion o un pie de figura. Ahi el enlace esta rodeado de
+   texto que no lo es, y sin marca no se distingue.
+
+   Se dejan fuera los que viven en un contenedor que YA dice que es
+   navegacion, donde subrayarlo todo seria ruido: el indice de contenidos, las
+   migas, el anterior/siguiente, el pie legal, las tarjetas de los listados y
+   los botones. En esos, cada elemento es un enlace y el contexto basta.
+   ======================================================================== */
+
+.post-single :is(p, li, dd, figcaption) > a:not(.pc-cta):not(.anchor),
+.page-header :is(p, li, dd) > a:not(.pc-cta):not(.anchor) {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+/* Los contenedores que son navegacion por si mismos. `:where()` no suma
+   especificidad, asi que esto no compite con nada: solo desactiva. */
+:where(.toc, .breadcrumbs, .paginav, .pie-legal, .post-entry, .entry-footer,
+       .menu-lateral, .pc-acciones) :is(p, li, dd, figcaption) > a {
+  text-decoration: none;
+}

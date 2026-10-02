@@ -82,6 +82,8 @@ Lo que hace es otra cosa:
 
 - Su **anexo I.A, apartado 8** obliga a que el proyecto de cada ZBE incluya el «Sistema de control de accesos, circulación y estacionamiento». Es decir: cada ayuntamiento tiene que definir cómo controla, pero elige cómo.
 - Su **artículo 14** sí fija la señalización, que debe ser la de la Instrucción MOV 21/3 aprobada por la DGT el 2 de junio de 2021.
+
+{{< senales-madrid >}}
 - Su **artículo 15** remite el régimen sancionador a la Ley de Tráfico, a la infracción grave del artículo 76.z3).
 
 Esa es la razón de que el control varíe de una ciudad a otra mientras el procedimiento sancionador es idéntico en todas: la tecnología la decide el municipio, el castigo lo fija el Estado.
