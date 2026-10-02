@@ -30,11 +30,20 @@
 <div class="tabla-scroll">
   <table class="tabla-zbe">
     <caption class="visually-hidden">Municipios con Zona de Bajas Emisiones registrada</caption>
+    {{- /* UN <col> POR COLUMNA, Y LOS PORCENTAJES SUMAN 100.
+
+           El navegador asocia cada <col> a una columna POR POSICION, no por
+           su clase. Al retirar la columna «Fuente oficial» el 02/10/2026 se
+           borraron su <th> y su <td> pero se olvido este <col>: quedaron
+           cinco para cuatro columnas, asi que «¿Verificado?» heredo el ancho
+           de col-fuente y el 25 % de col-verificado se lo llevaba una columna
+           fantasma. En pantalla eran 189 px de tabla vacia a la derecha.
+
+           Lo vigila pipeline/test_tablas.py. */}}
     <colgroup>
       <col class="col-municipio">
       <col class="col-provincia">
       <col class="col-estado">
-      <col class="col-fuente">
       <col class="col-verificado">
     </colgroup>
     <thead>

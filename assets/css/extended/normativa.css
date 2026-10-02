@@ -886,7 +886,12 @@ details.toc {
 .md-content details > summary {
   cursor: pointer;
   font-weight: 600;
-  list-style-position: outside;
+  /* `inside` y no `outside`: con `outside` el navegador dibuja el triangulo
+     FUERA de la caja del <summary>, que aqui significa dentro del relleno del
+     recuadro, pegado al borde izquierdo y separado de su propio texto. Se veia
+     como una flecha suelta fuera de la caja. Lo noto Carlos el 02/10/2026.
+     Con `inside` el marcador va en el flujo, justo delante del texto. */
+  list-style-position: inside;
 }
 
 .md-content details[open] > summary {

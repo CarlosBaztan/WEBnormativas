@@ -65,12 +65,16 @@
 }
 
 /* Anchos fijos: sin esto las columnas bailaban entre las dos tablas y
-   el contenido quedaba descuadrado. */
-.col-municipio  { width: 28%; }
-.col-provincia  { width: 17%; }
-.col-estado     { width: 15%; }
-.col-fuente     { width: 15%; }
-.col-verificado { width: 25%; }
+   el contenido quedaba descuadrado.
+
+   TIENEN QUE SUMAR 100. Si suman menos, la tabla deja hueco muerto a la
+   derecha aunque lleve width: 100%, porque ninguna columna reclama el resto.
+   Si suman mas, el navegador los reescala y los anchos dejan de ser los que
+   pone aqui. */
+.col-municipio  { width: 34%; }
+.col-provincia  { width: 22%; }
+.col-estado     { width: 20%; }
+.col-verificado { width: 24%; }
 
 .tabla-zbe th,
 .tabla-zbe td {
@@ -210,9 +214,9 @@
   .tabla-zbe { font-size: var(--txt-sm); }
   .tabla-zbe th,
   .tabla-zbe td { padding: 0.55rem 0.6rem; }
-  .col-municipio  { width: 34%; }
-  .col-provincia  { width: 20%; }
-  .col-estado     { width: 18%; }
-  .col-fuente     { width: 14%; }
-  .col-verificado { width: 24%; }
+  /* Sumaban 110 con la columna que ya no existe. Ahora, cuatro y 100. */
+  .col-municipio  { width: 36%; }
+  .col-provincia  { width: 22%; }
+  .col-estado     { width: 20%; }
+  .col-verificado { width: 22%; }
 }
