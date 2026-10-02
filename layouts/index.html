@@ -14,56 +14,6 @@
          "pagina" .) }}
 
 
-    {{/* ------------------------------------------------------------------
-      ACCESO DIRECTO A LAS CIUDADES QUE YA RESPONDEN
-
-      Va aquí, entre la herramienta y su explicación, por petición de Carlos
-      del 02/10/2026. Se descartó incrustar el mapa de España: cuesta 9
-      peticiones y 96 KB (Leaflet 38 desde cdnjs, el GeoJSON 57 y las teselas
-      de OpenStreetMap), medido sobre /mapa/ en producción, y esta es la
-      página que más visitas recibe. El mapa se enlaza, no se incrusta.
-
-      Qué hace este bloque, que es lo que justifica ocupar ese hueco:
-
-        · Para quien ya sabe su ciudad, se salta el formulario entero. Un
-          clic en vez de cinco campos.
-        · Son enlaces internos DESDE la portada, que es la página con más
-          autoridad, HACIA las fichas. Y resulta que las ocho verificadas son
-          casi exactamente las búsquedas de más volumen del estudio de
-          palabras clave: Madrid 9.900/mes, Barcelona 6.600, Bilbao 4.400,
-          Granada 4.400, Valencia 3.600, Málaga 3.600, Valladolid 3.600.
-        · Cuesta cero: la lista sale de partialCached "zbe-verificados.html",
-          que ya se calcula para el selector del formulario.
-
-      Y crece solo: cada ficha nueva que se verifique aparece aquí sin tocar
-      nada, que es justo el cuello de botella que hay que empujar.
-
-      Orden alfabético a propósito, no por volumen de búsqueda: una lista
-      ordenada a mano por una métrica de hoy envejece y nadie la revisa.
-      ------------------------------------------------------------------ */}}
-    {{- $ciudades := partialCached "zbe-verificados.html" . }}
-    {{- with $ciudades }}
-    <nav class="ciudades-directo" aria-labelledby="titulo-ciudades">
-      <h2 id="titulo-ciudades">¿Ya sabes tu ciudad?</h2>
-      <p>Estas son las que tienen la ordenanza leída, con el artículo citado y
-      la fecha en que se comprobó. Entra directo y sáltate el formulario.</p>
-
-      <ul class="ciudades-directo__lista">
-        {{- range sort . "municipio" }}
-        <li><a href="{{ .url }}">{{ .municipio }}</a></li>
-        {{- end }}
-      </ul>
-
-      <p class="ciudades-directo__mas">
-        <a href="{{ "mapa/" | relURL }}">Ver el mapa de todas las ZBE de España</a>
-        <span aria-hidden="true">·</span>
-        <a href="{{ "zbe/mi-calle/" | relURL }}">¿Está mi calle dentro de una?</a>
-        <span aria-hidden="true">·</span>
-        <a href="{{ "zbe/" | relURL }}">Los 45 municipios registrados</a>
-      </p>
-    </nav>
-    {{- end }}
-
     {{/* Misma clase que el bloque equivalente de /itv/ y /zbe/mi-calle/.
          Antes se llamaba `pc-explicacion` y tenia su propio CSS con valores
          identicos: dos nombres para el mismo componente. */}}
