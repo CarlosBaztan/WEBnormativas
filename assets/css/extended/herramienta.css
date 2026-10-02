@@ -719,3 +719,79 @@ a.pc-vz__zona:focus-visible {
 .pc-form--compacta .pc-ayuda {
   margin-top: var(--sp-1);
 }
+
+/* ------------------------------------------------------------------------
+   ACCESO DIRECTO A CIUDADES (portada)
+
+   Lista de las ciudades cuya ordenanza ya esta leida, entre la herramienta y
+   su explicacion. Se pinta como una fila de pastillas y no como una lista con
+   vinetas porque son ocho nombres cortos: en vertical ocuparian media
+   pantalla para decir ocho palabras.
+
+   Las pastillas SI llevan borde y fondo, asi que no necesitan subrayado: son
+   lo bastante evidentes como controles. Por eso estan en la lista de
+   excepciones de la regla de enlaces de prosa de normativa.css.
+   ------------------------------------------------------------------------ */
+
+.ciudades-directo {
+  margin: var(--sp-8) 0 var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--caja-borde);
+}
+
+.ciudades-directo h2 {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--txt-xl);
+  line-height: var(--lh-titular);
+}
+
+.ciudades-directo > p {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--txt-sm);
+  line-height: var(--lh-lectura);
+}
+
+.ciudades-directo__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-4);
+  padding: 0;
+  list-style: none;
+}
+
+.ciudades-directo__lista > li { min-width: 0; }
+
+.ciudades-directo__lista a {
+  display: inline-block;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--caja-borde);
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--primary);
+  font-size: var(--txt-sm);
+  font-weight: 600;
+  /* Sin transicion de color: el cambio al pasar el raton es instantaneo y
+     no hay nada que anunciar. */
+}
+
+.ciudades-directo__lista a:hover,
+.ciudades-directo__lista a:focus-visible {
+  border-color: var(--primary);
+  background: var(--code-bg);
+}
+
+.ciudades-directo__mas {
+  margin: 0;
+  font-size: var(--txt-sm);
+}
+
+.ciudades-directo__mas span {
+  margin: 0 var(--sp-2);
+  opacity: 0.5;
+}
+
+@media (max-width: 30rem) {
+  .ciudades-directo__mas span { display: block; height: 0; overflow: hidden; }
+  .ciudades-directo__mas a { display: block; margin-bottom: var(--sp-2); }
+}

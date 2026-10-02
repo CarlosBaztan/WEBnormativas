@@ -1,0 +1,133 @@
+{{- /*
+  zbe-verificados.html — DEVUELVE la lista de municipios que ya responden
+  «¿puedo entrar?», o sea los que tienen ficha con estado_dato: "verificado".
+
+  Se usa con `return`, no pinta nada:
+
+    {{- $verificados := partialCached "zbe-verificados.html" . }}
+
+  `partialCached` a proposito: el resultado no depende de la pagina que lo
+  pida (se calcula sobre site.RegularPages), asi que vale el mismo para todas
+  y recorrer las fichas una sola vez por compilacion es gratis.
+
+  POR QUE EXISTE COMO PARTIAL APARTE (02/10/2026)
+
+  Lo necesitan ya dos sitios: el selector de municipio de la herramienta y el
+  bloque de acceso directo a ciudades de la portada. Copiarlo habria dejado
+  dos versiones de la MISMA regla de publicacion, incluida la validacion que
+  rompe el build. Es el tercer caso del dia de algo escrito dos veces, y aqui
+  el coste de equivocarse es publicar una ficha sin trazabilidad.
+
+  OJO: aqui dentro esta el `errorf` que ABORTA la compilacion si una ficha
+  marcada como verificada no trae codigo_ine, fuente_url y fecha_verificacion.
+  Es deliberado: una ficha publicada sin trazabilidad no puede llegar a
+  produccion. No convertirlo en warnf.
+*/ -}}
+
+{{- $verificados := slice }}
+{{/*
+  ------------------------------------------------------------------
+  MUNICIPIOS PUBLICABLES
+
+  La única fuente de verdad es el front matter de las fichas de
+  content/zbe/. Un municipio sale en el selector cuando su ficha
+  tiene estado_dato: "verificado". No hace falta tocar código ni
+  esta plantilla para publicar uno nuevo.
+
+  data/zbe.json (salida del pipeline) NO alimenta el selector: ahí
+  todos los municipios están en pendiente_verificacion, y sirve para
+  el listado de /zbe/, no para responder "¿puedo circular?".
+  ------------------------------------------------------------------
+*/}}
+{{/*
+  Paginas de zona, para poder enlazar cada zona con la pagina que explica
+  sus condiciones. Un veredicto de "solo con condiciones" sin un sitio
+  donde leer cuales son esas condiciones no le sirve a nadie.
+*/}}
+{{- $paginasZona := where (where site.RegularPages "Section" "zbe") "Params.tipo" "zona" }}
+
+{{- range where (where site.RegularPages "Section" "zbe") "Params.estado_dato" "verificado" }}
+  {{- $p := .Params }}
+
+  {{/*
+    En la sección zbe/ conviven tres cosas: fichas de municipio, páginas de
+    zona (/zbe/madrid/distrito-centro/) y artículos generales (/zbe/que-es/).
+    Solo las primeras van al selector y pasan por la validación de
+    codigo_ine. `tipo` lo distingue, y "municipio" es el valor por defecto.
+  */}}
+  {{- if ne ($p.tipo | default "municipio") "municipio" }}{{ continue }}{{ end }}
+  {{/* Se captura aquí: dentro de `with`, el contexto deja de ser la página. */}}
+  {{- $ruta := .File.Path }}
+
+  {{/*
+    Test que rompe el build: una ficha publicada sin trazabilidad
+    completa no puede llegar a producción. errorf aborta `hugo`.
+  */}}
+  {{- $faltan := slice }}
+  {{- range slice "codigo_ine" "fuente_url" "fecha_verificacion" }}
+    {{- if not (index $p .) }}{{ $faltan = $faltan | append . }}{{ end }}
+  {{- end }}
+  {{- with $faltan }}
+    {{- errorf "FICHA PUBLICADA INCOMPLETA: content/%s tiene estado_dato: verificado pero le faltan estos campos obligatorios: %s. O los rellenas, o pones estado_dato: pendiente y draft: true." $ruta (delimit . ", ") }}
+  {{- end }}
+
+  {{/*
+    La herramienta responde POR ZONA. Los municipios con varias (Madrid)
+    las declaran en `zonas`; los que tienen una sola (Bilbao) usan los
+    campos planos, que es lo natural y lo que genera el archetype.
+
+    Sin esto, una ficha plana perfectamente verificada haria que la
+    herramienta dijese "no consta ninguna zona verificada", que es
+    justo lo contrario de la verdad. Se sintetiza la zona unica.
+
+    Valencia queda fuera a proposito: su lista esta vacia porque no hay
+    reglas en vigor, y una lista vacia aqui es falsa.
+  */}}
+  {{- $zonas := $p.zonas | default slice }}
+  {{- if and (not $zonas) $p.etiquetas_permitidas }}
+    {{- $zonas = slice (dict
+          "id"                     .File.ContentBaseName
+          "nombre"                 ($p.municipio | default .Title)
+          "distintivos_permitidos" $p.etiquetas_permitidas
+          "horario"                ($p.horario_restriccion | default "")
+          "articulo"               ($p.articulo | default "")
+          "nota"                   ($p.nota_zona | default "")
+          "caducan"                ($p.caducan | default dict)
+        ) }}
+  {{- end }}
+
+  {{/*
+    Cada zona lleva la URL de su propia pagina cuando existe, cruzando
+    municipio y zona_id. No se construye a mano: si alguien renombra una
+    pagina de zona, el enlace desaparece en vez de romperse.
+  */}}
+  {{- $muni := $p.municipio | default .Title }}
+  {{- $conUrl := slice }}
+  {{- range $z := $zonas }}
+    {{- $urlZona := "" }}
+    {{- range $pz := $paginasZona }}
+      {{- if and (eq ($pz.Params.municipio | default "") $muni) (eq ($pz.Params.zona_id | default "") (index $z "id")) }}
+        {{- $urlZona = $pz.RelPermalink }}
+      {{- end }}
+    {{- end }}
+    {{- $conUrl = $conUrl | append (merge $z (dict "url" $urlZona)) }}
+  {{- end }}
+  {{- $zonas = $conUrl }}
+
+  {{- $verificados = $verificados | append (dict
+        "slug"               .File.ContentBaseName
+        "municipio"          ($p.municipio | default .Title)
+        "codigo_ine"         $p.codigo_ine
+        "provincia"          $p.provincia
+        "url"                .RelPermalink
+        "fuente_nombre"      $p.fuente_nombre
+        "fuente_url"         $p.fuente_url
+        "fuente_boletin"     ($p.fuente_boletin | default "")
+        "fecha_verificacion" $p.fecha_verificacion
+        "sancion"            ($p.sancion_tipificacion | default "")
+        "estado_zbe"         ($p.estado_zbe | default "")
+        "zonas"              $zonas
+      ) }}
+{{- end }}
+
+{{- return $verificados }}

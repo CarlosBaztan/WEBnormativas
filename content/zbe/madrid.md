@@ -106,6 +106,10 @@ Calle Faro, avenida de Abrantes, calle Portalegre, avenida de Oporto, travesía 
 
 </details>
 
+## Cómo está señalizada
+
+{{< senales-madrid >}}
+
 ## Si te multan
 
 Entrar incumpliendo las restricciones es **infracción grave** de tráfico, tipificada en el artículo 76.z3) de la Ley de Tráfico y sancionada conforme a sus artículos 80.1 y 81. El importe no lo fija el Ayuntamiento, sino la ley estatal.

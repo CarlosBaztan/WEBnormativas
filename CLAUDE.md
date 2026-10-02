@@ -437,6 +437,16 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   imprime las llaves tal cual y la nota interna acaba publicada. Estuvo cuatro
   veces a la vista en `/multas/zbe/`. Lo vigila ahora `auditoria.py`, que
   además del front matter mira el cuerpo de cada página publicada.
+- **El material de un municipio va en la ficha de ese municipio, y en ningún
+  otro sitio.** Decisión de Carlos del 02/10/2026. Las fotos de la
+  señalización de la ZBE de Madrid estaban en `/zbe/`, el listado nacional,
+  bajo el titular «Cómo se señaliza una ZBE»: una pregunta general ilustrada
+  con señales de un solo ayuntamiento, y la primera ni siquiera es una señal
+  de tráfico, es el logotipo de Madrid 360. Yo las moví a `/zbe/camaras/`
+  razonando que allí ya se cita el art. 14 del RD 1052/2022; **él corrigió y
+  tiene razón**: esa página explica la norma estatal, y una señal concreta de
+  un ayuntamiento no ilustra una norma estatal, la confunde. Están en
+  `/zbe/madrid/`.
 - **Hugo elige plantilla por sección, no por lo que la página sea.** En
   `content/zbe/` conviven fichas de municipio con artículos y con una página
   de herramienta, y las tres caían en `layouts/zbe/single.html`: los artículos

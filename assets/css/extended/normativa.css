@@ -943,6 +943,6 @@ details.toc {
 /* Los contenedores que son navegacion por si mismos. `:where()` no suma
    especificidad, asi que esto no compite con nada: solo desactiva. */
 :where(.toc, .breadcrumbs, .paginav, .pie-legal, .post-entry, .entry-footer,
-       .menu-lateral, .pc-acciones) :is(p, li, dd, figcaption) > a {
+       .menu-lateral, .pc-acciones, .ciudades-directo__lista) :is(p, li, dd, figcaption) > a {
   text-decoration: none;
 }
