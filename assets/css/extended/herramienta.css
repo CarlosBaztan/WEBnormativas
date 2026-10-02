@@ -96,9 +96,30 @@
   outline-offset: 2px;
 }
 
-/* Reserva de espacio: el resultado no debe desplazar la página al aparecer. */
+/* El recuadro del resultado NO reserva espacio en vacio.
+
+   Tenia `min-height: 8rem` con el comentario «el resultado no debe desplazar
+   la pagina al aparecer». La intencion era buena y el efecto, malo: 128 px
+   mas 48 de margenes, o sea 176 px de hueco en blanco entre el formulario y
+   el texto siguiente, en las CUATRO calculadoras y antes de que nadie haya
+   pulsado nada. Lo vio Carlos el 02/10/2026.
+
+   Y la reserva no compraba lo que decia comprar. El resultado solo aparece
+   despues de pulsar «Consultar», y la documentacion de Core Web Vitals dice
+   que «los desplazamientos que ocurren dentro de los 500 milisegundos
+   posteriores a una interaccion del usuario llevan la marca `hadRecentInput`,
+   de modo que pueden excluirse del calculo». Un desplazamiento provocado por
+   un clic no cuenta para el CLS. Se pagaban 176 px de vacio permanente a
+   cambio de nada.
+
+   Sin `min-height` el div queda a cero mientras esta vacio y sus margenes se
+   colapsan, asi que el formulario y lo que viene detras quedan a la distancia
+   normal. Con el resultado dentro, crece y ya esta.
+
+   OJO: no se puede usar `:empty` para esto. En la portada y en /etiquetas/
+   el div lleva dentro el respaldo <noscript>, que para CSS es contenido
+   aunque el navegador no lo pinte, y `:empty` no casaria. */
 .pc-resultado {
-  min-height: 8rem;
   margin: 1.5rem 0;
   /* Al hacer scroll hasta aquí, que no lo tape la cabecera fija. */
   scroll-margin-top: 5rem;
