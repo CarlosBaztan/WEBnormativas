@@ -287,21 +287,31 @@ los buscadores y con las páginas legales publicadas.**
       así que Google consolida y no penaliza, pero lo limpio es la
       redirección. Pasos en [docs/conectar-dominio.md](docs/conectar-dominio.md).
 - [ ] **Early Hints** en Cloudflare, gratis. Mismo documento.
-- [ ] **Google Search Console.** La web ya cumple todo lo que pide
-      (comprobado el 02/10/2026: las 37 URL del sitemap en HTTP 200 e
-      indexables, canónicos consistentes, robots.txt abierto). Falta el alta,
-      que es en la cuenta de Google de Carlos. **Propiedad de tipo Dominio**,
-      verificada con un TXT en Cloudflare, para que cubra el ápex y el `www`
-      de una vez mientras la redirección sigue pendiente. Pasos en
-      [docs/search-console.md](docs/search-console.md).
+- [x] **Google Search Console**, dado de alta el 02/10/2026 como **propiedad
+      de tipo Dominio**, verificada con un TXT en Cloudflare, y con el sitemap
+      enviado. Pasos en [docs/search-console.md](docs/search-console.md).
       **No pone cookies**, así que no toca nada de las páginas legales.
-      Es lo que falta para saber por qué palabras nos encuentran, que hoy no
-      se sabe.
+      **Ya manda avisos, y son la única revisión externa que tiene el sitio:**
+      el 03/10 llegó uno de datos estructurados que destapó dos fallos que
+      ninguna prueba nuestra veía (ver las dos últimas trampas de la lista de
+      abajo). Sus correos se atienden.
 - [ ] **Solicitar AdSense.** Ya se puede: el sitio es accesible y tiene las
       legales. Lo tiene que hacer Carlos.
       **Ojo al orden:** AdSense trae cookies de terceros y obliga a banner de
       consentimiento y a reescribir `/legal/cookies/`, que hoy dice que el
       sitio no usa ninguna y lo promete por escrito. Search Console no.
+- [ ] **El logotipo del `Organization` es el `favicon.ico`.** El nodo que
+      emite el tema en la portada declara `logo: /favicon.ico`, de 48 px como
+      máximo, y Google pide una imagen raster de 112 px mínimo y no admite
+      ICO: ese logotipo no lo va a usar. **No es configurable sin daño**:
+      PaperMod usa `params.assets.favicon` para las dos cosas, el logotipo del
+      JSON-LD y el `<link rel=icon>`, y mover la URL del icono cuesta de días
+      a semanas de reindexado (ver la trampa de los iconos). La única salida
+      limpia es sobrescribir `_partials/templates/schema_json.html` en el
+      proyecto, que son 128 líneas del tema de las que pasaríamos a ser
+      responsables, porque ahí también van BreadcrumbList y BlogPosting.
+      Decisión de Carlos: o se asume ese mantenimiento, o se vive sin el
+      logotipo en el panel de conocimiento.
 - [ ] **Más fichas de municipio verificadas.** 13 de 45 con ZBE registrada en
       el NAP. **Es el cuello de botella real del proyecto**: sin contenido no
       hay tráfico, y sin tráfico no hay ingresos.
@@ -538,3 +548,29 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   invisible para Google. Necesita `| safeJS`.
 - **`cast.ToInt` sobre `"09"`** devuelve 0 (lo interpreta en base 0). No usar para
   aritmética de fechas.
+- **Que un dato sea válido para schema.org no significa que lo sea para
+  Google.** schema.org hereda `isPartOf` de CreativeWork y acepta cualquier
+  CreativeWork como valor, y un WebSite lo es. Google publica además, para
+  cada tipo de resultado enriquecido, **su propia lista de tipos esperados**,
+  y en un `Dataset` solo admite ahí `URL` o `Dataset`. El JSON-LD de
+  `/datos/zbe/` colgaba del WebSite del sitio: el validador genérico lo daba
+  por bueno y el build terminó en verde, así que el único sitio donde constó
+  el fallo fue un correo de Search Console del 03/10/2026. La propiedad que
+  Google sí define para esto es `includedInDataCatalog`, que espera un
+  `DataCatalog`, y lo emite la propia sección `/datos/`. **Antes de añadir una
+  propiedad a un nodo, mirar la página de ese tipo en
+  developers.google.com**, no solo schema.org. Lo vigila
+  `pipeline/test_schema.py`.
+- **Una clave de front matter que nadie lee no da ningún error.** Hugo guarda
+  cualquier cosa en `.Params` sin quejarse. `/datos/zbe/` declaraba
+  `dataset_formatos` y `dataset_licencia`, pero `schema.html` lee `descargas`
+  y `licencia`: el Dataset se publicaba **sin `distribution`**, o sea sin
+  decirle a Google que el dato se puede descargar, que es justo para lo que
+  sirve publicar un Dataset. Once días así, porque el fallo era una ausencia.
+  Es el mismo patrón que el resto de esta lista, lo mismo escrito dos veces,
+  aquí con dos nombres para el mismo dato. Lo vigila
+  `pipeline/test_front_matter.py`, que además deja declarada en
+  `HUERFANAS_CONOCIDAS` la deuda que queda: `fecha_vigor_ordenanza`,
+  `sancion_importe` y `verificado_por`, tres datos escritos en el front matter
+  que ninguna plantilla publica. **Esa lista tiene que encoger, nunca
+  crecer.**

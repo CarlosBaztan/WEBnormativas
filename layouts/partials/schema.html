@@ -110,8 +110,24 @@
         "isAccessibleForFree" true
         "creator" $editor
         "publisher" $editor
-        "isPartOf" $sitio
         "spatialCoverage" (dict "@type" "Place" "name" "España") -}}
+
+  {{- /* Aqui NO va `isPartOf` apuntando al sitio. Google solo admite en esa
+         propiedad una URL o otro Dataset, y lo avisa en Search Console
+         («el tipo de objeto del campo isPartOf no es valido») aunque
+         schema.org lo acepte y el validador generico no diga nada. La
+         propiedad que si documenta para esto es `includedInDataCatalog`, y
+         espera un DataCatalog: el que emite esta misma seccion en /datos/.
+         Se reusa su @id para que los dos nodos sean el mismo en el grafo. */ -}}
+  {{- if .IsPage -}}
+    {{- with .CurrentSection -}}
+      {{- $datos = merge $datos (dict "includedInDataCatalog" (dict
+            "@type" "DataCatalog"
+            "@id" (printf "%s#dataset" .Permalink)
+            "name" .Title
+            "url" .Permalink)) -}}
+    {{- end -}}
+  {{- end -}}
 
   {{- with .Params.cobertura_temporal }}{{ $datos = merge $datos (dict "temporalCoverage" (printf "%v" .)) }}{{ end -}}
   {{- if gt (len $distribuciones) 0 }}{{ $datos = merge $datos (dict "distribution" $distribuciones) }}{{ end -}}

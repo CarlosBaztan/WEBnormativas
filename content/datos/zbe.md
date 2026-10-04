@@ -5,11 +5,18 @@ date: 2026-09-22
 lastmod: 2026-09-22
 draft: false
 
-dataset: true
-dataset_licencia: "CC-BY 4.0"
-dataset_fuente_nombre: "Punto de Acceso Nacional de Tráfico y Movilidad (DGT)"
-dataset_fuente_url: "https://nap.dgt.es/dataset/zonas-de-bajas-emisiones"
-dataset_formatos: ["CSV", "JSON"]
+# Las dos claves que lee layouts/partials/schema.html para el JSON-LD del
+# Dataset. Antes esto se llamaba dataset_licencia y dataset_formatos, que no
+# las lee nadie: el Dataset se publicaba sin `distribution`, o sea sin decirle
+# a Google que el dato se puede descargar.
+licencia: "https://creativecommons.org/licenses/by/4.0/"
+descargas:
+  - nombre: "Municipios con ZBE (CSV)"
+    formato: "text/csv"
+    url: "/datos/zbe.csv"
+  - nombre: "Municipios con ZBE (JSON, con la evidencia en bruto)"
+    formato: "application/json"
+    url: "/datos/zbe.json"
 fecha_verificacion: "2026-09-22"
 estado_dato: "verificado"
 fuente_nombre: "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)"
