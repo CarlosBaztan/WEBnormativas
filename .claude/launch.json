@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cocheapto",
+      "runtimeExecutable": "hugo",
+      "runtimeArgs": ["server", "--port", "8905", "--disableFastRender"],
+      "port": 8905
+    }
+  ]
+}

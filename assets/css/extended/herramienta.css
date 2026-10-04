@@ -169,7 +169,25 @@
    lista ya se lee como lista. Queda la barra de estado, que si significa. */
 .pc-vz {
   display: grid;
-  grid-template-columns: 1.6rem 1fr auto;
+  /* La columna del nombre vale lo que mide el nombre, no todo el ancho
+     disponible (04/10/2026, Carlos).
+
+     Con `1fr` el veredicto se iba al borde derecho del recuadro y quedaba a
+     media pantalla de la zona a la que se refiere: en Madrid, «Solo con
+     condiciones» estaba tan lejos de «ZBEDEP Distrito Centro» que habia que
+     recorrer la linea con el dedo para saber cual era de cual.
+
+     OJO, QUE ESTO NO ALINEA LAS COLUMNAS ENTRE FILAS: cada <li> es su propia
+     rejilla, asi que `max-content` se calcula por fila y los veredictos de
+     dos zonas con nombres de distinta longitud NO empiezan a la misma altura.
+     Es el precio de juntar cada respuesta con su zona, y es lo que se ha
+     pedido. Alinearlos ademas exigiria `subgrid`, que obliga a declarar las
+     columnas en el <ul> y a tener un plan para los navegadores que no lo
+     entienden; no compensa por un listado de dos o tres filas.
+
+     El `minmax(0, ...)` es para que un nombre largo se parta en dos lineas en
+     vez de desbordar el recuadro cuando la ventana es estrecha. */
+  grid-template-columns: 1.6rem minmax(0, max-content) 1fr;
   align-items: baseline;
   gap: var(--sp-2);
   padding: var(--sp-2) 0 var(--sp-2) var(--sp-3);
@@ -188,6 +206,19 @@
   white-space: nowrap;
 }
 
+/* La flecha que une la zona con su respuesta. Va aqui y no en el HTML porque
+   es decorativa: `/ ""` le da texto alternativo vacio para que un lector de
+   pantalla lea «ZBEDEP Distrito Centro, solo con condiciones» y no se invente
+   una «flecha a la derecha» en medio. Si un navegador no entiende esa
+   sintaxis se queda sin flecha, que no rompe nada: lo que acerca las dos
+   cosas es la rejilla, no el simbolo. */
+.pc-vz__valor::before {
+  content: "→" / "";
+  margin-right: var(--sp-2);
+  font-weight: 400;
+  color: var(--secondary);
+}
+
 /* En pantallas estrechas el veredicto se salía del recuadro: pasa a su
    propia línea, alineado bajo el nombre de la zona. */
 @media (max-width: 30rem) {
@@ -197,6 +228,11 @@
   .pc-vz__valor {
     grid-column: 2;
     margin-top: 0.15rem;
+  }
+  /* Aqui el veredicto ya esta debajo de su zona, pegado a ella: una flecha
+     apuntando a la derecha senalaria al vacio. */
+  .pc-vz__valor::before {
+    content: none;
   }
 }
 
