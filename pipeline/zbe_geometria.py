@@ -182,6 +182,9 @@ FICHAS = {
     # RondasDeBarcelona.xml. La pagina se llama Barcelona porque es como la
     # busca la gente, y porque la ordenanza que se cita es la de la ciudad.
     "rondas-de-barcelona": "barcelona",
+    # SevillaCartuja.xml. La ZBE son dos zonas de la Isla de la Cartuja, pero
+    # la pagina se llama sevilla porque es lo que se busca.
+    "sevilla-cartuja": "sevilla",
 }
 
 # Nombre con el que sale la zona en el mapa. El selector ordena los 45

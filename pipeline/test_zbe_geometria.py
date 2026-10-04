@@ -375,6 +375,102 @@ def test_el_selector_del_mapa_usa_el_nombre_castellano_corto():
             slug, nombre, esperado)
 
 
+# ---------------------------------------------------------------------------
+# El cruce entre la ficha, el NAP y el mapa
+#
+# El slug del NAP lo pone la DGT con el nombre de su fichero XML, y no tiene
+# por que coincidir con el nombre que le damos a la pagina: la ZBE de
+# Barcelona viene como «rondas-de-barcelona» y la de Sevilla como
+# «sevilla-cartuja», pero las fichas se llaman barcelona y sevilla, que es
+# como las busca la gente.
+#
+# Cuando no coinciden hay que decirlo en DOS sitios, y si falta uno no se
+# entera nadie: el build termina en verde, la ficha se publica y lo unico que
+# pasa es que el mapa de esa ficha se queda cargando para siempre y la fila
+# del listado pierde su enlace.
+#
+#   slug_nap en el front matter   lo leen mapa-municipio.html y zbe/list.html
+#   FICHAS en zbe_geometria.py    lo lee el mapa para enlazar a la ficha
+#
+# Paso el 04/10/2026 al publicar Sevilla.
+# ---------------------------------------------------------------------------
+
+# Fichas de municipios que NO estan en el NAP. No es un descuido: el NAP solo
+# trae los 45 que han registrado su ZBE, y hay ordenanzas verificadas de
+# municipios que no lo han hecho.
+FUERA_DEL_NAP = {"zaragoza"}
+
+
+def _fichas_de_municipio():
+    """
+    [(fichero, clave_nap)] de las fichas de municipio de content/zbe/.
+
+    El front matter se lee linea a linea, sin expresiones regulares: solo
+    hacen falta tres claves escalares de primer nivel y asi este fichero no
+    lleva ni una barra invertida, que es lo que rompe el generador.
+    """
+    carpeta = os.path.join(RAIZ, "content", "zbe")
+    salida = []
+    for nombre in sorted(os.listdir(carpeta)):
+        if not nombre.endswith(".md") or nombre.startswith("_"):
+            continue
+        lineas = io.open(os.path.join(carpeta, nombre),
+                         encoding="utf-8-sig").read().splitlines()
+        if not lineas or lineas[0].strip() != "---":
+            continue
+        campos = {}
+        for linea in lineas[1:]:
+            if linea.strip() == "---":
+                break
+            if linea.startswith(" ") or linea.startswith("#") or ":" not in linea:
+                continue
+            clave, _, valor = linea.partition(":")
+            campos[clave.strip()] = valor.strip().strip('"').strip("'")
+        if campos.get("tipo", "municipio") != "municipio":
+            continue
+        base = nombre[:-3]
+        salida.append((base, campos.get("slug_nap") or base))
+    return salida
+
+
+def test_cada_ficha_apunta_a_un_municipio_del_nap():
+    """
+    La clave con la que la ficha busca su geometria existe en el NAP.
+
+    Si no existe, el mapa de la ficha se queda cargando y nadie lo ve en el
+    build. La salida es declarar slug_nap, o anotar la ficha en FUERA_DEL_NAP
+    si ese municipio no ha registrado su ZBE.
+    """
+    import json
+    nap = json.loads(io.open(os.path.join(RAIZ, "data", "zbe.json"),
+                             encoding="utf-8").read())["municipios"]
+    huerfanas = [
+        "%s -> %s" % (f, clave)
+        for f, clave in _fichas_de_municipio()
+        if clave not in nap and f not in FUERA_DEL_NAP
+    ]
+    assert not huerfanas, (
+        "estas fichas buscan en el NAP una clave que no existe, asi que se "
+        "publican con el mapa vacio y sin aviso: %s" % ", ".join(huerfanas))
+
+
+def test_toda_ficha_renombrada_esta_en_la_tabla_fichas():
+    """
+    Si la ficha no se llama como su slug del NAP, FICHAS lo traduce.
+
+    Sin esa entrada el mapa enlaza a /zbe/<slug-del-nap>/, que es un 404.
+    """
+    faltan = [
+        "%s (slug_nap: %s)" % (f, clave)
+        for f, clave in _fichas_de_municipio()
+        if clave != f and zg.FICHAS.get(clave) != f
+    ]
+    assert not faltan, (
+        "estas fichas declaran slug_nap pero no estan en la tabla FICHAS de "
+        "zbe_geometria.py, asi que el mapa enlazara a un 404: %s"
+        % ", ".join(faltan))
+
+
 def _ejecutar():
     fallos = 0
     for nombre, fn in sorted(globals().items()):

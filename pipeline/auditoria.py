@@ -23,6 +23,7 @@ Uso:
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from datetime import date, timedelta
@@ -236,6 +237,31 @@ def _codigo_http(url: str) -> int:
         return r.status
 
 
+def cola_ya_cubierta() -> list[str]:
+    """
+    Municipios que data/cobertura.json anuncia como proximos y ya tienen ficha.
+
+    La frase de cobertura de la portada se genera de las fichas desde el
+    02/10/2026, salvo esta lista: son municipios que todavia no tienen pagina,
+    asi que no hay dato del que sacarlos y siguen escritos a mano. El precio de
+    escribir algo a mano es que se queda viejo, y aqui se queda viejo justo
+    cuando se hace bien el trabajo, que es al publicar la ficha que faltaba.
+
+    Paso el 04/10/2026 con Palma y Alicante: la portada los anunciaba como
+    siguientes en la misma frase en la que ya los daba por verificados.
+    """
+    ruta = RAIZ / "data" / "cobertura.json"
+    if not ruta.exists():
+        return []
+    cola = json.loads(ruta.read_text(encoding="utf-8")).get("proximos", [])
+    con_ficha = set()
+    for _, texto in paginas_publicadas():
+        municipio = front_matter(texto).get("municipio", "")
+        if municipio:
+            con_ficha.add(municipio.strip().lower())
+    return [n for n in cola if n.strip().lower() in con_ficha]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Audita frescura y coherencia de las fichas.")
     ap.add_argument("--meses", type=int, default=6, help="antiguedad maxima admitida (por defecto 6)")
@@ -324,6 +350,7 @@ def main() -> int:
         ("TRAZABILIDAD INCOMPLETA", sin_trazabilidad),
         ("VERIFICADAS PERO SIN REGLAS", sin_reglas),
         (f"PENDIENTES DE REVISAR (mas de {args.meses} meses)", caducadas),
+        ("ANUNCIADOS COMO PROXIMOS Y YA PUBLICADOS", cola_ya_cubierta()),
     ):
         if lista:
             problemas += len(lista)

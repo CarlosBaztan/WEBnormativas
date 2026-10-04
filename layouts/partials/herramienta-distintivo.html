@@ -219,8 +219,19 @@
       {{- range sort $sinRespuesta "municipio" }}
         {{- $luego = $luego | append (printf `<a href="%s">%s</a>` .url .municipio) }}
       {{- end }}
+      {{- /* La cola del JSON se filtra contra lo que ya tiene ficha. Es la
+             unica parte de esta frase escrita a mano, y se queda vieja justo
+             cuando se hace bien el trabajo: al publicar la ficha que faltaba,
+             el municipio aparecia a la vez como verificado y como proximo.
+             Paso el 04/10/2026 con Palma y Alicante. Lo avisa ademas
+             auditoria.py, pero aqui no puede ni llegar a verse. */}}
+      {{- $yaTienenFicha := slice }}
+      {{- range $conRespuesta }}{{ $yaTienenFicha = $yaTienenFicha | append (lower .municipio) }}{{ end }}
+      {{- range $sinRespuesta }}{{ $yaTienenFicha = $yaTienenFicha | append (lower .municipio) }}{{ end }}
       {{- range site.Data.cobertura.proximos }}
-        {{- $luego = $luego | append . }}
+        {{- if not (in $yaTienenFicha (lower .)) }}
+          {{- $luego = $luego | append . }}
+        {{- end }}
       {{- end }}
 
       <p class="pc-ayuda pc-cobertura">

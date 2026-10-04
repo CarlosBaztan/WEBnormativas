@@ -312,9 +312,14 @@ los buscadores y con las páginas legales publicadas.**
       responsables, porque ahí también van BreadcrumbList y BlogPosting.
       Decisión de Carlos: o se asume ese mantenimiento, o se vive sin el
       logotipo en el panel de conocimiento.
-- [ ] **Más fichas de municipio verificadas.** 13 de 45 con ZBE registrada en
-      el NAP. **Es el cuello de botella real del proyecto**: sin contenido no
-      hay tráfico, y sin tráfico no hay ingresos.
+- [ ] **Más fichas de municipio verificadas.** Al 04/10/2026 hay ficha de
+      **once de los 45 municipios del NAP** (Alicante, Barcelona, Benidorm,
+      Bilbao, Granada, Madrid, Málaga, Palma, Sevilla, Valencia y Valladolid),
+      más Zaragoza, que tiene ordenanza verificada y no está registrada en el
+      NAP. Diez responden «¿puedo entrar?»; Benidorm es nivel C y la ZBE de
+      Valencia está prevista. **Es el cuello de botella real del proyecto**:
+      sin contenido no hay tráfico, y sin tráfico no hay ingresos.
+      Siguientes en cola: A Coruña, Vitoria-Gasteiz y Oviedo.
 
 ### Dominio: `cocheapto.com` (comprado el 01/10/2026)
 
@@ -438,6 +443,16 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   aplicara antes, `girona` pasaría a `gerona-girona` y cambiarían de golpe la
   clave de `data/zbe.json`, el nombre del fichero de caché y el slug del
   GeoJSON. Lo vigila `test_ningun_nombre_bilingue_cambia_el_slug`.
+- **El cruce ficha/NAP/mapa ya lo vigilan dos pruebas.** La trampa de arriba
+  (renombrar una ficha rompe tres cosas en silencio) volvió a aparecer el
+  04/10/2026 al publicar Sevilla: el NAP la llama `sevilla-cartuja` y la
+  página se llama `sevilla`. Desde entonces lo cazan
+  `test_cada_ficha_apunta_a_un_municipio_del_nap` y
+  `test_toda_ficha_renombrada_esta_en_la_tabla_fichas`, en
+  `pipeline/test_zbe_geometria.py`. **Al publicar una ficha cuyo nombre no
+  coincida con el del fichero XML del NAP hay que tocar los dos sitios**, y si
+  el municipio no está en el NAP, anotarlo en `FUERA_DEL_NAP` (hoy solo
+  Zaragoza).
 - **El GeoJSON se sirve en una URL fija, sin huella.** Al regenerarlo, el
   navegador sigue dando el anterior hasta que caduca su copia. Si una prueba
   en local no refleja un cambio del pipeline, recargar sin cache antes de

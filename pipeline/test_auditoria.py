@@ -197,6 +197,34 @@ def test_ninguna_pagina_publicada_lleva_marcadores():
     assert not sucias, "paginas con notas sin resolver:\n   " + "\n   ".join(sucias)
 
 
+# ---------------------------------------------------------------------------
+# La cola de municipios de data/cobertura.json
+#
+# 04/10/2026. Al publicar Palma y Alicante, la frase de cobertura de la
+# portada quedo diciendo «Con respuesta verificada: ... Palma, Sevilla ...
+# Siguientes: ... Palma y Alicante»: los anunciaba como proximos y ya estaban
+# hechos. La lista de la cola es la unica parte de esa frase que sigue escrita
+# a mano, porque son municipios que todavia no tienen pagina y no hay dato del
+# que sacarlos; el precio es que nadie la limpia.
+#
+# El build termino en verde y la auditoria no dijo nada: el fallo solo se ve
+# leyendo la frase entera en la portada.
+# ---------------------------------------------------------------------------
+
+def test_la_cola_no_anuncia_municipios_que_ya_tienen_ficha():
+    """
+    Ningun municipio de `proximos` puede tener ya ficha publicada.
+
+    Si la tiene, o responde (y entonces la frase se contradice sola) o no
+    responde (y entonces ya sale en «Siguientes» por su propia ficha, dos
+    veces).
+    """
+    repetidos = au.cola_ya_cubierta()
+    assert not repetidos, (
+        "data/cobertura.json anuncia como proximos municipios que ya tienen "
+        "ficha: %s. Quitalos de `proximos`." % ", ".join(repetidos))
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0
