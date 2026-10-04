@@ -1,0 +1,10 @@
+{{- /*
+  tabla-distintivos.html — permite llamar al partial desde un .md.
+
+  Markdown no puede invocar un partial directamente, de ahi este envoltorio de
+  una linea. El contexto que se pasa es la pagina, que es lo que necesita
+  partialCached dentro.
+
+    {{< tabla-distintivos >}}
+*/ -}}
+{{ partial "tabla-distintivos.html" .Page }}

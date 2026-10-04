@@ -6,3 +6,5 @@ draft: false
 ---
 
 Estas son las zonas de bajas emisiones registradas en el Punto de Acceso Nacional de la DGT. La última columna dice si hemos leído la ordenanza del municipio o todavía no.
+
+Si lo que buscas es la respuesta y no el inventario, está en **[qué distintivo necesitas en cada ZBE](/zbe/distintivos-por-ciudad/)**: las ciudades verificadas con su horario y sus fechas de cambio, en una sola tabla.

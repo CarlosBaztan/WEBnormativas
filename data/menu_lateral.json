@@ -22,6 +22,7 @@
       "enlaces": [
         { "texto": "Mapa de las ZBE", "url": "/mapa/" },
         { "texto": "¿Está mi calle en una ZBE?", "url": "/zbe/mi-calle/" },
+        { "texto": "Qué distintivo entra en cada ciudad", "url": "/zbe/distintivos-por-ciudad/" },
         { "texto": "Listado de municipios", "url": "/zbe/" },
         { "texto": "Qué es una ZBE", "url": "/zbe/que-es/" },
         { "texto": "Cómo funcionan las cámaras", "url": "/zbe/camaras/" },

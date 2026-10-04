@@ -1,0 +1,133 @@
+{{- /*
+  tabla-distintivos.html — qué distintivo entra en cada ZBE verificada, todo
+  en una tabla.
+
+  POR QUE EXISTE
+
+  El activo de este sitio es haber leído las ordenanzas una a una, pero esa
+  respuesta vivía repartida en doce páginas y no estaba junta en ninguna. El
+  listado de /zbe/ dice qué municipios tienen ZBE registrada y cuáles hemos
+  verificado; no dice lo único que la gente quiere saber, que es con qué
+  distintivo se entra.
+
+  Se genera del front matter de las fichas, nunca a mano: si mañana cambia una
+  ordenanza y se corrige su ficha, esta tabla cambia con ella. Escribirla a
+  mano habría sido el cuarto sitio donde el mismo dato se escribe dos veces.
+
+  LAS REGLAS QUE REPLICA, que son las mismas de puedo-circular.js:
+
+    distintivos_permitidos: "pendiente"   la zona no se ha verificado, no sale
+    "C con condiciones"                   entra, pero con requisitos
+    caducan: { B: "2027-01-01" }          fecha en la que ESE distintivo deja
+                                          de entrar, no el ultimo dia que entra
+
+  Si esas reglas cambian en el JavaScript, hay que cambiarlas aqui tambien.
+*/ -}}
+
+{{- $verificados := partialCached "zbe-verificados.html" . }}
+
+{{- /* Una fila por zona verificada, no por municipio: Madrid tiene tres zonas
+       con reglas distintas y meterlas en una fila seria mentir. */ -}}
+{{- $filas := slice }}
+{{- range $m := $verificados }}
+  {{- $varias := gt (len $m.zonas) 1 }}
+  {{- range $z := $m.zonas }}
+    {{- $lista := $z.distintivos_permitidos }}
+    {{- if and $lista (not (reflect.IsSlice $lista)) }}{{ continue }}{{ end }}
+    {{- if not $lista }}{{ continue }}{{ end }}
+
+    {{- $libres := slice }}
+    {{- $condicionados := slice }}
+    {{- $otros := slice }}
+    {{- range $lista }}
+      {{- $txt := trim (printf "%v" .) " " }}
+      {{- $clave := "" }}
+      {{- range slice "0" "ECO" "C" "B" }}
+        {{- if and (eq $clave "") (or (eq $txt .) (hasPrefix $txt (printf "%s " .))) }}
+          {{- $clave = . }}
+        {{- end }}
+      {{- end }}
+      {{- if eq $clave "" }}
+        {{- $otros = $otros | append $txt }}
+      {{- else if gt (len $txt) (len $clave) }}
+        {{- $condicionados = $condicionados | append $clave }}
+      {{- else }}
+        {{- $libres = $libres | append $clave }}
+      {{- end }}
+    {{- end }}
+
+    {{- /* Las fechas de caducidad de esta zona, LA MAS CERCANA PRIMERO.
+
+           Recorrer los distintivos en orden 0, ECO, C, B ponia el cambio de
+           2030 por delante del de 2027, que es el que le toca a quien lee.
+           Hugo baja a minusculas las claves de los mapas del front matter, asi
+           que `caducan: { B: ... }` llega como `b`: se busca de las dos
+           formas, igual que hace puedo-circular.js. */ -}}
+    {{- $pendientes := slice }}
+    {{- range $clave := slice "0" "ECO" "C" "B" }}
+      {{- $fecha := "" }}
+      {{- with index ($z.caducan | default dict) (lower $clave) }}{{ $fecha = . }}{{ end }}
+      {{- if eq $fecha "" }}
+        {{- with index ($z.caducan | default dict) $clave }}{{ $fecha = . }}{{ end }}
+      {{- end }}
+      {{- with $fecha }}
+        {{- $pendientes = $pendientes | append (dict "fecha" . "clave" $clave) }}
+      {{- end }}
+    {{- end }}
+    {{- $cambios := slice }}
+    {{- range sort $pendientes "fecha" }}
+      {{- $cambios = $cambios | append (printf "el %s deja de entrar el %s" .clave (time.Format "02/01/2006" .fecha)) }}
+    {{- end }}
+
+    {{- $filas = $filas | append (dict
+          "nombre"  (cond $varias (printf "%s: %s" $m.municipio $z.nombre) $m.municipio)
+          "url"     (cond (ne (string $z.url) "") (string $z.url) $m.url)
+          "libres"  $libres
+          "cond"    $condicionados
+          "otros"   $otros
+          "horario" ($z.horario | default "")
+          "cambios" $cambios) }}
+  {{- end }}
+{{- end }}
+
+<table class="tabla-distintivos">
+  <caption>
+    Distintivos que pueden entrar en cada Zona de Bajas Emisiones, según la
+    ordenanza de cada municipio. {{ len $filas }} zonas verificadas.
+  </caption>
+  <thead>
+    <tr>
+      <th scope="col">Zona</th>
+      <th scope="col">Qué entra hoy</th>
+      <th scope="col">Cuándo se aplica</th>
+      <th scope="col">Cambios con fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{- /* La fila se captura en $f: dentro de `with`, el contexto deja de ser
+           la fila, y `$` apunta a la pagina, no aqui. Es la misma trampa que
+           dejo un href="%!s(<nil>)" publicado en su dia. */ -}}
+    {{- range $f := sort $filas "nombre" }}
+    <tr>
+      <th scope="row"><a href="{{ $f.url }}">{{ $f.nombre }}</a></th>
+      <td>
+        {{- with $f.libres }}{{ delimit . ", " " y " }}{{ end }}
+        {{- with $f.cond }}{{ if $f.libres }}. {{ end }}{{ delimit . ", " " y " }}, solo con condiciones{{ end }}
+        {{- with $f.otros }}. {{ delimit . ", " " y " }}{{ end }}
+      </td>
+      {{- /* Los horarios vienen del front matter de cada ficha y unos empiezan
+             en mayuscula y otros no, segun quien escribiera la ficha. En una
+             columna puestos uno debajo de otro, eso canta. */ -}}
+      <td>{{ with $f.horario }}{{ strings.FirstUpper . }}{{ else }}No consta en la ordenanza{{ end }}</td>
+      <td>{{ with $f.cambios }}{{ delimit . "; " " y " }}{{ else }}Ninguno publicado{{ end }}</td>
+    </tr>
+    {{- end }}
+  </tbody>
+</table>
+
+<p class="tabla-distintivos__pie">
+  Cada fila sale de la ficha del municipio, donde está el artículo concreto de
+  la ordenanza, el enlace al boletín en que se publicó y la fecha en que lo
+  comprobamos. Los municipios cuya ordenanza todavía no hemos leído no salen
+  aquí: están en el <a href="/zbe/">listado completo</a>.
+</p>
