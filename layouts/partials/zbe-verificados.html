@@ -34,9 +34,13 @@
   tiene estado_dato: "verificado". No hace falta tocar código ni
   esta plantilla para publicar uno nuevo.
 
-  data/zbe.json (salida del pipeline) NO alimenta el selector: ahí
-  todos los municipios están en pendiente_verificacion, y sirve para
-  el listado de /zbe/, no para responder "¿puedo circular?".
+  data/zbe.json (salida del pipeline) NO alimenta el selector, y el
+  sentido del dato va al revés: desde el 04/10/2026 el pipeline COPIA
+  a ese fichero lo que dicen estas fichas, para que el dataset que
+  publicamos bajo CC-BY contenga las ordenanzas leídas y no solo el
+  registro de la DGT. Si alguna vez se invierte y el selector pasa a
+  leer de ahí, se habrá cerrado un círculo: el fichero diría que algo
+  está verificado porque lo dijo la ficha que a su vez lo leyó de él.
   ------------------------------------------------------------------
 */}}
 {{/*

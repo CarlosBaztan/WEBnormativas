@@ -370,7 +370,120 @@ def registrar_cambios(nuevos: dict) -> list[str]:
     return cambios
 
 
+def reglas_de_las_fichas() -> dict[str, dict]:
+    """
+    Las ordenanzas ya leidas, sacadas de content/zbe/*.md e indexadas por el
+    slug con el que el NAP nombra a ese municipio.
+
+    POR QUE ESTA FUNCION EXISTE (04/10/2026)
+
+    El dato que distingue a este proyecto es la ordenanza leida a mano, y vivia
+    solo en el front matter de doce ficheros markdown. El dataset que se
+    publica bajo CC-BY salia con las 45 filas del NAP y la columna
+    `etiquetas_permitidas` vacia en TODAS, incluidas las verificadas, y con
+    `con_reglas_verificadas: 0`.
+
+    El tubo estaba a medio hacer y nadie lo noto porque no da error: el estado
+    `confianza: "oficial"` estaba previsto y documentado en la ADVERTENCIA de
+    este mismo fichero, pero ningun municipio lo alcanzaba nunca porque faltaba
+    el paso que lo promueve. El fichero se generaba, el build terminaba en
+    verde y la columna seguia en blanco.
+
+    El cruce es por `slug_nap` cuando la ficha no se llama como el fichero XML
+    del NAP (Barcelona y Sevilla), que es la misma clave que ya usan el mapa y
+    el listado. Si eso se rompe, lo avisan las pruebas de test_zbe_geometria.py.
+
+    Aqui NO se interpreta nada ni se deduce ninguna regla: se copia lo que una
+    persona ya verifico, con su enlace y su fecha. Las fichas sin
+    `estado_dato: verificado` no entran.
+    """
+    try:
+        import yaml
+    except ImportError:                                   # pragma: no cover
+        print("AVISO: falta pyyaml, el dataset saldra sin las reglas verificadas",
+              file=sys.stderr)
+        return {}
+
+    salida: dict[str, dict] = {}
+    carpeta = RAIZ / "content" / "zbe"
+    if not carpeta.exists():
+        return salida
+
+    for ruta in sorted(carpeta.glob("*.md")):
+        if ruta.name.startswith("_"):
+            continue
+        cabecera = re.match(r"^---\s*?\n(.*?)\n---\s*?\n",
+                            ruta.read_text(encoding="utf-8-sig"), re.S)
+        if not cabecera:
+            continue
+        try:
+            fm = yaml.safe_load(cabecera.group(1)) or {}
+        except yaml.YAMLError:
+            continue
+        if not isinstance(fm, dict):
+            continue
+        if fm.get("tipo", "municipio") != "municipio":
+            continue
+        if fm.get("estado_dato") != "verificado":
+            continue
+
+        # Las zonas con reglas propias (Madrid). Solo las que declaran una
+        # lista: la cadena "pendiente" significa que esa zona no se ha leido.
+        zonas = []
+        for z in (fm.get("zonas") or []):
+            if not isinstance(z, dict):
+                continue
+            permitidos = z.get("distintivos_permitidos")
+            if not isinstance(permitidos, list) or not permitidos:
+                continue
+            zonas.append({
+                "nombre": z.get("nombre") or z.get("id") or "",
+                "etiquetas_permitidas": permitidos,
+                "horario_restriccion": z.get("horario") or "",
+                "articulo": z.get("articulo") or "",
+            })
+
+        clave = fm.get("slug_nap") or ruta.stem
+        salida[clave] = {
+            "municipio": fm.get("municipio") or "",
+            "ficha_url": "/zbe/%s/" % ruta.stem,
+            "ordenanza_nombre": fm.get("fuente_nombre") or "",
+            "ordenanza_url": fm.get("fuente_url") or "",
+            "ordenanza_boletin": fm.get("fuente_boletin") or "",
+            "fecha_verificacion": str(fm.get("fecha_verificacion") or ""),
+            "etiquetas_permitidas": fm.get("etiquetas_permitidas") or [],
+            "horario_verificado": fm.get("horario_restriccion") or "",
+            "articulo": fm.get("articulo") or "",
+            "zonas_verificadas": zonas,
+        }
+    return salida
+
+
+def aplicar_reglas_verificadas(municipios: dict) -> int:
+    """
+    Vuelca sobre los registros del NAP lo que ya se ha leido en la ordenanza.
+
+    Lo del NAP no se pisa: su `fuente_url` sigue siendo el XML de la DGT y su
+    `horario_restriccion` sigue siendo el que declara el XML. La lectura humana
+    entra en campos propios, para que quien descargue el fichero pueda
+    distinguir de donde viene cada cosa.
+
+    Devuelve cuantos municipios ha promovido a `confianza: "oficial"`.
+    """
+    reglas = reglas_de_las_fichas()
+    promovidos = 0
+    for clave, datos in reglas.items():
+        registro = municipios.get(clave)
+        if registro is None:
+            continue              # ficha de un municipio que no esta en el NAP
+        registro.update(datos)
+        registro["confianza"] = "oficial"
+        promovidos += 1
+    return promovidos
+
+
 def escribir_salidas(municipios: dict) -> None:
+    aplicar_reglas_verificadas(municipios)
     publicables = {s: m for s, m in municipios.items() if m["confianza"] == "oficial"}
 
     hoy = datetime.now(timezone.utc).date().isoformat()
@@ -382,11 +495,19 @@ def escribir_salidas(municipios: dict) -> None:
         "fecha_actualizacion": hoy,
         "generado_por": "pipeline/zbe_nap.py",
         "ADVERTENCIA": (
-            "Este fichero acredita que existe una ZBE y de donde sale el dato. NO contiene "
-            "reglas de acceso por distintivo: el NAP las codifica de forma inconsistente "
-            "entre ayuntamientos y una lectura automatica diria lo contrario de la verdad en "
-            "algunos municipios. Las reglas solo se publican tras leerlas en la ordenanza, "
-            "una a una, y entonces `confianza` pasa a 'oficial'."
+            "Lea `confianza` antes que nada: es lo que dice cuanto vale cada fila. "
+            "'oficial' significa que una persona ha leido la ordenanza del municipio en el "
+            "boletin en que se publico; esas filas traen `etiquetas_permitidas`, `articulo`, "
+            "`ordenanza_url`, `ordenanza_boletin` y `fecha_verificacion`, y se pueden usar. "
+            "'pendiente_verificacion' significa que solo consta que la ZBE existe: de esas "
+            "filas NO se puede deducir que distintivos entran. El NAP de la DGT trae "
+            "condiciones por distintivo, pero cada ayuntamiento las codifica con significados "
+            "opuestos, asi que una lectura automatica diria lo contrario de la verdad en "
+            "algunos municipios. Esa evidencia va en bruto y sin interpretar en "
+            "`evidencia_sin_interpretar`. "
+            "`etiquetas_permitidas` vacia en una fila 'oficial' no es un olvido: o el "
+            "municipio tiene varias zonas con reglas distintas, y entonces estan en "
+            "`zonas_verificadas`, o su ZBE todavia no restringe ningun distintivo."
         ),
         "municipios_con_zbe": len(municipios),
         "con_reglas_verificadas": len(publicables),
@@ -408,9 +529,16 @@ def escribir_salidas(municipios: dict) -> None:
         json.dumps({"_meta": meta, "municipios": municipios}, ensure_ascii=False, indent=1),
         encoding="utf-8")
 
+    # Las columnas nuevas van AL FINAL y las viejas se quedan donde estaban: quien
+    # ya tuviera un script leyendo este CSV por posicion sigue funcionando.
+    # De la columna 12 en adelante va la lectura humana de la ordenanza, que es
+    # lo unico de este fichero que no se puede sacar del NAP.
     columnas = ["slug", "municipio", "zbe_existe", "etiquetas_permitidas", "horario_restriccion",
                 "publicacion_origen", "confianza", "evidencia_sin_interpretar",
-                "fuente_url", "fecha_descarga", "incidencias"]
+                "fuente_url", "fecha_descarga", "incidencias",
+                "zonas_verificadas", "horario_verificado", "articulo",
+                "ordenanza_nombre", "ordenanza_boletin", "ordenanza_url",
+                "fecha_verificacion", "ficha_url"]
     with (destino / "zbe.csv").open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=columnas, extrasaction="ignore")
         w.writeheader()
@@ -420,6 +548,11 @@ def escribir_salidas(municipios: dict) -> None:
             fila["incidencias"] = " / ".join(m.get("incidencias", []))
             fila["evidencia_sin_interpretar"] = json.dumps(
                 m.get("evidencia_sin_interpretar", []), ensure_ascii=False)
+            # Un municipio con varias zonas no cabe en una celda plana. Se
+            # serializa igual que la evidencia, y asi `etiquetas_permitidas`
+            # vacia con `confianza: oficial` deja de parecer un olvido.
+            fila["zonas_verificadas"] = json.dumps(
+                m.get("zonas_verificadas", []), ensure_ascii=False) if m.get("zonas_verificadas") else ""
             w.writerow(fila)
 
 

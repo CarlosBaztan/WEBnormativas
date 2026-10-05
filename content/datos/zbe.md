@@ -34,17 +34,30 @@ Licencia **CC-BY 4.0**. Puedes reutilizarlo libremente citando como fuente a la 
 
 ## Qué contiene, y qué no
 
-**Sí contiene**, para cada municipio:
+Lo primero que hay que mirar de cada fila es la columna **`confianza`**, porque es la que dice cuánto vale.
+
+**Para los 45 municipios**, sea cual sea su confianza:
 
 - Que existe una ZBE registrada oficialmente.
 - El enlace directo al fichero DATEX2 de la DGT.
 - La fecha en que el ayuntamiento publicó ese fichero.
-- Los horarios de restricción declarados.
-- La evidencia en bruto de las condiciones por distintivo, sin interpretar.
+- Los horarios de restricción declarados en ese fichero.
+- La evidencia en bruto de las condiciones por distintivo, **sin interpretar**.
 
-**No contiene** qué distintivos ambientales pueden circular por cada zona. Y esa ausencia es deliberada.
+**Para los que tienen `confianza: oficial`**, que son aquellos cuya ordenanza hemos leído entera:
 
-## Por qué no publicamos los distintivos permitidos
+- **Qué distintivos pueden entrar** (`etiquetas_permitidas`).
+- El horario que fija la ordenanza, que no siempre coincide con el del fichero de la DGT (`horario_verificado`).
+- El artículo concreto en que lo pone (`articulo`).
+- El nombre de la ordenanza, el boletín en que se publicó y su enlace (`ordenanza_nombre`, `ordenanza_boletin`, `ordenanza_url`).
+- La fecha en que lo comprobamos (`fecha_verificacion`) y el enlace a la ficha (`ficha_url`).
+- Si el municipio tiene varias zonas con reglas distintas, cada una con las suyas (`zonas_verificadas`).
+
+**De los que tienen `confianza: pendiente_verificacion` no se puede deducir qué distintivos entran.** Ahí la columna va vacía a propósito, y el porqué es lo siguiente.
+
+Un aviso para quien procese el fichero: **`etiquetas_permitidas` vacía en una fila `oficial` no es un olvido.** O el municipio tiene varias zonas con reglas distintas, y entonces están en `zonas_verificadas`, o su ZBE todavía no restringe ningún distintivo, como pasa hoy en Valencia.
+
+## Por qué no publicamos los distintivos permitidos de los demás
 
 Los ficheros de la DGT sí traen condiciones de acceso por distintivo. El problema es que **cada ayuntamiento las codifica de forma distinta**, usando la misma estructura XML para decir cosas opuestas.
 
@@ -60,7 +73,9 @@ Si ese bloque negado fueran los **permitidos**, en Madrid solo podrían circular
 
 No hay una regla automática que acierte en los tres. Cualquier interpretación algorítmica acertaría en unos municipios y diría **justo lo contrario de la verdad** en otros.
 
-Como equivocarse aquí le cuesta al lector una multa de 200 €, preferimos no publicarlo. Estamos leyendo las ordenanzas municipales una a una; cada vez que verificamos una, su ficha pasa a mostrar las reglas con el artículo citado y la fecha de comprobación.
+Como equivocarse aquí le cuesta al lector una multa de 200 €, preferimos no publicarlo. Estamos leyendo las ordenanzas municipales una a una; cada vez que verificamos una, su ficha pasa a mostrar las reglas con el artículo citado y la fecha de comprobación, **y esa lectura entra también en este fichero**, con su artículo, su boletín y su fecha.
+
+Es decir: lo que falta aquí no es lo que no se puede saber, es lo que todavía no hemos leído.
 
 ## Metodología
 

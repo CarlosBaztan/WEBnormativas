@@ -563,6 +563,30 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   invisible para Google. Necesita `| safeJS`.
 - **`cast.ToInt` sobre `"09"`** devuelve 0 (lo interpreta en base 0). No usar para
   aritmética de fechas.
+- **Un tubo a medio hacer no da ningún error, y este llevaba así desde el
+  principio.** El activo del proyecto es la ordenanza leída a mano, y hasta el
+  04/10/2026 esa lectura vivía **solo** en el front matter de las fichas. El
+  dataset que publicamos bajo CC-BY, que anunciamos en `/datos/zbe/` y al que
+  apunta el nodo `Dataset` del JSON-LD, salía con las 45 filas del NAP y la
+  columna `etiquetas_permitidas` **vacía en todas**, incluidas las verificadas,
+  y con `con_reglas_verificadas: 0`. La página llegaba a decir por escrito que
+  el fichero «no contiene qué distintivos pueden circular».
+  Lo más revelador es que el pipeline **ya estaba escrito para esto**: su
+  propia ADVERTENCIA decía que las reglas se publican «tras leerlas en la
+  ordenanza, una a una, y entonces `confianza` pasa a 'oficial'». El estado
+  `oficial` existía, estaba documentado, y **no lo alcanzaba ningún municipio**
+  porque faltaba el paso que lo promueve. Nadie lo vio en dos semanas: no da
+  error, el fichero se genera y la columna sigue en blanco.
+  Resuelto con `reglas_de_las_fichas()` y `aplicar_reglas_verificadas()` en
+  `pipeline/zbe_nap.py`, que copian lo ya verificado sin interpretar nada. **El
+  dato del NAP no se pisa**: su `fuente_url` sigue siendo el XML de la DGT y la
+  lectura humana entra en campos propios (`ordenanza_url`, `articulo`,
+  `fecha_verificacion`...), para que quien descargue el fichero distinga de
+  dónde viene cada cosa. Lo vigilan las cuatro pruebas de
+  `pipeline/test_dataset_verificado.py`, **incluida la mitad que de verdad
+  importa**: que nada se marque `oficial` sin una ficha que lo sostenga.
+  **Al publicar una ficha nueva hay que volver a generar el dataset**
+  (`python pipeline/zbe_nap.py --sin-red`), y si no se hace, la prueba lo dice.
 - **Que un dato sea válido para schema.org no significa que lo sea para
   Google.** schema.org hereda `isPartOf` de CreativeWork y acepta cualquier
   CreativeWork como valor, y un WebSite lo es. Google publica además, para
