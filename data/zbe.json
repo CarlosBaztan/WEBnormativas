@@ -8,7 +8,7 @@
   "generado_por": "pipeline/zbe_nap.py",
   "ADVERTENCIA": "Lea `confianza` antes que nada: es lo que dice cuanto vale cada fila. 'oficial' significa que una persona ha leido la ordenanza del municipio en el boletin en que se publico; esas filas traen `etiquetas_permitidas`, `articulo`, `ordenanza_url`, `ordenanza_boletin` y `fecha_verificacion`, y se pueden usar. 'pendiente_verificacion' significa que solo consta que la ZBE existe: de esas filas NO se puede deducir que distintivos entran. El NAP de la DGT trae condiciones por distintivo, pero cada ayuntamiento las codifica con significados opuestos, asi que una lectura automatica diria lo contrario de la verdad en algunos municipios. Esa evidencia va en bruto y sin interpretar en `evidencia_sin_interpretar`. `etiquetas_permitidas` vacia en una fila 'oficial' no es un olvido: o el municipio tiene varias zonas con reglas distintas, y entonces estan en `zonas_verificadas`, o su ZBE todavia no restringe ningun distintivo.",
   "municipios_con_zbe": 45,
-  "con_reglas_verificadas": 12
+  "con_reglas_verificadas": 13
  },
  "municipios": {
   "a-coruna": {
@@ -1052,7 +1052,7 @@
    "etiquetas_prohibidas": [],
    "horario_restriccion": "00:00:00Z a 23:59:59Z",
    "publicacion_origen": "2025-11-19",
-   "confianza": "pendiente_verificacion",
+   "confianza": "oficial",
    "incidencias": [
     "Condiciones por distintivo presentes, pero el NAP las codifica de forma inconsistente entre ayuntamientos. Requiere verificacion manual contra la ordenanza."
    ],
@@ -1065,7 +1065,39 @@
      ]
     }
    ],
-   "zbe_existe": true
+   "zbe_existe": true,
+   "ficha_url": "/zbe/oviedo/",
+   "ordenanza_nombre": "Ordenanza de la Zona de Bajas Emisiones del Ayuntamiento de Oviedo, art. 8, art. 18 y anexos I y II",
+   "ordenanza_url": "https://www.oviedo.es/documents/35127/1038783/ORDENANZA+ZONA+DE+BAJAS+EMISIONES.pdf",
+   "ordenanza_boletin": "Aprobada definitivamente por acuerdo del Pleno de 2 de diciembre de 2025",
+   "fecha_verificacion": "2026-10-05",
+   "horario_verificado": "",
+   "articulo": "",
+   "zonas_verificadas": [
+    {
+     "nombre": "Anillo interior",
+     "etiquetas_permitidas": [
+      "0",
+      "ECO",
+      "C",
+      "B"
+     ],
+     "horario_restriccion": "Permanente. La ordenanza no fija franja horaria",
+     "articulo": "anexo I, tabla 1"
+    },
+    {
+     "nombre": "Anillo exterior",
+     "etiquetas_permitidas": [
+      "0",
+      "ECO",
+      "C",
+      "B",
+      "Sin distintivo"
+     ],
+     "horario_restriccion": "Permanente. La ordenanza no fija franja horaria",
+     "articulo": "anexo I, tabla 2"
+    }
+   ]
   },
   "alcala-de-henares": {
    "municipio": "Alcalá de Henares",

@@ -47,7 +47,11 @@
     {{- range $lista }}
       {{- $txt := trim (printf "%v" .) " " }}
       {{- $clave := "" }}
-      {{- range slice "0" "ECO" "C" "B" }}
+      {{/* «Sin distintivo» va en la lista a proposito: hay zonas donde todavia
+           entra cualquier vehiculo, como el anillo exterior de Oviedo hasta
+           el 31/12/2027. Sin reconocerlo caia en `otros` y se leia
+           «0, ECO, C y B. Sin distintivo», que parece una errata. */}}
+      {{- range slice "0" "ECO" "C" "B" "Sin distintivo" }}
         {{- if and (eq $clave "") (or (eq $txt .) (hasPrefix $txt (printf "%s " .))) }}
           {{- $clave = . }}
         {{- end }}
@@ -69,7 +73,7 @@
            que `caducan: { B: ... }` llega como `b`: se busca de las dos
            formas, igual que hace puedo-circular.js. */ -}}
     {{- $pendientes := slice }}
-    {{- range $clave := slice "0" "ECO" "C" "B" }}
+    {{- range $clave := slice "0" "ECO" "C" "B" "sin" }}
       {{- $fecha := "" }}
       {{- with index ($z.caducan | default dict) (lower $clave) }}{{ $fecha = . }}{{ end }}
       {{- if eq $fecha "" }}
@@ -81,7 +85,11 @@
     {{- end }}
     {{- $cambios := slice }}
     {{- range sort $pendientes "fecha" }}
-      {{- $cambios = $cambios | append (printf "el %s deja de entrar el %s" .clave (time.Format "02/01/2006" .fecha)) }}
+      {{- $texto := printf "el %s deja de entrar el %s" .clave (time.Format "02/01/2006" .fecha) }}
+      {{- if eq .clave "sin" }}
+        {{- $texto = printf "los vehículos sin distintivo dejan de entrar el %s" (time.Format "02/01/2006" .fecha) }}
+      {{- end }}
+      {{- $cambios = $cambios | append $texto }}
     {{- end }}
 
     {{- $filas = $filas | append (dict

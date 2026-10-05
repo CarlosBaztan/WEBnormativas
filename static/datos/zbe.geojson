@@ -145820,8 +145820,8 @@
         "provincia": "", 
         "km2": 1.03, 
         "envolvente": false, 
-        "estado_dato": "pendiente", 
-        "url_ficha": null, 
+        "estado_dato": "verificado", 
+        "url_ficha": "/zbe/oviedo/", 
         "fuente_nombre": "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)", 
         "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/Oviedo.xml", 
         "fecha_descarga": "2026-09-23"

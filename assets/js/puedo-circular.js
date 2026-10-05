@@ -290,8 +290,18 @@
    */
 
   // "C con condiciones" -> { clave: "C", condicionado: true }
+  //
+  // "Sin distintivo" tambien es una entrada valida, y hace falta (05/10/2026).
+  // El anillo exterior de la ZBE de Oviedo no restringe a nadie hasta el
+  // 31/12/2027: hasta esa fecha entran tambien los vehiculos sin distintivo.
+  // Sin esta rama, a quien no tiene etiqueta se le respondia "No" cuando la
+  // ordenanza dice que si, porque su clave interna es 'sin' y aqui no se
+  // reconocia: caia en `clave: null` y no casaba con nada.
   function analizarEntrada(entrada) {
     var txt = String(entrada).trim();
+    if (/^sin\b/i.test(txt)) {
+      return { clave: 'sin', texto: txt, condicionado: /^sin distintivo\s*\S/i.test(txt) };
+    }
     var m = /^(0|ECO|C|B)\b\s*(.*)$/i.exec(txt);
     if (!m) return { clave: null, texto: txt, condicionado: false };
     var clave = m[1].toUpperCase();
