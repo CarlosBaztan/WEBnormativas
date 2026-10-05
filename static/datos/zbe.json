@@ -8,7 +8,7 @@
   "generado_por": "pipeline/zbe_nap.py",
   "ADVERTENCIA": "Lea `confianza` antes que nada: es lo que dice cuanto vale cada fila. 'oficial' significa que una persona ha leido la ordenanza del municipio en el boletin en que se publico; esas filas traen `etiquetas_permitidas`, `articulo`, `ordenanza_url`, `ordenanza_boletin` y `fecha_verificacion`, y se pueden usar. 'pendiente_verificacion' significa que solo consta que la ZBE existe: de esas filas NO se puede deducir que distintivos entran. El NAP de la DGT trae condiciones por distintivo, pero cada ayuntamiento las codifica con significados opuestos, asi que una lectura automatica diria lo contrario de la verdad en algunos municipios. Esa evidencia va en bruto y sin interpretar en `evidencia_sin_interpretar`. `etiquetas_permitidas` vacia en una fila 'oficial' no es un olvido: o el municipio tiene varias zonas con reglas distintas, y entonces estan en `zonas_verificadas`, o su ZBE todavia no restringe ningun distintivo.",
   "municipios_con_zbe": 45,
-  "con_reglas_verificadas": 11
+  "con_reglas_verificadas": 12
  },
  "municipios": {
   "a-coruna": {
@@ -957,11 +957,16 @@
    "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/VitoriaGasteiz.xml",
    "licencia": "CC-BY (Direccion General de Trafico)",
    "fecha_descarga": "2026-09-23",
-   "etiquetas_permitidas": [],
+   "etiquetas_permitidas": [
+    "0",
+    "ECO",
+    "C",
+    "B"
+   ],
    "etiquetas_prohibidas": [],
    "horario_restriccion": "00:00:00Z a 23:59:59Z",
    "publicacion_origen": "2025-10-01",
-   "confianza": "pendiente_verificacion",
+   "confianza": "oficial",
    "incidencias": [
     "Condiciones por distintivo presentes, pero el NAP las codifica de forma inconsistente entre ayuntamientos. Requiere verificacion manual contra la ordenanza."
    ],
@@ -974,7 +979,15 @@
      ]
     }
    ],
-   "zbe_existe": true
+   "zbe_existe": true,
+   "ficha_url": "/zbe/vitoria-gasteiz/",
+   "ordenanza_nombre": "Ordenanza relativa a la implantación de una Zona de Bajas Emisiones (ZBE) en la ciudad de Vitoria-Gasteiz, art. 10 y disposición transitoria",
+   "ordenanza_url": "https://www.araba.eus/botha/Boletines/pdfni/2025/048/2025_048_01277_C.pdf",
+   "ordenanza_boletin": "BOTHA núm. 48, de 2 de mayo de 2025. Aprobación definitiva por el Pleno de 21 de marzo de 2025",
+   "fecha_verificacion": "2026-10-05",
+   "horario_verificado": "Permanente. La ordenanza no fija franja horaria para la ZBE",
+   "articulo": "art. 10.1 y disposición transitoria",
+   "zonas_verificadas": []
   },
   "dos-hermanas": {
    "municipio": "Dos Hermanas",
