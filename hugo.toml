@@ -77,7 +77,12 @@ disableKinds = ["taxonomy", "term"]
   # PaperMod ya usa hugo.Environment, que vale "production" con `hugo` y
   # "development" con `hugo server`.
   description = "Normativa, fiscalidad y trámites del vehículo en España. Datos oficiales verificados y fechados."
-  author = "Normativa del vehículo"
+  # Se queda con el nombre de la marca. Hasta el 05/10/2026 decia
+  # "Normativa del vehiculo", que era el nombre VIEJO del sitio: al
+  # cambiar la marca el 01/10 se cambio site.Title y este se quedo
+  # atras, y salia en <meta name=author> de las 42 paginas y como
+  # autor en el JSON-LD. Un autor que ya no existe no es una firma.
+  author = "Coche Apto"
   defaultTheme = "auto"
   ShowReadingTime = false
   # Bajo cada tarjeta de las listas salia "23 de septiembre de 2026 ·

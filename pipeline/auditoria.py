@@ -201,40 +201,87 @@ def exige_reglas(fm: dict) -> bool:
     return fm.get("estado_zbe", "") == "activa"
 
 
-def enlaces_rotos(fuentes: dict, comprobador=None) -> list:
+# Codigos con los que un servidor dice "no me fio de ti", no "esto no existe".
+# Los devuelven los cortafuegos y las CDN segun la huella de la peticion, y a
+# una persona con un navegador la pagina le abre igual.
+ANTIROBOT = (401, 403, 405, 429, 999)
+
+
+def enlaces_rotos(fuentes: dict, comprobador=None) -> tuple[list, list]:
     """
     Comprueba que las fuentes citadas siguen en pie.
+
+    Devuelve dos listas: (rotos, sin_comprobar).
 
     `fuentes` es {ruta de la ficha: url}. `comprobador` recibe una url y
     devuelve su codigo HTTP; se inyecta para poder probar esto sin red, y para
     que la auditoria de cada dia no dependa de que los ayuntamientos esten
     levantados.
 
-    Un enlace que no responde cuenta como roto: para el lector es lo mismo.
+    POR QUE DOS LISTAS (05/10/2026)
+
+    Antes todo lo que pasara de 400 contaba como roto, y eso dio dos falsas
+    alarmas el mismo dia: benidorm.org responde 405 a HEAD y 200 a GET, y
+    granada.org va tras Akamai y devuelve 403 segun la huella de la peticion,
+    hasta en su portada. Las dos paginas estaban perfectamente en pie.
+
+    Importa porque un aviso que grita sin motivo se deja de mirar, y entonces
+    el dia que avise de algo real tampoco se mirara. Un 403 hay que
+    comprobarlo a mano, pero no es una incidencia.
     """
     if comprobador is None:
         comprobador = _codigo_http
 
-    rotos = []
+    rotos, sin_comprobar = [], []
     for ficha, url in sorted(fuentes.items()):
         try:
             codigo = comprobador(url)
         except Exception as e:
             rotos.append("%s: %s no responde (%s)" % (ficha, url, e))
             continue
-        if codigo >= 400:
+        if codigo in ANTIROBOT:
+            sin_comprobar.append(
+                "%s: %s devuelve %s (antirrobot, compruebalo en el navegador)"
+                % (ficha, url, codigo))
+        elif codigo >= 400:
             rotos.append("%s: %s devuelve %s" % (ficha, url, codigo))
-    return rotos
+    return rotos, sin_comprobar
 
 
 def _codigo_http(url: str) -> int:
-    """Peticion real. Aislada aqui para que enlaces_rotos sea testeable."""
+    """
+    Peticion real. Aislada aqui para que enlaces_rotos sea testeable.
+
+    Se intenta HEAD, que no descarga el cuerpo, y si falla se reintenta con
+    GET: hay servidores que no admiten HEAD y contestan 405 a una pagina que
+    existe y se sirve sin problema (benidorm.org, 05/10/2026).
+    """
+    import urllib.error
     import urllib.request
 
-    peticion = urllib.request.Request(url, method="HEAD", headers={
-        "User-Agent": "CocheApto/auditoria (+https://cocheapto.com)"})
-    with urllib.request.urlopen(peticion, timeout=20) as r:
-        return r.status
+    cabeceras = {"User-Agent": "CocheApto/auditoria (+https://cocheapto.com)"}
+
+    def pedir(metodo):
+        """
+        Devuelve el codigo, tambien cuando es de error.
+
+        urlopen LANZA una excepcion con cualquier cosa a partir de 400, asi
+        que sin capturar HTTPError un 403 llegaria arriba como «no responde» y
+        no se podria distinguir de un servidor caido, que es justo lo que hay
+        que distinguir aqui. Los fallos de red si suben: esos no traen codigo.
+        """
+        peticion = urllib.request.Request(url, method=metodo, headers=cabeceras)
+        try:
+            with urllib.request.urlopen(peticion, timeout=20) as r:
+                return r.status
+        except urllib.error.HTTPError as e:
+            return e.code
+
+    codigo = pedir("HEAD")
+    if codigo >= 400:
+        # Vale el del GET: es el metodo con el que una persona abre la pagina.
+        return pedir("GET")
+    return codigo
 
 
 def cola_ya_cubierta() -> list[str]:
@@ -361,14 +408,21 @@ def main() -> int:
 
     if args.enlaces and fuentes:
         print(f"Comprobando {len(fuentes)} fuentes oficiales...")
-        rotos = enlaces_rotos(fuentes)
+        rotos, sin_comprobar = enlaces_rotos(fuentes)
         if rotos:
             problemas += len(rotos)
             print(f"FUENTES QUE NO RESPONDEN ({len(rotos)}):")
             for x in rotos:
                 print(f"  - {x}")
             print()
-        else:
+        # Estas NO cuentan como incidencia: el servidor no se fia de un robot,
+        # pero la pagina abre en un navegador. Se listan para mirarlas a mano.
+        if sin_comprobar:
+            print(f"FUENTES QUE NO SE PUEDEN COMPROBAR SOLAS ({len(sin_comprobar)}):")
+            for x in sin_comprobar:
+                print(f"  - {x}")
+            print()
+        if not rotos and not sin_comprobar:
             print("Todas responden.")
             print()
 

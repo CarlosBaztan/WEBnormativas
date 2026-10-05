@@ -53,7 +53,7 @@ def test_los_enlaces_rotos_se_detectan():
     sin red. En produccion se le pasa uno que hace la peticion de verdad.
     """
     respuestas = {"https://bien.example": 200, "https://roto.example": 404}
-    rotos = au.enlaces_rotos(
+    rotos, _ = au.enlaces_rotos(
         {"ficha-a.md": "https://bien.example", "ficha-b.md": "https://roto.example"},
         comprobador=lambda u: respuestas[u])
     assert len(rotos) == 1
@@ -64,8 +64,49 @@ def test_los_enlaces_rotos_se_detectan():
 def test_un_enlace_que_no_responde_cuenta_como_roto():
     def revienta(url):
         raise OSError("sin conexion")
-    rotos = au.enlaces_rotos({"ficha.md": "https://loquesea.example"}, comprobador=revienta)
+    rotos, _ = au.enlaces_rotos({"ficha.md": "https://loquesea.example"},
+                                comprobador=revienta)
     assert len(rotos) == 1
+
+
+# ---------------------------------------------------------------------------
+# 05/10/2026. La auditoria daba por rotas dos fuentes oficiales que estaban
+# perfectamente en pie:
+#
+#   benidorm.org    respondia 405 a HEAD y 200 a GET, con 64 KB de pagina
+#   granada.org     va tras Akamai y devuelve 403 segun la huella de la
+#                   peticion: hasta su portada da 403 con un User-Agent de
+#                   navegador y 200 sin ninguno
+#
+# Ninguno de los dos estaba roto. Un aviso que da falsas alarmas se acaba
+# ignorando, y entonces el dia que avise de verdad tampoco se mirara, asi que
+# esto es peor que no comprobar nada.
+# ---------------------------------------------------------------------------
+
+def test_un_403_no_cuenta_como_roto():
+    """
+    403, 405 y 429 son respuestas antirrobot, no paginas caidas.
+
+    Van a una lista aparte: hay que mirarlos a mano, pero no son incidencias
+    y no deben contarse como tales.
+    """
+    for codigo in (401, 403, 405, 429):
+        rotos, sin_comprobar = au.enlaces_rotos(
+            {"ficha.md": "https://antirobot.example"},
+            comprobador=lambda u, c=codigo: c)
+        assert not rotos, "un %d no es un enlace roto" % codigo
+        assert len(sin_comprobar) == 1, "un %d tiene que quedar anotado" % codigo
+        assert str(codigo) in sin_comprobar[0]
+
+
+def test_un_404_sigue_siendo_roto():
+    """Que lo anterior no tape lo que si esta roto de verdad."""
+    for codigo in (404, 410, 500, 503):
+        rotos, sin_comprobar = au.enlaces_rotos(
+            {"ficha.md": "https://caida.example"},
+            comprobador=lambda u, c=codigo: c)
+        assert len(rotos) == 1, "un %d tiene que contar como roto" % codigo
+        assert not sin_comprobar
 
 
 def test_una_zbe_prevista_no_tiene_que_declarar_reglas():
