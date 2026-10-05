@@ -134987,7 +134987,7 @@
       "properties": {
         "slug": "sevilla-cartuja", 
         "id_zona": "sevilla-cartuja-0", 
-        "municipio": "Sevilla (Cartuja)", 
+        "municipio": "Sevilla", 
         "zona": "", 
         "provincia": "", 
         "km2": 2.78, 
@@ -150499,13 +150499,13 @@
       "properties": {
         "slug": "a-coruna", 
         "id_zona": "a-coruna-0", 
-        "municipio": "A Coruña", 
+        "municipio": "La Coruña", 
         "zona": "A Coruña - Marina", 
         "provincia": "", 
         "km2": 0.18, 
         "envolvente": false, 
-        "estado_dato": "pendiente", 
-        "url_ficha": null, 
+        "estado_dato": "verificado", 
+        "url_ficha": "/zbe/la-coruna/", 
         "fuente_nombre": "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)", 
         "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/ACoru%C3%B1a.xml", 
         "fecha_descarga": "2026-09-23"
@@ -152485,13 +152485,13 @@
       "properties": {
         "slug": "a-coruna", 
         "id_zona": "a-coruna-1", 
-        "municipio": "A Coruña", 
+        "municipio": "La Coruña", 
         "zona": "A Coruña - Ciudad Vieja", 
         "provincia": "", 
         "km2": 0.15, 
         "envolvente": false, 
-        "estado_dato": "pendiente", 
-        "url_ficha": null, 
+        "estado_dato": "verificado", 
+        "url_ficha": "/zbe/la-coruna/", 
         "fuente_nombre": "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)", 
         "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/ACoru%C3%B1a.xml", 
         "fecha_descarga": "2026-09-23"

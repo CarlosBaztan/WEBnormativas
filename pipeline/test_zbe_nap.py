@@ -112,6 +112,15 @@ def test_las_fechas_previas_se_leen_del_json_publicado():
     assert previas.get("a-coruna"), "data/zbe.json deberia traer la fecha de A Coruna"
 
 
+def test_la_coruna_se_publica_con_las_dos_formas():
+    """
+    05/10/2026, al publicar su ficha. Mismo caso que Gerona y Lerida: la forma
+    oficial es la gallega y la mayoria escribe la castellana, asi que en el
+    dataset y en el listado van las dos, castellano primero.
+    """
+    assert _registro("A Coruña")["municipio"] == "La Coruña / A Coruña"
+
+
 def _ejecutar():
     fallos = 0
     for nombre, fn in sorted(globals().items()):

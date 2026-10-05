@@ -194,6 +194,11 @@
       {{- range $verificados }}
         {{- $responde := false }}
         {{- range .zonas }}
+          {{/* Una ZBE que no va por distintivo TAMBIEN responde, y su
+               respuesta es "no entra nadie sin autorizacion". Sin esto,
+               La Coruña salia anunciada como pendiente teniendo la
+               ordenanza leida entera. */}}
+          {{- if .sin_acceso_por_distintivo }}{{ $responde = true }}{{ end }}
           {{- with .distintivos_permitidos }}
             {{- if and (reflect.IsSlice .) (gt (len .) 0) }}{{ $responde = true }}{{ end }}
           {{- end }}
@@ -223,8 +228,15 @@
              unica parte de esta frase escrita a mano, y se queda vieja justo
              cuando se hace bien el trabajo: al publicar la ficha que faltaba,
              el municipio aparecia a la vez como verificado y como proximo.
-             Paso el 04/10/2026 con Palma y Alicante. Lo avisa ademas
-             auditoria.py, pero aqui no puede ni llegar a verse. */}}
+             Paso el 04/10/2026 con Palma y Alicante.
+
+             OJO, ESTE FILTRO COMPARA EL NOMBRE TAL CUAL. Con los toponimos
+             bilingues la misma ciudad se escribe de dos formas a proposito, y
+             entonces no casa: el 05/10/2026 la portada decia «verificada: La
+             Coruña» y «siguientes: A Coruña». Go no trae con que quitar
+             tildes, asi que quien de verdad lo vigila es auditoria.py, que
+             compara por slug y nombra al municipio. Si esa prueba falla, se
+             limpia data/cobertura.json y no se toca esto. */}}
       {{- $yaTienenFicha := slice }}
       {{- range $conRespuesta }}{{ $yaTienenFicha = $yaTienenFicha | append (lower .municipio) }}{{ end }}
       {{- range $sinRespuesta }}{{ $yaTienenFicha = $yaTienenFicha | append (lower .municipio) }}{{ end }}

@@ -33,8 +33,13 @@
   {{- $varias := gt (len $m.zonas) 1 }}
   {{- range $z := $m.zonas }}
     {{- $lista := $z.distintivos_permitidos }}
+    {{- $sinDistintivo := $z.sin_acceso_por_distintivo }}
+    {{- /* La cadena "pendiente" significa zona no leida: esa no sale.
+           Una lista vacia CON la marca de que el acceso no va por distintivo
+           si sale, y es la fila que mas dice de toda la tabla: hay ZBE donde
+           ninguna etiqueta abre la puerta. */}}
     {{- if and $lista (not (reflect.IsSlice $lista)) }}{{ continue }}{{ end }}
-    {{- if not $lista }}{{ continue }}{{ end }}
+    {{- if and (not $lista) (not $sinDistintivo) }}{{ continue }}{{ end }}
 
     {{- $libres := slice }}
     {{- $condicionados := slice }}
@@ -85,6 +90,7 @@
           "libres"  $libres
           "cond"    $condicionados
           "otros"   $otros
+          "sinDistintivo" $sinDistintivo
           "horario" ($z.horario | default "")
           "cambios" $cambios) }}
   {{- end }}
@@ -111,9 +117,13 @@
     <tr>
       <th scope="row"><a href="{{ $f.url }}">{{ $f.nombre }}</a></th>
       <td>
-        {{- with $f.libres }}{{ delimit . ", " " y " }}{{ end }}
-        {{- with $f.cond }}{{ if $f.libres }}. {{ end }}{{ delimit . ", " " y " }}, solo con condiciones{{ end }}
-        {{- with $f.otros }}. {{ delimit . ", " " y " }}{{ end }}
+        {{- if $f.sinDistintivo }}
+          <strong>Ningún distintivo da acceso.</strong> Solo transporte público, vehículos autorizados y carga y descarga
+        {{- else }}
+          {{- with $f.libres }}{{ delimit . ", " " y " }}{{ end }}
+          {{- with $f.cond }}{{ if $f.libres }}. {{ end }}{{ delimit . ", " " y " }}, solo con condiciones{{ end }}
+          {{- with $f.otros }}. {{ delimit . ", " " y " }}{{ end }}
+        {{- end }}
       </td>
       {{- /* Los horarios vienen del front matter de cada ficha y unos empiezan
              en mayuscula y otros no, segun quien escribiera la ficha. En una

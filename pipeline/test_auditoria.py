@@ -252,6 +252,25 @@ def test_ninguna_pagina_publicada_lleva_marcadores():
 # leyendo la frase entera en la portada.
 # ---------------------------------------------------------------------------
 
+def test_la_cola_detecta_el_mismo_municipio_con_otro_nombre():
+    """
+    La comparacion no puede ser por el nombre tal cual.
+
+    05/10/2026: al publicar la ficha de La Coruña, la portada decia a la vez
+    «Con respuesta verificada: ... La Coruña» y «Siguientes: ... A Coruña».
+    Es la misma ciudad escrita de las dos formas, que es justo lo que manda la
+    regla de toponimos bilingues del proyecto. Comparando cadenas no se ve.
+
+    Se compara por slug, que es la clave con la que el proyecto cruza fichas,
+    NAP y mapa, y que para las dos formas acaba en «a-coruna» o «la-coruna»
+    segun el caso: por eso la comprobacion mira tambien el slug_nap y el
+    nombre del fichero.
+    """
+    assert au.clave_de_cola("A Coruña") == au.clave_de_cola("a-coruna")
+    assert au.clave_de_cola("Vitoria-Gasteiz") == au.clave_de_cola("vitoria-gasteiz")
+    assert au.clave_de_cola("Gerona / Girona") != au.clave_de_cola("Lleida")
+
+
 def test_la_cola_no_anuncia_municipios_que_ya_tienen_ficha():
     """
     Ningun municipio de `proximos` puede tener ya ficha publicada.
@@ -264,6 +283,59 @@ def test_la_cola_no_anuncia_municipios_que_ya_tienen_ficha():
     assert not repetidos, (
         "data/cobertura.json anuncia como proximos municipios que ya tienen "
         "ficha: %s. Quitalos de `proximos`." % ", ".join(repetidos))
+
+
+# ---------------------------------------------------------------------------
+# El tercer tipo de ZBE: la que no se decide por el distintivo
+#
+# 05/10/2026, leyendo la Ordenanza de Movilidad Sostenible de A Coruna (BOP
+# num. 185, de 29/09/2025). Su ZBE CENTRO no restringe por etiqueta: solo
+# entran transporte publico, taxis en calles concretas, vehiculos autorizados
+# y la carga y descarga. Un turismo particular no entra, lleve la etiqueta que
+# lleve; la etiqueta 0 o ECO solo amplia la franja horaria de reparto.
+#
+# El modelo del proyecto sabia decir dos cosas: "entran estos distintivos" y
+# "no hemos leido la ordenanza". Esta es una tercera: "la hemos leido entera y
+# el distintivo no es lo que decide". Sin forma de decirla, solo quedaban dos
+# salidas y las dos eran falsas: publicar una lista de distintivos que no da
+# acceso, o marcar como `parcial` una ficha verificada y esconderla.
+# ---------------------------------------------------------------------------
+
+def test_una_zbe_que_no_va_por_distintivo_si_declara_reglas():
+    """
+    `acceso_por_distintivo: false` cuenta como regla declarada.
+
+    Es una afirmacion sobre quien puede circular, igual de verificada que una
+    lista, y mas restrictiva: dice que NINGUN distintivo basta.
+    """
+    texto = (
+        "---" + chr(10) +
+        'municipio: "A Coruna"' + chr(10) +
+        'codigo_ine: "15030"' + chr(10) +
+        'estado_zbe: "activa"' + chr(10) +
+        "acceso_por_distintivo: false" + chr(10) +
+        "etiquetas_permitidas: []" + chr(10) +
+        'estado_dato: "verificado"' + chr(10) +
+        "---" + chr(10) + chr(10) + "Cuerpo." + chr(10))
+    assert au.declara_reglas(texto)
+
+
+def test_sin_la_marca_una_lista_vacia_sigue_sin_declarar_nada():
+    """
+    Que lo anterior no abra la puerta a publicar fichas vacias.
+
+    Una lista vacia a secas sigue significando "no lo hemos leido", que es lo
+    que impide que una ficha luzca el sello de verificada sin responder nada.
+    """
+    texto = (
+        "---" + chr(10) +
+        'municipio: "Ejemplo"' + chr(10) +
+        'codigo_ine: "99999"' + chr(10) +
+        'estado_zbe: "activa"' + chr(10) +
+        "etiquetas_permitidas: []" + chr(10) +
+        'estado_dato: "verificado"' + chr(10) +
+        "---" + chr(10) + chr(10) + "Cuerpo." + chr(10))
+    assert not au.declara_reglas(texto)
 
 
 def _ejecutar():

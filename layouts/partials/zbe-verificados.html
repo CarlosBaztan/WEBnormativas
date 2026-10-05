@@ -87,12 +87,29 @@
     Valencia queda fuera a proposito: su lista esta vacia porque no hay
     reglas en vigor, y una lista vacia aqui es falsa.
   */}}
+  {{/*
+    El tercer tipo de ZBE: la que no se decide por el distintivo. La ZBE
+    CENTRO de A Coruna solo deja entrar al transporte publico, a los taxis en
+    calles concretas, a los vehiculos autorizados y a la carga y descarga, asi
+    que un turismo particular no entra lleve la etiqueta que lleve.
+
+    OJO CON `default` Y LOS BOOLEANOS: `$p.acceso_por_distintivo | default
+    true` devuelve TRUE cuando el valor es `false`, porque Hugo trata el falso
+    como vacio y aplica el defecto. Habria dejado la marca sin efecto en
+    silencio, que es justo el tipo de fallo que no se ve. Por eso `isset`.
+  */}}
+  {{- $sinDistintivo := false }}
+  {{- if isset $p "acceso_por_distintivo" }}
+    {{- if not $p.acceso_por_distintivo }}{{ $sinDistintivo = true }}{{ end }}
+  {{- end }}
+
   {{- $zonas := $p.zonas | default slice }}
-  {{- if and (not $zonas) $p.etiquetas_permitidas }}
+  {{- if and (not $zonas) (or $p.etiquetas_permitidas $sinDistintivo) }}
     {{- $zonas = slice (dict
           "id"                     .File.ContentBaseName
           "nombre"                 ($p.municipio | default .Title)
-          "distintivos_permitidos" $p.etiquetas_permitidas
+          "distintivos_permitidos" ($p.etiquetas_permitidas | default slice)
+          "sin_acceso_por_distintivo" $sinDistintivo
           "horario"                ($p.horario_restriccion | default "")
           "articulo"               ($p.articulo | default "")
           "nota"                   ($p.nota_zona | default "")

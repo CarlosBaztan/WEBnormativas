@@ -26,6 +26,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -157,11 +158,26 @@ def declara_reglas(texto: str) -> bool:
 
     Se mira sobre el texto crudo porque front_matter() solo lee escalares y
     las dos son listas.
+
+    Y vale una tercera desde el 05/10/2026: `acceso_por_distintivo: false`.
+    Hay ZBE que no se deciden por la etiqueta. La ZBE CENTRO de A Coruna solo
+    deja entrar al transporte publico, a los taxis en calles concretas, a los
+    vehiculos autorizados y a la carga y descarga: un turismo particular no
+    entra lleve la etiqueta que lleve, y la 0 o ECO solo amplian la franja de
+    reparto. Eso es una regla de acceso, esta verificada y es MAS restrictiva
+    que cualquier lista, asi que cuenta.
+
+    Sin esto solo quedaban dos salidas y las dos eran falsas: publicar una
+    lista de distintivos que no dan acceso, o llamar `parcial` a una ordenanza
+    leida entera y esconder la ficha del selector.
     """
     m = re.match(r"^---\s*\n(.*?)\n---\s*\n", texto, re.S)
     if not m:
         return False
     cabecera = m.group(1)
+
+    if re.search(r"^acceso_por_distintivo:\s*false\s*$", cabecera, re.M):
+        return True
 
     if re.search(r"^zonas:\s*$", cabecera, re.M):
         return True
@@ -284,6 +300,25 @@ def _codigo_http(url: str) -> int:
     return codigo
 
 
+def clave_de_cola(nombre: str) -> str:
+    """
+    Reduce un nombre de municipio a una clave comparable.
+
+    Quita tildes, baja a minusculas y deja solo letras y numeros separados por
+    guiones, igual que el slug de un fichero. Asi «A Coruña», «a-coruna» y
+    «A CORUÑA» caen en la misma clave.
+
+    Hace falta porque la regla de toponimos bilingues del proyecto hace que la
+    MISMA ciudad se escriba de dos formas a proposito. El 05/10/2026, al
+    publicar la ficha de La Coruña, la portada decia a la vez «Con respuesta
+    verificada: ... La Coruña» y «Siguientes: ... A Coruña». Comparando
+    cadenas no se ve; comparando slugs si.
+    """
+    sin_tildes = unicodedata.normalize("NFKD", nombre or "")
+    sin_tildes = "".join(c for c in sin_tildes if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", "-", sin_tildes.lower()).strip("-")
+
+
 def cola_ya_cubierta() -> list[str]:
     """
     Municipios que data/cobertura.json anuncia como proximos y ya tienen ficha.
@@ -301,12 +336,19 @@ def cola_ya_cubierta() -> list[str]:
     if not ruta.exists():
         return []
     cola = json.loads(ruta.read_text(encoding="utf-8")).get("proximos", [])
+
+    # Se recogen TODAS las formas con las que se puede nombrar un municipio ya
+    # publicado: el nombre que se muestra, el slug del fichero y el slug con
+    # el que lo llama el NAP. Con los toponimos bilingues, la misma ciudad
+    # aparece escrita de dos maneras a proposito.
     con_ficha = set()
-    for _, texto in paginas_publicadas():
-        municipio = front_matter(texto).get("municipio", "")
-        if municipio:
-            con_ficha.add(municipio.strip().lower())
-    return [n for n in cola if n.strip().lower() in con_ficha]
+    for ruta_ficha, texto in paginas_publicadas():
+        fm = front_matter(texto)
+        for valor in (fm.get("municipio", ""), fm.get("slug_nap", ""),
+                      Path(ruta_ficha).stem):
+            if valor:
+                con_ficha.add(clave_de_cola(valor))
+    return [n for n in cola if clave_de_cola(n) in con_ficha]
 
 
 def main() -> int:

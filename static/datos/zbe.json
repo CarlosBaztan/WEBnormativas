@@ -8,11 +8,11 @@
   "generado_por": "pipeline/zbe_nap.py",
   "ADVERTENCIA": "Lea `confianza` antes que nada: es lo que dice cuanto vale cada fila. 'oficial' significa que una persona ha leido la ordenanza del municipio en el boletin en que se publico; esas filas traen `etiquetas_permitidas`, `articulo`, `ordenanza_url`, `ordenanza_boletin` y `fecha_verificacion`, y se pueden usar. 'pendiente_verificacion' significa que solo consta que la ZBE existe: de esas filas NO se puede deducir que distintivos entran. El NAP de la DGT trae condiciones por distintivo, pero cada ayuntamiento las codifica con significados opuestos, asi que una lectura automatica diria lo contrario de la verdad en algunos municipios. Esa evidencia va en bruto y sin interpretar en `evidencia_sin_interpretar`. `etiquetas_permitidas` vacia en una fila 'oficial' no es un olvido: o el municipio tiene varias zonas con reglas distintas, y entonces estan en `zonas_verificadas`, o su ZBE todavia no restringe ningun distintivo.",
   "municipios_con_zbe": 45,
-  "con_reglas_verificadas": 10
+  "con_reglas_verificadas": 11
  },
  "municipios": {
   "a-coruna": {
-   "municipio": "A Coruña",
+   "municipio": "La Coruña",
    "slug": "a-coruna",
    "fuente_nombre": "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)",
    "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/ACoru%C3%B1a.xml",
@@ -22,7 +22,7 @@
    "etiquetas_prohibidas": [],
    "horario_restriccion": "00:00:00Z a 23:59:59Z",
    "publicacion_origen": "2024-09-12",
-   "confianza": "pendiente_verificacion",
+   "confianza": "oficial",
    "incidencias": [
     "Condiciones por distintivo presentes, pero el NAP las codifica de forma inconsistente entre ayuntamientos. Requiere verificacion manual contra la ordenanza."
    ],
@@ -48,7 +48,15 @@
      ]
     }
    ],
-   "zbe_existe": true
+   "zbe_existe": true,
+   "ficha_url": "/zbe/la-coruna/",
+   "ordenanza_nombre": "Ordenanza de Movilidad Sostenible del Concello da Coruña, arts. 20 y 190",
+   "ordenanza_url": "https://www.coruna.gal/descarga/1453902501202/Ordenanza-de-Movilidad-Sostenible-del-Concello-da-Coruna_castellano.pdf",
+   "ordenanza_boletin": "BOP A Coruña núm. 185, de 29 de septiembre de 2025. Aprobada definitivamente por el Pleno de 11 de septiembre de 2025",
+   "fecha_verificacion": "2026-10-05",
+   "horario_verificado": "Permanente. La ordenanza no fija franja horaria para el acceso general",
+   "articulo": "art. 20 de la Ordenanza de Movilidad Sostenible",
+   "zonas_verificadas": []
   },
   "molina-de-segura": {
    "municipio": "Molina de Segura",

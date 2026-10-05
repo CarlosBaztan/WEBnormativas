@@ -185,6 +185,9 @@ FICHAS = {
     # SevillaCartuja.xml. La ZBE son dos zonas de la Isla de la Cartuja, pero
     # la pagina se llama sevilla porque es lo que se busca.
     "sevilla-cartuja": "sevilla",
+    # ACoruna.xml. La pagina se llama la-coruna porque es la forma que busca
+    # la mayoria; ver la regla de toponimos bilingues en CLAUDE.md.
+    "a-coruna": "la-coruna",
 }
 
 # Nombre con el que sale la zona en el mapa. El selector ordena los 45
@@ -199,6 +202,7 @@ FICHAS = {
 # NOMBRES_BILINGUES, en pipeline/zbe_nap.py.
 NOMBRES = {
     "rondas-de-barcelona": "Barcelona (ZBE Rondas)",
+    "a-coruna": "La Coruña",
     "girona": "Gerona",
     "lleida": "Lérida",
     "donostia-san-sebastian": "San Sebastián",

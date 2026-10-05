@@ -98,6 +98,9 @@ CORRECCIONES_NOMBRE = {
 # En el mapa se usa la forma corta, que es otra tabla: NOMBRES en
 # pipeline/zbe_geometria.py.
 NOMBRES_BILINGUES = {
+    # 05/10/2026, al publicar su ficha. CLAUDE.md lo dejaba anotado como el
+    # siguiente caso del mismo tipo que Gerona y Lerida.
+    "A Coruña": "La Coruña / A Coruña",
     "Girona": "Gerona / Girona",
     "Lleida": "Lérida / Lleida",
     "Donostia - San Sebastián": "San Sebastián / Donostia",

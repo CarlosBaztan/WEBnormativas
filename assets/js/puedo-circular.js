@@ -312,11 +312,24 @@
    * lugar de una lista. Es el caso de Madrid ZBE (todo el municipio).
    */
   function zonaVerificada(zona) {
+    // Una ZBE que no va por distintivo tambien esta verificada, y su lista
+    // esta vacia a proposito: ningun distintivo da acceso. Ver abajo.
+    if (zona.sin_acceso_por_distintivo) return true;
     var p = zona.distintivos_permitidos;
     return !!(p && typeof p !== 'string' && p.length);
   }
 
   function veredictoZona(zona, distintivoUsuario) {
+    /*
+     * El tercer tipo de ZBE (05/10/2026). La ZBE CENTRO de A Coruna no
+     * restringe por etiqueta: solo entran transporte publico, taxis en calles
+     * concretas, vehiculos autorizados y la carga y descarga. Un turismo
+     * particular no entra lleve la etiqueta que lleve.
+     *
+     * Va ANTES de mirar el distintivo del usuario, porque aqui su distintivo
+     * no cambia la respuesta y preguntarselo seria tomarle el pelo.
+     */
+    if (zona.sin_acceso_por_distintivo) return 'no_por_distintivo';
     var permitidos = zona.distintivos_permitidos;
     if ((typeof permitidos === 'string') || !permitidos || !permitidos.length) return 'pendiente';
     if (!distintivoUsuario) return 'sin_distintivo_usuario';
@@ -368,6 +381,7 @@
     no_figura:   { etiqueta: 'No',              clase: 'no',   icono: '×' },
     pendiente:   { etiqueta: 'Sin verificar',   clase: 'pend', icono: '?' },
     caducado:    { etiqueta: 'Ya no',           clase: 'no',   icono: '×' },
+    no_por_distintivo: { etiqueta: 'No, salvo autorización', clase: 'no', icono: '×' },
     sin_distintivo_usuario: { etiqueta: 'Indica tu vehículo', clase: 'pend', icono: '?' }
   };
 
@@ -445,6 +459,9 @@
     } else if (todasIgual('caducado')) {
       titular = 'Ya no, la excepción ha caducado';
       claseGlobal = 'no';
+    } else if (todasIgual('no_por_distintivo')) {
+      titular = 'No, y tu distintivo no cambia la respuesta';
+      claseGlobal = 'no';
     } else if (todasIgual('no_figura')) {
       titular = plural ? 'No, en ninguna de las zonas verificadas' : 'No, según la ordenanza';
       claseGlobal = 'no';
@@ -453,7 +470,7 @@
       claseGlobal = 'cond';
     } else {
       titular = 'Depende de la zona';
-      claseGlobal = (hay('no_figura') || hay('caducado')) ? 'no' : 'cond';
+      claseGlobal = (hay('no_figura') || hay('caducado') || hay('no_por_distintivo')) ? 'no' : 'cond';
     }
 
     var partes = ['<div class="pc-veredicto pc-veredicto--' + claseGlobal + '">'];
