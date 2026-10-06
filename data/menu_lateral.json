@@ -38,7 +38,8 @@
         { "texto": "ECO", "url": "/etiquetas/eco/", "icono": "ECO" },
         { "texto": "C", "url": "/etiquetas/c/", "icono": "C" },
         { "texto": "B", "url": "/etiquetas/b/", "icono": "B" },
-        { "texto": "Sin distintivo", "url": "/etiquetas/sin-distintivo/" }
+        { "texto": "Sin distintivo", "url": "/etiquetas/sin-distintivo/" },
+        { "texto": "Cómo conseguir la pegatina", "url": "/etiquetas/como-pedir-la-etiqueta-ambiental/" }
       ]
     },
     {

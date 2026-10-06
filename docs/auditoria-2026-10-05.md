@@ -112,13 +112,9 @@ Ninguna es contenido basura: son páginas de navegación, y las dos de sección 
 
 `docs/seo-arquitectura.md` fija 20 piezas para los cuatro primeros meses. Medido contra el sitio en vivo:
 
-**19 de 20 publicadas.** Los dos bloqueantes del punto 0 (dominio conectado antes del primer contenido indexable, y `params.env` sin fijar) están los dos resueltos.
+**20 de 20 publicadas** desde el 06/10/2026, cuando se publicó la que faltaba. Los dos bloqueantes del punto 0 (dominio conectado antes del primer contenido indexable, y `params.env` sin fijar) están los dos resueltos.
 
-Falta una, y no es una cualquiera:
-
-| # | URL | Por qué importa, según el propio plan |
-|---:|:---|:---|
-| 17 | `/etiquetas/como-pedir-la-etiqueta-ambiental/` | Transaccional puro, volumen estable todo el año, verificación trivial (sede de la DGT y Correos), dificultad **baja**. Es la salida natural de las cinco páginas de etiqueta y **la primera pieza que no depende de la política de ZBE**, o sea la que cubre el riesgo de «cambio político» del plan de negocio |
+La que faltaba era la pieza 17, `/etiquetas/como-pedir-la-etiqueta-ambiental/`: transaccional pura, volumen estable todo el año, y **la primera pieza que no depende de la política de ZBE**, o sea la que cubre el riesgo de «cambio político» del plan de negocio. Publicada el 06/10/2026.
 
 Nota: la pieza 20 del plan era literalmente *«Qué etiquetas prohíbe cada una de las N ZBE de España»*. Es la tabla que se publicó ayer en `/zbe/distintivos-por-ciudad/`, escrita sin haber leído ese plan. Convergencia, no coincidencia: era el siguiente paso evidente.
 
