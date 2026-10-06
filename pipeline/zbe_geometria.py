@@ -188,6 +188,9 @@ FICHAS = {
     # ACoruna.xml. La pagina se llama la-coruna porque es la forma que busca
     # la mayoria; ver la regla de toponimos bilingues en CLAUDE.md.
     "a-coruna": "la-coruna",
+    # PamplonaEnsanche.xml, pero la ordenanza delimita el Casco Antiguo. La
+    # pagina se llama pamplona a secas; la discrepancia va dicha en la ficha.
+    "pamplona-ensanche": "pamplona",
 }
 
 # Nombre con el que sale la zona en el mapa. El selector ordena los 45
@@ -203,6 +206,7 @@ FICHAS = {
 NOMBRES = {
     "rondas-de-barcelona": "Barcelona (ZBE Rondas)",
     "a-coruna": "La Coruña",
+    "pamplona-ensanche": "Pamplona",
     "girona": "Gerona",
     "lleida": "Lérida",
     "donostia-san-sebastian": "San Sebastián",

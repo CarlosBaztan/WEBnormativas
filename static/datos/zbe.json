@@ -8,7 +8,7 @@
   "generado_por": "pipeline/zbe_nap.py",
   "ADVERTENCIA": "Lea `confianza` antes que nada: es lo que dice cuanto vale cada fila. 'oficial' significa que una persona ha leido la ordenanza del municipio en el boletin en que se publico; esas filas traen `etiquetas_permitidas`, `articulo`, `ordenanza_url`, `ordenanza_boletin` y `fecha_verificacion`, y se pueden usar. 'pendiente_verificacion' significa que solo consta que la ZBE existe: de esas filas NO se puede deducir que distintivos entran. El NAP de la DGT trae condiciones por distintivo, pero cada ayuntamiento las codifica con significados opuestos, asi que una lectura automatica diria lo contrario de la verdad en algunos municipios. Esa evidencia va en bruto y sin interpretar en `evidencia_sin_interpretar`. `etiquetas_permitidas` vacia en una fila 'oficial' no es un olvido: o el municipio tiene varias zonas con reglas distintas, y entonces estan en `zonas_verificadas`, o su ZBE todavia no restringe ningun distintivo.",
   "municipios_con_zbe": 45,
-  "con_reglas_verificadas": 13
+  "con_reglas_verificadas": 14
  },
  "municipios": {
   "a-coruna": {
@@ -126,7 +126,7 @@
    "zonas_verificadas": []
   },
   "pamplona-ensanche": {
-   "municipio": "Pamplona (Ensanche)",
+   "municipio": "Pamplona",
    "slug": "pamplona-ensanche",
    "fuente_nombre": "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)",
    "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/PamplonaEnsanche.xml",
@@ -136,7 +136,7 @@
    "etiquetas_prohibidas": [],
    "horario_restriccion": "10:30:00Z a 15:00:00Z; 12:30:00Z a 17:00:00Z",
    "publicacion_origen": "2025-08-20",
-   "confianza": "pendiente_verificacion",
+   "confianza": "oficial",
    "incidencias": [
     "Condiciones por distintivo presentes, pero el NAP las codifica de forma inconsistente entre ayuntamientos. Requiere verificacion manual contra la ordenanza."
    ],
@@ -152,7 +152,15 @@
      ]
     }
    ],
-   "zbe_existe": true
+   "zbe_existe": true,
+   "ficha_url": "/zbe/pamplona/",
+   "ordenanza_nombre": "Ordenanza reguladora de las Zonas de Bajas Emisiones de Pamplona, arts. 3, 8, 10, 11 y 13",
+   "ordenanza_url": "https://www.pamplona.es/sites/default/files/2025-10/ordenanzareguladorazonadebajasemisionespleno.pdf",
+   "ordenanza_boletin": "Boletín Oficial de Navarra núm. 257, de 29 de diciembre de 2025",
+   "fecha_verificacion": "2026-10-06",
+   "horario_verificado": "La ordenanza de ZBE no fija franja horaria: el acceso lo regulan las normas del Casco Antiguo",
+   "articulo": "arts. 3.2, 10 y 11 de la Ordenanza reguladora de las ZBE",
+   "zonas_verificadas": []
   },
   "malaga": {
    "municipio": "Málaga",
@@ -613,9 +621,9 @@
    "zbe_existe": true,
    "ficha_url": "/zbe/granada/",
    "ordenanza_nombre": "Ordenanza Integral de Movilidad Sostenible de Granada, arts. 130 a 138 y anexo V",
-   "ordenanza_url": "https://www.granada.org/v2010.nsf/xxtod/25ZBE?open=&pag=ini06",
+   "ordenanza_url": "https://www.granada.org/inet/wordenanz.nsf/e10bc5a24ff02353c1256e2800626524/936afdd744339e27c1258c850028d122/$FILE/aprobaci%C3%B3n-definitiva-ordenanza-movilidad-sostenible.pdf",
    "ordenanza_boletin": "BOP Granada núm. 86, de 9 de mayo de 2025 (CVE BOP-GRA-2025-086014). Aprobación definitiva del proyecto de ZBE: BOP núm. 178, de 18 de septiembre de 2025",
-   "fecha_verificacion": "2026-09-29",
+   "fecha_verificacion": "2026-10-06",
    "horario_verificado": "La ordenanza no fija una franja horaria general para la ZBE",
    "articulo": "",
    "zonas_verificadas": []

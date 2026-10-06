@@ -138071,13 +138071,13 @@
       "properties": {
         "slug": "pamplona-ensanche", 
         "id_zona": "pamplona-ensanche-0", 
-        "municipio": "Pamplona (Ensanche)", 
+        "municipio": "Pamplona", 
         "zona": "", 
         "provincia": "", 
         "km2": 1.67, 
         "envolvente": false, 
-        "estado_dato": "pendiente", 
-        "url_ficha": null, 
+        "estado_dato": "verificado", 
+        "url_ficha": "/zbe/pamplona/", 
         "fuente_nombre": "Punto de Acceso Nacional de la DGT, Zonas de Bajas Emisiones (DATEX2 v3)", 
         "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/PamplonaEnsanche.xml", 
         "fecha_descarga": "2026-09-23"
