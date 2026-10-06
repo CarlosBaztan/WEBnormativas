@@ -75,7 +75,7 @@ Todo esto está dicho en las propias fichas, para que ningún lector se lleve un
 | **Oviedo** | El número y la fecha del BOPA | Tengo el acuerdo del Pleno (02/12/2025) y el PDF oficial del ayuntamiento, pero no he localizado la referencia del boletín |
 | **Granada** | Que su enlace oficial siga vivo | `granada.org` va tras Akamai y devuelve 403 a cualquier comprobación automática, incluso en su portada. **Ábrelo una vez en el navegador y me dices** |
 | **Zaragoza** | El horario de la ZBE | Ya constaba: no se pudo confirmar en fuente oficial, y la ficha lo dice |
-| **Madrid** | La zona «Madrid ciudad» | Sigue pendiente de verificar: hay que leer el texto consolidado de la Ordenanza de Movilidad Sostenible (art. 21 y disposición transitoria primera). Es la zona con más volumen de búsqueda de las tres |
+| ~~**Madrid**~~ | ~~La zona «Madrid ciudad»~~ | **RESUELTO el 06/10/2026.** Verificado en la página oficial del Ayuntamiento, actualizada el 07/04/2026: el art. 21 prohíbe circular a los «A» en todo el municipio desde el 1 de enero de 2025, y la disposición transitoria séptima que introdujo la Ordenanza 2/2026 les permite volver desde el 7 de abril de 2026 de forma temporal y condicionada |
 
 ---
 

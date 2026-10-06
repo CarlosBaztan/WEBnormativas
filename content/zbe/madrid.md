@@ -15,17 +15,22 @@ fuente_nombre: "Ordenanza 2/2026, de 24 de marzo, que modifica la Ordenanza de M
 fuente_url: "https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF"
 fuente_boletin: "BOCM núm. 80, de 6 de abril de 2026, págs. 129-219"
 fecha_vigor_ordenanza: "2026-04-07"
-fecha_verificacion: "2026-10-01"
+fecha_verificacion: "2026-10-06"
 verificado_por: "Carlos Baztán"
 
 zonas:
   - id: "madrid-ciudad"
     nombre: "Madrid ZBE (todo el municipio)"
     estado: "activa"
-    distintivos_permitidos: "pendiente"
-    horario: "pendiente"
-    articulo: "art. 21 OMS"
-    nota: "El régimen de la ZBE de ciudad no lo fija la Ordenanza 2/2026. Verificar en el texto consolidado de la OMS (art. 21 y disposición transitoria primera)."
+    # Verificado el 06/10/2026 en la pagina oficial del Ayuntamiento de Madrid,
+    # actualizada el 07/04/2026. El art. 21 prohibe circular a los «A» desde el
+    # 1 de enero de 2025, y la disposicion transitoria septima que introdujo la
+    # Ordenanza 2/2026 les deja volver de forma temporal y CONDICIONADA desde
+    # el 7 de abril de 2026. De ahi «con condiciones» y no un si a secas.
+    distintivos_permitidos: ["0", "ECO", "C", "B", "Sin distintivo con condiciones"]
+    horario: "Permanente, todos los días"
+    articulo: "art. 21 OMS y disposición transitoria séptima"
+    nota: "Desde el 7 de abril de 2026, algunos vehículos sin distintivo pueden circular de forma temporal y condicionada, y solo fuera de Distrito Centro y Plaza Elíptica."
 
   - id: "distrito-centro"
     nombre: "ZBEDEP Distrito Centro"
@@ -55,13 +60,51 @@ Madrid no tiene una zona de bajas emisiones, sino **tres, con reglas distintas**
 
 | Tu distintivo | Madrid ciudad | Distrito Centro | Plaza Elíptica |
 |:---|:---|:---|:---|
-| **0 emisiones** | Pendiente de verificar | Sí | Sí |
-| **ECO** | Pendiente de verificar | Sí (industriales, de 7:00 a 21:00) | Sí |
-| **C** | Pendiente de verificar | Solo en casos concretos | Sí |
-| **B** | Pendiente de verificar | Solo en casos concretos | Sí |
-| **Sin distintivo** | Pendiente de verificar | No | **No** |
+| **0 emisiones** | Sí | Sí | Sí |
+| **ECO** | Sí | Sí (industriales, de 7:00 a 21:00) | Sí |
+| **C** | Sí | Solo en casos concretos | Sí |
+| **B** | Sí | Solo en casos concretos | Sí |
+| **Sin distintivo** | **Solo con condiciones**, y desde el 7 de abril de 2026 | No | **No** |
 
 "Casos concretos" en Distrito Centro significa, sobre todo: estar empadronado dentro, ser invitado de alguien que lo esté, tener empresa o local dentro, o acreditar que vas a un aparcamiento dentro de la zona. Lo detallamos abajo.
+
+## Madrid ciudad: toda la ciudad es zona de bajas emisiones
+
+Esto sorprende a mucha gente, y es lo primero que hay que entender de Madrid: **la ZBE no es un barrio, es el municipio entero**. El artículo 21 de la Ordenanza de Movilidad Sostenible la define como una ordenación del tráfico establecida de forma permanente «en el ámbito territorial constituido por todas las vías públicas urbanas del municipio de Madrid».
+
+Desde el **1 de enero de 2025** prohíbe circular a todos los vehículos que figuran con clasificación ambiental **'A'** en el Registro Nacional de Vehículos de la DGT. O sea, los que no tienen derecho a ningún distintivo.
+
+Si tu vehículo tiene distintivo 0, ECO, C o B, esta zona no te afecta: circulas por toda la ciudad sin restricción por etiqueta, y lo que te puede afectar son las otras dos zonas.
+
+### El giro de abril de 2026: algunos coches sin etiqueta han vuelto
+
+Y aquí está lo que casi nadie ha actualizado.
+
+La **Ordenanza 2/2026, de 24 de marzo** introdujo una nueva disposición transitoria séptima que, **desde las 00:00 del 7 de abril de 2026**, permite circular otra vez a parte de los vehículos 'A'. Pero con tres límites que conviene leer despacio, porque cada uno puede dejarte fuera:
+
+**Primero, solo por fuera de las otras dos zonas.** El permiso vale para las vías de Madrid ZBE «que no formen parte del ámbito territorial de las ZBEDEP Distrito Centro y Plaza Elíptica». Dentro de esas dos sigue prohibido.
+
+**Segundo, solo dos grupos de vehículos:**
+
+- Los **'A' domiciliados en Madrid**, que desde el 1 de enero de 2022 y **de forma ininterrumpida** figuren domiciliados en la ciudad en el Registro Nacional de Vehículos **y** de alta en el padrón del IVTM del Ayuntamiento. Las dos cosas, sin interrupción.
+- Los **'A' que no sean turismos**: camiones, furgonetas, motocicletas, ciclomotores y demás, con independencia del municipio donde estén domiciliados.
+
+**Tercero, y es el más frágil: está condicionado a la calidad del aire.** El permiso dura mientras se cumplan los valores límite de dióxido de nitrógeno **en todas** las estaciones de vigilancia de la ciudad. Si se incumple en cualquiera de ellas, la Junta de Gobierno declara extinguido el régimen transitorio y **se empieza a sancionar seis meses después** de publicarlo en el BOCM.
+
+Además, estos vehículos **tienen prohibido circular los días con episodio de contaminación**, según el artículo 35 de la ordenanza y el protocolo de dióxido de nitrógeno.
+
+### Quiénes quedan fuera del régimen transitorio
+
+No se benefician los **turismos 'A'** de las categorías por criterio de utilización 00 (sin especificar), 02 (familiar) y 33 (todoterreno) que a 1 de enero de 2022 no cumplieran a la vez el requisito de estar domiciliados en Madrid y de alta en el padrón del IVTM.
+
+Dicho en corto: si tu turismo sin etiqueta no era de Madrid en enero de 2022, no entra.
+
+### Las dos excepciones permanentes
+
+El artículo 21.3 exceptúa siempre, con independencia de todo lo anterior:
+
+- Los vehículos **conducidos por o que transporten a titulares de la tarjeta TEPMR**, siempre que estén de alta en el sistema de gestión de accesos y exhiban la tarjeta.
+- Los vehículos reconocidos como **históricos** conforme al reglamento de vehículos históricos.
 
 ## Distrito Centro
 
