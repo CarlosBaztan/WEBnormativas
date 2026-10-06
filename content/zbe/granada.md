@@ -25,7 +25,11 @@ excepciones:
   - "Vehículos que acceden al menos una hora a parkings adheridos al control municipal"
 
 fuente_nombre: "Ordenanza Integral de Movilidad Sostenible de Granada, arts. 130 a 138 y anexo V"
-fuente_url: "https://www.granada.org/v2010.nsf/xxtod/25ZBE?open=&pag=ini06"
+# Cambiada el 06/10/2026. La anterior (granada.org/v2010.nsf/xxtod/25ZBE) sigue
+# viva pero YA NO CONTIENE lo que citabamos: hoy solo remite a otra web y da
+# un correo. Esta es el PDF del BOP con la aprobacion definitiva de la
+# ordenanza, que es la norma que la ficha cita de verdad.
+fuente_url: "https://www.granada.org/inet/wordenanz.nsf/e10bc5a24ff02353c1256e2800626524/936afdd744339e27c1258c850028d122/$FILE/aprobaci%C3%B3n-definitiva-ordenanza-movilidad-sostenible.pdf"
 fuente_boletin: "BOP Granada núm. 86, de 9 de mayo de 2025 (CVE BOP-GRA-2025-086014). Aprobación definitiva del proyecto de ZBE: BOP núm. 178, de 18 de septiembre de 2025"
 fecha_verificacion: "2026-09-29"
 

@@ -98,7 +98,15 @@ El error de Alicante abre una pregunta incómoda: **¿está el mismo fallo en ot
 
 Así que el error era solo de Alicante, y ya está corregido.
 
-**Granada es otra cosa, y es un problema de trazabilidad.** La URL que cita su ficha (`granada.org/v2010.nsf/xxtod/25ZBE`) **ya no contiene lo que citábamos**: hoy solo remite a `movilidadgranada.com` y da un correo. El dato puede seguir siendo correcto, pero la fuente ya no lo respalda. Localizado el PDF del BOP con la aprobación definitiva de la ordenanza, que es la fuente que debería citar; queda pendiente leerlo y actualizar el enlace.
+**Granada queda a medias, y conviene saber exactamente en qué punto.**
+
+La URL que citaba su ficha (`granada.org/v2010.nsf/xxtod/25ZBE`) sigue viva pero **ya no contiene lo que citábamos**: hoy solo remite a `movilidadgranada.com` y da un correo. Ya está cambiada por el PDF del BOP con la aprobación definitiva de la ordenanza (BOP Granada núm. 86, de 9 de mayo de 2025), que es la norma que la ficha cita de verdad.
+
+De ese PDF he leído y confirmado los artículos 133 y 134: el 134 prohíbe el acceso a los vehículos no incluidos en el anexo V, y el 133 distingue tres grupos, de los cuales **el primero no requiere autorización municipal previa**. Esa es la estructura correcta, la misma de Oviedo y Palma.
+
+**Lo que no he podido leer es el anexo V.3 apartado 1**, que es la lista concreta de qué vehículos entran en ese primer grupo: el PDF son 482 páginas y esa parte no aparece en el texto extraído. O sea que la afirmación «en Granada entran 0, ECO, C y B» descansa en la verificación del 29/09 contra la página municipal, no en una relectura de hoy.
+
+No hay ningún indicio de que esté mal. Pero después del caso de Alicante prefiero decir dónde está el límite de lo comprobado. Dos salidas: abrir `movilidadgranada.com` (a mi navegador le está denegado ese sitio) o localizar el anexo V por separado.
 
 ## 3. Lo que sigue en mi lado
 
