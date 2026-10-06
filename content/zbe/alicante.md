@@ -1,6 +1,6 @@
 ---
-title: "Zona de Bajas Emisiones (ZBE) de Alicante: qué distintivos pueden entrar"
-description: "En Alicante la restricción por distintivo solo se aplica en el Anillo I, el Casco Antiguo: entran 0, ECO, C y B. En los anillos del Centro y la Gran Vía no hay restricción permanente por etiqueta."
+title: "Zona de Bajas Emisiones (ZBE) de Alicante: qué restringe de verdad"
+description: "En Alicante la etiqueta ambiental no abre ninguna puerta: el Casco Antiguo sigue con su régimen de residentes y autorizados, y en el resto de la ZBE no hay restricción por distintivo."
 date: 2026-10-04
 
 tipo: "municipio"
@@ -11,10 +11,23 @@ ccaa: "Comunidad Valenciana"
 
 estado_zbe: "activa"
 
-etiquetas_permitidas: ["0", "ECO", "C", "B"]
-horario_restriccion: "Permanente: la ordenanza no fija franja horaria y declara la ZBE de vigencia permanente"
+# CORREGIDO EL 06/10/2026, y la corrección importa.
+#
+# Esta ficha decía que en el Anillo I entran los distintivos 0, ECO, C y B.
+# Es falso, o al menos incompleto hasta el punto de inducir a error: el anexo 2
+# dice «todos aquellos vehículos YA AUTORIZADOS, no industriales, con etiqueta
+# ambiental del tipo B, C, ECO y CERO». La etiqueta es un SEGUNDO filtro sobre
+# quien ya tiene permiso de acceso al casco antiguo, no una llave por sí sola.
+#
+# Lo confirma la FAQ del propio Ayuntamiento: la ZBE «no implica restricciones
+# de acceso automáticas para los vehículos, ni sanciones directas, salvo en el
+# caso del anillo correspondiente al Casco Antiguo, en el que sigue vigente su
+# régimen de accesos restringidos a vehículos residentes y autorizados».
+acceso_por_distintivo: false
+etiquetas_permitidas: []
+horario_restriccion: "Permanente: la ordenanza declara la ZBE de vigencia permanente y no fija franja horaria"
 articulo: "art. 9.1 y anexo 2, apartado 1"
-nota_zona: "La prohibición por distintivo es solo del Anillo I, el Casco Antiguo. Los anillos II y III no tienen restricción permanente por etiqueta."
+nota_zona: "En el Casco Antiguo manda el régimen de residentes y autorizados, no la etiqueta. En los anillos del Centro y la Gran Vía no hay restricción por etiqueta."
 excepciones:
   - "Vehículos de personas empadronadas, residentes o propietarias de viviendas o garajes en la zona, con o sin distintivo"
   - "Propietarios y arrendatarios de plaza de garaje dentro de la zona, con o sin distintivo"
@@ -28,31 +41,41 @@ excepciones:
 fuente_nombre: "Ordenanza reguladora de la Zona de Bajas Emisiones de Alicante, arts. 9 y 17 y anexo 2"
 fuente_url: "https://www.alicante.es/sites/default/files/documentos/202501/ordenanza-zbe-alicante.pdf"
 fuente_boletin: "BOP Alicante núm. 5, de 9 de enero de 2025"
-fecha_verificacion: "2026-10-04"
+fecha_verificacion: "2026-10-06"
 
 estado_dato: "verificado"
 draft: false
 ---
 
-La ZBE de Alicante se cuenta casi siempre mal, porque se confunde el **perímetro** con la **restricción**. Son dos cosas distintas y la diferencia es enorme.
+La ZBE de Alicante se cuenta casi siempre mal, y nosotros también la contamos mal durante dos días. La corrección está al final de esta página.
 
-La zona declarada abarca tres anillos, y el mayor, el de la Gran Vía, son 7,49 km², el 19,4 % del municipio, con 157.498 habitantes dentro. Pero **la prohibición de entrar por el distintivo ambiental solo se aplica en el Anillo I, el Casco Antiguo**.
+Lo importante, dicho de una vez: **en Alicante la etiqueta ambiental no abre ninguna puerta**. No hay una lista de distintivos que entran y otra que no.
 
-## Qué distintivos pueden entrar al Casco Antiguo
+## Qué restringe de verdad
 
-| Distintivo | Puede acceder al Anillo I |
+La zona declarada abarca tres anillos, y el mayor, el de la Gran Vía, son 7,49 km², el 19,4 % del municipio, con 157.498 habitantes dentro. Pero el perímetro no es la restricción:
+
+| Anillo | Qué pasa hoy |
 |:---|:---|
-| **[0 emisiones](/etiquetas/0-emisiones/)** | Sí |
-| **[ECO](/etiquetas/eco/)** | Sí |
-| **[C](/etiquetas/c/)** | Sí |
-| **[B](/etiquetas/b/)** | Sí |
-| **[Sin distintivo](/etiquetas/sin-distintivo/)** | **No**, salvo que entres en alguna excepción |
+| **I, Casco Antiguo** | Sigue vigente su **régimen de accesos restringidos a residentes y autorizados**, que ya existía. La etiqueta no sustituye a la autorización |
+| **II, Centro Tradicional** | **Sin restricción por etiqueta** |
+| **III, Gran Vía** | **Sin restricción por etiqueta** |
 
-El artículo 9.1 lo dice por la vía negativa: «En el Anillo I del municipio se prohíbe el acceso, la circulación y el estacionamiento de los vehículos no incluidos en el apartado 1 del Anexo 2». Y ese apartado, para los turismos, autoriza los que tengan «etiqueta ambiental del tipo B, C, ECO y CERO».
+El Ayuntamiento lo dice así en sus preguntas frecuentes: la ZBE «no implica restricciones de acceso automáticas para los vehículos, ni sanciones directas, **salvo en el caso del anillo correspondiente al Casco Antiguo (en el que sigue vigente su régimen de accesos restringidos a vehículos residentes y autorizados)**».
+
+### Entonces, ¿para qué sirve la etiqueta aquí?
+
+Para nada por sí sola, y esta es la frase que hay que leer despacio. El anexo 2 de la ordenanza autoriza a los turismos así:
+
+> «Todos aquellos vehículos **ya autorizados**, no industriales, con etiqueta ambiental del tipo B, C, ECO y CERO.»
+
+«Ya autorizados» es la clave. La etiqueta es un **segundo filtro sobre quien ya tiene permiso** de acceso al casco antiguo, no una llave por sí misma. Lo mismo dice de las motocicletas («ya autorizados con distintivo ambiental B, C, ECO y CERO»), de los comercios («con autorización previa... podrán acceder libremente si tienen distintivo») y del personal que trabaja dentro («con acceso al casco antiguo autorizado, con distintivo»).
+
+Dicho en corto: **si no tienes autorización para el casco antiguo, tu etiqueta da igual. Y si la tienes, en algunos casos además te piden etiqueta.**
 
 ## Los otros dos anillos
 
-El Anillo II es el Centro Tradicional y el Anillo III el de la Gran Vía. Los dos forman parte de la ZBE declarada, **pero la ordenanza no les impone una restricción permanente por distintivo**.
+El Anillo II es el Centro Tradicional y el Anillo III el de la Gran Vía. Los dos forman parte de la ZBE declarada, **y la ordenanza no les impone ninguna restricción permanente por distintivo**. Puedes circular por ellos con cualquier vehículo.
 
 Lo que sí prevé para ellos es el artículo 10: ante un **episodio de contaminación** declarado por la administración competente, se activa el protocolo municipal y pueden restringirse accesos de forma temporal, por zonas y horarios concretos, a los vehículos más contaminantes.
 
@@ -98,3 +121,13 @@ El régimen general de las multas de ZBE lo explicamos en [multas por entrar en 
 La ordenanza fue **aprobada definitivamente por el Pleno el 30 de diciembre de 2024** y publicada en el **BOP de Alicante núm. 5, de 9 de enero de 2025**.
 
 Su disposición final tercera remite, para la entrada en vigor, al plazo del artículo 65.2 de la Ley 7/1985 reguladora de las Bases del Régimen Local, que son quince días hábiles desde la publicación. No damos una fecha exacta de entrada en vigor porque la ordenanza no la escribe: la hace depender de ese cómputo.
+
+## Qué decía esta ficha antes, y por qué estaba mal
+
+Entre el 4 y el 6 de octubre de 2026 esta página decía que en el Anillo I entran los distintivos 0, ECO, C y B, y que los vehículos sin distintivo no entran salvo excepción.
+
+**Era engañoso**, y conviene explicar por qué para que se entienda el error: nos quedamos con la parte de la frase del anexo que habla de etiquetas y pasamos por alto las dos palabras que la gobiernan, «ya autorizados». Leída entera, esa línea no dice que un turismo con etiqueta C pueda entrar: dice que, **entre los que ya tienen autorización**, pueden hacerlo los que además lleven B, C, ECO o CERO.
+
+Lo destapó la página de preguntas frecuentes del propio Ayuntamiento, que afirma que no hay restricciones automáticas por etiqueta y que el casco antiguo mantiene su régimen anterior.
+
+La consecuencia práctica de la versión antigua habría sido la peor posible: alguien de fuera con etiqueta C podía leernos y entender que podía entrar en el casco antiguo de Alicante. No podía. Lo dejamos escrito aquí porque corregir en silencio deja al lector sin saber cuál de las dos versiones leyó.

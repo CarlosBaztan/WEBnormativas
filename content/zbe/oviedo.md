@@ -48,7 +48,7 @@ excepciones:
 
 fuente_nombre: "Ordenanza de la Zona de Bajas Emisiones del Ayuntamiento de Oviedo, art. 8, art. 18 y anexos I y II"
 fuente_url: "https://www.oviedo.es/documents/35127/1038783/ORDENANZA+ZONA+DE+BAJAS+EMISIONES.pdf"
-fuente_boletin: "Aprobada definitivamente por acuerdo del Pleno de 2 de diciembre de 2025"
+fuente_boletin: "BOPA núm. 243, de 18 de diciembre de 2025. Aprobada definitivamente por acuerdo del Pleno de 2 de diciembre de 2025"
 fecha_verificacion: "2026-10-05"
 
 estado_dato: "verificado"
@@ -113,4 +113,6 @@ También funciona al revés: por motivos excepcionales de interés público se p
 
 ## Desde cuándo
 
-La ordenanza fue **aprobada definitivamente por acuerdo del Pleno de 2 de diciembre de 2025**, y la primera restricción, la del anillo interior, se aplica **desde el 31 de diciembre de 2025**.
+La ordenanza fue **aprobada definitivamente por acuerdo del Pleno de 2 de diciembre de 2025** y su texto íntegro se publicó en el **Boletín Oficial del Principado de Asturias número 243, de 18 de diciembre de 2025**.
+
+La primera restricción, la del anillo interior, se aplica **desde el 31 de diciembre de 2025**.

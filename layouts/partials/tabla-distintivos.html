@@ -99,6 +99,7 @@
           "cond"    $condicionados
           "otros"   $otros
           "sinDistintivo" $sinDistintivo
+          "nota"    ($z.nota | default "")
           "horario" ($z.horario | default "")
           "cambios" $cambios) }}
   {{- end }}
@@ -126,7 +127,13 @@
       <th scope="row"><a href="{{ $f.url }}">{{ $f.nombre }}</a></th>
       <td>
         {{- if $f.sinDistintivo }}
-          <strong>Ningún distintivo da acceso.</strong> Solo transporte público, vehículos autorizados y carga y descarga
+          {{/* La explicacion sale de la nota de la zona, no de aqui: cada
+               ciudad restringe por un motivo distinto. Alicante mantiene el
+               regimen de residentes y autorizados del casco antiguo; La Coruña
+               solo deja entrar a transporte publico y carga y descarga. Una
+               frase fija valia para una y mentia para la otra. */}}
+          <strong>Ningún distintivo da acceso.</strong>
+          {{- with $f.nota }} {{ . }}{{ end }}
         {{- else }}
           {{- with $f.libres }}{{ delimit . ", " " y " }}{{ end }}
           {{- with $f.cond }}{{ if $f.libres }}. {{ end }}{{ delimit . ", " " y " }}, solo con condiciones{{ end }}

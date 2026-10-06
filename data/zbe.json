@@ -1081,7 +1081,7 @@
    "ficha_url": "/zbe/oviedo/",
    "ordenanza_nombre": "Ordenanza de la Zona de Bajas Emisiones del Ayuntamiento de Oviedo, art. 8, art. 18 y anexos I y II",
    "ordenanza_url": "https://www.oviedo.es/documents/35127/1038783/ORDENANZA+ZONA+DE+BAJAS+EMISIONES.pdf",
-   "ordenanza_boletin": "Aprobada definitivamente por acuerdo del Pleno de 2 de diciembre de 2025",
+   "ordenanza_boletin": "BOPA núm. 243, de 18 de diciembre de 2025. Aprobada definitivamente por acuerdo del Pleno de 2 de diciembre de 2025",
    "fecha_verificacion": "2026-10-05",
    "horario_verificado": "",
    "articulo": "",
@@ -1391,12 +1391,7 @@
    "fuente_url": "https://nap.dgt.es/datex2/v3/dgt/zbe/ControledZonePublication/Alicante.xml",
    "licencia": "CC-BY (Direccion General de Trafico)",
    "fecha_descarga": "2026-09-23",
-   "etiquetas_permitidas": [
-    "0",
-    "ECO",
-    "C",
-    "B"
-   ],
+   "etiquetas_permitidas": [],
    "etiquetas_prohibidas": [],
    "horario_restriccion": "00:00:00Z a 23:59:59Z",
    "publicacion_origen": "2026-02-13",
@@ -1418,8 +1413,8 @@
    "ordenanza_nombre": "Ordenanza reguladora de la Zona de Bajas Emisiones de Alicante, arts. 9 y 17 y anexo 2",
    "ordenanza_url": "https://www.alicante.es/sites/default/files/documentos/202501/ordenanza-zbe-alicante.pdf",
    "ordenanza_boletin": "BOP Alicante núm. 5, de 9 de enero de 2025",
-   "fecha_verificacion": "2026-10-04",
-   "horario_verificado": "Permanente: la ordenanza no fija franja horaria y declara la ZBE de vigencia permanente",
+   "fecha_verificacion": "2026-10-06",
+   "horario_verificado": "Permanente: la ordenanza declara la ZBE de vigencia permanente y no fija franja horaria",
    "articulo": "art. 9.1 y anexo 2, apartado 1",
    "zonas_verificadas": []
   },
