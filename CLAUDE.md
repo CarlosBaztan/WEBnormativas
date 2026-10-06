@@ -563,6 +563,23 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   invisible para Google. Necesita `| safeJS`.
 - **`cast.ToInt` sobre `"09"`** devuelve 0 (lo interpreta en base 0). No usar para
   aritmética de fechas.
+- **«Ya autorizados» no es una muletilla: cambia quién puede entrar.** El
+  06/10/2026 hubo que corregir la ficha de Alicante dos días después de
+  publicarla. Decía que en el Anillo I entran los distintivos 0, ECO, C y B,
+  y el anexo 2 de su ordenanza dice literalmente «todos aquellos vehículos
+  **ya autorizados**, no industriales, con etiqueta ambiental del tipo B, C,
+  ECO y CERO». Nos quedamos con la parte de las etiquetas y pasamos por alto
+  las dos palabras que la gobiernan: la etiqueta es un **segundo filtro sobre
+  quien ya tiene autorización**, no una llave. Alguien de fuera con etiqueta C
+  podía leernos y entender que entraba en el casco antiguo de Alicante.
+  **La comprobación que hay que hacer en cada ordenanza**: buscar si la lista
+  de distintivos dice «sin necesidad de autorización/registro previo» (Sevilla,
+  Palma y Oviedo lo dicen, y ahí la etiqueta sí basta) o si la condiciona a una
+  autorización previa (Alicante y La Coruña). Son dos regímenes distintos y se
+  parecen mucho escritos.
+  **Ojo también a las zonas que se superponen**: en Vitoria-Gasteiz la ZBE y un
+  APR ocupan el mismo territorio y hay que cumplir las dos, así que la etiqueta
+  puede no bastar aunque la ZBE la acepte.
 - **Un tubo a medio hacer no da ningún error, y este llevaba así desde el
   principio.** El activo del proyecto es la ordenanza leída a mano, y hasta el
   04/10/2026 esa lectura vivía **solo** en el front matter de las fichas. El

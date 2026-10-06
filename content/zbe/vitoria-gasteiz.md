@@ -101,6 +101,14 @@ La ZBE mira **qué vehículo eres**. El APR mira **quién eres y a qué vas**: r
 
 **Las directrices concretas del APR se aprueban por decreto de alcaldía, y no las hemos leído**, así que no publicamos cuántos accesos al mes o cuántas horas permite cada categoría. La ordenanza remite a ellas pero no las contiene.
 
+### Y hay una fecha que ya ha pasado
+
+La disposición transitoria establece, «con carácter específico», una exención de la etiqueta ambiental **y del régimen sancionador** para las categorías de usuarios del APR (residentes, acceso a plaza de aparcamiento, comercios y prestación de servicios) **hasta el 15 de septiembre de 2026**.
+
+Esa fecha ya pasó. Lo que no hemos podido confirmar es **si las directrices del APR están aprobadas y en vigor**, porque se aprueban por decreto de alcaldía y no lo hemos localizado publicado.
+
+Dicho claro, y es el consejo práctico de esta ficha: **si vas al casco medieval de Vitoria y tu caso es uno de esos (residente, garaje, comercio, prestación de servicios), no des por hecho que con tener etiqueta basta.** Pregúntalo en el Ayuntamiento antes de entrar.
+
 ## El perímetro, y que va a crecer
 
 La delimitación se hace en dos fases. La **Fase 1** arrancó con la ordenanza y comprende las calles del casco medieval y su entorno: Correría, Cuchillería, Pintorería, Zapatería, Barrenkale, la plaza de España, Olaguibel en sus números pares e impares indicados, Mateo Benigno de Moraza, Becerro de Bengoa y otras, según el perímetro del anexo.

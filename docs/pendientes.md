@@ -71,13 +71,23 @@ Todo esto está dicho en las propias fichas, para que ningún lector se lleve un
 |:---|:---|:---|
 | ~~**Alicante**~~ | ~~Cuándo acaba la moratoria~~ | **RESUELTO el 06/10/2026, y de paso corregido un error nuestro.** La FAQ del Ayuntamiento dice que la ZBE «no implica restricciones de acceso automáticas ni sanciones directas, salvo en el Casco Antiguo, en el que sigue vigente su régimen de accesos restringidos a residentes y autorizados». O sea que **no hay restricción por etiqueta**, así que la moratoria es irrelevante. La ficha decía que entraban 0, ECO, C y B: estaba mal y ya está corregida, con la explicación del error escrita en la propia página |
 | **La Coruña** | Quién puede ser «vehículo autorizado» | La ordenanza remite a dos decretos de alcaldía (27/03/2017 y 01/06/2018). **Buscados el 06/10/2026 y no están publicados en abierto** ni en coruna.gal ni en el BOP. Son la única puerta de entrada a esa ZBE, así que o se piden al Concello o esto se queda sin publicar |
-| **Vitoria-Gasteiz** | Los límites concretos del APR | Las directrices de funcionamiento se aprueban por decreto de alcaldía y la ordenanza no las contiene |
+| **Vitoria-Gasteiz** | Si el APR ya está en vigor | La ordenanza eximía a las categorías del APR de la etiqueta y de las sanciones **hasta el 15/09/2026**, fecha ya pasada, pero las directrices se aprueban por decreto de alcaldía y **no lo he localizado publicado**. Si lo está, en el casco medieval no basta con tener etiqueta. La ficha lo advierte |
 | ~~**Oviedo**~~ | ~~El número y la fecha del BOPA~~ | **RESUELTO el 06/10/2026**: BOPA núm. 243, de 18 de diciembre de 2025, según la sede electrónica del Ayuntamiento |
 | **Granada** | Que su enlace oficial siga vivo | `granada.org` va tras Akamai y devuelve 403 a cualquier comprobación automática, incluso en su portada. **Ábrelo una vez en el navegador y me dices** |
 | ~~**Zaragoza**~~ | ~~El horario de la ZBE~~ | **RESUELTO el 06/10/2026.** Lo dice el Ayuntamiento en su nota del 11/12/2025: de lunes a viernes de 8:00 a 20:00, y fuera de ahí acceso libre para todos. De paso vuelve el perímetro, que habíamos retirado por no poder respaldarlo, y sale un dato que no tiene casi ninguna otra ciudad: **Zaragoza obliga a exhibir la pegatina** |
 | ~~**Madrid**~~ | ~~La zona «Madrid ciudad»~~ | **RESUELTO el 06/10/2026.** Verificado en la página oficial del Ayuntamiento, actualizada el 07/04/2026: el art. 21 prohíbe circular a los «A» en todo el municipio desde el 1 de enero de 2025, y la disposición transitoria séptima que introdujo la Ordenanza 2/2026 les permite volver desde el 7 de abril de 2026 de forma temporal y condicionada |
 
 ---
+
+## 2 bis. Una revisión que me he puesto a mí mismo
+
+El error de Alicante abre una pregunta incómoda: **¿está el mismo fallo en otras fichas?**
+
+He comprobado personalmente, releyendo el texto, que en **Sevilla, Palma y Oviedo** la ordenanza dice que los vehículos con distintivo entran «sin necesidad de autorización» o «sin necesidad de registro previo». Ahí la etiqueta sí es la llave, y las fichas están bien.
+
+**No he releído** las ordenanzas de Barcelona, Bilbao, Granada, Málaga ni Valladolid, verificadas en sesiones anteriores. No digo que estén mal; digo que no las he comprobado contra este error concreto, y afirmar lo contrario sería repetirlo.
+
+Queda como tarea mía: pasar esas cinco por la misma comprobación.
 
 ## 3. Lo que sigue en mi lado
 
