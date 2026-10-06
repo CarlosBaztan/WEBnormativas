@@ -10,7 +10,9 @@ fecha_verificacion: "2026-09-23"
 draft: false
 ---
 
-Aproximadamente **la mitad del parque de vehículos español no tiene distintivo**. No es un trámite pendiente ni un papel que falte: sencillamente no les corresponde ninguno.
+**Una parte enorme del parque de vehículos español no tiene distintivo.** No es un trámite pendiente ni un papel que falte: sencillamente no les corresponde ninguno.
+
+La DGT lo explica así: el distintivo clasifica al cincuenta por ciento más eficiente del parque, y el resto «no tiene derecho a ningún tipo de distintivo al no cumplir los requisitos para ser etiquetado como vehículo limpio».
 
 ## Qué vehículos quedan fuera
 
@@ -21,7 +23,7 @@ Aproximadamente **la mitad del parque de vehículos español no tiene distintivo
 
 Para vehículos de ocho o más plazas y pesados, el umbral está en **2006** para ambos combustibles.
 
-Si tu vehículo entra en esos rangos, le corresponde la [etiqueta B](../b/).
+Si tu vehículo es **posterior** a esas fechas, le corresponde la [etiqueta B](../b/) o una mejor.
 
 ## No se puede pedir
 

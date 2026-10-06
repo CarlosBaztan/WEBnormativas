@@ -100,12 +100,18 @@
     {{- $caducados := slice }}
     {{- range sort $pendientes "fecha" }}
       {{- $pasada := lt (time.AsTime .fecha) now }}
-      {{- $nombre := cond (eq .clave "sin") "los vehículos sin distintivo" (printf "el %s" .clave) }}
+      {{/* El verbo concuerda con el sujeto: «el B deja» pero «los vehículos
+           sin distintivo DEJAN». Sin esto la fila del anillo exterior de
+           Oviedo imprimia «los vehiculos sin distintivo deja de entrar». */}}
+      {{- $plural := eq .clave "sin" }}
+      {{- $nombre := cond $plural "los vehículos sin distintivo" (printf "el %s" .clave) }}
       {{- if $pasada }}
         {{- $caducados = $caducados | append .clave }}
-        {{- $cambios = $cambios | append (printf "%s ya no entra desde el %s" $nombre (time.Format "02/01/2006" .fecha)) }}
+        {{- $verbo := cond $plural "ya no entran" "ya no entra" }}
+        {{- $cambios = $cambios | append (printf "%s %s desde el %s" $nombre $verbo (time.Format "02/01/2006" .fecha)) }}
       {{- else }}
-        {{- $cambios = $cambios | append (printf "%s deja de entrar el %s" $nombre (time.Format "02/01/2006" .fecha)) }}
+        {{- $verbo := cond $plural "dejan" "deja" }}
+        {{- $cambios = $cambios | append (printf "%s %s de entrar el %s" $nombre $verbo (time.Format "02/01/2006" .fecha)) }}
       {{- end }}
     {{- end }}
 

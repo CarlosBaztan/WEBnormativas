@@ -77,8 +77,17 @@
   las fichas antiguas que no lo declaran (Madrid) sigan comportandose igual.
 */ -}}
 {{- $esFicha := in (slice "municipio" "zona") ($p.tipo | default "municipio") }}
+{{/* Las paginas de ZONA responden en prosa y en tabla, no con
+     `etiquetas_permitidas`. Al meterlas en $esFicha se las trataba como
+     fichas de municipio sin datos, y las dos de Madrid publicaban «las
+     reglas de acceso de esta ZBE no estan verificadas» DOS LINEAS ENCIMA
+     de su propia tabla de distintivos, con el bloque de datos vacio
+     debajo. En la ciudad con mas busquedas del nicho, y diciendo justo lo
+     contrario de lo que el sitio vende. Tercera vez que se pisa la trampa
+     de tratar por seccion lo que hay que tratar por tipo. */}}
+{{- $esMunicipio := eq ($p.tipo | default "municipio") "municipio" }}
 
-{{- $reglasSinVerificar := and $esFicha (not $porZonas) (or (not $verificado) (eq (len $etiquetas) 0)) }}
+{{- $reglasSinVerificar := and $esMunicipio (not $porZonas) (or (not $verificado) (eq (len $etiquetas) 0)) }}
 
 <article class="post-single ficha-zbe">
 
@@ -145,7 +154,7 @@
   </aside>
   {{- end }}
 
-  {{- if and $esFicha (not $porZonas) }}
+  {{- if and $esMunicipio (not $porZonas) }}
   <section class="ficha-datos" aria-labelledby="titulo-datos">
     <h2 id="titulo-datos">Lo que consta en la normativa</h2>
 
