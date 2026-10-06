@@ -98,15 +98,13 @@ El error de Alicante abre una pregunta incómoda: **¿está el mismo fallo en ot
 
 Así que el error era solo de Alicante, y ya está corregido.
 
-**Granada queda a medias, y conviene saber exactamente en qué punto.**
+**Granada: cerrado el 06/10/2026, y la ficha estaba bien.**
 
-La URL que citaba su ficha (`granada.org/v2010.nsf/xxtod/25ZBE`) sigue viva pero **ya no contiene lo que citábamos**: hoy solo remite a `movilidadgranada.com` y da un correo. Ya está cambiada por el PDF del BOP con la aprobación definitiva de la ordenanza (BOP Granada núm. 86, de 9 de mayo de 2025), que es la norma que la ficha cita de verdad.
+La URL que citaba era el problema, no el dato: seguía viva pero ya no contenía lo que citábamos. Cambiada por el PDF del BOP (BOP Granada núm. 86, de 9 de mayo de 2025), y leído entero.
 
-De ese PDF he leído y confirmado los artículos 133 y 134: el 134 prohíbe el acceso a los vehículos no incluidos en el anexo V, y el 133 distingue tres grupos, de los cuales **el primero no requiere autorización municipal previa**. Esa es la estructura correcta, la misma de Oviedo y Palma.
+El anexo V.3, apartado 1, «acceso directo sin necesidad de autorización», incluye en su letra b) a los **vehículos con distintivo ambiental B, C, ECO o 0 emisiones**. La etiqueta es la llave, sin trámite. La ficha era correcta.
 
-**Lo que no he podido leer es el anexo V.3 apartado 1**, que es la lista concreta de qué vehículos entran en ese primer grupo: el PDF son 482 páginas y esa parte no aparece en el texto extraído. O sea que la afirmación «en Granada entran 0, ECO, C y B» descansa en la verificación del 29/09 contra la página municipal, no en una relectura de hoy.
-
-No hay ningún indicio de que esté mal. Pero después del caso de Alicante prefiero decir dónde está el límite de lo comprobado. Dos salidas: abrir `movilidadgranada.com` (a mi navegador le está denegado ese sitio) o localizar el anexo V por separado.
+Y era correcta hasta el detalle: también tenía la letra a), que da acceso directo a cualquier vehículo con **domicilio fiscal en Granada** lleve o no etiqueta, y citaba bien los artículos 131.3 y 134.1 para explicar por qué no hay franja horaria. Las ocho fichas revisadas quedan confirmadas; el error era único de Alicante.
 
 ## 3. Lo que sigue en mi lado
 
