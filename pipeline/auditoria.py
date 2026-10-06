@@ -300,6 +300,24 @@ def _codigo_http(url: str) -> int:
     return codigo
 
 
+def rayas_largas(texto: str) -> list[str]:
+    """
+    Trozos del texto que contienen una raya (—) o una semirraya (–).
+
+    Regla de Carlos: ninguna de las dos en texto de cara al usuario. Delatan
+    texto generado, y este sitio se juega la credibilidad en que no lo parezca.
+
+    El guion corto NO cuenta: «Vitoria-Gasteiz» y «2001-2006» son correctos, y
+    una comprobacion que se queje de ellos se desactiva el primer dia.
+
+    Paso el 06/10/2026: un barrido de las 47 paginas publicadas encontro una
+    raya en la tabla de /zbe/vitoria-gasteiz/, usada como celda vacia. Habia
+    sobrevivido a tres revisiones porque no se ve leyendo deprisa.
+    """
+    return [m.group(0).strip()
+            for m in re.finditer(r".{0,35}[—–].{0,35}", texto or "")]
+
+
 def clave_de_cola(nombre: str) -> str:
     """
     Reduce un nombre de municipio a una clave comparable.
@@ -430,6 +448,12 @@ def main() -> int:
         if (marcas := marcadores_sin_resolver(texto))
     ]
 
+    con_rayas = [
+        f"{rel}: {trozos[0]}"
+        for rel, texto in paginas_publicadas()
+        if (trozos := rayas_largas(cuerpo(texto)))
+    ]
+
     print(f"Fichas con estado_dato revisadas: {revisadas}\n")
 
     problemas = 0
@@ -440,6 +464,7 @@ def main() -> int:
         ("VERIFICADAS PERO SIN REGLAS", sin_reglas),
         (f"PENDIENTES DE REVISAR (mas de {args.meses} meses)", caducadas),
         ("ANUNCIADOS COMO PROXIMOS Y YA PUBLICADOS", cola_ya_cubierta()),
+        ("RAYAS LARGAS EN TEXTO PUBLICADO", con_rayas),
     ):
         if lista:
             problemas += len(lista)

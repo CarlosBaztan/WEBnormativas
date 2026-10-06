@@ -51,7 +51,7 @@ Vitoria-Gasteiz tiene **la lista de excepciones más larga y más social** de to
 | **[ECO](/etiquetas/eco/)** | Sí | Sin fecha de salida |
 | **[C](/etiquetas/c/)** | Sí | Sin fecha de salida |
 | **[B](/etiquetas/b/)** | Sí | Hasta el **31 de diciembre de 2029** |
-| **[Sin distintivo](/etiquetas/sin-distintivo/)** | **No**, desde el 15 de septiembre de 2025 | — |
+| **[Sin distintivo](/etiquetas/sin-distintivo/)** | **No**, desde el 15 de septiembre de 2025 | Ya no entra |
 
 La disposición transitoria lo deja escrito con las dos fechas: la etiqueta y su régimen sancionador entraron en vigor el **15 de septiembre de 2025**, dejando fuera a los vehículos sin etiqueta, y **a partir del 1 de enero de 2030** quedan fuera también los de etiqueta B.
 

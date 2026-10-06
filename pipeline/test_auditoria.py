@@ -338,6 +338,43 @@ def test_sin_la_marca_una_lista_vacia_sigue_sin_declarar_nada():
     assert not au.declara_reglas(texto)
 
 
+# ---------------------------------------------------------------------------
+# Las rayas largas
+#
+# Regla de Carlos: ni una raya (—) ni un semirraya (–) en texto de cara al
+# usuario. Delatan texto generado, y este sitio se juega la credibilidad.
+#
+# El 06/10/2026 un barrido de las 47 paginas publicadas encontro una, en la
+# tabla de /zbe/vitoria-gasteiz/, usada como celda vacia. Habia sobrevivido a
+# tres revisiones porque es un caracter que no se ve en una lectura rapida.
+# ---------------------------------------------------------------------------
+
+def test_una_raya_larga_se_detecta():
+    """El detector encuentra las dos formas, la raya y la semirraya."""
+    assert au.rayas_largas("texto con una raya " + chr(8212) + " en medio")
+    assert au.rayas_largas("texto con una semirraya " + chr(8211) + " en medio")
+
+
+def test_un_guion_normal_no_es_una_raya():
+    """
+    Que no salte con los guiones de siempre.
+
+    «Vitoria-Gasteiz» y «carga y descarga» llevan guion corto y son correctos:
+    una prueba que se queje de ellos se desactiva el primer dia.
+    """
+    assert not au.rayas_largas("Vitoria-Gasteiz tiene una ZBE")
+    assert not au.rayas_largas("el distintivo B, de 2001-2006, ya no entra")
+
+
+def test_ninguna_pagina_publicada_lleva_rayas_largas():
+    """Sobre el contenido real. Si falla, hay una publicada."""
+    con_raya = []
+    for ruta, texto in au.paginas_publicadas():
+        for trozo in au.rayas_largas(au.cuerpo(texto)):
+            con_raya.append("%s: %s" % (ruta, trozo))
+    assert not con_raya, "rayas largas publicadas: " + "; ".join(con_raya)
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0

@@ -83,13 +83,40 @@
         {{- $pendientes = $pendientes | append (dict "fecha" . "clave" $clave) }}
       {{- end }}
     {{- end }}
+    {{- /* UNA FECHA QUE PASA NO AVISA A NADIE (06/10/2026).
+
+           Esta columna se genera al compilar y la herramienta de la portada
+           decide en el navegador, con la fecha del dia. El 30 de noviembre de
+           2026 caduca el distintivo B de Malaga y el 1 de enero de 2027 el de
+           Palma: a partir de esos dias, la herramienta diria «Ya no» y esta
+           tabla seguiria diciendo «entra», y ademas en futuro, «deja de entrar
+           el 30/11/2026», sobre una fecha ya pasada.
+
+           Comprobado simulandolo antes de escribir esto. Asi que aqui se
+           compara con `now` y los caducados salen de la lista de los que
+           entran. El texto de la ficha sigue siendo cosa de una persona: eso
+           lo vigila test_caducidades.py. */ -}}
     {{- $cambios := slice }}
+    {{- $caducados := slice }}
     {{- range sort $pendientes "fecha" }}
-      {{- $texto := printf "el %s deja de entrar el %s" .clave (time.Format "02/01/2006" .fecha) }}
-      {{- if eq .clave "sin" }}
-        {{- $texto = printf "los vehículos sin distintivo dejan de entrar el %s" (time.Format "02/01/2006" .fecha) }}
+      {{- $pasada := lt (time.AsTime .fecha) now }}
+      {{- $nombre := cond (eq .clave "sin") "los vehículos sin distintivo" (printf "el %s" .clave) }}
+      {{- if $pasada }}
+        {{- $caducados = $caducados | append .clave }}
+        {{- $cambios = $cambios | append (printf "%s ya no entra desde el %s" $nombre (time.Format "02/01/2006" .fecha)) }}
+      {{- else }}
+        {{- $cambios = $cambios | append (printf "%s deja de entrar el %s" $nombre (time.Format "02/01/2006" .fecha)) }}
       {{- end }}
-      {{- $cambios = $cambios | append $texto }}
+    {{- end }}
+
+    {{- /* Fuera de «qué entra hoy» los que ya han caducado. */ -}}
+    {{- with $caducados }}
+      {{- $vivos := slice }}
+      {{- range $libres }}{{ if not (in $caducados .) }}{{ $vivos = $vivos | append . }}{{ end }}{{ end }}
+      {{- $libres = $vivos }}
+      {{- $vivosCond := slice }}
+      {{- range $condicionados }}{{ if not (in $caducados .) }}{{ $vivosCond = $vivosCond | append . }}{{ end }}{{ end }}
+      {{- $condicionados = $vivosCond }}
     {{- end }}
 
     {{- $filas = $filas | append (dict
