@@ -70,11 +70,11 @@ Todo esto está dicho en las propias fichas, para que ningún lector se lleve un
 | Municipio | Qué falta | Por qué |
 |:---|:---|:---|
 | **Alicante** | Cuándo acaba la moratoria sin sanciones | La ordenanza la establece (art. 4.3) y **no dice cuánto dura**. No he encontrado publicación oficial que la cierre. La ficha dice la regla y dice que no sabemos si ya multan |
-| **La Coruña** | Quién puede ser «vehículo autorizado» | La ordenanza remite a dos decretos de alcaldía (27/03/2017 y 01/06/2018) que **no he leído**. Son la única puerta de entrada a esa ZBE |
+| **La Coruña** | Quién puede ser «vehículo autorizado» | La ordenanza remite a dos decretos de alcaldía (27/03/2017 y 01/06/2018). **Buscados el 06/10/2026 y no están publicados en abierto** ni en coruna.gal ni en el BOP. Son la única puerta de entrada a esa ZBE, así que o se piden al Concello o esto se queda sin publicar |
 | **Vitoria-Gasteiz** | Los límites concretos del APR | Las directrices de funcionamiento se aprueban por decreto de alcaldía y la ordenanza no las contiene |
 | **Oviedo** | El número y la fecha del BOPA | Tengo el acuerdo del Pleno (02/12/2025) y el PDF oficial del ayuntamiento, pero no he localizado la referencia del boletín |
 | **Granada** | Que su enlace oficial siga vivo | `granada.org` va tras Akamai y devuelve 403 a cualquier comprobación automática, incluso en su portada. **Ábrelo una vez en el navegador y me dices** |
-| **Zaragoza** | El horario de la ZBE | Ya constaba: no se pudo confirmar en fuente oficial, y la ficha lo dice |
+| ~~**Zaragoza**~~ | ~~El horario de la ZBE~~ | **RESUELTO el 06/10/2026.** Lo dice el Ayuntamiento en su nota del 11/12/2025: de lunes a viernes de 8:00 a 20:00, y fuera de ahí acceso libre para todos. De paso vuelve el perímetro, que habíamos retirado por no poder respaldarlo, y sale un dato que no tiene casi ninguna otra ciudad: **Zaragoza obliga a exhibir la pegatina** |
 | ~~**Madrid**~~ | ~~La zona «Madrid ciudad»~~ | **RESUELTO el 06/10/2026.** Verificado en la página oficial del Ayuntamiento, actualizada el 07/04/2026: el art. 21 prohíbe circular a los «A» en todo el municipio desde el 1 de enero de 2025, y la disposición transitoria séptima que introdujo la Ordenanza 2/2026 les permite volver desde el 7 de abril de 2026 de forma temporal y condicionada |
 
 ---

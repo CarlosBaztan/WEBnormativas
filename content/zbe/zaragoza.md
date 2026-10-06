@@ -13,7 +13,7 @@ estado_zbe: "activa"
 fecha_vigor: "2024-08-21"
 
 etiquetas_permitidas: ["0", "ECO", "C", "B"]
-horario_restriccion: "No hemos podido confirmar el horario en una fuente oficial"
+horario_restriccion: "De lunes a viernes, de 8:00 a 20:00. Fuera de ese horario, fines de semana y festivos, acceso libre"
 excepciones:
   - "Residentes con permiso de estacionamiento regulado, autorización anual renovable"
   - "Propietarios o arrendatarios de una plaza de garaje dentro de la zona, autorización anual renovable"
@@ -27,7 +27,7 @@ excepciones:
 fuente_nombre: "Ayuntamiento de Zaragoza, vehículos autorizados en la Zona de Bajas Emisiones"
 fuente_url: "https://www.zaragoza.es/sede/portal/movilidad/bajas-emisiones/vehiculos"
 fuente_boletin: "Ordenanza municipal de 21 de agosto de 2024"
-fecha_verificacion: "2026-09-29"
+fecha_verificacion: "2026-10-06"
 
 estado_dato: "verificado"
 draft: false
@@ -53,15 +53,35 @@ Conviene decirlo así de claro porque es fácil entenderlo al revés: registrars
 
 Es, en esencia, **el casco histórico**. Si tu recorrido por Zaragoza no entra ahí, la ZBE no te afecta.
 
-**No reproducimos aquí el listado de calles.** Lo habíamos publicado, y al revisarlo no hemos podido encontrarlo literalmente en las páginas oficiales que citamos: la del mapa dice que la ordenanza «delimita el perímetro», pero no lo detalla. Preferimos quitarlo a dejar un listado que no podemos respaldar.
+El Ayuntamiento la delimita así: **las calles San Vicente de Paúl, Coso, Mayoral y Echegaray y Caballero**.
 
-Puedes ver el trazado que publica la DGT en [el mapa](/mapa/) o comprobar una dirección concreta en [«¿está mi calle dentro de una ZBE?»](/zbe/mi-calle/).
+Dentro de ese perímetro ya había desde hace años calles de tráfico restringido, accesibles solo a residentes y otras excepciones. La ZBE se superpone a eso, no lo sustituye.
 
-## El horario: no lo publicamos
+Para ver el trazado completo tienes [el mapa](/mapa/), y para comprobar una dirección concreta, [«¿está mi calle dentro de una ZBE?»](/zbe/mi-calle/).
 
-**No hemos podido confirmar el horario de aplicación en una fuente oficial.** Ni la página de vehículos autorizados ni la del mapa y fases lo especifican.
+**Un apunte sobre esta sección.** Hasta el 6 de octubre de 2026 aquí no había ningún listado de calles: lo habíamos publicado, no pudimos encontrarlo literalmente en las fuentes que citábamos y preferimos quitarlo antes que dejar algo sin respaldo. Ahora vuelve porque lo dice el propio Ayuntamiento en la nota que anunciaba la última fase.
 
-Hay informaciones que hablan de una aplicación de lunes a viernes de 8:00 a 20:00, pero no las hemos podido contrastar con el texto de la ordenanza, así que no las damos por buenas. Si el horario es determinante para ti, consúltalo en la [fuente oficial](https://www.zaragoza.es/sede/portal/movilidad/bajas-emisiones/vehiculos).
+## El horario, que es lo que más margen te da
+
+**La ZBE está activa de lunes a viernes, de 8:00 a 20:00.** El resto del horario, los fines de semana y los festivos, **el acceso es libre para todos los vehículos**, tengan la etiqueta que tengan o no tengan ninguna.
+
+Lo dice el Ayuntamiento con esas palabras en la [nota del 11 de diciembre de 2025](https://www.zaragoza.es/sede/servicio/noticia/346150) que anunciaba la entrada en la última fase: «La ZBE estará activa de lunes a viernes de 8,00 a 20,00 horas. El resto del horario, así como fines de semana y festivos, el acceso será libre para todos los vehículos».
+
+Es un margen considerable, y conviene tenerlo presente si tu coche no tiene distintivo: entrar un sábado, o un martes a las nueve de la noche, no infringe nada.
+
+**Esto corrige lo que decíamos antes.** Hasta el 6 de octubre de 2026 esta ficha decía que no habíamos podido confirmar el horario en una fuente oficial, y que las informaciones que hablaban de 8:00 a 20:00 no las dábamos por buenas. Ya está contrastado: eran correctas, y la fuente es la de arriba.
+
+## Desde cuándo se multa
+
+La implantación se hizo en cuatro fases y las primeras fueron **informativas, sin sanción económica**. La última arrancó el **12 de diciembre de 2025**, y desde entonces los vehículos no autorizados pueden ser denunciados por la Policía Local.
+
+## Aquí sí hay que llevar la pegatina puesta
+
+Esto es poco frecuente y conviene saberlo, porque en la mayoría de las ciudades da igual.
+
+Con carácter general, llevar pegado el distintivo ambiental es **voluntario**: el control se hace leyendo la matrícula. Pero la norma estatal permite que cada administración lo haga obligatorio en su zona, y **Zaragoza lo ha hecho**: el Ayuntamiento dice que los vehículos con etiqueta «deberán exhibirla en su parabrisas delantero» y que «será obligatorio exhibir el distintivo en un lugar visible».
+
+Si no la tienes, en [cómo conseguir la etiqueta ambiental](/etiquetas/como-pedir-la-etiqueta-ambiental/) explicamos dónde se compra y cuánto cuesta.
 
 ## Las excepciones
 

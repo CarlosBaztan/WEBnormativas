@@ -78,6 +78,10 @@ La norma deja la puerta abierta a que lo sea en sitios concretos: «la Administr
 
 La DGT lo dice sin rodeos en su sede: «La colocación del distintivo es voluntaria», aunque recomienda llevarla visible.
 
+**Y hay ayuntamientos que la han hecho obligatoria.** [Zaragoza](/zbe/zaragoza/) es uno: dice que los vehículos con derecho a etiqueta «deberán exhibirla en su parabrisas delantero» y que «será obligatorio exhibir el distintivo en un lugar visible». Allí no basta con que tu matrícula conste bien en la DGT.
+
+Por eso la respuesta corta a «¿es obligatoria?» es **depende de la ciudad**, y la larga está en la ficha de cada una.
+
 ### Entonces, ¿me hace falta para entrar en una ZBE?
 
 Normalmente **no**, y es importante entenderlo porque hay quien compra la pegatina creyendo que sin ella le multan.
