@@ -83,11 +83,22 @@ Todo esto está dicho en las propias fichas, para que ningún lector se lleve un
 
 El error de Alicante abre una pregunta incómoda: **¿está el mismo fallo en otras fichas?**
 
-He comprobado personalmente, releyendo el texto, que en **Sevilla, Palma y Oviedo** la ordenanza dice que los vehículos con distintivo entran «sin necesidad de autorización» o «sin necesidad de registro previo». Ahí la etiqueta sí es la llave, y las fichas están bien.
+**Revisión hecha el 06/10/2026.** Releídos los textos oficiales uno a uno:
 
-**No he releído** las ordenanzas de Barcelona, Bilbao, Granada, Málaga ni Valladolid, verificadas en sesiones anteriores. No digo que estén mal; digo que no las he comprobado contra este error concreto, y afirmar lo contrario sería repetirlo.
+| Municipio | Qué dice su norma | Veredicto |
+|:---|:---|:---|
+| **Sevilla** | «sin necesidad de registro previo, todos los vehículos con distintivo B, C, Eco y Cero» | Correcta |
+| **Palma** | «vehículos de libre acceso... **sin necesidad de autorización municipal registral**: los vehículos con distintivo B, C, ECO y 0» | Correcta |
+| **Oviedo** | «disponen de libre acceso... **sin necesidad de autorización municipal**» | Correcta |
+| **Barcelona** | art. 10: «es prohibeix **als vehicles més contaminants** l'accés i la circulació», de lunes a viernes laborables de 7 a 20 h. Los demás no están restringidos | Correcta, y el horario coincide |
+| **Bilbao** | «no se requiere que los vehículos lleven la pegatina de forma física, **ni que ésta sea solicitada previamente**». Libre: 0, ECO y C. Restringidos: A, y B desde el 15/06/2025 | Correcta |
+| **Valladolid** | art. 10.a exime a «más contaminantes», B y C sin condicionarlo a autorización, con el calendario de la disposición transitoria: 30/06/2025 sin etiqueta, 31/12/2027 la B, 01/01/2030 la C | Correcta, fechas exactas |
+| **Málaga** | Comunicado oficial: en el segundo año circulan CERO, ECO, C y B «domiciliados o no»; desde el tercero se restringe la B a los no domiciliados antes del 30/11/2026 | Correcta, con el matiz del domicilio ya incluido |
+| **Granada** | **Pendiente**, ver abajo | — |
 
-Queda como tarea mía: pasar esas cinco por la misma comprobación.
+Así que el error era solo de Alicante, y ya está corregido.
+
+**Granada es otra cosa, y es un problema de trazabilidad.** La URL que cita su ficha (`granada.org/v2010.nsf/xxtod/25ZBE`) **ya no contiene lo que citábamos**: hoy solo remite a `movilidadgranada.com` y da un correo. El dato puede seguir siendo correcto, pero la fuente ya no lo respalda. Localizado el PDF del BOP con la aprobación definitiva de la ordenanza, que es la fuente que debería citar; queda pendiente leerlo y actualizar el enlace.
 
 ## 3. Lo que sigue en mi lado
 
