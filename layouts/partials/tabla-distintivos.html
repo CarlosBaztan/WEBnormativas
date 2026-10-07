@@ -138,6 +138,16 @@
   {{- end }}
 {{- end }}
 
+{{- /* Sin este envoltorio la tabla no desbordaba: desbordaba LA PAGINA.
+       Medido a 375 px, ocupaba 420 y empujaba el documento entero a 434, asi
+       que el titular, los parrafos y el pie se iban hacia la derecha y habia
+       que arrastrar de lado para leer cualquier cosa. En la pagina que compara
+       que distintivo entra en cada ciudad, que es el argumento del sitio.
+
+       Es el mismo envoltorio de las tablas de Markdown y del listado de /zbe/:
+       una sola forma de resolverlo, que es lo que faltaba. */ -}}
+<div class="tabla-envoltorio" role="group" tabindex="0"
+     aria-label="Tabla: qué distintivo entra en cada Zona de Bajas Emisiones">
 <table class="tabla-distintivos">
   <caption>
     Distintivos que pueden entrar en cada Zona de Bajas Emisiones, según la
@@ -182,6 +192,7 @@
     {{- end }}
   </tbody>
 </table>
+</div>
 
 <p class="tabla-distintivos__pie">
   Cada fila sale de la ficha del municipio, donde está el artículo concreto de

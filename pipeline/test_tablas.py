@@ -108,6 +108,47 @@ def test_los_anchos_de_columna_suman_cien():
         "movil); se han encontrado %d" % hallados)
 
 
+def test_toda_tabla_va_en_un_envoltorio_desplazable():
+    """
+    Una tabla ancha no puede quedarse suelta en la pagina.
+
+    LO QUE PASO EL 07/10/2026, y por que esta prueba mira las tres tablas:
+
+    El sitio resolvia lo mismo de tres maneras distintas, y solo una estaba
+    bien.
+
+      render-table.html (tablas de Markdown)  .tabla-envoltorio + tabindex  OK
+      tabla-zbe.html    (listado de /zbe/)    .tabla-scroll, sin tabindex    a medias
+      tabla-distintivos.html                  nada                           roto
+
+    La rota es la peor de las tres, porque es la tabla que compara que
+    distintivo entra en cada ciudad, o sea el argumento del sitio. Medido a
+    375 px: la tabla ocupaba 420 px y, sin envoltorio, empujaba el documento
+    entero a 434. El movil no desplazaba la tabla, desplazaba la pagina: el
+    titular, los parrafos y el pie se iban hacia la derecha y habia que
+    arrastrar de lado para leer cualquier cosa.
+
+    La de en medio tenia su desplazamiento pero no se podia enfocar, asi que
+    con el teclado no habia forma de llegar a sus columnas de la derecha. Es
+    el fallo `scrollable-region-focusable` que axe-core ya canto una vez en la
+    ficha de Madrid, corregido entonces en un sitio de los tres.
+    """
+    sin_envoltorio = []
+    for ruta, texto in _plantillas():
+        texto = _sin_comentarios_hugo(texto)
+        for m in re.finditer(r"<table\b", texto):
+            # El envoltorio tiene que ser lo inmediatamente anterior.
+            antes = texto[:m.start()]
+            div = re.search(r"<div[^>]*>\s*$", antes)
+            if not div or 'tabindex="0"' not in div.group(0):
+                linea = antes.count("\n") + 1
+                sin_envoltorio.append("%s:%d" % (ruta, linea))
+    assert not sin_envoltorio, (
+        "Estas tablas no van dentro de un envoltorio enfocable, asi que "
+        "desbordan la pagina en movil y sus columnas de la derecha quedan "
+        "fuera del alcance del teclado: %s" % ", ".join(sin_envoltorio))
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0

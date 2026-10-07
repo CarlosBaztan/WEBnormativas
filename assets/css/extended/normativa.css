@@ -77,9 +77,24 @@ body.list .post-entry {
     font-size: var(--txt-xs);
 }
 
+/* Los cuatro enlaces legales median 24 px de alto en el movil, uno al lado
+   del otro. Son los que la LSSI obliga a tener siempre a mano, asi que lo
+   menos que pueden hacer es dejarse pulsar: el relleno los lleva a 44 sin
+   mover el texto de sitio, y el `gap` del contenedor ya separa las cajas.
+   El tamano de letra no sube: siguen siendo secundarios. */
 .pie-legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: var(--sp-1);
     color: var(--secondary);
     text-decoration: none;
+}
+
+/* Con ratón no hace falta la caja alta, y en el pie se notaria como un hueco
+   gratuito debajo del texto. */
+@media (min-width: 64rem) {
+    .pie-legal a { min-height: 0; }
 }
 
 .pie-legal a:hover,
@@ -688,6 +703,22 @@ body {
   font-size: var(--txt-sm);
 }
 
+/* Las migas son 76 enlaces de 24 px de alto repartidos por las 46 paginas, y
+   en movil son la unica forma de subir un nivel sin abrir el panel. Suben a
+   44 por relleno: el texto no se mueve de sitio ni crece, solo la caja que
+   recibe el dedo. En escritorio se quedan como estaban. */
+@media (max-width: 63.99rem) {
+  .breadcrumbs a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    /* La miga mas corta del sitio es «ITV», de 21 px de ancho: tres por
+       debajo del minimo de 24 que pide el criterio de tamano de objetivo. */
+    min-width: 1.5rem;
+  }
+}
+
 /* ------------------------------------------------------------------
    Los tres restos que quedaban fuera de la escala, encontrados midiendo
    1.513 elementos de texto en 17 páginas (02/10/2026). La escala del sitio
@@ -873,6 +904,13 @@ details.toc {
   border-color: var(--caja-borde);
 }
 
+/* El tema le da al rotulo del indice `padding: 0.3rem 1.2rem`, que en movil
+   deja 37 px de alto. Es el primer control que se encuentra quien abre un
+   articulo largo. */
+@media (max-width: 63.99rem) {
+  details.toc summary { padding-block: 0.5rem; }
+}
+
 /* Los desplegables del cuerpo del articulo (el perimetro exacto de una zona,
    por ejemplo) no tenian ni una regla: se leian como un parrafo suelto con
    una flechita, y no se veia donde empezaban ni donde acababan. */
@@ -886,6 +924,19 @@ details.toc {
 .md-content details > summary {
   cursor: pointer;
   font-weight: 600;
+  /* Un desplegable es un boton: si no se puede pulsar comodo, el contenido
+     que esconde no existe. Median 27 px en movil, y en nueve paginas.
+
+     Se agranda con relleno y NO con `display: flex` + `align-items`, que es
+     lo primero que uno escribe: un <summary> en flex deja de ser `list-item`
+     y pierde el triangulo. Justo lo que Carlos noto el 02/10/2026 por otro
+     motivo, y no conviene volver a romperlo por el lado contrario.
+
+     0,5rem arriba y abajo sobre una linea de 28 px da los 44. Coincide con el
+     `padding-bottom` que ya tiene la version abierta, asi que al desplegarse
+     el rotulo no da un salto. */
+  padding-block: 0.5rem;
+  min-height: 2.75rem;
   /* `inside` y no `outside`: con `outside` el navegador dibuja el triangulo
      FUERA de la caja del <summary>, que aqui significa dentro del relleno del
      recuadro, pegado al borde izquierdo y separado de su propio texto. Se veia

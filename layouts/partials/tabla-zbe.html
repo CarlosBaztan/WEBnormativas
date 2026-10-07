@@ -27,7 +27,19 @@
 */ -}}
 {{- $verificadas := .verificadas }}
 
-<div class="tabla-scroll">
+{{- /* El envoltorio es el MISMO que usan las tablas de Markdown: el
+       desplazamiento y el `tabindex` vienen de `.tabla-envoltorio`, y
+       `.tabla-scroll` se queda solo con el recuadro.
+
+       Antes esta tabla tenia su propio `overflow-x` y ningun `tabindex`, asi
+       que con el teclado no habia manera de llegar a sus columnas de la
+       derecha. El mismo fallo se habia corregido en las tablas de Markdown en
+       su dia y aqui no, porque eran dos soluciones separadas para lo mismo.
+
+       `role="group"` y no `region`: una region es un landmark y saldria en la
+       lista de puntos de referencia junto a los cinco <nav> de la pagina. */ -}}
+<div class="tabla-envoltorio tabla-scroll" role="group" tabindex="0"
+     aria-label="Tabla: municipios con Zona de Bajas Emisiones registrada">
   <table class="tabla-zbe">
     <caption class="visually-hidden">Municipios con Zona de Bajas Emisiones registrada</caption>
     {{- /* UN <col> POR COLUMNA, Y LOS PORCENTAJES SUMAN 100.

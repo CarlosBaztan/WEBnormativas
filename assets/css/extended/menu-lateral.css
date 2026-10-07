@@ -356,6 +356,11 @@
      la más importante. */
   .nav-propia a.boton-accion { min-height: var(--cabecera-boton); }
 
+  /* El logotipo es un enlace a la portada, y la portada es la herramienta:
+     el dibujo mide 34 px de alto y la zona de pulsación no tiene por qué
+     medir lo mismo que el dibujo. */
+  .logo a.marca { min-height: var(--cabecera-boton); }
+
   /* Separación entre dianas: con 6 px entre tres círculos, el pulgar acierta
      por aproximación. 8 es el mínimo que deja un fallo por botón, no por
      grupo. */
@@ -575,6 +580,22 @@
   /* Mismo tamaño que el título de grupo: solo cambia el peso. */
   font-size: 1em;
   font-weight: 400;
+}
+
+/* En móvil el panel es la ÚNICA navegación que hay, y sus filas median 34 px
+   de alto pegadas unas a otras: 35 dianas por debajo del mínimo, sin un
+   píxel de separación entre ellas, así que un dedo que falle por poco no
+   falla, abre otra página. En escritorio la misma lista se maneja con el
+   ratón y 34 px sobran, así que la medida solo sube donde hace falta.
+
+   Se tocan también los títulos de grupo: son botones de plegar, y son los
+   que más se pulsan al entrar. */
+@media (max-width: 63.99rem) {
+  .menu-lateral__item a,
+  .menu-lateral__item--pendiente,
+  .menu-lateral__grupo-titulo {
+    min-height: var(--cabecera-boton);
+  }
 }
 
 .menu-lateral__item a:hover {

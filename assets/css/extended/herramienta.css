@@ -26,8 +26,21 @@
   margin-bottom: 0.35rem;
 }
 
+/* `input:not(casilla ni radio)` y no una lista de tipos (07/10/2026).
+
+   El selector decia `input[type="number"]`, asi que el unico campo de texto
+   del sitio, el de la direccion en /zbe/mi-calle/, no entraba: se servia con
+   el aspecto que le da el navegador por defecto, sin relleno, sin borde
+   nuestro y de 27 px de alto, al lado de un boton de 53. En todas las demas
+   herramientas los campos miden 45 o mas. Lo delata medir, no leer: el CSS
+   es correcto, solo que no alcanza.
+
+   Enumerar los tipos buenos habria dejado el mismo agujero para el siguiente
+   (`search`, `tel`, `email`). Se excluyen los dos que de verdad no quieren
+   esta caja. */
 .pc-campo select,
-.pc-campo input[type="number"] {
+.pc-campo textarea,
+.pc-campo input:not([type="checkbox"]):not([type="radio"]) {
   width: 100%;
   max-width: 28rem;
   padding: 0.6rem 0.7rem;

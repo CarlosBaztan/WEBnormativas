@@ -46,8 +46,11 @@
 
 /* --- Tabla ------------------------------------------------------------- */
 
+/* Solo el recuadro. El desplazamiento lo pone `.tabla-envoltorio`, que es el
+   mismo que usan las tablas de Markdown y la tabla comparativa: tenerlo aqui
+   tambien era la segunda copia de la misma decision, y fue la que se quedo
+   sin `tabindex` cuando la primera se arreglo. */
 .tabla-scroll {
-  overflow-x: auto;
   margin: 1.25rem 0 1.75rem;
   border: 1px solid var(--caja-borde);
   border-radius: 8px;
