@@ -40,12 +40,12 @@ Aquí está el origen de casi toda la confusión, porque son dos pegatinas disti
 
 | Qué se compara | Distintivo V-19 (ITV) | [Etiqueta ambiental](/etiquetas/) (DGT) |
 |:---|:---|:---|
-| ¿Obligatorio llevarla? | **Sí** | **No** |
+| ¿Obligatorio llevarla? | **Sí**, en toda España | **No**, salvo que lo exija la ordenanza de tu ciudad |
 | Qué acredita | Que el vehículo pasó la ITV | La clasificación por emisiones |
-| Dónde se obtiene | En la estación de ITV | En Correos, por 5 euros |
+| Dónde se obtiene | En la estación de ITV | [En Correos y otros distribuidores](/etiquetas/como-pedir-la-etiqueta-ambiental/) |
 | Norma | Art. 12.1 RD 920/2017 | Reglamento General de Vehículos |
 
-Obtener la etiqueta ambiental de la DGT **es voluntario**. Lo explicamos en [las etiquetas ambientales de la DGT](/etiquetas/): es necesaria para acogerse a las ventajas asociadas, pero nadie te obliga a pegarla.
+Obtener la etiqueta ambiental de la DGT **es voluntario**, y llevarla pegada también lo es con carácter general. Pero la norma deja que cada ayuntamiento la haga obligatoria en su zona, y hay dos que ya lo han hecho: [Zaragoza](/zbe/zaragoza/) y [Pamplona](/zbe/pamplona/). Lo explicamos en [cómo conseguir la etiqueta ambiental](/etiquetas/como-pedir-la-etiqueta-ambiental/).
 
 La de la ITV sí.
 

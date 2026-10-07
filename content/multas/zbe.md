@@ -80,6 +80,6 @@ Alegar que no viste la señal rara vez prospera: la señalización es requisito 
 
 ---
 
-**Fuente:** [Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722), arts. 76.z3), 80.1, 81, 89.2.c), 94 y anexo II · **Verificado el 1 de octubre de 2026**
+**Fuente:** [Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722), arts. 76.z3), 80.1, 81, 89.2.c), 94 y anexo II
 
 *Esta página resume la norma con fines informativos; no es asesoramiento jurídico. Para un caso concreto, consulta con un profesional.*

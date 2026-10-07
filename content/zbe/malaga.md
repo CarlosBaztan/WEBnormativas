@@ -34,7 +34,9 @@ estado_dato: "verificado"
 draft: false
 ---
 
-Málaga no aplicó su Zona de Bajas Emisiones de golpe: la escalona **año a año**, y cada 30 de noviembre cambia quién puede entrar. Ahora mismo estamos en el segundo año, y el tercero empieza pronto.
+Hoy entran los distintivos 0, ECO, C y B. Lo que distingue a Málaga es el calendario: **la escalona año a año**, y cada 30 de noviembre cambia quién puede entrar.
+
+El tercer año empieza el **30 de noviembre de 2026**, y es el que deja fuera al distintivo B si el vehículo no está domiciliado en la ciudad.
 
 ## Qué distintivos pueden entrar hoy
 

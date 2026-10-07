@@ -174,7 +174,7 @@ La regulación anterior de estas dos zonas, aprobada en 2021, fue **anulada por 
 
 ---
 
-**Fuente:** Ordenanza 2/2026, de 24 de marzo, por la que se modifica la Ordenanza de Movilidad Sostenible de 5 de octubre de 2018 · [BOCM núm. 80, de 6 de abril de 2026](https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF) · En vigor desde el 7 de abril de 2026 · El régimen de la TEPMR, además, en [Ordenanza de Movilidad Sostenible y PMR](https://www.madrid.es/portales/munimadrid/es/Inicio/Movilidad-y-transportes/Personas-con-movilidad-reducida/?vgnextfmt=default&vgnextchannel=220e31d3b28fe410VgnVCM1000000b205a0aRCRD) (Ayuntamiento de Madrid) · **Verificado el 1 de octubre de 2026**
+**Fuente:** Ordenanza 2/2026, de 24 de marzo, por la que se modifica la Ordenanza de Movilidad Sostenible de 5 de octubre de 2018 · [BOCM núm. 80, de 6 de abril de 2026](https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF) · En vigor desde el 7 de abril de 2026 · El régimen de la TEPMR, además, en [Ordenanza de Movilidad Sostenible y PMR](https://www.madrid.es/portales/munimadrid/es/Inicio/Movilidad-y-transportes/Personas-con-movilidad-reducida/?vgnextfmt=default&vgnextchannel=220e31d3b28fe410VgnVCM1000000b205a0aRCRD) (Ayuntamiento de Madrid)
 
 *Esta página resume la norma con fines informativos; no es asesoramiento jurídico. Ante cualquier duda, consulta el texto oficial.*
 

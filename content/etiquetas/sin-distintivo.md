@@ -69,6 +69,6 @@ El dato exacto se consulta por matrícula en la sede electrónica de la DGT. Si 
 
 ---
 
-**Fuente:** Distintivo ambiental de la DGT · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Distintivo ambiental de la DGT
 
 *Esta página resume criterios oficiales con fines informativos.*

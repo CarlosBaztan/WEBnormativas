@@ -60,7 +60,7 @@ El anexo 2 de la ordenanza fija **tres periodos**:
 | **1 de enero de 2027** | 0, ECO y **C** |
 | **1 de enero de 2030** | Solo **0 y ECO** |
 
-Si tu coche lleva el distintivo B, esta es la fecha que te importa: **el 1 de enero de 2027 deja de poder entrar**. Quedan pocos meses.
+Si tu coche lleva el distintivo B, esta es la fecha que te importa: **el 1 de enero de 2027 deja de poder entrar**.
 
 Y si lleva el C, tienes hasta el 1 de enero de 2030.
 

@@ -75,6 +75,6 @@ Por los umbrales de fecha y el asunto del mes en 2015, aquí deducir es arriesga
 
 ---
 
-**Fuente:** Distintivo ambiental de la DGT · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Distintivo ambiental de la DGT
 
 *Esta página resume criterios oficiales con fines informativos.*

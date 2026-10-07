@@ -11,7 +11,7 @@ fecha_verificacion: "2026-10-01"
 draft: false
 ---
 
-En la entrada de una Zona de Bajas Emisiones no hay barrera ni agente que te pare. Hay una señal y, en la mayoría de las ciudades, una cámara que lee matrículas. Si entras sin poder, no te enteras en el momento: la denuncia llega semanas después.
+En la entrada de una Zona de Bajas Emisiones no hay barrera ni agente que te pare. Hay una señal y, en las ciudades cuya ordenanza hemos leído, una cámara que lee matrículas. Si entras sin poder, no te enteras en el momento: la denuncia llega semanas después.
 
 Esta página explica ese circuito pieza por pieza, y de dónde sale cada afirmación.
 
@@ -110,6 +110,6 @@ Tampoco afirmamos qué tecnología concreta usa cada municipio. Solo recogemos l
 
 ---
 
-**Fuentes:** [Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722), arts. 84.2, 84.4, 87.2, 89.2.c), 90, 91 y 92 · [Real Decreto 1052/2022](https://www.boe.es/buscar/doc.php?id=BOE-A-2022-22689), arts. 14 y 15 y anexo I.A.8 · **Verificado el 1 de octubre de 2026**
+**Fuentes:** [Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722), arts. 84.2, 84.4, 87.2, 89.2.c), 90, 91 y 92 · [Real Decreto 1052/2022](https://www.boe.es/buscar/doc.php?id=BOE-A-2022-22689), arts. 14 y 15 y anexo I.A.8
 
 *Esta página resume la norma con fines informativos; no es asesoramiento jurídico. Para un caso concreto, consulta con un profesional.*

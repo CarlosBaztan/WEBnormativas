@@ -63,6 +63,6 @@ Si tu municipio aparece como «todavía no verificado», no publicamos sus excep
 
 ---
 
-**Fuente:** Ordenanza 2/2026, de 24 de marzo, arts. 23 y 24 · [BOCM núm. 80, de 6 de abril de 2026](https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF) · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Ordenanza 2/2026, de 24 de marzo, arts. 23 y 24 · [BOCM núm. 80, de 6 de abril de 2026](https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF)
 
 *Las excepciones de municipios distintos de Madrid se describen en términos generales y no están verificadas una a una. Consulta la ordenanza de tu ayuntamiento.*

@@ -58,9 +58,11 @@ Por eso el distintivo es el primer paso, pero no la respuesta completa.
 
 ## ¿Hay que pegarlo en el coche?
 
-Obtener el distintivo es **voluntario**, pero llevarlo pegado es necesario para acogerse a las ventajas asociadas. Se coloca en la parte inferior derecha del parabrisas, o en un lugar visible en el caso de las motocicletas.
+Obtener el distintivo es **voluntario**, y llevarlo pegado también, con carácter general: el control de las zonas de bajas emisiones se hace leyendo la matrícula. Pero la norma permite que cada ayuntamiento lo exija en su zona, y [Zaragoza](/zbe/zaragoza/) y [Pamplona](/zbe/pamplona/) ya lo hacen.
 
-Se compra en las oficinas de Correos por 5 euros.
+Se coloca en el ángulo inferior derecho del parabrisas, por dentro, o en un lugar visible en el caso de las motocicletas.
+
+Se compra en Correos y en otros distribuidores autorizados: [dónde, cuánto cuesta y qué documentación piden](/etiquetas/como-pedir-la-etiqueta-ambiental/).
 
 ## Y ahora, ¿dónde puedes circular?
 
@@ -71,6 +73,6 @@ Consulta las restricciones reales de tu ciudad:
 
 ---
 
-**Fuente:** Distintivo ambiental de la DGT · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Distintivo ambiental de la DGT
 
 *Esta página resume criterios oficiales con fines informativos.*

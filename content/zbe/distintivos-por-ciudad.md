@@ -8,17 +8,21 @@ tipo: "articulo"
 draft: false
 ---
 
-En las zonas de bajas emisiones que llevamos verificadas, **entran los distintivos 0, ECO, C y B, y no entran los vehículos sin distintivo**. Esa es la regla general, y se cumple en casi todas.
+**La respuesta cambia de una ciudad a otra mucho más de lo que parece.**
 
-Lo que cambia de una ciudad a otra son otras tres cosas: **a qué horas** se aplica, **qué excepciones** reconoce, y **en qué fecha** empieza a dejar fuera al distintivo B. Ahí no hay regla general, y es justo lo que esta tabla pone junto.
+En la mayoría de las que llevamos verificadas entran los distintivos 0, ECO, C y B, y quedan fuera los vehículos sin distintivo. Pero hay ciudades donde la etiqueta **no abre nada**, otras donde la **B ya no entra**, otras donde entra **solo con condiciones**, y alguna donde todavía entra **cualquier vehículo**.
+
+Cada fila de esta tabla sale de la ordenanza de su municipio. Lee la tuya antes de dar por buena ninguna regla general.
 
 {{< tabla-distintivos >}}
 
-## Las tres cosas que cambian de una ciudad a otra
+## Las cuatro cosas que cambian de una ciudad a otra
+
+**Si la etiqueta decide algo.** Esto es lo primero que hay que mirar, y sorprende a casi todo el mundo. En [La Coruña](/zbe/la-coruna/), [Alicante](/zbe/alicante/) y [Pamplona](/zbe/pamplona/) la etiqueta ambiental **no da acceso a nadie**: lo que abre la puerta es una autorización municipal previa, y la etiqueta, cuando se pide, es un filtro adicional encima. Un coche con distintivo 0, el mejor que da la DGT, tampoco entra.
 
 **El horario.** Hay ciudades donde la restricción solo se aplica en horario laboral, y otras donde es continua. En Sevilla puedes entrar un sábado con cualquier vehículo; en Palma, no.
 
-**El calendario.** Algunas ordenanzas ya traen escrita la fecha en que el distintivo B deja de entrar, y otras no dicen nada todavía. Las que la traen están en la última columna, y conviene mirarla si tu coche lleva el B: es la diferencia entre enterarte con dos años de margen o con una multa.
+**El calendario.** Algunas ordenanzas ya traen escrita la fecha en que el distintivo B deja de entrar, y otras no dicen nada todavía. Las que la traen están en la última columna, y conviene mirarla si tu coche lleva el B: es la diferencia entre enterarte con dos años de margen y enterarte con una multa.
 
 **Las excepciones.** Prácticamente todas dejan entrar a residentes empadronados en la zona y a quien tiene plaza de garaje dentro, muchas veces sin necesidad de distintivo. Las condiciones y los trámites varían bastante, y están en la ficha de cada municipio.
 

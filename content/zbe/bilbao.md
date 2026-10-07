@@ -81,4 +81,4 @@ El ayuntamiento publica la delimitación exacta de la zona en su documentación 
 
 El acceso indebido a una zona de bajas emisiones es una infracción grave de la Ley de Tráfico. Lo explicamos en detalle en [multas por entrar en una ZBE](/multas/zbe/).
 
-Cuando la ZBE arrancó hubo un periodo de adaptación sin multas, en el que las infracciones solo generaban un aviso informativo. Ese periodo terminó hace tiempo. No publicamos su duración exacta porque no la hemos podido leer en una página oficial.
+Cuando la ZBE arrancó hubo un periodo de adaptación sin multas, en el que las infracciones solo generaban un aviso informativo. **No hemos podido leer en una página oficial cuánto duró**, así que no afirmamos si hoy se sanciona de forma plena o sigue habiendo margen.

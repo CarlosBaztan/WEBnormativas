@@ -375,6 +375,36 @@ def test_ninguna_pagina_publicada_lleva_rayas_largas():
     assert not con_raya, "rayas largas publicadas: " + "; ".join(con_raya)
 
 
+# ---------------------------------------------------------------------------
+# La fecha de verificacion se escribe UNA vez
+#
+# 06/10/2026. /zbe/madrid/ mostraba dos fechas distintas en la misma pagina:
+# «Verificado el 06/10/2026», que pinta la plantilla desde el front matter, y
+# «Verificado el 1 de octubre de 2026», escrita a mano en el pie del cuerpo.
+#
+# En un sitio cuyo producto es la fecha, eso es un agujero en la linea de
+# flotacion. Y es el patron de siempre: lo mismo escrito dos veces, corregido
+# en un solo sitio. Habia trece ficheros asi.
+# ---------------------------------------------------------------------------
+
+def test_ninguna_pagina_escribe_a_mano_su_fecha_de_verificacion():
+    """
+    Nadie repite en el cuerpo lo que ya pinta fuente-verificacion.html.
+
+    Se busca el patron del pie («· **Verificado el ...**»), no la palabra
+    suelta: una ficha puede contar en su prosa cuando verifico algo, y eso es
+    legitimo.
+    """
+    import re
+    repetidas = []
+    for ruta, texto in au.paginas_publicadas():
+        if re.search(r"·\s*\*\*Verificado el ", texto):
+            repetidas.append(ruta)
+    assert not repetidas, (
+        "estas paginas escriben a mano su fecha de verificacion, y la "
+        "plantilla ya la pinta desde el front matter: " + ", ".join(repetidas))
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0

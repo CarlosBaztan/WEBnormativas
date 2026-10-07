@@ -58,6 +58,6 @@ Dado que la ECO depende de la tecnología **y** de la antigüedad, es de los dis
 
 ---
 
-**Fuente:** Distintivo ambiental de la DGT · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Distintivo ambiental de la DGT
 
 *Esta página resume criterios oficiales con fines informativos.*

@@ -77,6 +77,6 @@ Se tramita en la sede electrónica del Ayuntamiento. Dos detalles útiles:
 
 ---
 
-**Fuente:** Ordenanza 2/2026, de 24 de marzo, art. 23 y anexo III · [BOCM núm. 80, de 6 de abril de 2026](https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF) · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Ordenanza 2/2026, de 24 de marzo, art. 23 y anexo III · [BOCM núm. 80, de 6 de abril de 2026](https://www.bocm.es/boletin/CM_Orden_BOCM/2026/04/06/BOCM-20260406-32.PDF)
 
 *Esta página resume la norma con fines informativos; no es asesoramiento jurídico. Ante cualquier duda, consulta el texto oficial.*

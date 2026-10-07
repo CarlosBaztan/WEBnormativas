@@ -60,9 +60,13 @@
     {{- with .Content }}{{ . }}{{- end }}
 
     <p class="resumen-cobertura">
+      {{/* «De ellos» era falso por poco: entre las verificadas hay una,
+           Zaragoza, que no figura en el registro del NAP. En un sitio cuyo
+           producto es la precisión, ese «de ellos» no se puede dejar. */}}
       <strong>{{ $total }} municipios</strong> con ZBE registrada oficialmente en el
-      Punto de Acceso Nacional de la DGT. De ellos hemos leído la ordenanza de
-      <strong>{{ $nVerificadas }}</strong>.
+      Punto de Acceso Nacional de la DGT. Hemos leído
+      <strong>{{ $nVerificadas }}</strong> ordenanzas, una de ellas de un municipio
+      que no figura en ese registro.
     </p>
 
     <h2>Ciudades principales</h2>

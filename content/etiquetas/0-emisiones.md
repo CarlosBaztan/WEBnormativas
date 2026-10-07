@@ -61,6 +61,6 @@ Deducirlo por el tipo de vehículo funciona casi siempre, pero quien lo asigna e
 
 ---
 
-**Fuente:** Distintivo ambiental de la DGT · **Verificado el 23 de septiembre de 2026**
+**Fuente:** Distintivo ambiental de la DGT
 
 *Esta página resume criterios oficiales con fines informativos.*
