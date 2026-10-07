@@ -18,6 +18,22 @@
 {{- with site.Data.menu_lateral }}
 {{- $actual := $.RelPermalink }}
 
+{{- /* UNA SOLA «ESTÁS AQUÍ» (08/10/2026).
+
+       /etiquetas/ está en el menú dos veces, con dos nombres: «Qué etiqueta
+       tengo», entre las herramientas, y «Todas las etiquetas», en su propio
+       grupo. Las dos son útiles y las dos se quedan: una ofrece la
+       calculadora y la otra el índice de distintivos.
+
+       Lo que no puede ser es que al abrir esa página las dos salgan marcadas
+       como la actual. Se veían dos filas resaltadas a la vez y un lector de
+       pantalla anunciaba dos veces «página actual», que es como no decir
+       ninguna.
+
+       Se marca la primera que aparece. `$yaMarcado` se asigna con `=`, no con
+       `:=`, para que el cambio salga del `range` en vez de morir dentro. */ -}}
+{{- $yaMarcado := false }}
+
 <div class="fondo-menu" hidden></div>
 
 <nav id="menu-lateral" class="menu-lateral" aria-label="Secciones del sitio">
@@ -57,8 +73,10 @@
         </li>
         {{- else }}
         {{- $url := .url | relURL }}
+        {{- $esActual := and (eq $actual $url) (not $yaMarcado) }}
+        {{- if $esActual }}{{ $yaMarcado = true }}{{ end }}
         <li class="menu-lateral__item">
-          <a href="{{ $url }}"{{ if eq $actual $url }} aria-current="page"{{ end }}>
+          <a href="{{ $url }}"{{ if $esActual }} aria-current="page"{{ end }}>
             <span class="menu-lateral__texto">
               {{- with .icono }}{{ partial "distintivo.html" (dict "clave" . "ancho" 18 "clase" "distintivo-img--menu") }}{{ end -}}
               {{ .texto }}

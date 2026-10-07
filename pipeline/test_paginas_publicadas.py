@@ -93,6 +93,15 @@ def _html_de(destino, ruta):
     return io.open(f, encoding="utf-8").read()
 
 
+def _urls_publicadas(destino):
+    """Cada carpeta con index.html del build, como ruta de URL."""
+    for carpeta, _, ficheros in os.walk(destino):
+        if "index.html" not in ficheros:
+            continue
+        rel = os.path.relpath(carpeta, destino).replace(os.sep, "/")
+        yield "/" if rel == "." else "/%s/" % rel
+
+
 def _fichas():
     """Cada .md de content/zbe/, con su front matter y su texto crudo."""
     carpeta = os.path.join(RAIZ, "content", "zbe")
@@ -180,6 +189,43 @@ def test_la_tabla_de_datos_tampoco_dice_sin_verificar(destino):
         "Estas fichas tienen la ordenanza leida y su tabla de datos dice "
         "«sin verificar»: %s" % ", ".join(malas)
     )
+
+
+def test_el_menu_marca_una_sola_pagina_como_actual(destino):
+    """
+    `aria-current="page"` responde a «¿donde estoy?», y esa pregunta tiene una
+    respuesta.
+
+    /etiquetas/ esta en el menu lateral DOS VECES, con dos nombres: «Que
+    etiqueta tengo», en el grupo de herramientas, y «Todas las etiquetas», en
+    el de etiquetas. Las dos son utiles y las dos se quedan. Lo que no puede
+    ser es que al abrir esa pagina las DOS salgan marcadas como la actual:
+    dos filas resaltadas a la vez, y un lector de pantalla anunciando dos
+    veces «pagina actual».
+
+    Se marca la primera que aparece y ya esta. El enlace sigue estando en los
+    dos sitios.
+    """
+    malas = []
+    for ruta in _urls_publicadas(destino):
+        html = _html_de(destino, ruta)
+        if not html:
+            continue
+        # OJO CON LAS COMILLAS: el sitio se compila MINIFICADO, asi que en el
+        # HTML publicado pone `aria-current=page` y `id=menu-lateral`, sin
+        # comillas. La primera version de esta prueba buscaba
+        # `aria-current="page"` y pasaba siempre, sin comprobar nada: una
+        # prueba que no puede fallar. Es la misma trampa que ya dio un falso
+        # positivo con `alt=""`, anotada en CLAUDE.md.
+        menu = re.search(r"<nav id=[\"']?menu-lateral[\"']?.*?</nav>", html, re.S)
+        if not menu:
+            continue
+        n = len(re.findall(r"aria-current=[\"']?page", menu.group(0)))
+        if n > 1:
+            malas.append("%s (%d)" % (ruta, n))
+    assert not malas, (
+        "Estas paginas marcan mas de un enlace del menu como la pagina "
+        "actual: %s" % ", ".join(malas))
 
 
 def test_la_ficha_sin_reglas_leidas_si_lo_dice(destino):
