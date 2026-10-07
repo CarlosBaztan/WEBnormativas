@@ -458,6 +458,26 @@ oficial, fecha y horarios. Es información de nivel C, publicable.
   en local no refleja un cambio del pipeline, recargar sin cache antes de
   buscar el fallo en el codigo.
 
+  **Y el servidor de desarrollo tambien se queda atras.** El 08/10/2026, dos
+  horas despues de cambiar y commitear el titulo de Valencia, `hugo server`
+  seguia sirviendo el viejo para esa pagina y solo para esa. El fichero estaba
+  bien. Reiniciar el servidor antes de concluir que un cambio no se aplico.
+
+- **El sitio se compila MINIFICADO, y eso rompe las pruebas que leen el HTML
+  publicado.** El minificador quita las comillas (`aria-current=page`,
+  `class=boton-menu`) y convierte un atributo vacio en el atributo a secas
+  (`alt=""` pasa a `alt`, `href=""` pasa a `href`). Una prueba que busque
+  `aria-current="page"` o `href=""` **pasa siempre sin comprobar nada**.
+
+  Esto ha mordido **tres veces el 08/10/2026**, en un solo dia y a sabiendas
+  de que estaba anotado: una medicion que conto 172 imagenes sin `alt` que
+  estaban bien, y dos pruebas nuevas que nacieron verdes sin arreglar nada.
+  Lo unico que lo destapa es la regla de **ver fallar la prueba antes del
+  arreglo**; si nace en verde, sospechar de ella, no celebrarla.
+
+  Al escribir una asercion contra el HTML construido, aceptar las tres formas:
+  `attr="valor"`, `attr=valor` y `attr` a secas.
+
 - **`{{VERIFICAR}}` no es una plantilla de Hugo.** Parece una, pero Goldmark
   imprime las llaves tal cual y la nota interna acaba publicada. Estuvo cuatro
   veces a la vista en `/multas/zbe/`. Lo vigila ahora `auditoria.py`, que
