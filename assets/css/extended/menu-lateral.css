@@ -210,8 +210,13 @@
 
 .nav-propia .menu::-webkit-scrollbar { display: none; }
 
+/* Misma altura que los botones de la derecha: el recuadro que se pinta al
+   pasar el ratón medía 31 px al lado de tres de 36, y en una fila de siete
+   piezas eso se ve. */
 .nav-propia .menu a {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: var(--cabecera-boton);
   padding: 0.4rem 0.6rem;
   border-radius: 6px;
   white-space: nowrap;
@@ -244,6 +249,11 @@
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
+  /* Misma altura que los botones redondos: 36 con ratón, 44 con dedo. Sin
+     esto la fila de la derecha median 32, 34 y 36 segun lo que llevara dentro
+     cada uno, y tres alturas distintas en cuatro botones se ven aunque esten
+     centrados. */
+  min-height: var(--cabecera-boton);
   padding: 0.35rem 0.7rem;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -270,6 +280,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
+  min-height: var(--cabecera-boton);
   padding: 0.4rem 0.85rem;
   border: 1px solid var(--primary);
   border-radius: 999px;
@@ -350,11 +361,6 @@
     padding: 0;
     border-radius: 50%;
   }
-
-  /* La píldora con texto medía 34 px de alto mientras sus tres vecinos ya
-     iban a 44: en tableta era la diana más pequeña de la cabecera, y además
-     la más importante. */
-  .nav-propia a.boton-accion { min-height: var(--cabecera-boton); }
 
   /* El logotipo es un enlace a la portada, y la portada es la herramienta:
      el dibujo mide 34 px de alto y la zona de pulsación no tiene por qué
