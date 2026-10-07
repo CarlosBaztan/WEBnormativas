@@ -19,6 +19,21 @@
     compacta                una línea, para la cabecera de la ficha
 
   Nunca debe romper el build: todos los campos degradan a ausente.
+
+  SIN `nofollow` EN LOS ENLACES A LA FUENTE (08/10/2026).
+
+  Los tres enlaces de este fichero llevaban `rel="nofollow noopener external"`.
+  Va contra la regla escrita en docs/seo-arquitectura.md, apartado 7: citar la
+  fuente oficial con un enlace normal es la senal mas barata que tiene el
+  sitio, y poner nofollow a un enlace a .gob.es no protege de nada.
+
+  Lo peor no era el nofollow: layouts/_markup/render-link.html lo hace BIEN y
+  su comentario dice «Es la misma convencion que ya usa
+  partials/fuente-verificacion.html». No lo era. Un comentario afirmando un
+  comportamiento que nadie comprobo, que es otra de las trampas de la lista.
+
+  `noopener external` y `target="_blank"` se quedan: eso es seguridad y aviso
+  de que el enlace saca del sitio, no una instruccion a los buscadores.
 */ -}}
 
 {{- $pagina := . -}}
@@ -109,7 +124,7 @@
       <span class="fuente__campo"><strong>Fuente:</strong>
         {{- if $trazable }}
           {{- if $urlValida }}
-          <a class="fuente__enlace" href="{{ $url }}" rel="nofollow noopener external" target="_blank">{{ $nombre }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>
+          <a class="fuente__enlace" href="{{ $url }}" rel="noopener external" target="_blank">{{ $nombre }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>
           {{- else }}
           {{ $nombre }}
           {{- end }}
@@ -131,7 +146,7 @@
   <p class="fuente__revision">
     <strong>Pendiente de revisión.</strong>
     Han pasado más de seis meses desde la última comprobación y la normativa puede haber cambiado.
-    {{ if $urlValida }}Confirma el dato en <a href="{{ $url }}" rel="nofollow noopener external" target="_blank">la fuente oficial<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>.{{ end }}
+    {{ if $urlValida }}Confirma el dato en <a href="{{ $url }}" rel="noopener external" target="_blank">la fuente oficial<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>.{{ end }}
   </p>
   {{- end }}
 
@@ -167,7 +182,7 @@
     {{ if $parcial }}No decidas si puedes entrar a partir de esta página.{{ else }}No tomes decisiones a partir de esta página.{{ end }}
     {{ if $urlValida -}}
       Consulta directamente
-      <a class="fuente__enlace" href="{{ $url }}" rel="nofollow noopener external" target="_blank">{{ with $nombre }}{{ . }}{{ else }}la fuente oficial{{ end }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>.
+      <a class="fuente__enlace" href="{{ $url }}" rel="noopener external" target="_blank">{{ with $nombre }}{{ . }}{{ else }}la fuente oficial{{ end }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>.
     {{- else if ne $nombre "" -}}
       La referencia que estamos comprobando es: {{ $nombre }}.
     {{- else -}}

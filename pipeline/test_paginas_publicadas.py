@@ -50,6 +50,7 @@ CLAUDE.md.
 """
 
 import io
+import json
 import os
 import re
 import shutil
@@ -189,6 +190,87 @@ def test_la_tabla_de_datos_tampoco_dice_sin_verificar(destino):
         "Estas fichas tienen la ordenanza leida y su tabla de datos dice "
         "«sin verificar»: %s" % ", ".join(malas)
     )
+
+
+def test_el_json_ld_de_una_ficha_describe_un_solo_documento(destino):
+    """
+    Una pagina emite TRES bloques JSON-LD: el WebPage nuestro y el
+    BreadcrumbList y el BlogPosting del tema. Tienen que hablar del mismo
+    documento, y para eso sirve `@id`.
+
+    LO QUE PASO (08/10/2026). Nuestro WebPage se llamaba
+    `https://cocheapto.com/zbe/granada/#webpage` y el BlogPosting del tema
+    declaraba `mainEntityOfPage: {"@id": "https://cocheapto.com/zbe/granada/"}`.
+    Dos nodos distintos para la misma pagina.
+
+    O sea que `lastReviewed`, `citation` y `about`, que es TODO lo que este
+    sitio aporta de propio y el motivo por el que existe, colgaban de un
+    documento que para un consumidor de JSON-LD no era el mismo que el que
+    lleva el titular, la fecha y el autor.
+
+    Se vio porque los tres bloques solo se emiten en el build de produccion:
+    con `hugo server` sale uno, asi que auditando en local se ve un tercio de
+    lo que ve Google. Esta prueba compila como produccion.
+    """
+    fallos = []
+    for ruta in ("/zbe/granada/", "/zbe/pamplona/", "/etiquetas/b/"):
+        html = _html_de(destino, ruta)
+        if not html:
+            continue
+        nodos = []
+        for b in re.findall(r"<script type=[\"']?application/ld\+json[\"']?>(.*?)</script>",
+                            html, re.S):
+            try:
+                nodos.append(json.loads(b))
+            except ValueError:
+                fallos.append("%s: un bloque JSON-LD no parsea" % ruta)
+        propios = [n.get("@id") for n in nodos if n.get("@type") == "WebPage"]
+        for n in nodos:
+            meop = n.get("mainEntityOfPage")
+            if not isinstance(meop, dict):
+                continue
+            if meop.get("@id") not in propios:
+                fallos.append(
+                    "%s: el %s apunta a %s y nuestro WebPage es %s"
+                    % (ruta, n.get("@type"), meop.get("@id"), propios or "(ninguno)"))
+    assert not fallos, (
+        "El JSON-LD de estas paginas describe dos documentos distintos: %s"
+        % "; ".join(fallos))
+
+
+def test_ningun_enlace_a_la_fuente_oficial_lleva_nofollow(destino):
+    """
+    Citar la fuente oficial con un enlace normal es la senal mas barata que
+    tiene este sitio, y es literalmente su argumento de negocio.
+
+    La regla esta escrita en docs/seo-arquitectura.md, apartado 7: «Sin
+    `rel="nofollow"`. Poner nofollow a un enlace a .gob.es no protege de nada
+    y desperdicia la senal».
+
+    Estaba implementada en layouts/_markup/render-link.html, para los enlaces
+    escritos en el Markdown, y NO en fuente-verificacion.html, que es el
+    bloque de fuente del que habla ese apartado. Los tres enlaces de ahi
+    llevaban `nofollow`, o sea que la senal se anulaba justo en el sitio donde
+    el apartado 7 dice que importa.
+
+    Y el detalle que lo hace peor: el comentario de render-link.html decia «Es
+    la misma convencion que ya usa partials/fuente-verificacion.html». No lo
+    era. Un comentario afirmando un comportamiento que nadie comprobo.
+
+    El sitio no tiene enlaces pagados ni contenido de terceros, asi que no hay
+    ningun caso legitimo de nofollow. Si alguna vez lo hay (publicidad), esta
+    prueba tendra que cambiar, y ese es justo el momento de pensarlo.
+    """
+    con_nofollow = []
+    for ruta in _urls_publicadas(destino):
+        html = _html_de(destino, ruta)
+        if not html:
+            continue
+        if re.search(r'rel=["\']?[^"\'>]*nofollow', html):
+            con_nofollow.append(ruta)
+    assert not con_nofollow, (
+        "Estas paginas anulan la senal de su propia fuente oficial con "
+        "nofollow: %s" % ", ".join(sorted(con_nofollow)))
 
 
 def test_quien_declara_una_fuente_la_publica(destino):

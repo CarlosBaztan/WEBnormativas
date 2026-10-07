@@ -47,7 +47,26 @@
 {{- $modificado := "" -}}
 {{- if not .Lastmod.IsZero }}{{ $modificado = .Lastmod.Format "2006-01-02" }}{{ end -}}
 
-{{- /* ---------- FAQPage ---------- */ -}}
+{{- /* ---------- FAQPage ----------
+
+       RAMA MUERTA, Y CONVIENE SABERLO ANTES DE INVERTIR AQUI (08/10/2026).
+
+       No se ha ejecutado nunca: esta condicionada a `eq $seccion "guias"`,
+       /guias/ esta en borrador desde el 01/10, y NINGUNA pagina del sitio
+       declara `faq:` en su front matter. Comprobado.
+
+       Y ya no compensa activarla. Google restringio el resultado
+       enriquecido de FAQ a webs de gobierno y salud el 14/09/2023 y retiro
+       su documentacion el 15/06/2025 diciendo que ese resultado ya no se
+       muestra. O sea que el marcado no pinta nada en la pagina de
+       resultados.
+
+       Lo que SI vale de una FAQ es el contenido: preguntas como encabezado,
+       respuesta en la primera frase. Eso no necesita marcado, y ya lo hacen
+       /zbe/pamplona/ y /zbe/alicante/.
+
+       Se deja el codigo porque no estorba y porque /guias/ puede volver,
+       pero que nadie le dedique tiempo creyendo que da resultado. */ -}}
 {{- $faq := slice -}}
 {{- with .Params.faq -}}
   {{- range . -}}
@@ -134,10 +153,27 @@
 
 {{- else -}}
 
+  {{- /* EL @id ES EL DE LA PAGINA, NO UNO APARTE (08/10/2026).
+
+         Era `%s#webpage`, con la intencion de no chocar con los nodos del
+         tema. El efecto medido era otro: el BlogPosting de PaperMod declara
+         `mainEntityOfPage: {"@id": "https://cocheapto.com/zbe/granada/"}` y
+         nuestro WebPage se llamaba `.../granada/#webpage`. Dos nodos
+         distintos para la misma pagina, y ninguna forma de saber que son la
+         misma.
+
+         O sea que `lastReviewed`, `citation` y `about`, que es TODO lo que
+         este sitio aporta de propio, colgaban de un documento que para un
+         consumidor de JSON-LD no era el mismo que el que tiene el titular,
+         la fecha y el autor.
+
+         Con el mismo @id los dos bloques se funden en un nodo, que es
+         justamente para lo que sirve @id en JSON-LD. No sustituye nada del
+         tema: lo completa, que es lo que decia la intencion original. */ -}}
   {{- $datos = dict
         "@context" "https://schema.org"
         "@type" "WebPage"
-        "@id" (printf "%s#webpage" .Permalink)
+        "@id" .Permalink
         "url" .Permalink
         "name" .Title
         "description" $desc
