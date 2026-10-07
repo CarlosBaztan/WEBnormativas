@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Málaga: qué distintivos pueden entrar"
-description: "Hoy entran 0, ECO, C y B. Pero el 30 de noviembre de 2026 empieza el tercer año de la ordenanza y el distintivo B queda restringido si el vehículo no está domiciliado en Málaga."
+description: "Hoy entran 0, ECO, C y B. Pero el 30 de noviembre de 2026 empieza el tercer año y el B queda restringido si el vehículo no está domiciliado en Málaga."
 date: 2026-09-29
 
 tipo: "municipio"

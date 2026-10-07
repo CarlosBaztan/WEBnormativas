@@ -134,6 +134,49 @@ def test_la_deuda_declarada_sigue_siendo_deuda():
         % ", ".join(resueltas))
 
 
+LIMITE_DESCRIPCION = 160
+
+
+def _paginas_publicadas():
+    """(ruta relativa, front matter) de cada .md que no sea borrador."""
+    for carpeta, _, ficheros in os.walk(os.path.join(RAIZ, "content")):
+        for nombre in sorted(ficheros):
+            if not nombre.endswith(".md"):
+                continue
+            ruta = os.path.join(carpeta, nombre)
+            texto = io.open(ruta, encoding="utf-8-sig").read()
+            m = re.match(r"^---\s*?\n(.*?)\n---\s*?\n", texto, re.S)
+            if not m or re.search(r"^draft:\s*true", m.group(1), re.M):
+                continue
+            yield os.path.relpath(ruta, RAIZ).replace("\\", "/"), m.group(1)
+
+
+def test_ninguna_descripcion_se_pasa_de_lo_que_google_ensena():
+    """
+    La descripcion es el unico texto del sitio que se escribe PARA el
+    resultado de busqueda, y Google la corta sobre los 160 caracteres.
+
+    Medidas las 46 el 07/10/2026: veintidos se pasaban, y Barcelona llegaba a
+    257, o sea que su ultimo tercio no lo leia nadie. Reescritas todas.
+
+    Esta prueba existe porque ese trabajo se pierde sin hacer ruido. El mismo
+    dia, al devolver una fecha de prueba con `git checkout -- malaga.md`, se
+    deshizo tambien su descripcion: el fichero volvio entero, no solo la
+    linea que interesaba. Nadie lo habria visto hasta el proximo repaso.
+
+    No se comprueba un minimo: una descripcion corta no engana a nadie, solo
+    desaprovecha sitio, y /search/ o /legal/ no necesitan 150 caracteres.
+    """
+    largas = []
+    for ruta, fm in _paginas_publicadas():
+        m = re.search(r'^description:\s*"(.*)"\s*$', fm, re.M)
+        if m and len(m.group(1)) > LIMITE_DESCRIPCION:
+            largas.append("%s (%d)" % (ruta, len(m.group(1))))
+    assert not largas, (
+        "Descripciones de mas de %d caracteres, que Google corta a mitad de "
+        "frase: %s" % (LIMITE_DESCRIPCION, ", ".join(sorted(largas))))
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0
