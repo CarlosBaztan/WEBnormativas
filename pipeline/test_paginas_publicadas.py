@@ -191,6 +191,56 @@ def test_la_tabla_de_datos_tampoco_dice_sin_verificar(destino):
     )
 
 
+def test_quien_declara_una_fuente_la_publica(destino):
+    """
+    La promesa del sitio es que cada dato lleva fuente, enlace y fecha de
+    verificacion VISIBLES. Esta prueba vigila el caso en que el dato esta y no
+    se pinta, que no da ningun error y no se ve leyendo el front matter.
+
+    LO QUE PASO (08/10/2026). Siete paginas lo declaraban y no lo publicaban:
+    las cinco de distintivo, /etiquetas/ y /multas/zbe/. Las dos plantillas que
+    las sirven (una copia del single.html del tema y el single.html del tema
+    mismo) no llamaban nunca a fuente-verificacion.html.
+
+    En su lugar habia una linea escrita a mano al final del Markdown,
+    «**Fuente:** Distintivo ambiental de la DGT», SIN ENLACE y SIN FECHA, en
+    paginas que afirman que anos y que combustibles llevan cada distintivo.
+
+    Y un segundo efecto, peor porque era futuro: el aviso automatico de
+    «pendiente de revision» a los seis meses vive en ese partial. Sin el, esas
+    paginas habrian pasado el 23/03/2027 sin decir nada mientras una ficha de
+    ZBE se marca sola.
+    """
+    sin_publicar = []
+    for ruta in _urls_publicadas(destino):
+        md = _fuente_declarada(ruta)
+        if not md:
+            continue
+        html = _html_de(destino, ruta)
+        if not html:
+            continue
+        if "fuente__linea" not in html:
+            sin_publicar.append(ruta)
+    assert not sin_publicar, (
+        "Estas paginas declaran una fuente en el front matter y no la "
+        "publican: %s" % ", ".join(sorted(sin_publicar)))
+
+
+def _fuente_declarada(ruta):
+    """True si el .md de esa URL declara `fuente_nombre`."""
+    rel = ruta.strip("/")
+    candidatos = [os.path.join(RAIZ, "content", rel + ".md"),
+                  os.path.join(RAIZ, "content", rel, "_index.md")]
+    for c in candidatos:
+        if not os.path.exists(c):
+            continue
+        texto = io.open(c, encoding="utf-8-sig").read()
+        m = re.match(r"^---\s*?\n(.*?)\n---\s*?\n", texto, re.S)
+        if m and re.search(r"^fuente_nombre:\s*\S", m.group(1), re.M):
+            return True
+    return False
+
+
 def test_ningun_enlace_publicado_apunta_a_ninguna_parte(destino):
     """
     Un `<a href="">` no da 404: recarga la pagina en la que estas. Por eso no

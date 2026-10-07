@@ -63,9 +63,3 @@ En el permiso de circulación aparece la fecha completa de matriculación. Si el
 ## Cómo confirmar el tuyo
 
 El dato exacto se consulta por matrícula en la sede electrónica de la DGT. Es gratis, y es el único que vale ante una sanción.
-
----
-
-**Fuente:** Distintivo ambiental de la DGT
-
-*Esta página resume criterios oficiales con fines informativos.*

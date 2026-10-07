@@ -70,9 +70,3 @@ Consulta las restricciones reales de tu ciudad:
 
 - **[ZBE de Madrid](/zbe/madrid/)**: tres zonas con reglas distintas
 - **[Todos los municipios con ZBE](/zbe/)**
-
----
-
-**Fuente:** Distintivo ambiental de la DGT
-
-*Esta página resume criterios oficiales con fines informativos.*

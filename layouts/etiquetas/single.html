@@ -35,6 +35,31 @@
     {{- end }}
   </header>
 
+  {{- /* TRAZABILIDAD, QUE AQUI FALTABA (08/10/2026).
+
+         Estas paginas declaran `fuente_nombre`, `fuente_url`,
+         `fecha_verificacion` y `estado_dato` en el front matter desde que se
+         escribieron, y esta plantilla no leia ninguno: es una copia del
+         single.html del tema con la imagen del distintivo anadida, y nadie
+         enchufo el partial.
+
+         Lo que se publicaba en su lugar era una linea escrita a mano al final
+         del Markdown, «**Fuente:** Distintivo ambiental de la DGT», SIN
+         ENLACE y SIN FECHA, en cinco paginas que afirman que anos y que
+         combustibles llevan cada distintivo. La regla del proyecto es que
+         cada dato lleve fuente, enlace y fecha de verificacion visibles.
+
+         Y hay un segundo efecto, peor porque es futuro: el aviso automatico
+         de «pendiente de revision» a los seis meses vive en este partial. Sin
+         el, estas paginas habrian pasado el 23/03/2027 sin decir nada,
+         mientras una ficha de ZBE se marca sola.
+
+         La condicion es la misma que en layouts/zbe/single.html: se pide
+         trazabilidad solo a quien la declara. */ -}}
+  {{- with .Params.fuente_nombre }}
+  {{ partial "fuente-verificacion.html" (dict "pagina" $ "variante" "compacta") }}
+  {{- end }}
+
   {{- if (.Param "ShowToc") }}
   {{- partial "toc.html" . }}
   {{- end }}
@@ -51,6 +76,11 @@
 
   {{- /* Regla dura 4: el hueco de anuncio va al final del artículo, nunca antes. */}}
   {{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
+
+  {{- /* La versión completa del cierre NO va aquí: la pinta
+         extend_post_content.html, que esta plantilla ya llama más arriba y
+         que es también el gancho de las páginas sin plantilla propia. Una
+         sola llamada para todas. */}}
 
   <footer class="post-footer">
     {{- if (.Param "ShowPostNavLinks") }}

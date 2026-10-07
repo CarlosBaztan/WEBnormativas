@@ -4,7 +4,10 @@ description: "Cómo se tipifica entrar en una zona de bajas emisiones sin poder,
 date: 2026-09-23
 
 estado_dato: "verificado"
-fuente_nombre: "Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial (LTSV)"
+# Los articulos van DENTRO de fuente_nombre, como en las fichas de ZBE:
+# es lo unico que imprime fuente-verificacion.html, y estaban escritos a
+# mano al final del Markdown, en un bloque que duplicaba este.
+fuente_nombre: "Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial (LTSV), arts. 76.z3), 80.1, 81, 89.2.c), 94 y anexo II"
 fuente_url: "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722"
 fecha_verificacion: "2026-10-01"
 draft: false
@@ -77,9 +80,3 @@ Alegar que no viste la señal rara vez prospera: la señalización es requisito 
 - **[Qué etiqueta tiene mi coche](/etiquetas/)**
 - **[Municipios con ZBE](/zbe/)**
 - **[Qué es una ZBE y desde cuándo son obligatorias](/zbe/que-es/)**
-
----
-
-**Fuente:** [Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722), arts. 76.z3), 80.1, 81, 89.2.c), 94 y anexo II
-
-*Esta página resume la norma con fines informativos; no es asesoramiento jurídico. Para un caso concreto, consulta con un profesional.*

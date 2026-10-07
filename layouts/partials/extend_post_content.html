@@ -1,0 +1,30 @@
+{{- /*
+  extend_post_content.html — sobrescribe el partial vacio del tema.
+
+  POR QUE EXISTE (08/10/2026)
+
+  Es el unico gancho que PaperMod deja dentro de su single.html, justo
+  despues del contenido. Lo usamos para una cosa: la trazabilidad al cierre
+  de las paginas que NO tienen plantilla propia.
+
+  El caso que lo trajo es /multas/zbe/. Declaraba `fuente_nombre`,
+  `fuente_url` y `fecha_verificacion` en el front matter y no los leia nadie,
+  porque esa pagina cae en el single.html del tema. Lo que se publicaba en su
+  lugar era una linea escrita a mano al final del Markdown, sin fecha, y sin
+  el aviso automatico de «pendiente de revision» a los seis meses, que vive
+  en fuente-verificacion.html.
+
+  CONDICION: solo a quien declara una fuente. La misma regla de
+  layouts/zbe/single.html y layouts/etiquetas/single.html. Sin ella, las
+  cuatro paginas legales, /sobre/ y /metodologia/, que no citan ninguna norma
+  porque no afirman nada sobre ninguna, saldrian coronadas con un recuadro
+  rojo de «datos sin verificar». Eso ya paso en /zbe/ y esta en la lista de
+  trampas.
+
+  OJO SI ALGUN DIA SE TOCA: layouts/etiquetas/single.html llama a este
+  partial Y ADEMAS pinta la version compacta arriba. Si aqui se anadiera
+  tambien la compacta, esas paginas la sacarian dos veces.
+*/ -}}
+{{- with .Params.fuente_nombre }}
+{{ partial "fuente-verificacion.html" (dict "pagina" $ "variante" "completa") }}
+{{- end }}

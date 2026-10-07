@@ -39,6 +39,13 @@
   {{- end }}
 </header>
 
+{{- /* Misma trazabilidad que las páginas de distintivo. Ver el porqué largo en
+       layouts/etiquetas/single.html: el dato estaba en el front matter y no lo
+       leía nadie. */ -}}
+{{- with .Params.fuente_nombre }}
+{{ partial "fuente-verificacion.html" (dict "pagina" $ "variante" "compacta") }}
+{{- end }}
+
 {{- if .Content }}
 <div class="post-content md-content">
   {{- if not (.Param "disableAnchoredHeadings") }}

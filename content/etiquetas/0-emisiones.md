@@ -58,9 +58,3 @@ El alcance concreto lo fija cada ayuntamiento en su ordenanza fiscal, así que v
 ## Cómo confirmar el tuyo
 
 Deducirlo por el tipo de vehículo funciona casi siempre, pero quien lo asigna es la DGT en su Registro de Vehículos. Si quieres el dato exacto, se consulta por matrícula en la sede electrónica de la DGT.
-
----
-
-**Fuente:** Distintivo ambiental de la DGT
-
-*Esta página resume criterios oficiales con fines informativos.*
