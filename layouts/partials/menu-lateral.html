@@ -34,6 +34,45 @@
        `:=`, para que el cambio salga del `range` en vez de morir dentro. */ -}}
 {{- $yaMarcado := false }}
 
+{{- /* QUÉ GRUPO SE ABRE CUANDO LA PÁGINA NO ESTÁ EN EL MENÚ (08/10/2026).
+
+       Medido: en 24 de las 46 páginas el menú salía con los seis grupos
+       cerrados y ninguna fila marcada. Entre ellas, CATORCE DE LAS QUINCE
+       FICHAS DE MUNICIPIO.
+
+       Quien llega desde Google a /zbe/granada/, que es la entrada más común
+       del sitio, veía a la izquierda seis acordeones cerrados: ni dónde está
+       ni qué más hay de lo suyo. El menú no hacía ninguno de sus dos trabajos
+       justo en las páginas que traen el tráfico.
+
+       El motivo es que las fichas de municipio NO están en el menú una a una,
+       y no deben estarlo: serían quince entradas, y creciendo. Así que cuando
+       ningún enlace coincide exactamente, se abre el primer grupo que tenga
+       algo de la misma sección. Para /zbe/granada/, el de zonas de bajas
+       emisiones.
+
+       `$exacto` se calcula antes del bucle porque la regla de abajo es un
+       respaldo: solo entra si no hay coincidencia exacta, y así no cambia
+       nada de lo que ya funcionaba. */ -}}
+{{- $seccion := $.Section }}
+{{- $exacto := false }}
+{{- range .grupos }}
+  {{- range .enlaces }}
+    {{- if and (not .proximamente) (eq $actual (.url | relURL)) }}{{ $exacto = true }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- $grupoDeSeccion := -1 }}
+{{- if and (not $exacto) (ne $seccion "") }}
+  {{- range $i, $g := .grupos }}
+    {{- range $g.enlaces }}
+      {{- if and (not .proximamente) (lt $grupoDeSeccion 0) }}
+        {{- $trozos := split (strings.TrimPrefix "/" (.url | relURL)) "/" }}
+        {{- if eq (index $trozos 0) $seccion }}{{ $grupoDeSeccion = $i }}{{ end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
 <div class="fondo-menu" hidden></div>
 
 <nav id="menu-lateral" class="menu-lateral" aria-label="Secciones del sitio">
@@ -58,6 +97,7 @@
       {{- if and (not .proximamente) (eq ($.RelPermalink) (.url | relURL)) }}{{ $abierto = true }}{{ end }}
     {{- end }}
     {{- if and (eq $i 0) (eq $actual ("/" | relURL)) }}{{ $abierto = true }}{{ end }}
+    {{- if eq $i $grupoDeSeccion }}{{ $abierto = true }}{{ end }}
 
     <details class="menu-lateral__grupo"{{ if $abierto }} open{{ end }}>
       <summary class="menu-lateral__grupo-titulo">

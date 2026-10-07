@@ -191,6 +191,48 @@ def test_la_tabla_de_datos_tampoco_dice_sin_verificar(destino):
     )
 
 
+SECCIONES_EN_EL_MENU = ("zbe", "etiquetas", "itv", "multas", "datos")
+
+
+def test_el_menu_se_abre_por_la_seccion_de_la_pagina(destino):
+    """
+    En 24 de las 46 paginas, mas de la mitad, el menu lateral salia con los
+    seis grupos cerrados y ninguna fila marcada. Entre ellas, CATORCE DE LAS
+    QUINCE FICHAS DE MUNICIPIO.
+
+    O sea: quien llega desde Google a /zbe/granada/, que es la entrada mas
+    comun del sitio, ve a la izquierda una columna de seis acordeones cerrados
+    que no le dicen ni donde esta ni que mas hay de lo suyo. El menu no hacia
+    ninguno de sus dos trabajos justo en las paginas que traen el trafico.
+
+    Pasaba porque el grupo solo se abria cuando alguno de sus enlaces era
+    EXACTAMENTE la pagina actual, y las fichas de municipio no estan en el
+    menu una a una (seria una lista de quince y creciendo).
+
+    La regla que fija esta prueba: si la seccion de la pagina aparece en el
+    menu, algun grupo tiene que estar abierto. /legal/ queda fuera a
+    proposito: sus cuatro paginas no estan en el menu ni deben estarlo, se
+    llega a ellas por el pie.
+    """
+    cerradas = []
+    for ruta in _urls_publicadas(destino):
+        seccion = ruta.strip("/").split("/")[0]
+        if seccion not in SECCIONES_EN_EL_MENU:
+            continue
+        html = _html_de(destino, ruta)
+        if not html:
+            continue
+        menu = re.search(r"<nav id=[\"']?menu-lateral[\"']?.*?</nav>", html, re.S)
+        if not menu:
+            continue
+        # `open` minificado va sin valor, igual que `alt`.
+        if not re.search(r"<details[^>]*\bopen\b", menu.group(0)):
+            cerradas.append(ruta)
+    assert not cerradas, (
+        "Estas paginas abren con todos los grupos del menu cerrados, sin "
+        "decirle al lector donde esta: %s" % ", ".join(sorted(cerradas)))
+
+
 def test_el_menu_marca_una_sola_pagina_como_actual(destino):
     """
     `aria-current="page"` responde a «¿donde estoy?», y esa pregunta tiene una
