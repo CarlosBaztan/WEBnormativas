@@ -33,20 +33,29 @@
       </a>
     </div>
 
-    {{- $currentPage := . }}
-    <div class="nav-derecha">
-      <ul id="menu" class="menu">
-        {{- range site.Menus.main }}
-        {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL)) | absLangURL }}
-        {{- $page_url := $currentPage.Permalink | absLangURL }}
-        <li>
-          <a href="{{ .URL | absLangURL }}" title="{{ .Title | default .Name }}">
-            <span {{- if eq $menu_item_url $page_url }} class="active"{{- end }}>{{ .Name }}</span>
-          </a>
-        </li>
-        {{- end }}
-      </ul>
+    {{- /* El menú de secciones va pegado al logotipo, no al otro extremo.
 
+           Antes vivía dentro de .nav-derecha, con los botones: a 1366 px eso
+           dejaba 500 px de cabecera vacía entre la marca y el primer enlace, y
+           a 1920 más de mil. Marca y navegación son lo mismo (dónde estoy y a
+           dónde puedo ir) y comparten borde izquierdo; a la derecha quedan las
+           herramientas (buscar, acción, tema), que es lo convencional y lo que
+           el ojo ya espera. El `id` sigue siendo "menu" porque el script de
+           PaperMod guarda ahí el desplazamiento horizontal. */ -}}
+    {{- $currentPage := . }}
+    <ul id="menu" class="menu">
+      {{- range site.Menus.main }}
+      {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL)) | absLangURL }}
+      {{- $page_url := $currentPage.Permalink | absLangURL }}
+      <li>
+        <a href="{{ .URL | absLangURL }}" title="{{ .Title | default .Name }}">
+          <span {{- if eq $menu_item_url $page_url }} class="active"{{- end }}>{{ .Name }}</span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+
+    <div class="nav-derecha">
       <a class="boton-buscar" href="{{ "search/" | absLangURL }}" accesskey="/"
          title="Buscar en la web (Alt + /)" aria-label="Buscar en la web">
         <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor"
@@ -56,6 +65,45 @@
           <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
         </svg>
         <span class="boton-buscar__texto">Buscar</span>
+      </a>
+
+      {{- /* LA ACCIÓN PRINCIPAL, EN LA CABECERA (07/10/2026).
+
+             La cabecera tenía tres enlaces de sección, una lupa y el botón de
+             tema: ni uno de los cinco era lo que el sitio hace. Quien llega a
+             la ficha de una ciudad desde Google no tiene desde dónde preguntar
+             por SU coche salvo pulsando el logotipo, que no anuncia que lleve
+             a una herramienta.
+
+             Va siempre, también en la portada, donde además marca la página
+             actual. Una cabecera que cambia de piezas según la página es justo
+             lo que se nota al navegar.
+
+             En móvil se queda solo el icono con su texto accesible: a 375 px
+             no caben a la vez el logotipo, una píldora con texto y los tres
+             botones con zona táctil decente. Medido, no supuesto. */ -}}
+      {{- /* `aria-label` además del texto, porque en móvil el texto se oculta
+             y sin él el enlace se quedaría sin nombre. Dice exactamente lo
+             mismo que el texto visible, que es lo que pide el criterio de
+             «etiqueta en el nombre»: quien maneja el sitio por voz dice lo
+             que lee. La frase larga va en `title`, que es un apoyo. */ -}}
+      <a class="boton-accion" href="{{ "" | absLangURL }}" aria-label="¿Puedo circular?"
+         {{ if .IsHome }}aria-current="page" {{ end }}title="Comprueba si tu coche puede entrar en una ZBE">
+        {{- /* Coche de perfil, con la misma retícula de 24 y el mismo grosor
+               de trazo que la lupa y la hamburguesa, para que los tres
+               botones se vean de la misma familia. Dibujado centrado en el
+               cuadro: el primer intento colgaba de la mitad inferior y, con
+               el texto oculto en móvil, salía alto y descentrado dentro del
+               círculo. */ -}}
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor"
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true" focusable="false">
+          <path d="M4 16.5v-3.2l1.9-4.4A2 2 0 0 1 7.7 7.6h8.6a2 2 0 0 1 1.8 1.3l1.9 4.4v3.2"></path>
+          <line x1="4" y1="13.3" x2="20" y2="13.3"></line>
+          <circle cx="7.6" cy="16.5" r="1.7"></circle>
+          <circle cx="16.4" cy="16.5" r="1.7"></circle>
+        </svg>
+        <span class="boton-accion__texto">¿Puedo circular?</span>
       </a>
 
       {{- /* Solo visible por debajo de 64rem: ahí el menú lateral pasa a ser

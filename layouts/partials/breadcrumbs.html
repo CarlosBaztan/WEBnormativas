@@ -10,6 +10,19 @@
      entren en la tabulacion (Internet Explorer y algunos lectores meten los
      SVG en el recorrido si no se les dice lo contrario).
 
+  3. SE QUITA LA FLECHA FINAL (07/10/2026). El tema cierra el rastro con un
+     chevron detras de la ultima miga, apuntando al titulo de la pagina. Como
+     `.breadcrumbs` es flex con `flex-wrap`, cada enlace y cada flecha son
+     elementos sueltos que se reparten por lineas: a 375 px, en la ficha de
+     Madrid, la miga «Municipios con Zona de Bajas Emisiones en España» llena
+     su linea entera y la flecha caia SOLA en una tercera linea, debajo de
+     todo, apuntando al vacio. Medido en el navegador.
+
+     No se arregla pegandola con `white-space: nowrap`, porque entonces es la
+     miga larga la que no puede partirse y desborda. Un rastro que termina en
+     el ultimo enlace es ademas lo normal, y la flecha no decia nada a quien
+     no ve la pantalla: ya iba con aria-hidden.
+
   Se copia el fichero entero, que es como se sobreescribe un partial del tema,
   porque themes/PaperMod es un submodulo de git y no se toca.
 */ -}}
@@ -28,10 +41,5 @@
             <a href="{{ $bc.RelPermalink }}">{{ $bc.Title }}</a>
         {{- end }}
     {{- end }}
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"
-        aria-hidden="true" focusable="false">
-        <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
 </nav>
 {{- end -}}

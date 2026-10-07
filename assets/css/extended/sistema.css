@@ -46,6 +46,33 @@
     --lh-corto:   1.45;   /* fichas, tablas, notas, celdas */
     --lh-lectura: 1.65;   /* parrafos largos */
 
+    /* ------------------------------------------------------------------
+       LONGITUD DE LINEA (07/10/2026)
+
+       Tope de ancho SOLO para el texto corrido. Las tablas, el mapa, el
+       formulario y las fichas siguen ocupando toda la franja central: la
+       decision del 02/10 de que el contenido coja todo el hueco entre el
+       menu y su espejo de la derecha sigue en pie, y esto no la toca.
+
+       De donde sale el numero, medido en el navegador y no redondeado a ojo:
+
+         ancho de 1ch con la fuente del sitio  9,16 px
+         caracter medio real                   8,19 px
+         parrafo a 1366 px                     791 px = 96 caracteres = 86ch
+         parrafo a 1920 px                   1.345 px = 164 caracteres
+
+       164 caracteres por linea es el doble de lo que se recomienda, y el ojo
+       pierde el renglon al volver a la izquierda. A 86ch, 1366 se queda
+       EXACTAMENTE como estaba (788 px contra 791) y 1920 baja de 164 a 96.
+       O sea que esto no estrecha ninguna pantalla que ya estuviera bien;
+       solo le pone techo a las grandes.
+
+       Si algun dia se quiere apretar hasta el rango de manual (66-80
+       caracteres), se cambia este numero a 75ch y ya esta. Afecta a toda la
+       web desde aqui.
+       ------------------------------------------------------------------ */
+    --medida: 86ch;
+
     /* Espaciado en multiplos de 4 px */
     --sp-1: 0.25rem;  --sp-2: 0.5rem;  --sp-3: 0.75rem;  --sp-4: 1rem;
     --sp-5: 1.25rem;  --sp-6: 1.5rem;  --sp-8: 2rem;     --sp-12: 3rem;

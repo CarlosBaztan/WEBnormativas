@@ -44,10 +44,37 @@
   flex-wrap: wrap;
 }
 
+/* EL `line-height: 60px` QUE SE ESCAPABA, Y LO QUE ROMPÍA (07/10/2026).
+
+   PaperMod le da al `nav` de la cabecera `line-height: var(--header-height)`,
+   o sea 60 px, para centrar el título a ojo. Eso NO se queda en el nav: la
+   altura de línea se hereda, así que todo lo que lleva texto dentro de la
+   cabecera arrastraba una caja de 60 px más su propio relleno.
+
+   Medido en el navegador, no deducido:
+
+     .boton-buscar          74,2 px de alto, dentro de una cabecera de 60
+     .nav-propia .menu a    72,8 px, de y = -6 a y = 67
+
+   La cabecera va de 0 a 61. O sea que los enlaces y la lupa sobresalían
+   SIETE PÍXELES por arriba (fuera de la pantalla) y SEIS por debajo del
+   borde, encima del contenido de la página. Y como los enlaces se pintan al
+   pasar el ratón, el recuadro gris se salía de la cabecera: se ve en cuanto
+   se pasa por «Etiquetas DGT».
+
+   La regla de abajo ya intentaba neutralizar al tema con `height: auto` y
+   `min-height: 0`, pero se dejó la altura de línea, que es la que mandaba.
+   Se corta en `.nav-propia` para que no la herede nadie. */
+.nav-propia,
+.nav-propia * {
+  line-height: 1.2;
+}
+
 .nav-propia .menu,
 .nav-propia .menu li,
 .nav-propia .menu a,
 .nav-propia .theme-toggle,
+.boton-accion,
 .boton-buscar {
   height: auto;
   min-height: 0;
@@ -146,11 +173,16 @@
   :root:not([data-theme="light"]) .marca__logo--oscuro { display: block; }
 }
 
+/* Las herramientas, al otro extremo. `margin-inline-start: auto` y no
+   `justify-content: space-between` en el padre: con tres hijos (logotipo,
+   menú y este bloque), repartir el hueco dejaría el menú centrado en vez de
+   pegado a la marca. */
 .nav-derecha {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   flex-wrap: nowrap;
+  margin-inline-start: auto;
   /* Sin min-width:0 el `ul` no puede encogerse y empuja la lupa y el
      conmutador de tema fuera de la pantalla en móvil. */
   min-width: 0;
@@ -170,6 +202,7 @@
   scrollbar-width: none;
 }
 
+.boton-accion,
 .boton-buscar,
 .nav-propia .theme-toggle {
   flex: 0 0 auto;
@@ -186,11 +219,30 @@
 
 .nav-propia .menu a:hover { background: var(--code-bg); }
 
-/* --- Botón de búsqueda --------------------------------------------------- */
+/* --- Botón de búsqueda ---------------------------------------------------
 
-.boton-buscar {
+   `.nav-propia a.boton-buscar` y no `.boton-buscar` a secas: PaperMod trae
+   `.header-nav a { display: block }`, que con dos selectores contra uno
+   ganaba y dejaba el botón en `block`. O sea que ni `inline-flex`, ni
+   `align-items`, ni `gap` llegaban a aplicarse NUNCA.
+
+   Lo que eso provocaba, medido a 375 px antes de tocarlo: la lupa se pintaba
+   en la esquina superior izquierda de su círculo, a once píxeles y medio del
+   centro en las dos direcciones. Se veía como un icono mal puesto y nadie lo
+   relacionó con una regla del tema. En escritorio el daño era menor, solo la
+   separación entre la lupa y la palabra «Buscar», que salía del espacio del
+   HTML en vez del `gap`.
+
+   Es la tercera vez que se pisa la misma trampa (ya pasó con `.main` y con
+   `.marca`), y está anotada en CLAUDE.md: si una regla nuestra parece no
+   aplicarse en la cabecera, mirar primero si el tema la pisa por
+   especificidad.
+   ------------------------------------------------------------------------ */
+
+.nav-propia a.boton-buscar {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
   padding: 0.35rem 0.7rem;
   border: 1px solid var(--border);
@@ -205,6 +257,68 @@
 }
 
 .boton-buscar__texto { font-size: var(--txt-sm); }
+
+/* --- Acción principal ---------------------------------------------------
+
+   Relleno sólido, igual que `.pc-boton` y `.pc-cta`: es el mismo papel (la
+   acción principal) y el sitio solo tiene una forma de decirlo. `--primary`
+   sobre `--theme` se invierte solo con el tema, así que no hace falta una
+   variante oscura.
+   ------------------------------------------------------------------------ */
+.nav-propia a.boton-accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--theme);
+  font-size: var(--txt-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.boton-accion:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+/* El foco general del sitio dibuja el anillo en `--caja-acento`, que es el
+   mismo color del relleno de este botón: sobre negro no se vería. */
+.boton-accion:focus-visible {
+  outline-color: var(--theme);
+  outline-offset: -5px;
+}
+
+/* ZONAS TÁCTILES (07/10/2026).
+
+   Medido a 375 px antes de tocar nada: la lupa y la hamburguesa daban 36x36
+   y el conmutador de tema 28x28, con 6 y 7 px de separación entre ellos. Tres
+   dianas pequeñas y pegadas en la esquina donde cae el pulgar.
+
+   Se igualan los controles redondos a una caja única, de 2,25rem en
+   escritorio (ratón) y 2,75rem (44 px) por debajo de 64rem, que es la medida
+   que recomiendan tanto Apple como Google para el dedo. La lupa solo se suma
+   abajo, donde pierde el texto y pasa a ser un círculo como los otros. */
+:root { --cabecera-boton: 2.25rem; }
+
+.nav-propia .theme-toggle,
+.boton-menu {
+  width: var(--cabecera-boton);
+  height: var(--cabecera-boton);
+}
+
+.nav-propia .theme-toggle {
+  justify-content: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+}
+
+.nav-propia .theme-toggle:hover { background: var(--code-bg); }
 
 /* Por debajo del punto en que aparece la columna, la cabecera se queda en
    una sola fila: el menú de secciones se consulta desde el panel, que ya
@@ -221,18 +335,50 @@
   .nav-propia .logo { min-width: 0; }
   .logo a.marca { font-size: var(--txt-md); }
 
+  /* 44 px para el dedo, y con ellos la lupa pierde el texto: a 375 px no
+     caben el logotipo, dos píldoras con letra y tres botones. Lo que se
+     conserva es la zona táctil, no la palabra. */
+  :root { --cabecera-boton: 2.75rem; }
+
   /* Solo la lupa: el texto se come el poco ancho que hay. Ancho y alto
      fijos, o el círculo sale ovalado. */
   .boton-buscar__texto { display: none; }
-  .boton-buscar {
-    width: 2.25rem;
-    height: 2.25rem;
+
+  .nav-propia a.boton-buscar {
+    width: var(--cabecera-boton);
+    height: var(--cabecera-boton);
     padding: 0;
-    justify-content: center;
     border-radius: 50%;
   }
 
-  .nav-derecha { gap: 0.4rem; }
+  /* La píldora con texto medía 34 px de alto mientras sus tres vecinos ya
+     iban a 44: en tableta era la diana más pequeña de la cabecera, y además
+     la más importante. */
+  .nav-propia a.boton-accion { min-height: var(--cabecera-boton); }
+
+  /* Separación entre dianas: con 6 px entre tres círculos, el pulgar acierta
+     por aproximación. 8 es el mínimo que deja un fallo por botón, no por
+     grupo. */
+  .nav-derecha { gap: 0.5rem; }
+}
+
+/* La acción principal conserva su texto más abajo que el resto, porque es la
+   única pieza de la cabecera cuyo icono no se entiende solo: una lupa y tres
+   rayas las lee cualquiera, un coche no dice «comprueba tu vehículo».
+
+   El corte está medido, no redondeado: con la píldora escrita, el logotipo,
+   la lupa, la hamburguesa y el tema suman 497 px. Por encima de 34rem (544)
+   caben; por debajo, no. Así el texto sobrevive en tableta y en el móvil
+   apaisado, y solo se queda en icono el móvil de pie. */
+@media (max-width: 33.99rem) {
+  .boton-accion__texto { display: none; }
+
+  .nav-propia a.boton-accion {
+    width: var(--cabecera-boton);
+    height: var(--cabecera-boton);
+    padding: 0;
+    border-radius: 50%;
+  }
 }
 
 @media (max-width: 26rem) {
@@ -241,6 +387,19 @@
   .logo-senal { width: 30px; height: 30px; }
   /* El logotipo encoge un punto para dejar sitio a la lupa y al menu. */
   .marca__logo { height: 34px; }
+}
+
+/* Lo más estrecho que se ve hoy (un iPhone SE de 2016 y poco más). Con cuatro
+   dianas de 44 px, el logotipo y 16 px de relleno a cada lado, la cabecera se
+   pasa de ancho: medido, se sale 16 px. Lo que cede es el aire, no la zona
+   táctil, que es lo único que no se puede recortar. */
+@media (max-width: 22.5rem) {
+  .nav-propia {
+    padding-inline: 0.5rem;
+    column-gap: 0.5rem;
+  }
+  .nav-derecha { gap: 0.375rem; }
+  .marca__logo { height: 28px; }
 }
 
 /* --- Menú lateral -------------------------------------------------------- */
@@ -314,12 +473,15 @@
   font-weight: 700;
 }
 
+/* El panel solo existe en móvil, así que su botón de cerrar vale lo mismo
+   que los de la cabecera: 44 px. */
 .menu-lateral__cerrar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  flex: 0 0 auto;
+  width: var(--cabecera-boton);
+  height: var(--cabecera-boton);
   padding: 0;
   border: 1px solid var(--border);
   border-radius: 50%;
@@ -330,13 +492,17 @@
 
 .menu-lateral__cerrar:hover { background: var(--code-bg); }
 
-/* Botón hamburguesa de la cabecera: solo existe mientras el menú es panel. */
+/* Botón hamburguesa de la cabecera: solo existe mientras el menú es panel.
+   La medida sale de --cabecera-boton, como los demás controles: tenerla
+   escrita aquí a pelo dejaba la hamburguesa en 36 px cuando los otros tres
+   ya habían pasado a 44, y encima la pisaba por orden de aparición. */
 .boton-menu {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  flex: 0 0 auto;
+  width: var(--cabecera-boton);
+  height: var(--cabecera-boton);
   padding: 0;
   border: 1px solid var(--border);
   border-radius: 50%;
@@ -448,11 +614,30 @@
    a igualdad de especificidad, ganaba la del tema según el orden de
    concatenación del bundle. */
 @media (min-width: 64rem) {
-  /* Altura exacta: el menú lateral se posiciona a partir de ella. */
+  /* Altura exacta: el menú lateral se posiciona a partir de ella.
+
+     Y la cabecera comparte la retícula de lo que tiene debajo, que es lo que
+     hace que una pantalla se vea cuadrada y no solo ordenada:
+
+       · El logotipo arranca en 12 px, igual que los enlaces del menú lateral
+         (su relleno es `1rem 0.75rem 2rem`). Antes arrancaba en 16 y la
+         diferencia de cuatro píxeles se notaba al bajar la vista.
+       · La caja del logotipo mide lo que el menú lateral menos ese relleno,
+         así que termina justo en su borde derecho (16rem).
+       · Con 1,5rem de hueco, el primer enlace de sección cae en 280 px, que
+         es exactamente donde empieza el texto del contenido (16rem de menú
+         más los 24 px de relleno de `.main`).
+
+     Medido a 1366: menú lateral 0-256, h1 en 280, primer enlace en 280. */
   .nav-propia {
     height: var(--cabecera-alto);
-    padding: 0 1rem;
+    padding: 0 1rem 0 0.75rem;
+    column-gap: 1.5rem;
     flex-wrap: nowrap;
+  }
+
+  .nav-propia .logo {
+    flex: 0 0 calc(var(--ml-ancho) - 0.75rem);
   }
 
   /* Con la columna siempre a la vista, el panel y su botón sobran. */

@@ -87,7 +87,31 @@
      de tratar por seccion lo que hay que tratar por tipo. */}}
 {{- $esMunicipio := eq ($p.tipo | default "municipio") "municipio" }}
 
-{{- $reglasSinVerificar := and $esMunicipio (not $porZonas) (or (not $verificado) (eq (len $etiquetas) 0)) }}
+{{- /* LA LISTA VACIA NO SIEMPRE ES UN HUECO (07/10/2026).
+
+       Hay tres ZBE donde la etiqueta ambiental NO es lo que abre la puerta:
+       Alicante, La Coruña y Pamplona. Lo que da acceso es una autorizacion
+       municipal, y la etiqueta, cuando se pide, es un filtro de segunda
+       vuelta. Eso se declara con `acceso_por_distintivo: false`, y entonces
+       `etiquetas_permitidas: []` quiere decir «lo hemos leido y la respuesta
+       es que ninguna vale», no «no lo hemos mirado».
+
+       Sin esta linea, las tres fichas publicaban «Las reglas de acceso de
+       esta ZBE no estan verificadas... todavia no hemos contrastado articulo
+       por articulo que distintivos ambientales pueden circular» encima de su
+       propio articulo, que cita la ordenanza por articulos y por boletin. La
+       ficha de Pamplona llegaba a decirlo cuatro parrafos por encima de dos
+       listas sacadas de los articulos 10 y 11.
+
+       auditoria.py ya lo entendia bien desde el 05/10 (ver declara_reglas),
+       asi que la auditoria daba verde mientras la pagina se desmentia sola:
+       el mismo criterio escrito en dos sitios y corregido en uno.
+
+       `isset` y no `| default true`: en Hugo, `false | default true` devuelve
+       TRUE, y la trampa estaria otra vez servida. */ -}}
+{{- $noVaPorDistintivo := and (isset $p "acceso_por_distintivo") (not $p.acceso_por_distintivo) }}
+
+{{- $reglasSinVerificar := and $esMunicipio (not $porZonas) (not $noVaPorDistintivo) (or (not $verificado) (eq (len $etiquetas) 0)) }}
 
 <article class="post-single ficha-zbe">
 
@@ -184,6 +208,16 @@
             {{- end }}
           </ul>
           <p class="datos-nota">La ordenanza nombra estos distintivos. Que un vehículo los tenga no equivale por sí solo a poder acceder: revisa horario y excepciones, y la señalización de la vía.</p>
+          {{- else if $noVaPorDistintivo }}
+          {{- /* La respuesta es que no hay respuesta por etiqueta, y eso es un
+                 dato verificado, no un hueco. El porqué sale de `nota_zona`,
+                 como en la tabla comparativa: cada una de las tres ciudades
+                 restringe por un motivo distinto y una frase fija valdría
+                 para una y mentiría para las otras dos. */ -}}
+          <strong>Ningún distintivo da acceso por sí solo.</strong>
+          {{- with $p.nota_zona }}
+          <p class="datos-nota">{{ . }}</p>
+          {{- end }}
           {{- else }}
           <span class="dato-vacio">Sin verificar. No publicamos esta lista hasta haberla leído en el texto oficial.</span>
           {{- end }}

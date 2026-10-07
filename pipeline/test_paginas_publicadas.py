@@ -1,0 +1,203 @@
+# -*- coding: utf-8 -*-
+"""
+Pruebas sobre el HTML que de verdad se publica.
+
+    python pipeline/test_paginas_publicadas.py
+
+POR QUE ESTE FICHERO ES DISTINTO DE LOS DEMAS
+
+Los otros tests leen plantillas, front matter o CSS. Este compila el sitio con
+Hugo y lee lo que sale. Es mas lento y es el unico que puede responder a la
+pregunta que ya ha fallado CUATRO veces en este proyecto:
+
+    "¿esta pagina dice de si misma algo que no es verdad?"
+
+Las cuatro, repasadas, porque todas tienen la misma forma:
+
+  1. Articulos de /zbe/ («que es una ZBE», «excepciones», «camaras») coronados
+     con «las reglas de acceso de esta ZBE no estan verificadas», sobre una
+     ZBE que no existe porque la pagina no es de un municipio.
+  2. Las dos paginas de zona de Madrid, con ese mismo aviso DOS LINEAS ENCIMA
+     de su propia tabla de distintivos verificada.
+  3. /itv/pegatina/ servida con la calculadora de periodicidad de la ITV y su
+     texto de «que hace esta herramienta», que hablaba de otra cosa.
+  4. Alicante, La Coruna y Pamplona (07/10/2026): las tres con la ordenanza
+     leida articulo por articulo, las tres publicando que no la hemos
+     contrastado. Ver abajo.
+
+En las cuatro, el build termino en verde y lo descubrio una persona mirando.
+
+LO QUE VIGILA, por ahora
+
+Que ninguna pagina marcada como verificada publique el aviso de que sus reglas
+no lo estan. Y al reves, que una ficha que de verdad no tiene reglas leidas lo
+siga diciendo: una prueba que solo mira en una direccion se cumple borrando el
+aviso de todas partes.
+
+EL CASO DE 2026-10-07, para que se entienda la regla
+
+Hay tres ZBE donde la etiqueta ambiental NO es lo que abre la puerta: en
+Alicante, La Coruna y Pamplona lo que da acceso es una autorizacion municipal,
+y la etiqueta, cuando se pide, es un filtro de segunda vuelta. Eso se declara
+con `acceso_por_distintivo: false` y `etiquetas_permitidas: []`.
+
+La lista vacia ahi NO significa «no lo hemos mirado». Significa «lo hemos
+mirado y la respuesta es que ninguna etiqueta vale». auditoria.py ya lo
+entendia asi desde el 05/10 (ver declara_reglas), pero la plantilla seguia
+mirando solo si la lista tenia elementos. Mismo criterio escrito dos veces y
+corregido en uno solo, que es el error de fondo de casi todo lo anotado en
+CLAUDE.md.
+"""
+
+import io
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from auditoria import declara_reglas, front_matter  # noqa: E402
+
+AVISO_SIN_VERIFICAR = "Las reglas de acceso de esta ZBE no est"
+
+
+def _compilar():
+    """Compila el sitio en un directorio temporal y devuelve su ruta.
+
+    `--destination` fuera del proyecto a proposito: public/ no se limpia sola
+    entre builds, y una prueba que leyera restos de una compilacion anterior
+    seria peor que no tenerla.
+    """
+    destino = tempfile.mkdtemp(prefix="cocheapto-test-")
+    r = subprocess.run(
+        ["hugo", "--quiet", "--destination", destino,
+         "--baseURL", "http://localhost/", "--logLevel", "error"],
+        cwd=RAIZ, capture_output=True, text=True,
+    )
+    if r.returncode != 0:
+        shutil.rmtree(destino, ignore_errors=True)
+        raise RuntimeError("hugo fallo:\n" + (r.stderr or r.stdout))
+    return destino
+
+
+def _html_de(destino, ruta):
+    """Lee el index.html de una URL ya compilada. None si no se publico."""
+    f = os.path.join(destino, ruta.strip("/").replace("/", os.sep), "index.html")
+    if not os.path.exists(f):
+        return None
+    return io.open(f, encoding="utf-8").read()
+
+
+def _fichas():
+    """Cada .md de content/zbe/, con su front matter y su texto crudo."""
+    carpeta = os.path.join(RAIZ, "content", "zbe")
+    for nombre in sorted(os.listdir(carpeta)):
+        if not nombre.endswith(".md") or nombre == "_index.md":
+            continue
+        texto = io.open(os.path.join(carpeta, nombre), encoding="utf-8").read()
+        yield nombre[:-3], front_matter(texto), texto
+
+
+def test_ninguna_ficha_verificada_dice_que_no_lo_esta(destino):
+    """Lo que paso el 07/10/2026 con Alicante, La Coruna y Pamplona."""
+    malas = []
+    for slug, fm, texto in _fichas():
+        if fm.get("estado_dato") != "verificado":
+            continue
+        if not declara_reglas(texto):
+            continue
+        html = _html_de(destino, "/zbe/%s/" % slug)
+        if html and AVISO_SIN_VERIFICAR in html:
+            malas.append(slug)
+    assert not malas, (
+        "Estas fichas tienen la ordenanza leida y publican que no la hemos "
+        "contrastado: %s" % ", ".join(malas)
+    )
+
+
+def test_la_tabla_de_datos_tampoco_dice_sin_verificar(destino):
+    """El mismo fallo tenia dos salidas, y la segunda es la tabla.
+
+    Quitado el aviso de arriba, la fila «Distintivos que la ordenanza permite
+    circular» del bloque de datos seguia imprimiendo «Sin verificar. No
+    publicamos esta lista hasta haberla leido en el texto oficial» en las tres
+    fichas. Una pagina puede desmentirse en mas de un sitio, y arreglar el
+    primero no arregla el segundo.
+    """
+    malas = []
+    for slug, fm, texto in _fichas():
+        if fm.get("estado_dato") != "verificado" or not declara_reglas(texto):
+            continue
+        html = _html_de(destino, "/zbe/%s/" % slug)
+        if html and "Sin verificar. No publicamos esta lista" in html:
+            malas.append(slug)
+    assert not malas, (
+        "Estas fichas tienen la ordenanza leida y su tabla de datos dice "
+        "«sin verificar»: %s" % ", ".join(malas)
+    )
+
+
+def test_la_ficha_sin_reglas_leidas_si_lo_dice(destino):
+    """La otra mitad, la que impide 'arreglar' esto borrando el aviso.
+
+    Hoy el caso real es Benidorm: consta que su ZBE opera desde enero de 2025,
+    pero el ayuntamiento no publica de forma legible que distintivos restringe.
+    Es el nivel C del CLAUDE.md y el aviso tiene que salir.
+
+    Se exige SOLO a las zonas en vigor. A una zona «prevista» no se le pide
+    este aviso: la ficha publica otro distinto, el de que todavia no hay nada
+    que cumplir, y decir ademas «no hemos contrastado que distintivos pueden
+    circular» seria mentir sobre nuestro propio trabajo. Es el caso de
+    Valencia, y esta razonado en la plantilla.
+    """
+    comprobadas = 0
+    faltan = []
+    for slug, fm, texto in _fichas():
+        if fm.get("estado_dato") == "verificado" and declara_reglas(texto):
+            continue
+        if fm.get("draft") == "true" or not fm.get("codigo_ine"):
+            continue
+        if fm.get("estado_zbe") != "activa":
+            continue
+        html = _html_de(destino, "/zbe/%s/" % slug)
+        if html is None:
+            continue
+        comprobadas += 1
+        if AVISO_SIN_VERIFICAR not in html:
+            faltan.append(slug)
+    assert comprobadas, (
+        "No queda ninguna ficha sin reglas leidas, asi que esta prueba ya no "
+        "vigila nada. Si es verdad, borrarla; si no, el filtro esta mal."
+    )
+    assert not faltan, (
+        "Estas fichas no tienen reglas leidas y no lo advierten: %s"
+        % ", ".join(faltan)
+    )
+
+
+def main():
+    destino = _compilar()
+    try:
+        fallos = 0
+        for nombre, f in sorted(globals().items()):
+            if not nombre.startswith("test_"):
+                continue
+            try:
+                f(destino)
+                print("  ok   %s" % nombre)
+            except AssertionError as e:
+                fallos += 1
+                print("  FALLA %s\n        %s" % (nombre, e))
+        print("\n%d prueba(s), %d fallo(s)" % (
+            len([n for n in globals() if n.startswith("test_")]), fallos))
+        return 1 if fallos else 0
+    finally:
+        shutil.rmtree(destino, ignore_errors=True)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

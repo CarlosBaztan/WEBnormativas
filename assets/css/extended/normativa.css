@@ -951,3 +951,25 @@ details.toc {
        .menu-lateral, .pc-acciones, .ciudades-directo__lista) :is(p, li, dd, figcaption) > a {
   text-decoration: none;
 }
+
+/* ========================================================================
+   LONGITUD DE LINEA DEL TEXTO CORRIDO
+
+   El tope vive en --medida (sistema.css), que explica de donde sale el
+   numero. Aqui solo se decide A QUE se le aplica, y eso es lo delicado:
+
+     SI   los parrafos, las listas, las citas y la entradilla. Texto que se
+          lee renglon a renglon y donde el ojo se pierde al volver.
+     NO   las tablas, el mapa, el formulario, las fichas de datos, las cajas
+          de fuente y las figuras. Esos quieren TODO el ancho, y es la razon
+          por la que la franja central se dejo suelta el 02/10.
+
+   El selector de hijo directo (`>`) es lo que mantiene la frontera: lo que
+   cuelga de un componente no lo toca esta regla, aunque sea un <p>.
+   ======================================================================== */
+
+.post-description,
+.post-content > :is(p, ul, ol, dl, blockquote),
+.pc-descargo > :is(p, ul, ol) {
+  max-width: var(--medida);
+}
