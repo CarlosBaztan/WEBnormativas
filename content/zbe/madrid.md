@@ -1,5 +1,5 @@
 ---
-title: "ZBE Madrid: qué coches pueden entrar y en qué zonas"
+title: "Zona de Bajas Emisiones (ZBE) de Madrid: qué coches entran"
 description: "Madrid tiene tres zonas de bajas emisiones con reglas distintas. Qué distintivo necesitas en cada una, excepciones y sanción, con la ordenanza citada."
 date: 2026-09-23
 

@@ -91,6 +91,7 @@ los 46 con la tipografía que usa:
 |:---|---:|
 | Títulos que se pasan de 600 px | **30 de 46** |
 | El peor, antes de tocarlo (Valencia) | 964 px |
+| El peor después de acortar los cuatro sueltos | 837 px |
 | Lo que ocupa el sufijo «\| Coche Apto» | ~115 px |
 | Lo que ocupa «Zona de Bajas Emisiones (ZBE) de » | ~302 px |
 
@@ -104,6 +105,15 @@ Las dos causas son decisiones tomadas, y por eso no las toco yo:
   Emisiones (ZBE) de Valencia». Se tomó para no perder ninguna de las dos
   búsquedas, y el motivo sigue en pie.
 - El **sufijo de marca**, que puse el 01/10 al cambiar `site.Title`.
+
+He acortado cuatro títulos que se pasaban por su propia cuenta (Valencia,
+Pamplona, la pieza de la etiqueta) y he metido **Madrid** en la convención:
+era la única ficha de municipio que iba solo con la sigla, y es la ciudad
+con más búsquedas del nicho. Las **dos páginas de zona de Madrid** siguen
+con la sigla a propósito: la convención habla de nombres de ciudad, y
+«Zona de Bajas Emisiones (ZBE) Distrito Centro (Madrid)» no hay por dónde
+cogerlo. Eso baja el peor caso de 964 a 837 px, pero no arregla el fondo:
+siguen siendo 30 de 46.
 
 Tres salidas, de menos a más invasiva:
 
