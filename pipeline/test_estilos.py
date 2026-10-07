@@ -180,6 +180,82 @@ def test_siguen_pisadas_las_reglas_del_tema_fuera_de_escala():
             "tema, que no esta en la escala del sitio." % (selector, porque))
 
 
+def _reglas(texto):
+    """Devuelve {(contexto, selector): [cuantas veces]} de un CSS ya limpio.
+
+    Lleva la cuenta del @media en el que esta cada regla, porque repetir un
+    selector DENTRO de una media query es justo para lo que sirven: no es un
+    duplicado, es un ajuste por ancho.
+    """
+    cuenta = {}
+    prof = 0
+    contexto = []
+    buf = ""
+    for c in texto:
+        if c == "{":
+            sel = " ".join(buf.split())
+            if sel.startswith("@"):
+                contexto.append(sel)
+            elif sel:
+                clave = (tuple(contexto), sel)
+                cuenta[clave] = cuenta.get(clave, 0) + 1
+            prof += 1
+            buf = ""
+        elif c == "}":
+            prof -= 1
+            buf = ""
+            if prof < len(contexto):
+                contexto.pop()
+        else:
+            buf += c
+    return cuenta
+
+
+def test_ningun_selector_se_declara_dos_veces_en_el_mismo_fichero():
+    """
+    Un selector escrito dos veces en el mismo sitio es una decision tomada dos
+    veces, y gana la de abajo por orden de aparicion, no por estar mejor.
+
+    LO QUE PASO (07/10/2026). herramienta.css tenia DOCE selectores repetidos:
+    `.pc-campo`, `.pc-boton`, `.pc-aviso`, `.pc-fuente`... Los originales
+    estaban arriba con valores a pelo y las copias 560 lineas mas abajo con
+    los tokens del sistema. Funcionaba, pero:
+
+      · Para saber que hace `.pc-boton` habia que leer dos sitios y aplicar
+        mentalmente la cascada. Si solo se leia el primero, se leia lo que NO
+        se aplica.
+      · `.pc-boton` tenia `font: inherit` arriba y `font-size` abajo. `font`
+        es un atajo que reinicia el tamano: eso funcionaba por el orden, y
+        habria dejado de funcionar al mover cualquiera de los dos bloques.
+      · Es el patron de media lista de trampas de CLAUDE.md, el mismo dato
+        escrito dos veces y corregido en uno solo.
+
+    Fusionados los doce. Se comprobo que no cambiaba nada comparando la huella
+    de los 535 estilos calculados de cada clase, en tema claro y oscuro, antes
+    y despues: las 24 huellas identicas.
+
+    Esta prueba no deja que vuelvan.
+    """
+    # `:root` se exceptua a proposito: no es un componente, es el almacen de
+    # tokens, y sistema.css lo parte en bloques por tema (tipografia, cajas,
+    # paleta del mapa) con un comentario largo delante de cada uno. Juntarlos
+    # en uno solo daria una lista de sesenta variables sin agrupar, que es
+    # justo lo que ese fichero existe para evitar.
+    EXENTOS = (":root", ":root[data-theme=\"dark\"]")
+
+    repetidos = []
+    for nombre, texto in _ficheros(CSS, ".css"):
+        for (contexto, sel), n in _reglas(texto).items():
+            if sel in EXENTOS:
+                continue
+            if n > 1:
+                repetidos.append("%s: %s%s (x%d)" % (
+                    nombre, sel, (" dentro de %s" % "/".join(contexto)) if contexto else "", n))
+    assert not repetidos, (
+        "Selectores declarados mas de una vez en el mismo fichero y el mismo "
+        "contexto; fusionalos en una sola regla: %s" % "; ".join(sorted(repetidos)))
+
+
 def _ejecutar():
     nombres = [n for n in globals() if n.startswith("test_")]
     fallos = 0

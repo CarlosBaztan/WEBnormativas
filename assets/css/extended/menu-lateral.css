@@ -81,10 +81,18 @@
   align-self: center;
 }
 
+/* PaperMod le da al conmutador una altura fija de 60 px que estiraba la fila
+   entera. Esto lo neutraliza y le da la misma caja redonda que los demas
+   botones de la cabecera. El borde transparente no se ve, pero reserva el
+   pixel para que al pasar el raton no baile respecto a la lupa, que si lo
+   tiene. */
 .nav-propia .theme-toggle {
   display: inline-flex;
   align-items: center;
-  padding: 0.35rem;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
 }
 
 .nav-propia .logo {
@@ -107,15 +115,15 @@
   border: 0;
   border-radius: 0;
   padding: 0;
+  /* Para que el recorte con puntos suspensivos funcione, todos los eslabones
+     de la cadena flex tienen que poder encogerse: .logo, .marca y el propio
+     texto. Basta que uno conserve min-width:auto para que desborde: a .marca
+     le faltaba, y en movil la senal del logotipo se montaba encima de la
+     lupa. */
+  min-width: 0;
 }
 
 .marca:hover { text-decoration: none; }
-
-/* Para que el recorte con puntos suspensivos funcione, todos los eslabones
-   de la cadena flex tienen que poder encogerse: .logo, .marca y el propio
-   texto. Basta que uno conserve min-width:auto para que desborde: a .marca
-   le faltaba, y en movil la señal del logotipo se montaba encima de la lupa. */
-.logo a.marca { min-width: 0; }
 
 /* El logotipo sustituye al titulo escrito desde el 01/10/2026.
    .marca__texto y .logo-senal se quedan por si vuelve el titulo en texto. */
@@ -322,12 +330,6 @@
   height: var(--cabecera-boton);
 }
 
-.nav-propia .theme-toggle {
-  justify-content: center;
-  padding: 0;
-  border: 1px solid transparent;
-  border-radius: 50%;
-}
 
 .nav-propia .theme-toggle:hover { background: var(--code-bg); }
 
@@ -344,7 +346,14 @@
     height: var(--cabecera-alto);
   }
   .nav-propia .logo { min-width: 0; }
-  .logo a.marca { font-size: var(--txt-md); }
+
+  /* El logotipo es un enlace a la portada, y la portada es la herramienta:
+     el dibujo mide 34 px de alto y la zona de pulsacion no tiene por que
+     medir lo mismo que el dibujo. */
+  .logo a.marca {
+    font-size: var(--txt-md);
+    min-height: var(--cabecera-boton);
+  }
 
   /* 44 px para el dedo, y con ellos la lupa pierde el texto: a 375 px no
      caben el logotipo, dos píldoras con letra y tres botones. Lo que se
@@ -361,11 +370,6 @@
     padding: 0;
     border-radius: 50%;
   }
-
-  /* El logotipo es un enlace a la portada, y la portada es la herramienta:
-     el dibujo mide 34 px de alto y la zona de pulsación no tiene por qué
-     medir lo mismo que el dibujo. */
-  .logo a.marca { min-height: var(--cabecera-boton); }
 
   /* Separación entre dianas: con 6 px entre tres círculos, el pulgar acierta
      por aproximación. 8 es el mínimo que deja un fallo por botón, no por

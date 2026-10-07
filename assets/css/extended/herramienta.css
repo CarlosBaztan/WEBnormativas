@@ -5,25 +5,29 @@
 }
 
 .pc-form fieldset {
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-4) var(--sp-5) var(--sp-5);
   border: 1px solid var(--caja-borde);
-  border-radius: 8px;
-  padding: 1rem 1.25rem 1.25rem;
-  margin: 0 0 1rem;
+  border-radius: var(--caja-radio);
 }
 
+/* El rotulo del grupo tiene que pesar mas que el de cada campo. Estaban
+   practicamente iguales. */
 .pc-form legend {
+  padding: 0 var(--sp-2);
+  font-size: var(--txt-lg);
   font-weight: 700;
-  padding: 0 0.5rem;
 }
 
 .pc-campo {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--sp-4);
 }
 
 .pc-campo label {
   display: block;
+  margin-bottom: var(--sp-1);
+  font-size: var(--txt-md);
   font-weight: 600;
-  margin-bottom: 0.35rem;
 }
 
 /* `input:not(casilla ni radio)` y no una lista de tipos (07/10/2026).
@@ -84,9 +88,13 @@
 }
 
 .pc-boton {
+  /* `font: inherit` es un atajo y reinicia el tamano, asi que el
+     `font-size` tiene que ir DESPUES. Antes funcionaba por casualidad:
+     estaban en reglas distintas separadas por 560 lineas. */
   font: inherit;
+  font-size: var(--txt-md);
   font-weight: 600;
-  padding: 0.65rem 1.4rem;
+  padding: var(--sp-3) var(--sp-6);
   border: 1px solid var(--primary);
   border-radius: 6px;
   background: var(--primary);
@@ -395,14 +403,15 @@ a.pc-vz__zona:focus-visible {
 }
 
 .pc-aviso {
-  border: 1px solid var(--caja-borde);
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
   margin: 0 0 1rem;
+  padding: var(--sp-4);
+  border: 1px solid var(--caja-borde);
+  border-radius: var(--caja-radio);
 }
 
 .pc-aviso__titulo {
-  margin: 0 0 0.4rem;
+  margin: 0 0 var(--sp-2);
+  font-size: var(--txt-md);
   font-weight: 700;
 }
 
@@ -465,8 +474,8 @@ a.pc-vz__zona:focus-visible {
 }
 
 .pc-zona__pendiente {
-  border-left: 4px solid currentColor;
-  padding-left: 0.75rem;
+  padding-left: var(--sp-3);
+  border-left: 4px solid var(--nv-warn-line);
 }
 
 .pc-articulo {
@@ -486,10 +495,13 @@ a.pc-vz__zona:focus-visible {
 }
 
 .pc-fuente {
-  font-size: var(--txt-sm);
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
   border-top: 1px solid var(--caja-borde);
-  padding-top: 0.6rem;
-  margin-top: 0.8rem;
+  font-size: var(--txt-xs);
+  line-height: var(--lh-corto);
+  color: var(--secondary);
+  opacity: 1;
 }
 
 .pc-ok {
@@ -530,11 +542,12 @@ a.pc-vz__zona:focus-visible {
 .itv-tramos li:last-child { border-bottom: 0; }
 
 /* El tramo que le toca al usuario, destacado: es lo que ha venido a mirar. */
+/* Era un resaltado con fondo --code-bg, invisible en tema claro. */
 .itv-tramo--actual {
   font-weight: 700;
-  background: var(--code-bg);
+  background: transparent;
   border-radius: 6px;
-  box-shadow: inset 3px 0 0 var(--primary);
+  box-shadow: inset 4px 0 0 var(--caja-acento);
 }
 
 /* Estaba en 1,6rem (25,6 px), por encima del titular del veredicto: la
@@ -557,20 +570,16 @@ a.pc-vz__zona:focus-visible {
 
 .mi-calle-zonas li:last-child { border-bottom: 0; }
 
-/* El titular aquí es una dirección, que puede ser larga: sin esto se sale
-   de la caja en pantallas estrechas. */
-.pc-veredicto__titular {
-  overflow-wrap: anywhere;
-}
 
 /* Aviso de que un distintivo permitido hoy tiene fecha de salida. */
 .pc-veredicto__caduca {
-  margin: 0.75rem 0 0;
-  padding: 0.6rem 0.8rem;
-  border-radius: 6px;
-  background: var(--code-bg);
+  margin: var(--sp-3) 0 0;
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-3);
+  border-left: 4px solid var(--nv-warn-line);
+  border-radius: 0;
+  background: transparent;
   font-size: var(--txt-sm);
-  line-height: 1.45;
+  line-height: var(--lh-corto);
 }
 
 
@@ -593,75 +602,16 @@ a.pc-vz__zona:focus-visible {
   opacity: 1;
 }
 
-.pc-fuente {
-  margin-top: var(--sp-4);
-  padding-top: var(--sp-3);
-  border-top: 1px solid var(--caja-borde);
-  font-size: var(--txt-xs);
-  line-height: var(--lh-corto);
-  color: var(--secondary);
-  opacity: 1;
-}
 
-.pc-veredicto__caduca {
-  margin: var(--sp-3) 0 0;
-  padding: var(--sp-2) 0 var(--sp-2) var(--sp-3);
-  border-left: 4px solid var(--nv-warn-line);
-  border-radius: 0;
-  background: transparent;
-  font-size: var(--txt-sm);
-  line-height: var(--lh-corto);
-}
 
-.pc-zona__pendiente {
-  padding-left: var(--sp-3);
-  border-left: 4px solid var(--nv-warn-line);
-}
 
-/* El rotulo del grupo tiene que pesar mas que el de cada campo. Estaban
-   practicamente iguales. */
-.pc-form fieldset {
-  margin: 0 0 var(--sp-4);
-  padding: var(--sp-4) var(--sp-5) var(--sp-5);
-  border-color: var(--caja-borde);
-  border-radius: var(--caja-radio);
-}
 
-.pc-form legend {
-  padding: 0 var(--sp-2);
-  font-size: var(--txt-lg);
-  font-weight: 700;
-}
 
-.pc-campo { margin: 0 0 var(--sp-4); }
 
-.pc-campo label {
-  margin-bottom: var(--sp-1);
-  font-size: var(--txt-md);
-  font-weight: 600;
-}
 
-.pc-boton {
-  padding: var(--sp-3) var(--sp-6);
-  font-size: var(--txt-md);
-}
 
-.pc-aviso {
-  padding: var(--sp-4);
-  border-color: var(--caja-borde);
-  border-radius: var(--caja-radio);
-}
 
-.pc-aviso__titulo {
-  margin: 0 0 var(--sp-2);
-  font-size: var(--txt-md);
-}
 
-/* Era un resaltado con fondo --code-bg, invisible en tema claro. */
-.itv-tramo--actual {
-  background: transparent;
-  box-shadow: inset 4px 0 0 var(--caja-acento);
-}
 
 /* ------------------------------------------------------------------------
    BLOQUE "QUE HACE Y QUE NO HACE ESTA HERRAMIENTA"
