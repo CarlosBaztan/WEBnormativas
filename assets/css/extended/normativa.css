@@ -703,19 +703,43 @@ body {
   font-size: var(--txt-sm);
 }
 
-/* Las migas son 76 enlaces de 24 px de alto repartidos por las 46 paginas, y
-   en movil son la unica forma de subir un nivel sin abrir el panel. Suben a
-   44 por relleno: el texto no se mueve de sitio ni crece, solo la caja que
-   recibe el dedo. En escritorio se quedan como estaban. */
+/* LA ZONA DE PULSACION CRECE SIN QUE CREZCA LA CAJA.
+
+   Las migas son 76 enlaces de 24 px de alto repartidos por las 46 paginas, y
+   en movil son la unica forma de subir un nivel sin abrir el panel. El primer
+   intento (08/10/2026) les puso `min-height: 2.75rem` y funcionaba, pero
+   medido en produccion salia caro: en la ficha de Granada, a 375 px, la miga
+   larga se parte en dos lineas y el bloque pasaba de 51 px a NOVENTA Y UNO.
+   Cuarenta pixeles de la primera pantalla, en todas las fichas, gastados en
+   navegacion secundaria. El h1 empezaba en y=198.
+
+   Asi que la caja vuelve a medir lo que mide el texto y lo que crece es un
+   `::after` invisible, que no ocupa sitio en el flujo. Con 6 px arriba y
+   abajo quedan 36, por encima de los 24 que exige el criterio de tamano de
+   objetivo y suficiente para el pulgar en un enlace que ademas es ancho.
+
+   El hueco entre filas sube a 12 para que las dos zonas se toquen sin
+   solaparse: si se solaparan, el area de en medio la ganaria la miga de
+   abajo y un toque cerca del borde llevaria a la pagina equivocada. */
 @media (max-width: 63.99rem) {
+  .breadcrumbs {
+    row-gap: 0.75rem;
+  }
+
   .breadcrumbs a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2.75rem;
+    position: relative;
+    display: inline-block;
     /* La miga mas corta del sitio es «ITV», de 21 px de ancho: tres por
-       debajo del minimo de 24 que pide el criterio de tamano de objetivo. */
+       debajo del minimo de 24. Esta si tiene que crecer de verdad, porque
+       el ancho del texto es el ancho del objetivo. */
     min-width: 1.5rem;
+    text-align: center;
+  }
+
+  .breadcrumbs a::after {
+    content: "";
+    position: absolute;
+    inset: -6px 0;
   }
 }
 
