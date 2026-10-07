@@ -191,6 +191,43 @@ def test_la_tabla_de_datos_tampoco_dice_sin_verificar(destino):
     )
 
 
+def test_ningun_enlace_publicado_apunta_a_ninguna_parte(destino):
+    """
+    Un `<a href="">` no da 404: recarga la pagina en la que estas. Por eso no
+    lo caza un comprobador de enlaces, y por eso lleva ahi sin que nadie lo
+    vea.
+
+    LO QUE PASO (08/10/2026). /itv/ esta en borrador y sus dos paginas si
+    estan publicadas, asi que la miga de pan de /itv/cuando-me-toca/ y de
+    /itv/pegatina/ decia «Inicio > ITV >» con la ITV enlazada a `href=""`.
+    Quien la pulsa no va a ningun sitio; quien navega con lector de pantalla
+    oye «ITV, enlace» y al activarlo se recarga la misma pagina.
+
+    Un barrido de los 48 enlaces internos distintos del sitio dio CERO rotos,
+    porque `""` resuelve a la URL actual y devuelve 200. Lo unico que lo
+    delata es buscar el atributo vacio.
+
+    Que /itv/ se publique o se cierre es otra decision, y es de Carlos. Esto
+    vale igual para las dos: una miga sin destino se pinta como texto, no
+    como enlace.
+    """
+    malas = []
+    for ruta in _urls_publicadas(destino):
+        html = _html_de(destino, ruta)
+        if not html:
+            continue
+        # OJO: el minificador NO escribe `href=""`, escribe `<a href>` a
+        # secas, igual que convierte `alt=""` en `alt`. La primera version de
+        # esta prueba buscaba `href=""` y pasaba sin comprobar nada. Es la
+        # tercera vez hoy que esta trampa muerde, y ya estaba anotada en
+        # CLAUDE.md por el `alt`.
+        if re.search(r'<a(?=[\s>])[^>]*?\shref(=(?:""|\'\')|(?=[\s>]))', html):
+            malas.append(ruta)
+    assert not malas, (
+        "Estas paginas publican un enlace sin destino, que al pulsarlo "
+        "recarga la misma pagina: %s" % ", ".join(sorted(malas)))
+
+
 SECCIONES_EN_EL_MENU = ("zbe", "etiquetas", "itv", "multas", "datos")
 
 

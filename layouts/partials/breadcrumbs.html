@@ -38,7 +38,24 @@
                 aria-hidden="true" focusable="false">
                 <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
-            <a href="{{ $bc.RelPermalink }}">{{ $bc.Title }}</a>
+            {{- /* Una miga sin destino se pinta como texto, no como enlace.
+
+                   /itv/ esta en borrador y sus dos paginas si estan
+                   publicadas, asi que Hugo devolvia el ancestro con
+                   RelPermalink vacio y salia `<a href>ITV</a>`. Eso no da
+                   404: recarga la pagina en la que estas. Por eso no lo caza
+                   un comprobador de enlaces (`""` resuelve a la URL actual y
+                   devuelve 200) y por eso llevaba ahi sin que nadie lo viera.
+                   Quien navega con lector de pantalla oia «ITV, enlace» y al
+                   activarlo no pasaba nada.
+
+                   La jerarquia se sigue viendo; lo que se quita es la promesa
+                   de que lleva a algun sitio. */ -}}
+            {{- with $bc.RelPermalink }}
+            <a href="{{ . }}">{{ $bc.Title }}</a>
+            {{- else }}
+            <span>{{ $bc.Title }}</span>
+            {{- end }}
         {{- end }}
     {{- end }}
 </nav>
