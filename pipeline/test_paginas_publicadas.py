@@ -63,6 +63,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from auditoria import declara_reglas, front_matter  # noqa: E402
 
 AVISO_SIN_VERIFICAR = "Las reglas de acceso de esta ZBE no est"
+AVISO_SIN_FUENTE = "Datos sin verificar."
 
 
 def _compilar():
@@ -117,6 +118,46 @@ def test_ninguna_ficha_verificada_dice_que_no_lo_esta(destino):
         "Estas fichas tienen la ordenanza leida y publican que no la hemos "
         "contrastado: %s" % ", ".join(malas)
     )
+
+
+def test_el_aviso_de_datos_sin_verificar_solo_sale_donde_toca(destino):
+    """
+    Quinta vez que una plantilla se dispara en una pagina que no es la suya.
+
+    LO QUE PASO (08/10/2026). /zbe/distintivos-por-ciudad/ abria con un recuadro
+    rojo: «Datos sin verificar. No hemos contrastado todavia esta informacion
+    con el texto oficial... No tomes decisiones a partir de esta pagina.
+    Todavia no tenemos una fuente oficial publicable para este municipio.»
+
+    En la pagina cuyo contenido entero son diecisiete zonas leidas ordenanza por
+    ordenanza, con el articulo citado en cada ficha. Y hablando de «este
+    municipio», que no es ninguno: es una tabla de todos.
+
+    La causa: layouts/zbe/single.html llamaba a fuente-verificacion.html para
+    TODA pagina de la seccion, y ese partial trata «no declara estado_dato»
+    igual que «sin verificar». Para una ficha eso esta bien (la ausencia es
+    falta de verificacion); para un articulo derivado de otras paginas, no.
+
+    No se arreglo inventandole una fuente: esta pagina no tiene una, tiene
+    quince, y cada fila ya enlaza la suya. Lo que se arreglo es que solo se
+    pida trazabilidad a quien puede darla.
+
+    LA REGLA: ese aviso solo puede salir en una pagina de municipio o de zona
+    que de verdad no este verificada.
+    """
+    malas = []
+    for slug, fm, _ in _fichas():
+        html = _html_de(destino, "/zbe/%s/" % slug)
+        if not html or AVISO_SIN_FUENTE not in html:
+            continue
+        es_ficha = fm.get("tipo", "municipio") in ("municipio", "zona")
+        if not es_ficha or fm.get("estado_dato") == "verificado":
+            malas.append("%s (tipo=%s, estado=%s)" % (
+                slug, fm.get("tipo", "municipio"),
+                fm.get("estado_dato", "sin declarar")))
+    assert not malas, (
+        "Estas paginas publican el aviso de «datos sin verificar» sin ser una "
+        "ficha pendiente: %s" % ", ".join(malas))
 
 
 def test_la_tabla_de_datos_tampoco_dice_sin_verificar(destino):

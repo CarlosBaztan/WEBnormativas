@@ -123,8 +123,31 @@
     {{- end }}
   </header>
 
-  {{- /* Trazabilidad arriba: lo primero que se ve es de dónde sale el dato. */}}
+  {{- /* Trazabilidad arriba: lo primero que se ve es de dónde sale el dato.
+
+         SOLO SE LE PIDE A QUIEN PUEDE DARLA (08/10/2026).
+
+         Este partial trata «no declara estado_dato» igual que «sin
+         verificar», y para una ficha eso es correcto: ahí la ausencia ES
+         falta de verificación. Pero la plantilla se aplica a toda la sección,
+         y en /zbe/ también viven artículos.
+
+         `/zbe/distintivos-por-ciudad/` abría con un recuadro rojo que decía
+         «Datos sin verificar... No tomes decisiones a partir de esta página.
+         Todavía no tenemos una fuente oficial publicable para este
+         municipio», en la página cuyo contenido entero son diecisiete zonas
+         leídas ordenanza por ordenanza. Y hablando de «este municipio», que
+         ahí no es ninguno.
+
+         No se arregla inventándole una fuente: esa página no tiene una, tiene
+         quince, y cada fila enlaza la suya. Se arregla no pidiéndosela.
+
+         Quinta vez que una plantilla de sección se dispara en una página que
+         no es la suya. Al tocar esta plantilla, preguntarse siempre qué pasa
+         con la página que NO es una ficha. */}}
+  {{- if or $esFicha $p.fuente_nombre }}
   {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "compacta") }}
+  {{- end }}
 
   {{- /*
     Dos situaciones distintas que antes se contaban igual:
@@ -298,8 +321,12 @@
   {{- /* Regla dura 4: aquí no hay formulario; el hueco va al final del artículo. */}}
   {{ partial "anuncio.html" (dict "ubicacion" "fin-articulo" "formato" "horizontal") }}
 
-  {{- /* Trazabilidad también al cierre, en versión completa. */}}
+  {{- /* Trazabilidad también al cierre, en versión completa. Con la misma
+         condición de arriba: una página sin fuente única no la declara, y
+         pedírsela solo sirve para que diga que no la tiene. */}}
+  {{- if or $esFicha $p.fuente_nombre }}
   {{ partial "fuente-verificacion.html" (dict "pagina" . "variante" "completa") }}
+  {{- end }}
 
   <footer class="post-footer">
     <p class="volver"><a href="{{ "/zbe/" | relURL }}">&larr; Todos los municipios con ZBE</a></p>
