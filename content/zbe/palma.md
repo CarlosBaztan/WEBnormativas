@@ -36,7 +36,7 @@ estado_dato: "verificado"
 draft: false
 ---
 
-Palma es de las pocas ciudades que ha publicado **el calendario completo desde el principio**. Sabes hoy qué pasa en 2027 y en 2030, con fecha exacta, porque está en el anexo de la ordenanza.
+El anexo 2 de la ordenanza de Palma trae el calendario entero escrito: el distintivo **B deja de entrar el 1 de enero de 2027** y el **C el 1 de enero de 2030**. Y la zona restringe a todas horas, todos los días.
 
 ## Qué distintivos pueden entrar hoy
 

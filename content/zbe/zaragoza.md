@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Zaragoza: qué distintivos pueden entrar"
-description: "En Zaragoza entran 0, ECO, C y B. Solo los vehículos sin distintivo necesitan registrarse para acceder. Perímetro, excepciones y accesos esporádicos."
+description: "En Zaragoza entran 0, ECO, C y B, de lunes a viernes de 8 a 20 h. Los vehículos sin distintivo no tienen acceso general: solo 8 autorizaciones al mes."
 date: 2026-09-29
 
 tipo: "municipio"
@@ -33,7 +33,7 @@ estado_dato: "verificado"
 draft: false
 ---
 
-La Zona de Bajas Emisiones de Zaragoza es de las **más permisivas en cuanto a distintivos** y de las **más pequeñas en superficie**: se concentra en el casco histórico.
+La Zona de Bajas Emisiones de Zaragoza es **el casco histórico y poco más**, y solo restringe **de lunes a viernes de 8:00 a 20:00**. Dentro de esa franja entran los distintivos 0, ECO, C y B; los que no tienen ninguno, no, salvo ocho autorizaciones puntuales al mes.
 
 ## Qué distintivos pueden entrar
 

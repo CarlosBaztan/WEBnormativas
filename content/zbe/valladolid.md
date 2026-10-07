@@ -37,7 +37,7 @@ estado_dato: "verificado"
 draft: false
 ---
 
-Valladolid tiene la particularidad de haber publicado **el calendario completo desde el principio**, con fechas concretas hasta 2030. Sabes con años de antelación cuándo te toca.
+La disposición transitoria de Valladolid pone las tres fechas por escrito: los vehículos **sin distintivo quedaron fuera el 30 de junio de 2025**, el **B sale el 31 de diciembre de 2027** y el **C el 1 de enero de 2030**.
 
 ## Qué distintivos pueden entrar hoy
 

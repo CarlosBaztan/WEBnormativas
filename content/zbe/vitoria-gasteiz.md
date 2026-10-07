@@ -41,7 +41,7 @@ estado_dato: "verificado"
 draft: false
 ---
 
-Vitoria-Gasteiz tiene **la lista de excepciones más larga y más social** de todas las que llevamos verificadas. Hay dos que no aparecen en ninguna otra ordenanza: la renta baja y la cercanía a la jubilación.
+La ordenanza de Vitoria-Gasteiz recoge **dos excepciones que no hemos encontrado en ninguna otra**: la renta baja y la cercanía a la jubilación. Su lista completa es, con diferencia, la más detallada de las que llevamos leídas.
 
 ## Qué distintivos pueden entrar
 

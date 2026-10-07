@@ -37,7 +37,7 @@ estado_dato: "verificado"
 draft: false
 ---
 
-Granada tiene la Zona de Bajas Emisiones **más permisiva** de las que llevamos verificadas, y su criterio de excepción principal no es el distintivo ni el empadronamiento, sino **dónde tributa el vehículo**.
+En Granada el criterio que más gente deja entrar no es el distintivo ni el empadronamiento del conductor, sino **dónde tributa el vehículo**: con domicilio fiscal en el municipio entra, lleve etiqueta o no lleve ninguna.
 
 ## Qué distintivos pueden entrar
 

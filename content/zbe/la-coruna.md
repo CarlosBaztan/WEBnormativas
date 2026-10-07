@@ -50,9 +50,7 @@ estado_dato: "verificado"
 draft: false
 ---
 
-La Zona de Bajas Emisiones de La Coruña es **distinta de todas las demás que llevamos verificadas**, y conviene decirlo antes que nada porque tira abajo la pregunta habitual.
-
-Aquí **el distintivo ambiental no decide nada**. No hay una lista de etiquetas que entran y otra que no. Lo que hay es una zona cerrada al tráfico general: entran unos pocos tipos de vehículo por lo que son y por lo que van a hacer, y el resto no entra, lleve la pegatina que lleve.
+En La Coruña **el distintivo ambiental no decide nada**, y hay que decirlo antes que nada porque tira abajo la pregunta habitual. No hay una lista de etiquetas que entran y otra que no. Lo que hay es una zona cerrada al tráfico general: entran unos pocos tipos de vehículo por lo que son y por lo que van a hacer, y el resto no entra, lleve la pegatina que lleve.
 
 Un coche particular con distintivo 0 emisiones, el mejor que da la DGT, **tampoco puede entrar**.
 
