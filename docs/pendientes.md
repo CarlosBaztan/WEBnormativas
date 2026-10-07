@@ -1,6 +1,8 @@
 # Pendientes: lo que te toca a ti y lo que no he podido verificar
 
-Al 05/10/2026. Esta lista recoge también cosas que quedaron en el aire de días anteriores, no solo de hoy.
+Actualizado el **07/10/2026**. La lista crece: lo que se resuelve se tacha y se
+deja a la vista, para no volver a abrirlo. Lo nuevo de hoy va marcado así:
+**(nuevo 07/10)**.
 
 ---
 
@@ -10,15 +12,27 @@ Al 05/10/2026. Esta lista recoge también cosas que quedaron en el aire de días
 
 > **4-6 piezas/mes**, cada una verificada. Publicar 80 páginas de golpe generadas con IA = penalización por *scaled content abuse*. El ritmo lento es una decisión de diseño, no una limitación.
 
-En dos días se han publicado **seis fichas de municipio** (Sevilla, Palma, Alicante, La Coruña, Vitoria-Gasteiz y Oviedo) más la tabla comparativa. Eso es más de lo que la regla fija para un mes entero, en dos días, en un dominio de cinco días de vida.
+En tres días se han publicado **siete fichas de municipio** (Sevilla, Palma,
+Alicante, La Coruña, Vitoria-Gasteiz, Oviedo y Pamplona), la tabla comparativa
+y la pieza de la etiqueta ambiental. Eso es el doble de lo que la regla fija
+para un mes entero, en tres días, en un dominio de una semana de vida.
 
-**A favor:** las seis salen del boletín oficial leído entero, con artículo citado, enlace y fecha. No son contenido generado a escala, que es lo que persigue esa política de Google. El dataset tampoco se infla: crece con lo que una persona ha verificado.
+**A favor:** las siete salen del boletín oficial leído entero, con artículo
+citado, enlace y fecha. No son contenido generado a escala, que es lo que
+persigue esa política de Google. El dataset tampoco se infla: crece con lo que
+una persona ha verificado.
 
-**En contra:** Google no lee tu intención, lee el patrón. Un dominio nuevo que pasa de 37 a 47 URL en cinco días, con seis páginas casi gemelas en estructura, es exactamente la silueta que esa política describe. Y el coste de equivocarse aquí no es perder una posición: es perder la confianza del dominio entero.
+**En contra:** Google no lee tu intención, lee el patrón. Un dominio nuevo que
+pasa de 37 a 46 URL en seis días, con siete páginas casi gemelas en estructura,
+es exactamente la silueta que esa política describe. Y el coste de equivocarse
+aquí no es perder una posición: es perder la confianza del dominio entero.
 
-**Mi recomendación: parar las fichas unas semanas.** No porque estén mal hechas, sino porque el riesgo es asimétrico. Si quieres seguir publicando, que sea contenido de otra forma: la pieza 17 que falta del plan, el hub de `/itv/`, las tarifas de ITV por comunidad.
+**Mi recomendación sigue siendo parar las fichas unas semanas.** No porque
+estén mal hechas, sino porque el riesgo es asimétrico. **(nuevo 07/10)** Los
+dos últimos días no he publicado ninguna ficha nueva: el trabajo ha ido a
+arreglar lo ya publicado, que no suma URL y sí suma calidad.
 
-Tú decides, y si me dices que siga, sigo. Pero no quería que esto pasara sin que lo supieras.
+Tú decides, y si me dices que siga, sigo.
 
 ---
 
@@ -43,14 +57,20 @@ Tú decides, y si me dices que siga, sigo. Pero no quería que esto pasara sin q
 
 ### Para que yo pueda ver Search Console
 
-Me pediste que lo revise de aquí en adelante. **Hoy no puedo**: vive en tu cuenta de Google y mi navegador está aislado del tuyo, sin tu sesión. Comprobado: no hay ningún Chrome conectado a esta cuenta.
+Me pediste que lo revise de aquí en adelante. **Sigo sin poder**: vive en tu
+cuenta de Google y mi navegador está aislado del tuyo, sin tu sesión.
 
 Dos caminos, y el segundo es más barato:
 
-- **Conectar la extensión Claude en Chrome.** Actúa en tu Chrome real con tus sesiones abiertas, así que podría entrar y leer los informes.
-- **Que exportes tú los datos.** Search Console → Rendimiento → Exportar → CSV. Dejas el fichero en la carpeta del proyecto y yo lo analizo y lo comparo con el de la vez anterior. Cero configuración.
+- **Conectar la extensión Claude en Chrome.** Actúa en tu Chrome real con tus
+  sesiones abiertas, así que podría entrar y leer los informes.
+- **Que exportes tú los datos.** Search Console → Rendimiento → Exportar → CSV.
+  Dejas el fichero en la carpeta del proyecto y yo lo analizo y lo comparo con
+  el de la vez anterior. Cero configuración.
 
-**Aviso de expectativas:** la propiedad se creó el 02/10 y el sitio se abrió a los buscadores el 01/10. Ahora mismo hay **9 URL indexadas de 47**, lo cual es normal a los cinco días. Datos de rendimiento con los que hacer algo habrá dentro de dos o tres semanas, y conclusiones sólidas hacia el mes y medio.
+**Aviso de expectativas:** la propiedad se creó el 02/10 y el sitio se abrió a
+los buscadores el 01/10. Datos de rendimiento con los que hacer algo habrá
+dentro de dos o tres semanas, y conclusiones sólidas hacia el mes y medio.
 
 ### Decisiones tuyas, sin prisa
 
@@ -60,6 +80,44 @@ Dos caminos, y el segundo es más barato:
 | 9 | **`/itv/` está en borrador** y sus dos páginas cuelgan de una sección sin entrada | O se cierra la sección, o se le escribe un hub de verdad |
 | 10 | **Tres claves del front matter que nadie lee**: `fecha_vigor_ordenanza`, `sancion_importe`, `verificado_por` | O se publican de forma legible por máquina, o se borran |
 | 11 | **Renombrar la carpeta a `webCocheApto`** | Tuyo desde hace días. El Worker de Cloudflare y el repositorio NO se renombran |
+| 12 | **(nuevo 07/10) Los títulos son demasiado largos para la caja de Google** | Ver abajo. Es la decisión con más efecto en tráfico de toda esta lista |
+
+#### 12. Los títulos, con los números delante
+
+Google pinta el título del resultado en una caja de unos **600 px**. Medidos
+los 46 con la tipografía que usa:
+
+| | |
+|:---|---:|
+| Títulos que se pasan de 600 px | **30 de 46** |
+| El peor, antes de tocarlo (Valencia) | 964 px |
+| Lo que ocupa el sufijo «\| Coche Apto» | ~115 px |
+| Lo que ocupa «Zona de Bajas Emisiones (ZBE) de » | ~302 px |
+
+O sea que en una ficha de municipio **la mitad de la caja se va antes de
+nombrar la ciudad**, y lo que se corta es justo el final, que es donde está lo
+que diferencia una ficha de otra («qué distintivos pueden entrar»).
+
+Las dos causas son decisiones tomadas, y por eso no las toco yo:
+
+- La **convención de títulos** de `CLAUDE.md`: las dos formas, «Zona de Bajas
+  Emisiones (ZBE) de Valencia». Se tomó para no perder ninguna de las dos
+  búsquedas, y el motivo sigue en pie.
+- El **sufijo de marca**, que puse el 01/10 al cambiar `site.Title`.
+
+Tres salidas, de menos a más invasiva:
+
+1. **Quitar el sufijo «| Coche Apto»** de las páginas que no son la portada.
+   Recupera 115 px de golpe en las 46. Google ya muestra el nombre del sitio
+   por su cuenta encima del título, así que se duplica. Es un cambio de una
+   línea en `layouts/partials/head.html`.
+2. **Acortar la fórmula** a «ZBE de Valencia: Zona de Bajas Emisiones y qué
+   distintivos entran». Mantiene las dos formas pero pone la sigla delante,
+   que es lo contrario de lo que decidiste.
+3. **Dejarlo como está** y asumir que Google recorta. No es una penalización:
+   es que el visitante ve menos razones para pulsar.
+
+Yo haría la 1. Pero es tu marca y la pusiste hace seis días.
 
 ---
 
@@ -69,45 +127,106 @@ Todo esto está dicho en las propias fichas, para que ningún lector se lleve un
 
 | Municipio | Qué falta | Por qué |
 |:---|:---|:---|
-| ~~**Alicante**~~ | ~~Cuándo acaba la moratoria~~ | **RESUELTO el 06/10/2026, y de paso corregido un error nuestro.** La FAQ del Ayuntamiento dice que la ZBE «no implica restricciones de acceso automáticas ni sanciones directas, salvo en el Casco Antiguo, en el que sigue vigente su régimen de accesos restringidos a residentes y autorizados». O sea que **no hay restricción por etiqueta**, así que la moratoria es irrelevante. La ficha decía que entraban 0, ECO, C y B: estaba mal y ya está corregida, con la explicación del error escrita en la propia página |
 | **La Coruña** | Quién puede ser «vehículo autorizado» | La ordenanza remite a dos decretos de alcaldía (27/03/2017 y 01/06/2018). **Buscados el 06/10/2026 y no están publicados en abierto** ni en coruna.gal ni en el BOP. Son la única puerta de entrada a esa ZBE, así que o se piden al Concello o esto se queda sin publicar |
 | **Vitoria-Gasteiz** | Si el APR ya está en vigor | La ordenanza eximía a las categorías del APR de la etiqueta y de las sanciones **hasta el 15/09/2026**, fecha ya pasada, pero las directrices se aprueban por decreto de alcaldía y **no lo he localizado publicado**. Si lo está, en el casco medieval no basta con tener etiqueta. La ficha lo advierte |
-| ~~**Oviedo**~~ | ~~El número y la fecha del BOPA~~ | **RESUELTO el 06/10/2026**: BOPA núm. 243, de 18 de diciembre de 2025, según la sede electrónica del Ayuntamiento |
+| **Pamplona** | Los horarios del Casco Antiguo | **(nuevo 07/10)** La ordenanza de la ZBE no fija franja horaria: quien la fija son las Normas de Acceso al Casco Antiguo, de 2017. La página municipal que las recoge no está disponible, así que la ficha dice que existen y dónde se tramitan, y no las reproduce |
 | **Granada** | Que su enlace oficial siga vivo | `granada.org` va tras Akamai y devuelve 403 a cualquier comprobación automática, incluso en su portada. **Ábrelo una vez en el navegador y me dices** |
-| ~~**Zaragoza**~~ | ~~El horario de la ZBE~~ | **RESUELTO el 06/10/2026.** Lo dice el Ayuntamiento en su nota del 11/12/2025: de lunes a viernes de 8:00 a 20:00, y fuera de ahí acceso libre para todos. De paso vuelve el perímetro, que habíamos retirado por no poder respaldarlo, y sale un dato que no tiene casi ninguna otra ciudad: **Zaragoza obliga a exhibir la pegatina** |
-| ~~**Madrid**~~ | ~~La zona «Madrid ciudad»~~ | **RESUELTO el 06/10/2026.** Verificado en la página oficial del Ayuntamiento, actualizada el 07/04/2026: el art. 21 prohíbe circular a los «A» en todo el municipio desde el 1 de enero de 2025, y la disposición transitoria séptima que introdujo la Ordenanza 2/2026 les permite volver desde el 7 de abril de 2026 de forma temporal y condicionada |
+| ~~**Alicante**~~ | ~~Cuándo acaba la moratoria~~ | **RESUELTO el 06/10/2026**, y de paso corregido un error nuestro: no hay restricción por etiqueta, así que la moratoria es irrelevante |
+| ~~**Oviedo**~~ | ~~El número y la fecha del BOPA~~ | **RESUELTO el 06/10/2026**: BOPA núm. 243, de 18 de diciembre de 2025 |
+| ~~**Zaragoza**~~ | ~~El horario de la ZBE~~ | **RESUELTO el 06/10/2026**: de lunes a viernes de 8:00 a 20:00 |
+| ~~**Madrid**~~ | ~~La zona «Madrid ciudad»~~ | **RESUELTO el 06/10/2026**: art. 21 y disposición transitoria séptima de la Ordenanza 2/2026 |
 
 ---
 
-## 2 bis. Una revisión que me he puesto a mí mismo
+## 2 bis. La revisión que me puse a mí mismo, cerrada
 
-El error de Alicante abre una pregunta incómoda: **¿está el mismo fallo en otras fichas?**
+El error de Alicante abrió una pregunta incómoda: **¿estaba el mismo fallo en
+otras fichas?** Releídos los textos oficiales uno a uno el 06/10/2026:
+**Sevilla, Palma, Oviedo, Barcelona, Bilbao, Valladolid, Málaga y Granada
+quedan confirmadas.** El error era único de Alicante y está corregido, con la
+explicación escrita en la propia página.
 
-**Revisión hecha el 06/10/2026.** Releídos los textos oficiales uno a uno:
-
-| Municipio | Qué dice su norma | Veredicto |
-|:---|:---|:---|
-| **Sevilla** | «sin necesidad de registro previo, todos los vehículos con distintivo B, C, Eco y Cero» | Correcta |
-| **Palma** | «vehículos de libre acceso... **sin necesidad de autorización municipal registral**: los vehículos con distintivo B, C, ECO y 0» | Correcta |
-| **Oviedo** | «disponen de libre acceso... **sin necesidad de autorización municipal**» | Correcta |
-| **Barcelona** | art. 10: «es prohibeix **als vehicles més contaminants** l'accés i la circulació», de lunes a viernes laborables de 7 a 20 h. Los demás no están restringidos | Correcta, y el horario coincide |
-| **Bilbao** | «no se requiere que los vehículos lleven la pegatina de forma física, **ni que ésta sea solicitada previamente**». Libre: 0, ECO y C. Restringidos: A, y B desde el 15/06/2025 | Correcta |
-| **Valladolid** | art. 10.a exime a «más contaminantes», B y C sin condicionarlo a autorización, con el calendario de la disposición transitoria: 30/06/2025 sin etiqueta, 31/12/2027 la B, 01/01/2030 la C | Correcta, fechas exactas |
-| **Málaga** | Comunicado oficial: en el segundo año circulan CERO, ECO, C y B «domiciliados o no»; desde el tercero se restringe la B a los no domiciliados antes del 30/11/2026 | Correcta, con el matiz del domicilio ya incluido |
-| **Granada** | **Pendiente**, ver abajo | — |
-
-Así que el error era solo de Alicante, y ya está corregido.
-
-**Granada: cerrado el 06/10/2026, y la ficha estaba bien.**
-
-La URL que citaba era el problema, no el dato: seguía viva pero ya no contenía lo que citábamos. Cambiada por el PDF del BOP (BOP Granada núm. 86, de 9 de mayo de 2025), y leído entero.
-
-El anexo V.3, apartado 1, «acceso directo sin necesidad de autorización», incluye en su letra b) a los **vehículos con distintivo ambiental B, C, ECO o 0 emisiones**. La etiqueta es la llave, sin trámite. La ficha era correcta.
-
-Y era correcta hasta el detalle: también tenía la letra a), que da acceso directo a cualquier vehículo con **domicilio fiscal en Granada** lleve o no etiqueta, y citaba bien los artículos 131.3 y 134.1 para explicar por qué no hay franja horaria. Las ocho fichas revisadas quedan confirmadas; el error era único de Alicante.
+---
 
 ## 3. Lo que sigue en mi lado
 
-1. **Fichas**, si decides seguir: Pamplona, Salamanca y Cartagena están en la cola.
-2. **La pieza 17 del plan**: `/etiquetas/como-pedir-la-etiqueta-ambiental/`. Es lo único que falta de las 20 del plan de arquitectura, es transaccional, y no depende de la política de ZBE.
-3. **Tarifas de ITV por comunidad autónoma**, que tu plan apuntaba para octubre: mismo patrón que las ZBE, dato público disperso en diecisiete sitios que nadie consolida.
+1. **Fichas**, si decides seguir: Salamanca, Cartagena y Alcalá de Henares
+   están en la cola. Pamplona ya está publicada.
+2. ~~**La pieza 17 del plan**: `/etiquetas/como-pedir-la-etiqueta-ambiental/`~~
+   **HECHA el 06/10/2026.** Con ella, las 20 piezas del plan de arquitectura
+   están completas.
+3. **Tarifas de ITV por comunidad autónoma**, que tu plan apuntaba para
+   octubre: mismo patrón que las ZBE, dato público disperso en diecisiete
+   sitios que nadie consolida. **No suma una ficha más de municipio**, así que
+   no agrava el aviso del punto 0.
+4. **(nuevo 07/10) Limpiar `herramienta.css`.** `.pc-campo`, `.pc-campo label`
+   y `.pc-boton` están declarados **dos veces** en el mismo fichero, a 600
+   líneas de distancia: una vez con valores a pelo y otra con los tokens del
+   sistema. Gana el segundo por orden de aparición, así que hoy funciona, pero
+   es exactamente la forma de las trampas de `CLAUDE.md`. No urge y no lo he
+   tocado hoy para no mezclarlo con el repaso de diseño.
+5. **(nuevo 07/10) El resto del repaso de redacción.** Queda releer las
+   entradillas de las fichas más antiguas: nueve de quince abren con un
+   superlativo o con una promesa, y eso se nota al leerlas seguidas.
+
+---
+
+## 4. (nuevo 07/10) Lo que he arreglado estos dos días, para que no lo busques
+
+No hace falta que hagas nada con esto. Está aquí para que sepas qué cambió por
+si algo se ve distinto.
+
+### Lo más serio: tres fichas se desmentían a sí mismas
+
+**Alicante, La Coruña y Pamplona** publicaban, encima de su propio artículo,
+el aviso «Las reglas de acceso de esta ZBE no están verificadas… todavía no
+hemos contrastado artículo por artículo qué distintivos ambientales pueden
+circular». Las tres tienen la ordenanza leída por artículos y por boletín. Y
+su tabla de datos lo repetía: «Sin verificar».
+
+El motivo es el modelo de las ZBE donde la etiqueta no abre la puerta: ahí la
+lista de distintivos está vacía **a propósito**, y la plantilla lo leía como
+un hueco. `auditoria.py` ya lo entendía bien desde el 05/10; la plantilla no.
+
+Lo vigila ahora `pipeline/test_paginas_publicadas.py`, que es de un tipo nuevo:
+**compila el sitio y lee el HTML que sale**. Es la única forma de responder a
+«¿esta página dice de sí misma algo que no es verdad?», que ya ha fallado
+cuatro veces y las cuatro con el build en verde.
+
+### La tabla que es el argumento del sitio desbordaba la pantalla
+
+`/zbe/distintivos-por-ciudad/` no llevaba envoltorio: a 375 px la tabla medía
+420 y **empujaba la página entera a 434**. No se desplazaba la tabla, se
+desplazaba todo: el titular, los párrafos y el pie se iban hacia la derecha.
+La del listado de `/zbe/` sí se desplazaba, pero no se podía enfocar con el
+teclado. Las tres tablas del sitio usan ya el mismo envoltorio.
+
+### Zonas táctiles
+
+76 enlaces y controles por debajo de 40 px de alto repartidos por las 46
+páginas, incluidas las 35 filas del panel de secciones, que en móvil es la
+única navegación que hay. Ahora **cero**, y cero desbordes horizontales en las
+46 páginas.
+
+### La cabecera
+
+- Un `line-height: 60px` del tema se heredaba a todo: la lupa medía 74 px de
+  alto dentro de una cabecera de 61 y sobresalía por los dos lados.
+- `.header-nav a { display: block }` del tema ganaba a nuestro `inline-flex`,
+  así que el centrado de los iconos **nunca se aplicó**: la lupa se pintaba a
+  once píxeles y medio del centro de su círculo.
+- El menú de secciones pasa a la izquierda, pegado a la marca, y la cabecera
+  comparte ya la retícula de la página.
+- **Botón nuevo: «¿Puedo circular?».** La cabecera tenía tres enlaces de
+  sección, una lupa y el botón de tema, y ninguno era lo que el sitio hace.
+
+### Longitud de línea
+
+A 1920 px el texto corrido salía a 164 caracteres por línea, el doble de lo
+recomendable. Nuevo tope de 86ch que **deja 1366 exactamente como estaba** y
+baja 1920 a 96. Si algún día quieres apretar hasta el rango de manual, se
+cambia `--medida` en `sistema.css` a `75ch` y afecta a todo el sitio.
+
+### Contraste
+
+Repasadas las 46 páginas en los dos temas: **cero incidencias**.
