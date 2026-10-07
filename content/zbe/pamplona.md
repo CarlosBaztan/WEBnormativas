@@ -1,6 +1,6 @@
 ---
-title: "Zona de Bajas Emisiones (ZBE) de Pamplona: quién puede entrar al Casco Antiguo"
-description: "En Pamplona la etiqueta no basta: el Casco Antiguo lleva desde 2017 con acceso controlado y la ZBE añade el filtro ambiental encima. Quién entra, con qué permiso y desde cuándo se multa."
+title: "Zona de Bajas Emisiones (ZBE) de Pamplona: quién entra al Casco Antiguo"
+description: "La etiqueta no basta: el Casco Antiguo lleva desde 2017 con acceso controlado y la ZBE le añade el filtro ambiental. Quién entra y desde cuándo se multa."
 date: 2026-10-06
 
 tipo: "municipio"

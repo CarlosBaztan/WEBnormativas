@@ -1,6 +1,6 @@
 ---
 title: "ZBE Plaza Elíptica (Madrid): qué coches no pueden circular"
-description: "En Plaza Elíptica solo tienen prohibido circular los vehículos sin distintivo, incluido el tramo interior de la A-42. Excepciones y perímetro, con la ordenanza citada."
+description: "En Plaza Elíptica solo tienen prohibido circular los vehículos sin distintivo, incluido el tramo interior de la A-42. Excepciones y perímetro, con la ordenanza."
 date: 2026-09-23
 url: "/zbe/madrid/plaza-eliptica/"
 

@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Vitoria-Gasteiz: qué distintivos pueden entrar"
-description: "En Vitoria-Gasteiz entran los distintivos 0, ECO, C y B. Los vehículos sin distintivo quedaron fuera el 15 de septiembre de 2025, y el B tiene fecha marcada: el 1 de enero de 2030."
+description: "En Vitoria-Gasteiz entran 0, ECO, C y B. Los vehículos sin distintivo quedaron fuera el 15/09/2025, y el B tiene fecha marcada: el 1 de enero de 2030."
 date: 2026-10-05
 
 tipo: "municipio"

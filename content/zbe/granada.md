@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Granada: qué distintivos pueden entrar"
-description: "En Granada entran los distintivos 0, ECO, C y B. Solo quedan fuera los vehículos sin distintivo, y ni siquiera todos: los que tributan en Granada están exentos. Ordenanza citada artículo por artículo."
+description: "En Granada entran 0, ECO, C y B. Solo quedan fuera los sin distintivo, y ni esos todos: los que tributan en Granada están exentos. Con la ordenanza citada."
 date: 2026-09-29
 
 tipo: "municipio"
@@ -53,7 +53,7 @@ El anexo V.3, apartado 1, letra b) de la Ordenanza Integral de Movilidad Sosteni
 
 El artículo 134.1 lo dice por el otro lado: prohíbe el acceso a los vehículos *«no incluidos en el anexo V de esta Ordenanza, **sin perjuicio del acceso a los aparcamientos estratégicos de borde** a que se refiere este mismo anexo»*. Así que en la práctica la restricción alcanza solo a los vehículos sin distintivo ambiental, y ni siquiera les cierra los aparcamientos de borde.
 
-## El detalle que cambia las cosas: el domicilio fiscal
+## El domicilio fiscal del vehículo lo cambia todo
 
 La primera letra de esa misma lista, la a), autoriza a los *«vehículos de motor que dispongan de domicilio fiscal en el término municipal de Granada»*.
 

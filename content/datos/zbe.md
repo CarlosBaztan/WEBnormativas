@@ -92,4 +92,4 @@ El código del pipeline está en el repositorio del proyecto, en `pipeline/zbe_n
 - Las fechas de publicación de los ayuntamientos van de 2024 a 2025: algunos ficheros llevan tiempo sin actualizarse en origen.
 - Un municipio ausente **no significa que no tenga ZBE**.
 
-Si detectas un error, escríbenos y lo corregimos citando la fuente.
+Si detectas un error, [escríbenos](/legal/contacto/) y lo corregimos citando la fuente.

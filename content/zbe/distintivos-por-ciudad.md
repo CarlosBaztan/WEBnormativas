@@ -1,6 +1,6 @@
 ---
 title: "Qué distintivo necesitas en cada ZBE de España"
-description: "La respuesta ciudad por ciudad, en una sola tabla: qué distintivos entran hoy en cada Zona de Bajas Emisiones verificada, en qué horario y qué fechas de cambio hay ya publicadas."
+description: "La respuesta ciudad por ciudad en una sola tabla: qué distintivos entran hoy en cada ZBE verificada, en qué horario y qué fechas de cambio hay publicadas."
 date: 2026-10-04
 lastmod: 2026-10-04
 

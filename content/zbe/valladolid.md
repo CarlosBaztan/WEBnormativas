@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Valladolid: qué distintivos pueden entrar"
-description: "En Valladolid entran hoy los distintivos 0, ECO, C y B. Los vehículos sin distintivo quedaron fuera el 30 de junio de 2025, y el B tiene fecha marcada para el 31 de diciembre de 2027."
+description: "En Valladolid entran hoy 0, ECO, C y B. Los vehículos sin distintivo quedaron fuera el 30/06/2025, y el B tiene fecha marcada: el 31 de diciembre de 2027."
 date: 2026-09-29
 
 tipo: "municipio"
@@ -81,7 +81,7 @@ Y además: taxis, transporte público colectivo y autobuses turísticos autoriza
 
 Todas ellas hay que tramitarlas: la ordenanza remite al procedimiento de las directrices de funcionamiento de la ZBE.
 
-## Los accesos temporales, que casi nadie cuenta
+## Los accesos temporales: seis motivos para entrar sin distintivo
 
 El artículo 11 permite entrar **con cualquier clasificación ambiental**, incluido un vehículo sin distintivo, para seis cosas concretas:
 

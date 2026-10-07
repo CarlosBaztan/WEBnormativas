@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Alicante: qué restringe de verdad"
-description: "En Alicante la etiqueta ambiental no abre ninguna puerta: el Casco Antiguo sigue con su régimen de residentes y autorizados, y en el resto de la ZBE no hay restricción por distintivo."
+description: "En Alicante la etiqueta ambiental no abre ninguna puerta: el Casco Antiguo sigue con su régimen de residentes y autorizados, y el resto no restringe por ella."
 date: 2026-10-04
 
 tipo: "municipio"

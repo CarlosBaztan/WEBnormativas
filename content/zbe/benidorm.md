@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Benidorm: lo que consta y lo que no"
-description: "La ZBE de Benidorm funciona desde el 1 de enero de 2025. Qué dice la información oficial sobre residentes y autorizaciones, y por qué no publicamos aquí qué distintivos pueden entrar."
+description: "Funciona desde el 1 de enero de 2025. Qué dice la información oficial sobre residentes y autorizaciones, y por qué no publicamos qué distintivos pueden entrar."
 date: 2026-09-29
 
 tipo: "municipio"

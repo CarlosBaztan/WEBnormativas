@@ -250,7 +250,7 @@
       return '<div class="pc-distintivo pc-distintivo--' + esc(res.distintivo) + '">' +
         imagenDistintivo(res.distintivo) +
         '<div class="pc-distintivo__texto">' +
-        '<p class="pc-distintivo__etiqueta">Distintivo que probablemente le corresponde</p>' +
+        '<p class="pc-distintivo__etiqueta">Distintivo que probablemente te corresponde</p>' +
         '<p class="pc-distintivo__valor">' + esc(d ? d.nombre : res.distintivo) + '</p>' +
         (d && d.color ? '<p class="pc-distintivo__color">Color: ' + esc(d.color) + '</p>' : '') +
         '</div></div>' + extra;
@@ -259,8 +259,20 @@
     // Casos sin respuesta única: se explican, no se resuelven a ojo.
     var msg;
     if (res.motivo === 'moto') {
-      msg = 'Las motocicletas y ciclomotores se rigen por criterios propios que esta herramienta no cubre. ' +
-        'No vamos a deducir tu distintivo con reglas que no le aplican.';
+      /*
+       * Esto era un callejon sin salida: decia que no sabemos y ahi se
+       * acababa. Quien llega en moto se va sin nada, y la moto SI entra en
+       * las ZBE, asi que la pregunta que trae sigue en pie.
+       *
+       * No se inventa el distintivo, que es la regla dura. Se le dice donde
+       * esta el suyo de verdad y que con ese dato la ficha del municipio si
+       * le responde.
+       */
+      msg = 'Las motocicletas y ciclomotores se rigen por criterios propios que esta herramienta no cubre, ' +
+        'y no vamos a deducir tu distintivo con reglas que no le aplican. ' +
+        'Lo que consta para tu matrícula lo da la propia DGT en su sede electrónica, y con ese dato ' +
+        'la <a href="/zbe/">ficha de tu municipio</a> sí responde: ahí están sus reglas de acceso y sus ' +
+        '<a href="/zbe/excepciones/">excepciones</a>.';
     } else if (res.motivo === 'autonomia_desconocida') {
       msg = 'Falta la autonomía eléctrica. En un híbrido enchufable marca la diferencia entre el distintivo 0 ' +
         '(40 km o más) y el ECO (menos de 40 km).';
@@ -542,6 +554,36 @@
         partes.push('<p class="pc-veredicto__caduca"><strong>Pero tiene fecha de caducidad:</strong> ' +
           avisos.join('; ') + '. A partir de ese día, la ordenanza deja de permitir tu distintivo. ' +
           'Lo explicamos en la ficha completa.</p>');
+      }
+    }
+
+    /*
+     * El reverso del aviso de arriba, que faltaba.
+     *
+     * Para un distintivo que TODAVIA entra, la herramienta daba la fecha
+     * exacta en que dejara de hacerlo. Para uno que YA no entra decia «Ya no»
+     * y nada mas: ni cuando, ni desde cuando. Y es la misma pregunta vista
+     * desde el otro lado, con un dato que ya teniamos a mano.
+     *
+     * Importa mas de lo que parece: quien ha entrado ahi otras veces sin
+     * problema necesita saber si la regla cambio la semana pasada o hace dos
+     * anos, porque de eso depende que se crea la respuesta.
+     */
+    if (distintivoUsuario) {
+      var desde = [];
+      for (var q = 0; q < zonas.length; q++) {
+        if (veredictos[q] !== 'caducado') continue;
+        var fq = fechaCaducidad(zonas[q], distintivoUsuario);
+        if (fq) {
+          desde.push(plural
+            ? esc(zonas[q].nombre || zonas[q].id) + ', el ' + esc(fq)
+            : 'el ' + esc(fq));
+        }
+      }
+      if (desde.length) {
+        partes.push('<p class="pc-veredicto__caduca"><strong>Dejó de entrar:</strong> ' +
+          desde.join('; ') + '. Antes de esa fecha sí podía, y por eso es fácil ' +
+          'llevarse la sorpresa. La ficha completa explica qué cambió.</p>');
       }
     }
 

@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Palma: qué distintivos pueden entrar"
-description: "La ZBE de Palma es el Centre Ciutat, dentro de las Avenidas, y funciona las 24 horas. Hoy entran 0, ECO, C y B. El B sale el 1 de enero de 2027 y el C el 1 de enero de 2030."
+description: "La ZBE de Palma es el Centre Ciutat, dentro de las Avenidas, y funciona las 24 horas. Hoy entran 0, ECO, C y B. El B sale el 01/01/2027 y el C el 01/01/2030."
 date: 2026-10-04
 
 tipo: "municipio"

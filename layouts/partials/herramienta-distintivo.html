@@ -220,10 +220,22 @@
       {{- range sort $conRespuesta "municipio" }}
         {{- $enlaza = $enlaza | append (printf `<a href="%s">%s</a>` .url .municipio) }}
       {{- end }}
-      {{- $luego := slice }}
+      {{- /* TRES GRUPOS, NO DOS (07/10/2026).
+
+             Benidorm y Valencia tienen ficha publicada, con su fuente y su
+             fecha, y salían bajo «Siguientes:» junto a Salamanca, Cartagena y
+             Alcalá de Henares, que no tienen página ninguna. Cinco nombres en
+             una fila, dos de ellos enlazados y tres no, bajo un rótulo que
+             dice «todavía no».
+
+             Quien busca «ZBE Benidorm» y llega aquí lee que no está hecho y
+             se va, cuando la página existe y dice lo que consta y lo que no.
+             Es trabajo verificado escondido por una etiqueta. */ -}}
+      {{- $conFicha := slice }}
       {{- range sort $sinRespuesta "municipio" }}
-        {{- $luego = $luego | append (printf `<a href="%s">%s</a>` .url .municipio) }}
+        {{- $conFicha = $conFicha | append (printf `<a href="%s">%s</a>` .url .municipio) }}
       {{- end }}
+      {{- $luego := slice }}
       {{- /* La cola del JSON se filtra contra lo que ya tiene ficha. Es la
              unica parte de esta frase escrita a mano, y se queda vieja justo
              cuando se hace bien el trabajo: al publicar la ficha que faltaba,
@@ -248,6 +260,7 @@
 
       <p class="pc-ayuda pc-cobertura">
         {{- with $enlaza }}{{ site.Data.cobertura.etiqueta_verificados }} {{ delimit . ", " " y " | safeHTML }}.{{ end }}
+        {{- with $conFicha }} {{ site.Data.cobertura.etiqueta_con_ficha }} {{ delimit . ", " " y " | safeHTML }}.{{ end }}
         {{- with $luego }} {{ site.Data.cobertura.etiqueta_proximos }} {{ delimit . ", " " y " | safeHTML }}.{{ end }}
       </p>
 

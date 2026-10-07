@@ -1,6 +1,6 @@
 ---
-title: "Cómo conseguir la etiqueta ambiental de la DGT: dónde, cuánto y si es obligatoria"
-description: "La etiqueta no se solicita: la DGT ya te la asignó. Lo que se compra es la pegatina, cuesta desde 6 euros en Correos y llevarla puesta es voluntario salvo que tu ayuntamiento diga otra cosa."
+title: "Cómo conseguir la etiqueta ambiental de la DGT: dónde y cuánto cuesta"
+description: "La etiqueta no se solicita: la DGT ya te la asignó. Lo que se compra es la pegatina, desde 6 € en Correos, y solo obliga llevarla si lo dice tu ayuntamiento."
 date: 2026-10-06
 
 estado_dato: "verificado"
@@ -49,7 +49,7 @@ Aquí hay una discrepancia entre fuentes oficiales que conviene saber antes de i
 
 No son necesariamente contradictorias: Correos dice «desde», así que 6 € es su precio de partida y el canal online puede añadir envío. Pero si vas esperando pagar 5 euros por lo que la DGT dice en su web, es probable que pagues 6.
 
-**Comprobado el 6 de octubre de 2026 en las dos páginas.** Si cambian, esta tabla se queda vieja: avísanos y la corregimos.
+**Comprobado el 6 de octubre de 2026 en las dos páginas.** Si cambian, esta tabla se queda vieja: [escríbenos](/legal/contacto/) y la corregimos.
 
 ## Qué tienes que llevar
 

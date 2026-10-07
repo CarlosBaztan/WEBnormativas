@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Sevilla: qué distintivos pueden entrar"
-description: "La ZBE de Sevilla no es el centro: son dos zonas de la Isla de la Cartuja. Entran los distintivos 0, ECO, C y B; el resto, solo con excepción. De lunes a viernes de 7:00 a 19:00."
+description: "La ZBE de Sevilla no es el centro: son dos zonas de la Isla de la Cartuja. Entran 0, ECO, C y B; el resto, con excepción. De lunes a viernes de 7 a 19 h."
 date: 2026-10-04
 
 tipo: "municipio"

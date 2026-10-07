@@ -156,10 +156,33 @@
     partes.push('<p class="pc-fuente">Fuente: <a href="' + esc(DATOS._meta.fuente_url) +
       '" rel="noopener external" target="_blank">' + esc(DATOS._meta.fuente_nombre) +
       '<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>' +
-      ' · Verificado el 29 de septiembre de 2026</p>');
+      fechaVerificada() + '</p>');
     partes.push('</div>');
 
     return partes.join('');
+  }
+
+  /*
+   * La fecha de verificacion sale de los datos, NO escrita aqui.
+   *
+   * Estuvo a mano, «Verificado el 29 de septiembre de 2026», mientras el JSON
+   * ya traia `_meta.fecha_verificacion` con esa misma fecha. El dia que se
+   * revise el RD 920/2017 se tocara el JSON, que es lo que uno toca, y la
+   * pagina seguiria diciendo septiembre de 2026 sin que nada fallara. Es el
+   * mismo dato escrito dos veces, que es de lo que va media lista de trampas
+   * de CLAUDE.md.
+   */
+  var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
+               'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+  function fechaVerificada() {
+    var iso = DATOS._meta && DATOS._meta.fecha_verificacion;
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || '').trim());
+    if (!m) return '';
+    var mes = parseInt(m[2], 10);
+    if (mes < 1 || mes > 12) return '';
+    return ' · Verificado el ' + parseInt(m[3], 10) + ' de ' +
+      MESES[mes - 1] + ' de ' + m[1];
   }
 
   form.addEventListener('submit', function (ev) {

@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Bilbao: qué distintivos pueden entrar"
-description: "La ZBE de Bilbao está en vigor desde junio de 2024. Los distintivos 0, ECO y C entran sin restricción; el B quedó restringido en junio de 2025. Horario, excepciones y cómo se controla."
+description: "En vigor desde junio de 2024. Los distintivos 0, ECO y C entran sin restricción; el B quedó restringido en junio de 2025. Horario, excepciones y control."
 date: 2026-09-28
 
 tipo: "municipio"

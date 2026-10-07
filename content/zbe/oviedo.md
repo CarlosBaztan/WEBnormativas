@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Oviedo: qué distintivos pueden entrar"
-description: "Oviedo tiene dos anillos con calendarios distintos. En el interior, los vehículos sin distintivo están fuera desde el 31 de diciembre de 2025. En el exterior entran todos hasta el 31 de diciembre de 2027."
+description: "Dos anillos con calendarios distintos: en el interior, los sin distintivo están fuera desde el 31/12/2025; en el exterior entran todos hasta el 31/12/2027."
 date: 2026-10-05
 
 tipo: "municipio"

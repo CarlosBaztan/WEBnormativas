@@ -2,12 +2,12 @@
   "_meta": {
     "descripcion": "Textos y lista de la linea de cobertura que va bajo el selector de municipios.",
     "ojo": "La LISTA DE MUNICIPIOS YA NO SE ESCRIBE AQUI. Desde el 02/10/2026 sale de las propias fichas: los que tienen respuesta verificada y los que tienen ficha pero todavia no responden se calculan en layouts/partials/herramienta-distintivo.html. Antes estaba escrita a mano y habia que acordarse de editarla cada vez que se verificaba un municipio.",
-    "que_queda_aqui": "Solo las dos etiquetas, para poder cambiar la redaccion sin tocar plantillas, y la lista de municipios EN COLA, que no tienen pagina todavia y por tanto no hay dato del que sacarlos."
+    "que_queda_aqui": "Solo las dos etiquetas, para poder cambiar la redaccion sin tocar plantillas, y la lista de municipios EN COLA, que no tienen pagina todavia y por tanto no hay dato del que sacarlos.",
+    "tres_grupos": "Desde el 07/10/2026 son TRES etiquetas, no dos. Benidorm y Valencia tienen ficha publicada con informacion real y salian bajo 'Siguientes:', al lado de ciudades que no tienen pagina ninguna: el lector entendia que no existen todavia y no pulsaba un enlace que si estaba ahi."
   },
-
   "etiqueta_verificados": "Con respuesta verificada:",
-  "etiqueta_proximos": "Siguientes:",
-
+  "etiqueta_con_ficha": "Con ficha, pero todavía sin respuesta:",
+  "etiqueta_proximos": "Sin ficha todavía:",
   "proximos": [
     "Salamanca",
     "Cartagena",

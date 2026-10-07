@@ -1,6 +1,6 @@
 ---
 title: "¿Está mi calle dentro de una Zona de Bajas Emisiones?"
-description: "Escribe tu dirección y te decimos si cae dentro de alguna de las zonas de bajas emisiones cuyo perímetro publica la DGT, con enlace a la ordenanza de ese municipio."
+description: "Escribe tu dirección y te decimos si cae dentro de alguna zona de bajas emisiones cuyo perímetro publica la DGT, con enlace a la ordenanza del municipio."
 date: 2026-09-29
 
 tipo: "herramienta"

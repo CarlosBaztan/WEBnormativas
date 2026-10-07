@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Zaragoza: qué distintivos pueden entrar"
-description: "En Zaragoza entran los distintivos 0, ECO, C y B. Solo los vehículos sin distintivo necesitan registrarse para acceder. Perímetro, excepciones y accesos esporádicos."
+description: "En Zaragoza entran 0, ECO, C y B. Solo los vehículos sin distintivo necesitan registrarse para acceder. Perímetro, excepciones y accesos esporádicos."
 date: 2026-09-29
 
 tipo: "municipio"
@@ -67,7 +67,7 @@ Para ver el trazado completo tienes [el mapa](/mapa/), y para comprobar una dire
 
 Lo dice el Ayuntamiento con esas palabras en la [nota del 11 de diciembre de 2025](https://www.zaragoza.es/sede/servicio/noticia/346150) que anunciaba la entrada en la última fase: «La ZBE estará activa de lunes a viernes de 8,00 a 20,00 horas. El resto del horario, así como fines de semana y festivos, el acceso será libre para todos los vehículos».
 
-Es un margen considerable, y conviene tenerlo presente si tu coche no tiene distintivo: entrar un sábado, o un martes a las nueve de la noche, no infringe nada.
+Es un margen considerable, y cambia las cosas si tu coche no tiene distintivo: entrar un sábado, o un martes a las nueve de la noche, no infringe nada.
 
 **Esto corrige lo que decíamos antes.** Hasta el 6 de octubre de 2026 esta ficha decía que no habíamos podido confirmar el horario en una fuente oficial, y que las informaciones que hablaban de 8:00 a 20:00 no las dábamos por buenas. Ya está contrastado: eran correctas, y la fuente es la de arriba.
 
@@ -77,7 +77,7 @@ La implantación se hizo en cuatro fases y las primeras fueron **informativas, s
 
 ## Aquí sí hay que llevar la pegatina puesta
 
-Esto es poco frecuente y conviene saberlo, porque en la mayoría de las ciudades da igual.
+Esto es poco frecuente, y por eso pilla: en la mayoría de las ciudades da igual.
 
 Con carácter general, llevar pegado el distintivo ambiental es **voluntario**: el control se hace leyendo la matrícula. Pero la norma estatal permite que cada administración lo haga obligatorio en su zona, y **Zaragoza lo ha hecho**: el Ayuntamiento dice que los vehículos con etiqueta «deberán exhibirla en su parabrisas delantero» y que «será obligatorio exhibir el distintivo en un lugar visible».
 

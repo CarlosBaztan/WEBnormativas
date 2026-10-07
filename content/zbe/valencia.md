@@ -1,6 +1,6 @@
 ---
-title: "Zona de Bajas Emisiones (ZBE) de Valencia: qué dice la ordenanza y por qué todavía no multa"
-description: "La ordenanza de la ZBE de Valencia está aprobada solo inicialmente: el propio ayuntamiento dice que la aprobación definitiva sigue pendiente. Qué prevé el texto y desde cuándo afectaría a cada vehículo."
+title: "Zona de Bajas Emisiones (ZBE) de Valencia: la ordenanza aún no multa"
+description: "La ordenanza de la ZBE de Valencia solo está aprobada inicialmente: la definitiva sigue pendiente según el ayuntamiento. Qué prevé el texto y a quién afectaría."
 date: 2026-09-28
 
 tipo: "municipio"

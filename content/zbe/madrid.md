@@ -54,7 +54,7 @@ estado_dato: "verificado"
 draft: false
 ---
 
-Madrid no tiene una zona de bajas emisiones, sino **tres, con reglas distintas**. Antes de entrar conviene saber en cuál vas a circular.
+Madrid no tiene una zona de bajas emisiones, sino **tres, con reglas distintas**. Antes de entrar hay que saber en cuál vas a circular.
 
 ## Respuesta rápida
 
@@ -78,7 +78,7 @@ Si tu vehículo tiene distintivo 0, ECO, C o B, esta zona no te afecta: circulas
 
 ### El giro de abril de 2026: algunos coches sin etiqueta han vuelto
 
-Y aquí está lo que casi nadie ha actualizado.
+Es el cambio más reciente de las tres zonas, y el que peor recogen los resúmenes que siguen circulando.
 
 La **Ordenanza 2/2026, de 24 de marzo** introdujo una nueva disposición transitoria séptima que, **desde las 00:00 del 7 de abril de 2026**, permite circular otra vez a parte de los vehículos 'A'. Pero con tres límites que conviene leer despacio, porque cada uno puede dejarte fuera:
 
@@ -118,7 +118,7 @@ Pueden entrar, entre otros:
 - Vehículos de personas con **tarjeta de estacionamiento por movilidad reducida** (TEPMR), dadas de alta en el sistema municipal.
 - El resto de vehículos **B o C**, únicamente si acreditan que van a un aparcamiento o reserva de estacionamiento dentro de la zona.
 
-Dos horarios que conviene tener claros:
+Dos horarios, y no son el mismo:
 
 - **Vehículos industriales** que prestan servicios o hacen reparto: los 0 emisiones, las 24 horas; los ECO, de 7:00 a 21:00; los C, de 7:00 a 15:00.
 - **Motos y ciclomotores B o C** no autorizados por otra vía: solo de 7:00 a 22:00.

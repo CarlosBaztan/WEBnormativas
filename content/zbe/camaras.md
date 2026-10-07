@@ -1,6 +1,6 @@
 ---
 title: "Cámaras de las ZBE: qué leen y cuándo llega la multa"
-description: "Cómo se controla el acceso a una Zona de Bajas Emisiones: qué lee la cámara, contra qué registro lo compara, quién sanciona y por qué la denuncia tarda semanas en llegar."
+description: "Cómo se controla el acceso a una ZBE: qué lee la cámara, contra qué registro lo compara, quién sanciona y por qué la denuncia tarda semanas en llegar."
 date: 2026-10-01
 
 tipo: "articulo"
@@ -17,12 +17,12 @@ Esta página explica ese circuito pieza por pieza, y de dónde sale cada afirmac
 
 ## Lo que se comprueba es tu matrícula, no la pegatina
 
-Es la duda más repetida y conviene despejarla con una fuente delante. La [ordenanza de Bilbao](/zbe/bilbao/) lo dice con todas las letras: el control se hace con cámaras lectoras de matrículas conectadas a las bases de datos municipales y a las de la DGT, y **lo que cuenta es el distintivo que consta en el Registro de Vehículos**, no lo que lleves pegado en el parabrisas.
+Es la duda más repetida, y se despeja con una fuente delante. La [ordenanza de Bilbao](/zbe/bilbao/) lo dice con todas las letras: el control se hace con cámaras lectoras de matrículas conectadas a las bases de datos municipales y a las de la DGT, y **lo que cuenta es el distintivo que consta en el Registro de Vehículos**, no lo que lleves pegado en el parabrisas.
 
 De ahí se siguen dos cosas:
 
 - **Una cámara no puede ver tu pegatina.** Lee caracteres de una matrícula, la busca en un registro y obtiene de ahí el distintivo. La pegatina no entra en la operación.
-- **Si tu coche está mal clasificado en la DGT, la cámara se equivocará contigo.** No porque falle, sino porque el dato del que tira está mal. El distintivo que te consta se consulta por matrícula en la sede electrónica de la DGT, y conviene mirarlo antes de dar nada por hecho.
+- **Si tu coche está mal clasificado en la DGT, la cámara se equivocará contigo.** No porque falle, sino porque el dato del que tira está mal. El distintivo que te consta se consulta por matrícula en la sede electrónica de la DGT, y vale más mirarlo que suponerlo.
 
 Esto lo hemos leído en la ordenanza de Bilbao. **No afirmamos que las 45 ciudades con ZBE registrada funcionen igual**, porque no hemos leído las 45 ordenanzas. Donde sí lo hemos verificado, el mecanismo de fondo es el mismo: cotejo de la matrícula contra el Registro de Vehículos.
 
@@ -52,7 +52,7 @@ Este orden importa, porque mucha gente espera una carta y la notificación ya se
 | 4.º | **Boletín Oficial del Estado** | Art. 91 LTSV |
 | Opcional, previo | **Tablón Edictal de Sanciones de Tráfico (TESTRA)** | Art. 92 LTSV |
 
-Dos plazos que conviene tener presentes, los dos en días naturales:
+Dos plazos, los dos en días naturales:
 
 - **Diez días en la DEV.** Si consta que la notificación llegó a tu Dirección Electrónica Vial y pasan diez días naturales sin que accedas a su contenido, **se entiende rechazada** y el procedimiento sigue adelante sin ti (art. 90.2). No hace falta que la leas para que cuente.
 - **Veinte días en el BOE.** Cuando la notificación acaba publicándose en el BOE, transcurridos veinte días naturales desde la publicación se entiende practicada (art. 91).

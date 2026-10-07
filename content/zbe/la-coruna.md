@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de La Coruña / A Coruña: quién puede entrar"
-description: "La ZBE de La Coruña no va por etiqueta ambiental: ningún distintivo da acceso. Solo entran transporte público, taxis en calles concretas, vehículos autorizados y la carga y descarga."
+description: "La ZBE de La Coruña no va por etiqueta: ningún distintivo da acceso. Solo entran transporte público, taxis en calles concretas y la carga y descarga."
 date: 2026-10-05
 
 tipo: "municipio"

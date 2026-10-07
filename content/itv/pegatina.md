@@ -1,6 +1,6 @@
 ---
 title: "¿Es obligatorio llevar la pegatina de la ITV?"
-description: "Sí, el distintivo V-19 es obligatorio y lo dice el artículo 12.1 del Real Decreto 920/2017. Solo quedan exentos los vehículos históricos. No confundir con la etiqueta ambiental de la DGT, que no lo es."
+description: "Sí, el distintivo V-19 es obligatorio: lo dice el artículo 12.1 del RD 920/2017. Solo quedan exentos los históricos. No es la etiqueta ambiental de la DGT."
 date: 2026-09-29
 
 fuente_nombre: "Real Decreto 920/2017, de 23 de octubre, por el que se regula la inspección técnica de vehículos, artículo 12"

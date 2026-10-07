@@ -93,8 +93,8 @@ Puedes usar este sitio libremente para informarte. Al hacerlo te comprometes a
 no emplearlo con fines ilícitos, a no intentar dañarlo ni sobrecargarlo, y a no
 suplantar la identidad de su titular ni de terceros.
 
-Si detectas un error en un dato publicado, **escríbenos**: corregirlo nos
-interesa más que a nadie.
+Si detectas un error en un dato publicado,
+**[escríbenos](/legal/contacto/)**: corregirlo nos interesa más que a nadie.
 
 ## Legislación aplicable
 

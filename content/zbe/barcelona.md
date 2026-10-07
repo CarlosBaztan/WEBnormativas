@@ -1,6 +1,6 @@
 ---
 title: "Zona de Bajas Emisiones (ZBE) de Barcelona: qué distintivos pueden entrar"
-description: "Entran los distintivos 0, ECO, C y B. Los vehículos sin distintivo no, de lunes a viernes laborables de 7 a 20 h. Ordenanza de 2023 citada artículo por artículo: multa de 200 euros, 24 autorizaciones al año y un plazo de 24 horas que casi nadie conoce."
+description: "Entran 0, ECO, C y B; sin distintivo no, de lunes a viernes laborables de 7 a 20 h. Ordenanza de 2023: multa de 200 €, 24 permisos al año y 24 h para pedirlo."
 date: 2026-09-29
 
 tipo: "municipio"
@@ -46,7 +46,7 @@ draft: false
 
 La ZBE Rondas de Barcelona es **la más grande de España** y una de las primeras: las restricciones arrancaron el 1 de enero de 2020.
 
-Lo primero que conviene entender es que **no es una ZBE municipal**. Ocupa más de 95 km² dentro de las rondas de Dalt y Litoral, abarca cinco municipios, y **cada uno la regula con su propia ordenanza**. Esta ficha detalla la de Barcelona ciudad, que es la que hemos leído entera en el boletín.
+Lo primero que hay que entender es que **no es una ZBE municipal**. Ocupa más de 95 km² dentro de las rondas de Dalt y Litoral, abarca cinco municipios, y **cada uno la regula con su propia ordenanza**. Esta ficha detalla la de Barcelona ciudad, que es la que hemos leído entera en el boletín.
 
 ## Qué distintivos pueden entrar
 
@@ -104,7 +104,7 @@ El caso de Cornellà es el más llamativo: si su ZBE cubre ya el municipio enter
 
 Un vehículo sin distintivo puede pedir **hasta 24 autorizaciones diarias al año** para entrar de forma esporádica (artículo 15.1.a y anexo 3). Los **clásicos e históricos** entran por esta vía, no por una exención aparte.
 
-Y aquí está el detalle que casi nadie publica, y que puede salvarte una multa de 200 euros:
+Y el detalle que puede salvarte una multa de 200 euros es este:
 
 > El artículo 15.3 permite tramitar la autorización **hasta 24 horas después de haber entrado**. No hay que pedirla antes.
 
@@ -170,7 +170,7 @@ Este calendario y los años de matriculación salen de la página de vehículos 
 
 El artículo 20.1 lo tipifica: incumplir la prohibición del artículo 10 es **infracción grave** de los artículos 76.z.3 y 80.1 de la Ley de Tráfico, sancionable con **200 euros**.
 
-Y hay un supuesto agravado que conviene conocer. El artículo 20.2 eleva la multa a **260 euros** cuando se comete **habiendo declarado la Generalitat un episodio de contaminación del aire**. Son los mismos 200 euros incrementados un 30 %, por la mayor gravedad del hecho.
+Y hay un supuesto agravado. El artículo 20.2 eleva la multa a **260 euros** cuando se comete **habiendo declarado la Generalitat un episodio de contaminación del aire**. Son los mismos 200 euros incrementados un 30 %, por la mayor gravedad del hecho.
 
 Lo explicamos en detalle en [multas por entrar en una ZBE](/multas/zbe/).
 

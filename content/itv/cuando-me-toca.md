@@ -1,6 +1,6 @@
 ---
 title: "¿Cuándo me toca la ITV? Calcula la periodicidad de tu vehículo"
-description: "Cada cuánto hay que pasar la ITV según el tipo de vehículo y su edad, con la tabla del Real Decreto 920/2017. Turismos, furgonetas, motos, ciclomotores, autobuses y caravanas."
+description: "Cada cuánto hay que pasar la ITV según el tipo de vehículo y su edad, con la tabla del RD 920/2017. Turismos, furgonetas, motos, autobuses y caravanas."
 date: 2026-09-29
 
 # Esta pagina SI lleva la calculadora. Sin esta marca, layouts/itv/single.html
