@@ -223,3 +223,42 @@
   .col-estado     { width: 20%; }
   .col-verificado { width: 22%; }
 }
+
+/* La procedencia dentro de la celda del nombre, en la tabla comparativa.
+
+   No es una columna nueva: la tabla ya se desplaza en movil y una quinta
+   columna con el nombre de una ordenanza la haria mucho mas ancha. Aqui ocupa
+   el ancho que ya tiene la primera columna y no cuesta nada.
+
+   Mas pequena y en el gris secundario porque es lo que es: el respaldo de la
+   respuesta, no la respuesta. La regla del sitio es que ningun texto
+   secundario pese lo mismo que el principal. */
+.tabla-distintivos__norma {
+  display: block;
+  margin-top: var(--sp-1);
+  font-size: var(--txt-xs);
+  font-weight: 400;
+  line-height: var(--lh-corto);
+  color: var(--secondary);
+}
+
+/* EN MOVIL SE RECORTA A DOS LINEAS, Y EL TEXTO SIGUE ENTERO EN EL HTML.
+
+   Medido a 375 px: con la procedencia visible la tabla pasa de 3.405 px de
+   alto a 5.087, un 49 % mas, o sea dos pantallas de movil extra de
+   desplazamiento. El nombre de algunas ordenanzas pasa de 200 caracteres
+   («Ordenanza por la que se fijan los criterios de acceso, circulacion y
+   estacionamiento de vehiculos en la Zona de Bajas Emisiones de Barcelona y
+   se promueve una movilidad sin emisiones») en una columna de 120 px.
+
+   `line-clamp` recorta lo que se ve y NO lo que hay: el nombre completo sigue
+   en el marcado, que es lo que lee quien extrae la tabla, y el enlace sigue
+   llevando al boletin. En escritorio no hace falta y se ve entero. */
+@media (max-width: 63.99rem) {
+  .tabla-distintivos__norma a {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

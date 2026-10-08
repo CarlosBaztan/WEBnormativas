@@ -125,9 +125,18 @@
       {{- $condicionados = $vivosCond }}
     {{- end }}
 
+    {{- /* `norma`, `normaUrl` y `fecha` viajan CON la fila: la procedencia se
+           pinta dentro de la celda del nombre. El porqué, abajo en el <th>.
+
+           OJO: nada de comentarios DENTRO de la llamada a `dict`. Go los trata
+           como un operando más y el build muere con «unexpected "{" in
+           operand». */ -}}
     {{- $filas = $filas | append (dict
           "nombre"  (cond $varias (printf "%s: %s" $m.municipio $z.nombre) $m.municipio)
           "url"     (cond (ne (string $z.url) "") (string $z.url) $m.url)
+          "norma"    ($m.fuente_nombre | default "")
+          "normaUrl" ($m.fuente_url | default "")
+          "fecha"    ($m.fecha_verificacion | default "")
           "libres"  $libres
           "cond"    $condicionados
           "otros"   $otros
@@ -167,7 +176,32 @@
            dejo un href="%!s(<nil>)" publicado en su dia. */ -}}
     {{- range $f := sort $filas "nombre" }}
     <tr>
-      <th scope="row"><a href="{{ $f.url }}">{{ $f.nombre }}</a></th>
+      {{- /* LA PROCEDENCIA, DENTRO DE LA FILA.
+
+             La tabla daba diecisiete respuestas correctas y ni un artículo,
+             ni un boletín, ni una fecha con los que justificarlas. El cuerpo
+             de la página dice que «puedes ver la fuente de cada una en su
+             ficha», y eso obliga a seguir diecisiete enlaces: una persona lo
+             hace si le interesa, un extractor no.
+
+             Esa es la diferencia entre dar la respuesta y ser la fuente de la
+             respuesta. Dar la respuesta sin procedencia es lo que ya hacen
+             los sitios de motor, y ellos tienen la marca.
+
+             Va en la celda del nombre y no en una columna nueva porque la
+             tabla ya se desplaza en móvil: una quinta columna con el nombre
+             de una ordenanza la haría mucho más ancha. En la misma celda es
+             igual de extraíble y no cuesta ancho. */ -}}
+      <th scope="row">
+        <a href="{{ $f.url }}">{{ $f.nombre }}</a>
+        {{- if $f.norma }}
+        <span class="tabla-distintivos__norma">
+          {{- with $f.normaUrl }}<a href="{{ . }}" rel="noopener external" target="_blank">{{ $f.norma }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>
+          {{- else }}{{ $f.norma }}{{ end }}
+          {{- with $f.fecha }} · <span class="tabla-distintivos__fecha">Verificado el {{ time.Format "02/01/2006" . }}</span>{{ end }}
+        </span>
+        {{- end }}
+      </th>
       <td>
         {{- if $f.sinDistintivo }}
           {{/* La explicacion sale de la nota de la zona, no de aqui: cada
