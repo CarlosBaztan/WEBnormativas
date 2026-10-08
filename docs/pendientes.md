@@ -1,8 +1,8 @@
 # Pendientes: lo que te toca a ti y lo que no he podido verificar
 
-Actualizado el **07/10/2026**. La lista crece: lo que se resuelve se tacha y se
-deja a la vista, para no volver a abrirlo. Lo nuevo de hoy va marcado así:
-**(nuevo 07/10)**.
+Actualizado el **08/10/2026**. La lista crece: lo que se resuelve se tacha y se
+deja a la vista, para no volver a abrirlo. Lo de cada día va marcado con su
+fecha: **(nuevo 07/10)**, **(nuevo 08/10)**.
 
 ---
 
@@ -155,6 +155,77 @@ otras fichas?** Releídos los textos oficiales uno a uno el 06/10/2026:
 **Sevilla, Palma, Oviedo, Barcelona, Bilbao, Valladolid, Málaga y Granada
 quedan confirmadas.** El error era único de Alicante y está corregido, con la
 explicación escrita en la propia página.
+
+---
+
+## 2 ter. (nuevo 08/10) Lo que dijo el especialista en buscadores de IA
+
+Lancé tres agentes. El de visibilidad en IA terminó; **el de accesibilidad y
+el de repaso de código murieron por el límite de sesión de la cuenta** (se
+repone a las 2:10). Quedan pendientes de relanzar.
+
+Del que terminó he comprobado cada afirmación antes de tocar nada, y he
+aplicado tres: el `nofollow` de los enlaces a la ordenanza, el grafo JSON-LD
+partido en dos y la procedencia dentro de la tabla comparativa. Lo que queda
+es tuyo.
+
+### Lo más importante que dijo, y no es de marcado
+
+**Si Bing no conoce tus URL, ninguna ficha puede ser citada en ChatGPT Search
+ni en Perplexity**, por buena que sea. Los dos se apoyan en ese índice para
+descubrir páginas. Eso convierte el punto 1 de esta lista (la redirección de
+`www` y de `http`) en el cambio con más efecto de todos, por delante de
+cualquier cosa de contenido. Y es un interruptor.
+
+Lo comprobó hoy: `http://cocheapto.com/zbe/granada/` y
+`https://www.cocheapto.com/zbe/granada/` devuelven los dos **200**, sin
+redirigir.
+
+Dijo también algo que va contra la intuición de todo el sector: **Google
+afirma por escrito que no hay ningún marcado especial para aparecer en AI
+Overviews**. Ni `FAQPage`, ni `HowTo`, ni `llms.txt`. Lo que mete a una página
+en una respuesta generada es que la respuesta esté en texto, en una frase, con
+su fuente al lado. Por eso la procedencia en la tabla sí la he hecho, y el
+marcado nuevo no.
+
+### 13. (nuevo 08/10) Diez fichas sin `articulo`
+
+`barcelona`, `benidorm`, `bilbao`, `granada`, `madrid`, `malaga`, `oviedo`,
+`valencia`, `valladolid` y `zaragoza` no tienen el campo `articulo` en el
+front matter. Tres de ellas llevan los artículos dentro de `fuente_nombre`
+(Granada, Oviedo, Valladolid) y por eso sí se ven en la tabla; las otras siete
+citan la ordenanza entera sin decir por qué artículo.
+
+**Esto es trabajo de verificación, no de redacción**, y por eso no lo hago yo:
+sale de releer la ordenanza que cada ficha ya cita y enlaza. Varias lo tienen
+escrito en su propio cuerpo, así que en algunos casos es transcribir; en otros
+hay que volver al boletín.
+
+Es el dato que le falta a la tabla comparativa para que cada fila se sostenga
+sola.
+
+### 14. (nuevo 08/10) El autor de las 46 páginas es una persona que no existe
+
+El JSON-LD declara `author: {"@type": "Person", "name": "Coche Apto"}`: una
+persona que se llama como la marca, sin URL y sin nada que la identifique. La
+autoría humana verificable es de las señales que más separan «fuente» de
+«agregador».
+
+Tu nombre ya está publicado en `/legal/aviso-legal/` porque lo exige el
+artículo 10 de la LSSI, y en `/sobre/`. **Pero ponerlo como autor en las 46
+páginas es una decisión tuya sobre tu propio nombre, no mía**, así que la dejo
+aquí en vez de hacerla. Es una línea en `hugo.toml`.
+
+De paso encogería `HUERFANAS_CONOCIDAS`: `verificado_por` existe en
+`madrid.md` y no lo lee nadie.
+
+### 15. (nuevo 08/10) `Organization.sameAs` está vacío
+
+Hoy «Coche Apto» no es una entidad resoluble para ningún buscador: no hay ni
+un enlace externo que diga quién es. El ancla legítima que ya está en tu plan
+es **el alta del dataset en `datos.gob.es`**, que `docs/seo-arquitectura.md`
+sitúa en el mes 6. Cuando exista esa URL, se añade y el campo deja de estar
+vacío. No propongo inventar perfiles para rellenarlo.
 
 ---
 
