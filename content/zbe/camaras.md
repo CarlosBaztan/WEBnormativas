@@ -111,5 +111,3 @@ Tampoco afirmamos qué tecnología concreta usa cada municipio. Solo recogemos l
 ---
 
 **Fuentes:** [Real Decreto Legislativo 6/2015, Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722), arts. 84.2, 84.4, 87.2, 89.2.c), 90, 91 y 92 · [Real Decreto 1052/2022](https://www.boe.es/buscar/doc.php?id=BOE-A-2022-22689), arts. 14 y 15 y anexo I.A.8
-
-*Esta página resume la norma con fines informativos; no es asesoramiento jurídico. Para un caso concreto, consulta con un profesional.*

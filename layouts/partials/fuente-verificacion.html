@@ -159,7 +159,13 @@
 
   {{- if not $esCompacta }}
   <p class="fuente__nota">
-    Reproducimos lo que dice la norma citada. No sustituye al texto oficial ni a la señalización de la vía.
+    {{- /* «No es asesoramiento juridico» estaba escrito A MANO al final de
+           cuatro paginas, en TRES redacciones distintas, y faltaba en las
+           otras cuarenta. Un descargo legal que solo aparece en cuatro
+           paginas de cuarenta y cuatro no protege de nada, y escrito de tres
+           formas distintas se lee como relleno. Aqui lo dice la plantilla,
+           una vez, y sale en todas las que citan una norma. */ -}}
+    Reproducimos lo que dice la norma citada. <strong>No sustituye al texto oficial ni a la señalización de la vía, y no es asesoramiento jurídico.</strong>
   </p>
   {{- end }}
 </aside>

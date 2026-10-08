@@ -70,5 +70,3 @@ Y si te preguntas cómo se enteran, la respuesta es una cámara que lee tu matr�
 ---
 
 **Fuentes:** [Real Decreto 1052/2022, de 27 de diciembre, por el que se regulan las zonas de bajas emisiones](https://www.boe.es/buscar/doc.php?id=BOE-A-2022-22689) · Ley 7/2021, de 20 de mayo, de cambio climático y transición energética, art. 14.3
-
-*Esta página resume la norma con fines informativos; no es asesoramiento jurídico.*

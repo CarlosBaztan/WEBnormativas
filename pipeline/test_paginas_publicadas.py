@@ -342,8 +342,20 @@ def test_el_json_ld_de_una_ficha_describe_un_solo_documento(destino):
     con `hugo server` sale uno, asi que auditando en local se ve un tercio de
     lo que ve Google. Esta prueba compila como produccion.
     """
+    # BARRIDO COMPLETO, NO TRES URL A MANO.
+    #
+    # Estaban escritas: /zbe/granada/, /zbe/pamplona/ y /etiquetas/b/. Una
+    # seccion nueva, o una plantilla nueva que rompiera el @id, no estaba
+    # cubierta por nadie.
+    #
+    # Las paginas de /datos/ se saltan a proposito y hay que decir por que:
+    # ahi nuestro nodo es un `Dataset` con @id acabado en `#dataset`, no hay
+    # ningun `WebPage` nuestro, y la prueba daria un fallo falso. Es una
+    # entidad distinta de la pagina que la describe, asi que su @id tambien
+    # tiene que serlo.
     fallos = []
-    for ruta in ("/zbe/granada/", "/zbe/pamplona/", "/etiquetas/b/"):
+    comprobadas = 0
+    for ruta in _urls_publicadas(destino):
         html = _html_de(destino, ruta)
         if not html:
             continue
@@ -354,6 +366,13 @@ def test_el_json_ld_de_una_ficha_describe_un_solo_documento(destino):
                 nodos.append(json.loads(b))
             except ValueError:
                 fallos.append("%s: un bloque JSON-LD no parsea" % ruta)
+        # El filtro se hace sobre los nodos YA PARSEADOS, no buscando texto en
+        # el HTML: el espaciado del JSON depende de como lo serialice Hugo y
+        # un `"@type": "Dataset"` con otra separacion no casaba. Comprobado:
+        # con el filtro por texto, /datos/zbe/ daba un fallo falso.
+        if any(n.get("@type") in ("Dataset", "DataCatalog") for n in nodos):
+            continue
+        comprobadas += 1
         propios = [n.get("@id") for n in nodos if n.get("@type") == "WebPage"]
         for n in nodos:
             meop = n.get("mainEntityOfPage")
@@ -363,6 +382,10 @@ def test_el_json_ld_de_una_ficha_describe_un_solo_documento(destino):
                 fallos.append(
                     "%s: el %s apunta a %s y nuestro WebPage es %s"
                     % (ruta, n.get("@type"), meop.get("@id"), propios or "(ninguno)"))
+    assert comprobadas >= 40, (
+        "Solo se han comprobado %d paginas. O el barrido esta roto, o el "
+        "filtro de Dataset se esta llevando por delante medio sitio."
+        % comprobadas)
     assert not fallos, (
         "El JSON-LD de estas paginas describe dos documentos distintos: %s"
         % "; ".join(fallos))
