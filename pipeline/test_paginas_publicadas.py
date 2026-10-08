@@ -149,6 +149,86 @@ def _exigir_cobertura(vistas, total, prueba):
         "HTML, asi que no ha comprobado nada en ellas." % (prueba, vistas, total))
 
 
+ROTULOS_DISTINTIVO = {"0 emisiones": "0", "ECO": "ECO", "C": "C", "B": "B",
+                      "Sin distintivo": "SIN"}
+
+
+def _tabla_de_la_prosa(cuerpo):
+    """Lo que la tabla escrita a mano dice que entra y que no.
+
+    OJO CON LA EXPRESION. El primer intento capturaba el rotulo con `+?`
+    perezoso, asi que de «**[0 emisiones](/etiquetas/0-emisiones/)**» se
+    quedaba con «0» y de «ECO» con «E», no casaban con el diccionario y se
+    saltaban. Resultado: NUEVE fichas marcadas como discrepantes cuando
+    estaban las nueve bien. Es la misma clase de error que conto 172 imagenes
+    sin `alt` que estaban correctas: la medicion, no el sitio.
+    """
+    entran, fuera, otros = set(), set(), set()
+    for linea in cuerpo.splitlines():
+        if not linea.startswith("|") or linea.startswith("|:"):
+            continue
+        celdas = [c.strip() for c in linea.strip("|").split("|")]
+        if len(celdas) < 2:
+            continue
+        rot = re.sub(r"\*+", "", celdas[0])
+        rot = re.sub(r"\[([^\]]+)\]\([^)]*\)", "\\1", rot).strip()
+        clave = ROTULOS_DISTINTIVO.get(rot)
+        if not clave:
+            continue
+        v = celdas[1]
+        if re.match(r"(?i)^\**s[ií]\b", v):
+            entran.add(clave)
+        elif re.match(r"(?i)^\**no\b", v):
+            fuera.add(clave)
+        else:
+            otros.add(clave)
+    return entran, fuera, otros
+
+
+def test_la_prosa_y_el_dato_dicen_lo_mismo(destino):
+    """
+    Cada ficha dice que distintivos entran DOS VECES: en la tabla que lee una
+    persona y en `etiquetas_permitidas`, que es lo que lee la herramienta de
+    la portada y lo que sale en el dataset publico.
+
+    Son dos copias del mismo hecho. El dia que se corrija una y no la otra, la
+    pagina y la herramienta responderan cosas distintas sobre la misma ciudad,
+    y ninguna de las dos dara error. Es el patron de media lista de trampas de
+    CLAUDE.md, aqui sobre el dato que el sitio existe para publicar.
+
+    Hoy coinciden en las diez fichas que tienen tabla. Las otras cinco no la
+    tienen a proposito: tres son ZBE donde la etiqueta no abre nada, una es
+    nivel C y la ultima no esta en vigor.
+    """
+    malas = []
+    con_tabla = 0
+    for slug, _, fm, texto in _fichas():
+        if fm.get("tipo") != "municipio":
+            continue
+        m = re.search(r"^etiquetas_permitidas:\s*\[(.*?)\]", texto, re.M)
+        if not m:
+            continue
+        declaradas = set(x.strip().strip('"').upper()
+                         for x in m.group(1).split(",") if x.strip())
+        cuerpo = texto.split("---", 2)[-1]
+        entran, fuera, otros = _tabla_de_la_prosa(cuerpo)
+        if not (entran or fuera or otros):
+            continue
+        con_tabla += 1
+        faltan = declaradas - entran - otros
+        sobran = entran - declaradas
+        choque = declaradas & fuera
+        if faltan or sobran or choque:
+            malas.append("%s (declarado %s, la prosa da por si %s)"
+                         % (slug, sorted(declaradas), sorted(entran)))
+    assert con_tabla >= 8, (
+        "Solo %d fichas con tabla de distintivos en la prosa. O se han "
+        "perdido, o la lectura de la tabla esta rota." % con_tabla)
+    assert not malas, (
+        "En estas fichas la tabla que lee una persona y el dato que lee la "
+        "herramienta no dicen lo mismo: %s" % "; ".join(malas))
+
+
 def test_toda_pagina_de_zbe_declara_su_tipo(destino):
     """
     En content/zbe/ conviven fichas de municipio, paginas de zona, articulos y
