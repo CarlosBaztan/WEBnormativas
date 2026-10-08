@@ -626,7 +626,7 @@
 
   function pintarZona(zona, distintivoUsuario) {
     var partes = ['<div class="pc-zona">'];
-    partes.push('<h4>' + esc(zona.nombre || zona.id || 'Zona') + '</h4>');
+    partes.push('<h3>' + esc(zona.nombre || zona.id || 'Zona') + '</h3>');
 
     var permitidos = zona.distintivos_permitidos;
     var pendiente = (typeof permitidos === 'string') || !permitidos || !permitidos.length;
@@ -696,7 +696,7 @@
     var salida = [pintarVeredicto(m, distintivoUsuario)];
 
     var partes = ['<div class="pc-ordenanza">'];
-    partes.push('<h3>Lo que dice la ordenanza de ' + esc(m.municipio) + '</h3>');
+    partes.push('<h2>Lo que dice la ordenanza de ' + esc(m.municipio) + '</h2>');
 
     // El mismo criterio que arriba: solo lo que hemos leido. Si no, el
     // recuento decia "3 zonas" y debajo aparecia una que no responde nada.
@@ -730,7 +730,8 @@
 
     if (m.fuente_nombre) {
       var fuente = m.fuente_url
-        ? '<a href="' + esc(m.fuente_url) + '" rel="noopener" target="_blank">' + esc(m.fuente_nombre) + '</a>'
+        ? '<a href="' + esc(m.fuente_url) + '" rel="noopener external" target="_blank">' +
+            esc(m.fuente_nombre) + '<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>'
         : esc(m.fuente_nombre);
       var boletin = m.fuente_boletin ? ' · ' + esc(m.fuente_boletin) : '';
       var fecha = m.fecha_verificacion ? ' · Verificado el ' + esc(formatearFecha(m.fecha_verificacion)) : '';

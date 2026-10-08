@@ -21,7 +21,7 @@
 {{- $slug := .Params.slug_nap | default .File.ContentBaseName }}
 
 <div id="mapa-municipio" class="mapa-municipio" data-slug="{{ $slug }}"
-     role="region" aria-label="Perimetro de la zona de bajas emisiones de {{ .Params.municipio | default .Title }}">
+     role="region" aria-label="Perímetro de la zona de bajas emisiones de {{ .Params.municipio | default .Title }}">
   <p class="mapa-zbe__cargando">Cargando el perímetro…</p>
 </div>
 

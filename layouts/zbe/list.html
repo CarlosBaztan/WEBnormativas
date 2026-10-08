@@ -75,11 +75,11 @@
     su zona está <strong>registrada oficialmente</strong>, no que estén sancionando:
     eso solo lo afirmamos tras leer su ordenanza.</p>
 
-    {{ partial "tabla-zbe.html" (dict "filas" $destacados "verificadas" $verificadas) }}
+    {{ partial "tabla-zbe.html" (dict "filas" $destacados "verificadas" $verificadas "rotulo" "Tabla: municipios destacados con Zona de Bajas Emisiones") }}
 
     <details class="lista-completa">
       <summary>Ver los {{ $total }} municipios registrados</summary>
-      {{ partial "tabla-zbe.html" (dict "filas" $todos "verificadas" $verificadas) }}
+      {{ partial "tabla-zbe.html" (dict "filas" $todos "verificadas" $verificadas "rotulo" "Tabla: los 45 municipios con ZBE registrada en el Punto de Acceso Nacional") }}
     </details>
 
     <h2>Qué significa cada columna</h2>
@@ -114,7 +114,7 @@
 
     <p class="fuente-lista">
       <strong>Fuente:</strong>
-      <a href="{{ $datos._meta.fuente_url }}" rel="noopener" target="_blank">{{ $datos._meta.fuente_nombre }}</a>
+      <a href="{{ $datos._meta.fuente_url }}" rel="noopener external" target="_blank">{{ $datos._meta.fuente_nombre }}<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>
       · Licencia {{ $datos._meta.licencia }}
       · Datos descargados el {{ $datos._meta.fecha_actualizacion }}
     </p>

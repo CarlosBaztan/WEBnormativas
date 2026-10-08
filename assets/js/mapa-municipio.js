@@ -131,6 +131,22 @@
           scrollWheelZoom: false
         });
 
+        /*
+         * L1: Leaflet pinta el boton de cerrar el globo con
+         * aria-label="Close popup", en ingles, dentro de un documento que
+         * declara lang="es". Un lector configurado en espanol lo lee con
+         * fonetica espanola y sale ruido. Es el mismo motivo por el que se
+         * tradujo aria-label="Breadcrumb" en breadcrumbs.html, y el resto de
+         * Leaflet ya esta en espanol: era un hueco, no una decision.
+         *
+         * Leaflet 1.9 no expone una opcion para esto, asi que se cambia el
+         * elemento cuando el globo se abre.
+         */
+        mapa.on('popupopen', function () {
+          var cerrar = document.querySelector('.leaflet-popup-close-button');
+          if (cerrar) cerrar.setAttribute('aria-label', 'Cerrar el globo');
+        });
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 18,
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

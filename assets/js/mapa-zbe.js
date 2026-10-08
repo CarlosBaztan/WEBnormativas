@@ -129,7 +129,7 @@
       partes.push('<span class="globo-nota">Todavía no hemos verificado sus reglas de acceso.</span>');
       if (p.fuente_url) {
         partes.push('<a class="globo-ficha" href="' + esc(p.fuente_url) +
-          '" rel="noopener external" target="_blank">Fuente oficial</a>');
+          '" rel="noopener external" target="_blank">Fuente oficial<span class="visually-hidden"> (se abre en una ventana nueva)</span></a>');
       }
     }
 
@@ -371,6 +371,22 @@
         var grupos = porMunicipio(capas);
         chinchetas(mapa, grupos);
         selector(mapa, grupos, limites);
+
+        /*
+         * L1: Leaflet pinta el boton de cerrar el globo con
+         * aria-label="Close popup", en ingles, dentro de un documento que
+         * declara lang="es". Un lector configurado en espanol lo lee con
+         * fonetica espanola y sale ruido. Es el mismo motivo por el que se
+         * tradujo aria-label="Breadcrumb" en breadcrumbs.html, y el resto de
+         * Leaflet ya esta en espanol: era un hueco, no una decision.
+         *
+         * Leaflet 1.9 no expone una opcion para esto, asi que se cambia el
+         * elemento cuando el globo se abre.
+         */
+        mapa.on('popupopen', function () {
+          var cerrar = document.querySelector('.leaflet-popup-close-button');
+          if (cerrar) cerrar.setAttribute('aria-label', 'Cerrar el globo');
+        });
 
         sinParadasVacias(mapa);
         mapa.on('layeradd zoomend', function () { sinParadasVacias(mapa); });

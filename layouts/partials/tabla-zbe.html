@@ -21,6 +21,14 @@
   Parámetros:
     filas       slice de municipios de data/zbe.json
     verificadas dict slug -> página de la ficha verificada
+    rotulo      opcional. El nombre con el que se anuncia la tabla.
+
+  EL ROTULO ES UN PARAMETRO DESDE EL 08/10/2026. En /zbe/ hay DOS tablas, la
+  de destacados y la de los 45 registrados, y las dos se anunciaban igual:
+  «Tabla: municipios con Zona de Bajas Emisiones registrada». Quien se mueve
+  por tablas o por grupos no podia distinguirlas. Es el mismo problema que
+  este sitio ya resolvio para los cinco <nav> y para las dos variantes del
+  bloque de fuente, aplicado a medias aqui.
 
   La columna "Provincia" solo se rellena cuando tenemos ficha propia: el
   dataset del NAP no trae provincia, y no se inventa.
@@ -39,9 +47,9 @@
        `role="group"` y no `region`: una region es un landmark y saldria en la
        lista de puntos de referencia junto a los cinco <nav> de la pagina. */ -}}
 <div class="tabla-envoltorio tabla-scroll" role="group" tabindex="0"
-     aria-label="Tabla: municipios con Zona de Bajas Emisiones registrada">
+     aria-label="{{ .rotulo | default "Tabla: municipios con Zona de Bajas Emisiones registrada" }}">
   <table class="tabla-zbe">
-    <caption class="visually-hidden">Municipios con Zona de Bajas Emisiones registrada</caption>
+    <caption class="visually-hidden">{{ .rotulo | default "Municipios con Zona de Bajas Emisiones registrada" }}</caption>
     {{- /* UN <col> POR COLUMNA, Y LOS PORCENTAJES SUMAN 100.
 
            El navegador asocia cada <col> a una columna POR POSICION, no por
