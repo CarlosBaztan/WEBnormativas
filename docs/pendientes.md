@@ -259,8 +259,29 @@ yo.
 |:---|:---|:---|
 | ~~m1~~ | **RECHAZADO con motivo.** Partir por comas daba veinte falsos positivos: agrupar selectores es CSS normal. La prueba lleva anotado lo que no cubre | |
 | ~~m2~~ | **HECHO.** Duplicados **entre** ficheros tampoco, y hay uno vivo: `.dato-vacio` está en `normativa.css` y en `pagina-zbe.css` | igual |
-| m3 | `test_el_json_ld...` recorre tres URL a mano | `test_paginas_publicadas.py` |
+| ~~m3~~ | **HECHO.** `test_el_json_ld...` recorre tres URL a mano | `test_paginas_publicadas.py` |
 | ~~m4~~ | **HECHO.** `SECCIONES_EN_EL_MENU` está a mano; debería salir de `data/menu_lateral.json` | igual |
+
+---
+
+### (nuevo 08/10) Tres contratos nuevos que antes no vigilaba nadie
+
+No son pendientes, son cosas que ya no se pueden romper en silencio. Las
+apunto porque explican por qué el número de pruebas ha subido tanto:
+
+- **La tabla que lees y el dato que lee la herramienta dicen lo mismo.** Cada
+  ficha declara los distintivos dos veces: en la tabla escrita a mano y en
+  `etiquetas_permitidas`. Si se corrige una y no la otra, la ficha y la
+  calculadora de la portada responderían cosas distintas sobre la misma
+  ciudad, las dos con cara de verificadas. Hoy coinciden en las trece fichas
+  con tabla.
+- **Cada fila de la tabla comparativa lleva su ordenanza y su fecha**, y no se
+  puede vaciar sin que falle.
+- **Ninguna página puede decir de sí misma algo que no es verdad**, en
+  ninguno de sus dos sitios (el aviso de arriba y la tabla de datos).
+
+Comprobado además, sin hallazgos: las fechas de caducidad del front matter
+aparecen todas en la prosa de su ficha, y los horarios declarados también.
 
 ---
 
