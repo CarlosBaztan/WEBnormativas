@@ -205,6 +205,38 @@
    * entero. Sin estos puntos, la pagina no dice donde hay zonas de bajas
    * emisiones, que es lo primero que se le pide.
    */
+  /*
+   * CIENTO UNA PARADAS DE TABULACION SIN NOMBRE (08/10/2026).
+   *
+   * Medido con pulsaciones reales: desde el selector de municipio, cinco
+   * tabuladores y el foco cae en un `path.leaflet-interactive`. Y detras hay
+   * 100 mas, 56 poligonos y 45 chinchetas. Ninguno tiene aria-label, ninguno
+   * tiene role, ninguno aparece en el arbol de accesibilidad: o sea que el
+   * navegador no los expone y el foco si entra. Con un lector de pantalla son
+   * 101 silencios seguidos; en pantalla no se ve moverse nada, porque a ese
+   * nivel de zoom las formas miden pocos pixeles.
+   *
+   * El `tabindex` NO esta puesto en el codigo (lo comprobamos: `tabIndex` lee
+   * -1 y no hay atributo), lo mete el navegador por su cuenta con los SVG
+   * interactivos de Leaflet. Por eso nunca se vio leyendo el fuente.
+   *
+   * No se pierde ninguna funcion al quitarlas: el raton sigue funcionando y
+   * el teclado ya tiene la misma via por el selector de municipio, que ademas
+   * de volar abre el globo (ver `llevaA`). Si algun dia se quiere que las
+   * chinchetas sean operables con teclado, entonces hay que darles
+   * role="button" y aria-label con el nombre del municipio, no dejarlas asi.
+   *
+   * Hay que reaplicarlo cuando Leaflet recrea las capas, que pasa al quitar y
+   * poner las chinchetas en `zoomend`.
+   */
+  function sinParadasVacias(mapa) {
+    var c = mapa.getContainer();
+    if (!c) return;
+    c.querySelectorAll('path.leaflet-interactive').forEach(function (p) {
+      p.setAttribute('tabindex', '-1');
+    });
+  }
+
   function chinchetas(mapa, grupos) {
     var capa = L.layerGroup();
 
@@ -316,7 +348,15 @@
           style: estilo,
           onEachFeature: function (f, capaZona) {
             capaZona.bindPopup(globo(f.properties));
-            // Accesible por teclado: sin esto el mapa solo existe para el raton.
+            /*
+             * El rotulo que sale al pasar el raton. ATENCION: aqui ponia
+             * "Accesible por teclado: sin esto el mapa solo existe para el
+             * raton", y era falso. El tooltip es `sticky`, o sea que sigue al
+             * puntero, y Leaflet solo mantiene UN elemento de tooltip en el
+             * DOM a la vez: los `aria-describedby` de los otros cien
+             * poligonos no resuelven a nada. Lo accesible por teclado es el
+             * selector de municipio, que vuela y abre el globo.
+             */
             var rotulo = f.properties.zona
               ? f.properties.municipio + ': ' + f.properties.zona
               : f.properties.municipio;
@@ -331,6 +371,9 @@
         var grupos = porMunicipio(capas);
         chinchetas(mapa, grupos);
         selector(mapa, grupos, limites);
+
+        sinParadasVacias(mapa);
+        mapa.on('layeradd zoomend', function () { sinParadasVacias(mapa); });
 
         var aviso = contenedor.querySelector('.mapa-zbe__cargando');
         if (aviso) aviso.remove();

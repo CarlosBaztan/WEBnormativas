@@ -171,11 +171,53 @@
       });
     }
 
+    /*
+      EL FOCO SE ESCAPABA DEL PANEL, Y LO QUE ENFOCABA QUEDABA TAPADO.
+
+      Medido el 08/10/2026 con pulsaciones reales, a 375 px: con el panel
+      abierto, despues de los seis grupos, la septima pulsacion de Tab sacaba
+      el foco del panel y lo llevaba a la miga «Inicio», que esta DEBAJO del
+      fondo oscuro. El enlace enfocado quedaba integramente tapado por el
+      panel, que es la palabra exacta del criterio 2.4.11 de WCAG 2.2, nivel
+      AA. En pantalla no se veia ningun anillo de foco en ninguna parte.
+      Shift+Tab desde el boton de cerrar se escapaba igual, hacia la cabecera.
+
+      Y habia una segunda cara, para quien usa lector de pantalla: el resto de
+      la pagina seguia en el arbol de accesibilidad, asi que con el panel
+      abierto se podia leer entera como si nada.
+
+      `inert` resuelve las dos cosas a la vez: saca del orden de tabulacion y
+      del arbol. Solo en movil: en escritorio el menu es una columna fija, no
+      un panel modal, y ahi no hay nada que acotar.
+
+      OJO AL ORDEN en cerrarPanel: hay que quitar el `inert` ANTES de
+      devolverle el foco al boton, porque el boton esta dentro de <header> y
+      mientras siga inerte no admite el foco.
+    */
+    function fueraDelPanel(inerte) {
+      /*
+        QUITARLO SE HACE SIEMPRE; PONERLO, SOLO EN MOVIL.
+
+        Si la condicion cubriera los dos sentidos habria un agujero: abrir el
+        panel a 375 px y ensanchar la ventana llama a cerrarPanel() desde
+        ajustar(), y para entonces `enColumna.matches` ya es true, asi que la
+        salida temprana se saltaria la limpieza y `header`, `main` y `footer`
+        se quedarian inertes PARA SIEMPRE: pagina entera sin teclado y sin
+        lector, hasta recargar.
+      */
+      if (inerte && enColumna.matches) return;
+      ['header', 'main', 'footer'].forEach(function (sel) {
+        var elementos = document.querySelectorAll(sel);
+        for (var i = 0; i < elementos.length; i++) elementos[i].inert = inerte;
+      });
+    }
+
     function abrir() {
       nav.setAttribute('data-abierto', '');
       boton.setAttribute('aria-expanded', 'true');
       fondo.hidden = false;
       document.body.style.overflow = 'hidden';
+      fueraDelPanel(true);
       enfocarElPanel();
     }
 
@@ -184,6 +226,7 @@
       boton.setAttribute('aria-expanded', 'false');
       fondo.hidden = true;
       document.body.style.overflow = '';
+      fueraDelPanel(false);
       if (devolverFoco) boton.focus();
     }
 
