@@ -197,6 +197,20 @@ def _reglas(texto):
             if sel.startswith("@"):
                 contexto.append(sel)
             elif sel:
+                # LA CADENA ENTERA, NO SELECTOR A SELECTOR, y es deliberado.
+                #
+                # El repaso de codigo del 08/10/2026 señalo que asi se escapa
+                # un duplicado escrito como lista: `.pc-boton, .zz {}` mas un
+                # `.pc-boton {}` suelto. Es verdad. Pero al partir por comas
+                # salieron VEINTE avisos, y casi todos son CSS normal:
+                # agrupar un selector con otros para compartir una propiedad y
+                # darle ademas su propia regla para lo suyo es un idioma, no un
+                # descuido.
+                #
+                # Una comprobacion que da falsos positivos se desactiva el
+                # primer dia, que es justo lo que este proyecto escribio al
+                # anadir el aviso de las rayas largas. Asi que se queda como
+                # estaba, sabiendo lo que no cubre.
                 clave = (tuple(contexto), sel)
                 cuenta[clave] = cuenta.get(clave, 0) + 1
             prof += 1
@@ -254,6 +268,44 @@ def test_ningun_selector_se_declara_dos_veces_en_el_mismo_fichero():
     assert not repetidos, (
         "Selectores declarados mas de una vez en el mismo fichero y el mismo "
         "contexto; fusionalos en una sola regla: %s" % "; ".join(sorted(repetidos)))
+
+
+def test_ningun_selector_se_declara_en_dos_ficheros_distintos():
+    """
+    Los cinco CSS de extended/ se concatenan en uno. Para la cascada, y para
+    quien lee, da igual en cual este un selector: tenerlo en dos sigue siendo
+    la misma decision tomada dos veces, y hay que mirar los dos sitios para
+    saber que hace.
+
+    La prueba hermana solo mira DENTRO de cada fichero, asi que esto se le
+    escapaba. Habia un caso vivo: `.dato-vacio` estaba en normativa.css (el
+    chip ambar) y en pagina-zbe.css (la opacidad y el tamano). Juntado.
+
+    `:root` se exceptua por lo mismo que en la otra: es el almacen de tokens,
+    no un componente.
+    """
+    EXENTOS = (":root", ":root[data-theme=\"dark\"]")
+
+    # Deuda declarada, como HUERFANAS_CONOCIDAS en test_front_matter.py: lo
+    # que ya estaba repartido el dia que se escribio esta prueba. TIENE QUE
+    # ENCOGER, NUNCA CRECER. `.dato-vacio` salio de aqui el mismo dia.
+    REPARTIDOS_CONOCIDOS = {
+        ".menu-lateral",            # menu-lateral.css + normativa.css
+        ".pc-acciones",             # herramienta.css + normativa.css
+        ".pc-distintivo__texto",    # distintivos.css + herramienta.css
+    }
+    donde = {}
+    for nombre, texto in _ficheros(CSS, ".css"):
+        for (contexto, sel) in _reglas(texto):
+            if sel in EXENTOS:
+                continue
+            donde.setdefault((contexto, sel), set()).add(nombre)
+    repetidos = ["%s: %s" % (sel, ", ".join(sorted(fich)))
+                 for (ctx, sel), fich in donde.items()
+                 if len(fich) > 1 and sel not in REPARTIDOS_CONOCIDOS]
+    assert not repetidos, (
+        "Estos selectores estan declarados en mas de un fichero, y los "
+        "ficheros se concatenan: %s" % "; ".join(sorted(repetidos)))
 
 
 def _ejecutar():

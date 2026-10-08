@@ -115,13 +115,6 @@
   white-space: nowrap;
 }
 
-/* La opacidad se apilaba sobre el chip ambar de normativa.css y dejaba el
-   texto en 2,50:1, por debajo del 4,5:1 que pide el nivel AA. El estado se
-   sigue distinguiendo por el fondo ambar y por la cursiva. */
-.dato-vacio {
-  opacity: 1;
-  font-size: var(--txt-sm);
-}
 
 .celda-verificado {
   white-space: nowrap;

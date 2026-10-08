@@ -518,7 +518,28 @@ def _ventana_del_menu(html, ruta):
     return m.group(1)
 
 
-SECCIONES_EN_EL_MENU = ("zbe", "etiquetas", "itv", "multas", "datos")
+def _secciones_en_el_menu():
+    """Las secciones que el menu lateral cubre, SACADAS DEL MISMO DATO.
+
+    Estaba escrita a mano: anadir una seccion al menu y olvidarse de esta
+    tupla dejaba sus paginas sin comprobar, en silencio. Ahora sale de
+    data/menu_lateral.json, que es lo que lee la plantilla.
+    """
+    ruta = os.path.join(RAIZ, "data", "menu_lateral.json")
+    datos = json.loads(io.open(ruta, encoding="utf-8").read())
+    secciones = set()
+    for grupo in datos.get("grupos", []):
+        for enlace in grupo.get("enlaces", []):
+            if enlace.get("proximamente"):
+                continue
+            trozos = (enlace.get("url") or "").strip("/").split("/")
+            if trozos and trozos[0]:
+                secciones.add(trozos[0])
+    assert secciones, "no se han podido leer las secciones de menu_lateral.json"
+    return secciones
+
+
+SECCIONES_EN_EL_MENU = _secciones_en_el_menu()
 
 
 def test_el_menu_se_abre_por_la_seccion_de_la_pagina(destino):

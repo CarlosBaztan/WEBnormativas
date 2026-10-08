@@ -351,12 +351,22 @@ textarea:focus-visible {
     padding-left: 0;
 }
 
+/* Venia partido en dos ficheros: aqui el chip ambar, y en pagina-zbe.css la
+   opacidad y el tamano. Se concatenan, asi que para la cascada y para quien
+   lo lee daba igual en cual estuviera, pero habia que mirar los dos para
+   saber que hace. Juntado el 08/10/2026.
+
+   `opacity: 1` no es decorativo: la opacidad heredada se apilaba sobre este
+   fondo ambar y dejaba el texto en 2,50:1, por debajo del 4,5:1 que pide el
+   nivel AA. El estado se distingue por el fondo y por la cursiva. */
 .dato-vacio {
     color: var(--nv-warn-fg);
     background: var(--nv-warn-bg);
     border-radius: 4px;
     padding: 1px 6px;
+    font-size: var(--txt-sm);
     font-style: italic;
+    opacity: 1;
 }
 
 .datos-nota {
