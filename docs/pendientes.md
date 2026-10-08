@@ -238,14 +238,14 @@ se corta la sesión: ninguno es urgente y todos están medidos.
 
 | | Qué | Dónde | Criterio |
 |:---|:---|:---|:---|
-| M2 | El resultado de la portada mete un `h3` entre el `h1` y el `h2`, así que se salta un nivel | `assets/js/puedo-circular.js`, líneas 699 y 629: `h3`→`h2`, `h4`→`h3` | 1.3.1, A |
-| M3 | Tres enlaces externos abren pestaña nueva sin el aviso accesible que sí tienen los otros once | `puedo-circular.js:733`, `mapa-zbe.js:132`, `layouts/zbe/list.html:117` | regla propia |
-| M4 | El globo del mapa se abre con el selector sin anuncio ni foco | `mapa-zbe.js`, `llevaA()` | 4.1.3, AA |
-| M5 | Las dos tablas de `/zbe/` se anuncian con la misma etiqueta | `tabla-zbe.html`, pasar la etiqueta por parámetro | 2.4.6, AA |
-| L1 | `aria-label="Close popup"`, en inglés, en un documento en español | Leaflet, en `popupopen` | 3.1.2, AA |
-| L2 | Dos `aria-label` sin tilde: «Espana» y «Perimetro» | `mapa/single.html:48`, `mapa-municipio.html:24` | calidad |
+| ~~M2~~ | **HECHO.** El resultado de la portada mete un `h3` entre el `h1` y el `h2`, así que se salta un nivel | `assets/js/puedo-circular.js`, líneas 699 y 629: `h3`→`h2`, `h4`→`h3` | 1.3.1, A |
+| ~~M3~~ | **HECHO.** Tres enlaces externos abren pestaña nueva sin el aviso accesible que sí tienen los otros once | `puedo-circular.js:733`, `mapa-zbe.js:132`, `layouts/zbe/list.html:117` | regla propia |
+| M4 | El globo del mapa se abre con el selector sin anuncio ni foco. **No lo he hecho: no consegui abrir un globo con un evento sintetico, asi que no podia comprobar el arreglo** | `mapa-zbe.js`, `llevaA()` | 4.1.3, AA |
+| ~~M5~~ | **HECHO.** Las dos tablas de `/zbe/` se anuncian con la misma etiqueta | `tabla-zbe.html`, pasar la etiqueta por parámetro | 2.4.6, AA |
+| ~~L1~~ | **HECHO.** `aria-label="Close popup"`, en inglés, en un documento en español | Leaflet, en `popupopen` | 3.1.2, AA |
+| ~~L2~~ | **HECHO.** Dos `aria-label` sin tilde: «Espana» y «Perimetro» | `mapa/single.html:48`, `mapa-municipio.html:24` | calidad |
 | L4 | Dos enlaces del menú se llaman solo «C» y «B» | `data/menu_lateral.json` | opcional |
-| L5 | El mapa a pantalla completa no acota el foco | `mapa-gestos.js`, reusar el `inert` de G1 | 2.4.3, A |
+| ~~L5~~ | **HECHO.** El mapa a pantalla completa no acota el foco | `mapa-gestos.js`, reusar el `inert` de G1 | 2.4.3, A |
 
 **M1 no se hace, y es una decisión:** proponía quitar `aria-live` de los tres
 contenedores de resultado. El propio informe dice que no pudo confirmarlo sin
@@ -257,10 +257,10 @@ yo.
 
 | | Qué | Dónde |
 |:---|:---|:---|
-| m1 | Un duplicado escrito como lista (`.pc-boton, .zz {}` más `.pc-boton {}`) no lo detecta la prueba | `test_estilos.py`, partir por comas |
-| m2 | Duplicados **entre** ficheros tampoco, y hay uno vivo: `.dato-vacio` está en `normativa.css` y en `pagina-zbe.css` | igual |
+| ~~m1~~ | **RECHAZADO con motivo.** Partir por comas daba veinte falsos positivos: agrupar selectores es CSS normal. La prueba lleva anotado lo que no cubre | |
+| ~~m2~~ | **HECHO.** Duplicados **entre** ficheros tampoco, y hay uno vivo: `.dato-vacio` está en `normativa.css` y en `pagina-zbe.css` | igual |
 | m3 | `test_el_json_ld...` recorre tres URL a mano | `test_paginas_publicadas.py` |
-| m4 | `SECCIONES_EN_EL_MENU` está a mano; debería salir de `data/menu_lateral.json` | igual |
+| ~~m4~~ | **HECHO.** `SECCIONES_EN_EL_MENU` está a mano; debería salir de `data/menu_lateral.json` | igual |
 
 ---
 

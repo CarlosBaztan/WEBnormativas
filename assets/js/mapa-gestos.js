@@ -153,6 +153,41 @@ window.MapaGestos = (function () {
           boton.setAttribute('aria-pressed', ampliado ? 'true' : 'false');
         }
 
+        /*
+         * A PANTALLA COMPLETA, EL RESTO DE LA PAGINA SE APAGA.
+         *
+         * Con el mapa ampliado, `body` queda en overflow hidden y el
+         * contenedor cubre la ventana entera, pero el resto de la pagina
+         * seguia en el recorrido del tabulador: pasada la atribucion de
+         * Leaflet, el foco se iba a una pagina que no se ve. Hacia atras no
+         * se notaba porque los controles del mapa van antes.
+         *
+         * Es la misma situacion del panel de secciones en movil, con menos
+         * riesgo porque Escape sale siempre y devuelve el foco al boton. Y se
+         * resuelve igual: `inert` saca del tabulador Y del arbol de
+         * accesibilidad de una vez.
+         *
+         * Se apagan `header` y `footer` enteros, y del `main` todo menos el
+         * propio contenedor del mapa: `inert` se hereda, asi que apagar
+         * `main` apagaria tambien el mapa.
+         */
+        function fueraDelMapa(inerte) {
+          var padre = contenedor.parentElement;
+          ['header', 'footer'].forEach(function (sel) {
+            var els = document.querySelectorAll(sel);
+            for (var i = 0; i < els.length; i++) els[i].inert = inerte;
+          });
+          while (padre && padre !== document.body) {
+            var hermanos = padre.parentElement ? padre.parentElement.children : [];
+            for (var j = 0; j < hermanos.length; j++) {
+              if (hermanos[j] !== padre && hermanos[j].tagName !== 'SCRIPT') {
+                hermanos[j].inert = inerte;
+              }
+            }
+            padre = padre.parentElement;
+          }
+        }
+
         function alterna() {
           var ampliado = contenedor.classList.toggle('mapa--ampliado');
           document.body.classList.toggle('mapa-ampliado-activo', ampliado);
@@ -160,6 +195,7 @@ window.MapaGestos = (function () {
           /* Leaflet guarda el tamano del contenedor: si cambia por CSS hay que
              decirselo o pinta los tiles donde ya no estan. */
           mapa.invalidateSize();
+          fueraDelMapa(ampliado);
           if (!ampliado) boton.focus();
         }
 
