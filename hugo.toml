@@ -38,6 +38,17 @@ disableKinds = ["taxonomy", "term"]
 
 [pagination]
   pagerSize = 20
+  # Hugo generaba /datos/page/1/, /legal/page/1/ y /multas/page/1/, las tres
+  # secciones que caen en el list.html del tema, que pagina. La primera pagina
+  # de un paginador es siempre un duplicado de la propia seccion: mismo
+  # contenido, otra URL. No estaban en el sitemap y su canonico apuntaba bien,
+  # asi que Google consolidaba, pero salian ademas SIN menu lateral, o sea sin
+  # forma de salir de ahi.
+  #
+  # Lo destapo la prueba del menu el 08/10/2026, al cambiar un `continue`
+  # silencioso por un `assert`: hasta entonces esas tres paginas se saltaban
+  # sin comprobar nada y nadie sabia que existian.
+  disableAliases = true
 
 [minify]
   disableXML = true

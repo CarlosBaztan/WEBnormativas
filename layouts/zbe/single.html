@@ -76,7 +76,25 @@
   `tipo` vale por defecto "municipio", como en layouts/index.html, para que
   las fichas antiguas que no lo declaran (Madrid) sigan comportandose igual.
 */ -}}
-{{- $esFicha := in (slice "municipio" "zona") ($p.tipo | default "municipio") }}
+{{- /* EL VALOR POR DEFECTO, AL LADO SEGURO (08/10/2026).
+
+       Era "municipio", y sostenia UNA sola pagina: madrid.md, que no lo
+       declaraba. A cambio dejaba la trampa armada para la siguiente pagina
+       que cayera en la seccion: un articulo normal, sin `tipo`, salia con el
+       recuadro rojo de «Datos sin verificar», con «Las reglas de acceso de
+       esta ZBE no estan verificadas» y con la tabla «Lo que consta en la
+       normativa» llena de «No consta». Comprobado creando uno.
+
+       Seria la SEXTA vez que una plantilla de seccion se dispara en una
+       pagina que no es la suya, y en /itv/ ya se eligio el defecto contrario
+       por este mismo motivo. CLAUDE.md lo dice: «al escribir una plantilla de
+       seccion, preguntarse siempre que pasa con la segunda pagina que caiga
+       ahi».
+
+       Ahora madrid.md declara su `tipo` y el defecto pasa a "articulo". Lo
+       vigila test_toda_pagina_de_zbe_declara_su_tipo, para que el defecto no
+       vuelva a sostener a nadie. */ -}}
+{{- $esFicha := in (slice "municipio" "zona") ($p.tipo | default "articulo") }}
 {{/* Las paginas de ZONA responden en prosa y en tabla, no con
      `etiquetas_permitidas`. Al meterlas en $esFicha se las trataba como
      fichas de municipio sin datos, y las dos de Madrid publicaban «las
@@ -85,7 +103,7 @@
      debajo. En la ciudad con mas busquedas del nicho, y diciendo justo lo
      contrario de lo que el sitio vende. Tercera vez que se pisa la trampa
      de tratar por seccion lo que hay que tratar por tipo. */}}
-{{- $esMunicipio := eq ($p.tipo | default "municipio") "municipio" }}
+{{- $esMunicipio := eq ($p.tipo | default "articulo") "municipio" }}
 
 {{- /* LA LISTA VACIA NO SIEMPRE ES UN HUECO (07/10/2026).
 
@@ -231,6 +249,15 @@
             {{- end }}
           </ul>
           <p class="datos-nota">La ordenanza nombra estos distintivos. Que un vehículo los tenga no equivale por sí solo a poder acceder: revisa horario y excepciones, y la señalización de la vía.</p>
+          {{- else if $sinVigor }}
+          {{- /* La ordenanza esta leida; lo que no hay es nada en vigor.
+                 Decir aqui «sin verificar» era desmentir al aviso que esta
+                 cuatro bloques mas arriba en la misma pagina, que dice que
+                 hemos leido el texto y que todavia no obliga a nada. Lo
+                 destapo la prueba al dejar de filtrar por `declara_reglas`
+                 (08/10/2026); es el caso de Valencia. */ -}}
+          <strong>Todavía no hay ninguno exigible.</strong>
+          <p class="datos-nota">La ordenanza está leída, pero no ha completado su aprobación: mientras no esté en vigor no hay restricción por distintivo que cumplir.</p>
           {{- else if $noVaPorDistintivo }}
           {{- /* La respuesta es que no hay respuesta por etiqueta, y eso es un
                  dato verificado, no un hueco. El porqué sale de `nota_zona`,

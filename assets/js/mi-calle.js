@@ -144,18 +144,34 @@
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
 
-    var texto = (document.getElementById('mi-calle-direccion').value || '').trim();
+    var campo = document.getElementById('mi-calle-direccion');
+    var texto = (campo.value || '').trim();
+
+    /* El error lleva AL CAMPO, no al mensaje. Ver el porque largo en
+       assets/js/puedo-circular.js: el `return` seco se saltaba el foco que si
+       tiene la rama de exito, y el campo podia quedar fuera de pantalla. */
+    campo.removeAttribute('aria-invalid');
+    campo.removeAttribute('aria-describedby');
+
     if (texto.length < 5) {
       salida.innerHTML = aviso('pc-aviso--incierto', '',
-        'Escribe una dirección algo más completa: calle, número y municipio.');
+        '<span id="mc-error-direccion">Escribe una dirección algo más completa: ' +
+        'calle, número y municipio.</span>');
+      campo.setAttribute('aria-invalid', 'true');
+      campo.setAttribute('aria-describedby', 'mc-error-direccion');
+      campo.focus();
       return;
     }
 
     var ahora = Date.now();
     if (ahora - ultimaPeticion < ESPERA_MS) {
+      /* Aqui NO se marca `aria-invalid`: lo que escribio esta bien, lo que
+         pasa es que ha pulsado demasiado rapido. Pero el foco si vuelve al
+         campo, que es desde donde va a reintentar. */
       salida.innerHTML = aviso('pc-aviso--incierto', '',
         'Espera un segundo entre consultas, por favor. El servicio de búsqueda de ' +
         'direcciones es gratuito y conviene no saturarlo.');
+      campo.focus();
       return;
     }
     ultimaPeticion = ahora;

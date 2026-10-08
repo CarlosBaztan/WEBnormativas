@@ -104,26 +104,102 @@ def _urls_publicadas(destino):
 
 
 def _fichas():
-    """Cada .md de content/zbe/, con su front matter y su texto crudo."""
+    """Cada .md de content/zbe/, con su ruta publicada, front matter y texto.
+
+    LA RUTA SALE DEL FRONT MATTER, NO DEL NOMBRE DEL FICHERO (08/10/2026).
+
+    Antes se componia `/zbe/<nombre del fichero>/`, y eso dejaba CIEGAS a
+    cuatro de estas pruebas justo en las dos paginas donde mas importa:
+    `madrid-distrito-centro.md` y `madrid-plaza-eliptica.md` declaran
+    `url: "/zbe/madrid/distrito-centro/"`. La ruta inventada no existia en el
+    build, `_html_de` devolvia None y los bucles hacian `continue` sin
+    comprobar nada.
+
+    Medido: de 23 fichas, 21 encontraban su HTML y esas dos no. Y son
+    exactamente el caso 2 del docstring de arriba, en la ciudad con mas
+    busquedas del nicho. Reintroducir esa regresion dejaba las diez pruebas
+    en verde.
+
+    Por eso ademas existe `_exigir_cobertura()`: «no he podido mirar» no
+    puede parecerse a «he mirado y esta bien».
+    """
     carpeta = os.path.join(RAIZ, "content", "zbe")
     for nombre in sorted(os.listdir(carpeta)):
         if not nombre.endswith(".md") or nombre == "_index.md":
             continue
         texto = io.open(os.path.join(carpeta, nombre), encoding="utf-8").read()
-        yield nombre[:-3], front_matter(texto), texto
+        fm = front_matter(texto)
+        slug = nombre[:-3]
+        ruta = fm.get("url") or "/zbe/%s/" % slug
+        if not ruta.endswith("/"):
+            ruta += "/"
+        yield slug, ruta, fm, texto
+
+
+def _exigir_cobertura(vistas, total, prueba):
+    """Falla si la prueba no llego a mirar todo lo que decia mirar.
+
+    El silencio es el modo de fallo de esta clase de prueba: un `continue`
+    que trata «no encontre el HTML» igual que «lo mire y estaba bien». Si se
+    renombra una pagina o se le pone un `url:` propio, esto lo dice en vez de
+    seguir en verde.
+    """
+    assert vistas == total, (
+        "%s solo pudo mirar %d de %d paginas: a las otras no les encontro el "
+        "HTML, asi que no ha comprobado nada en ellas." % (prueba, vistas, total))
+
+
+def test_toda_pagina_de_zbe_declara_su_tipo(destino):
+    """
+    En content/zbe/ conviven fichas de municipio, paginas de zona, articulos y
+    una herramienta, y Hugo les da la misma plantilla a todas: elige por
+    seccion, no por lo que la pagina sea. `tipo` es lo unico que las
+    distingue.
+
+    Mientras el valor por defecto de la plantilla sostenga alguna pagina real,
+    cambiarlo rompe esa pagina y no cambiarlo deja la trampa armada para la
+    siguiente. Exigiendo que TODAS lo declaren, el defecto deja de importar y
+    se puede dejar en el lado seguro, que es "articulo": una pagina nueva no
+    hereda el tratamiento de ficha sin pedirlo.
+
+    Comprobado antes de escribir esto: un articulo normal sin `tipo` salia con
+    el recuadro rojo de «Datos sin verificar», con «Las reglas de acceso de
+    esta ZBE no estan verificadas» y con la tabla de normativa llena de «No
+    consta». Seria la sexta vez que esta trampa se pisa.
+
+    Esta prueba NO lee el HTML: mira el front matter. Esta aqui porque es la
+    pareja de las otras, que si lo leen y que replicaban el mismo valor por
+    defecto que la plantilla, de modo que una pagina sin declararlo pasaba por
+    ficha para las dos y nadie se quejaba.
+    """
+    sin_tipo = [slug for slug, _, fm, _ in _fichas() if not fm.get("tipo")]
+    assert not sin_tipo, (
+        "Estas paginas de /zbe/ no declaran `tipo`, asi que dependen del valor "
+        "por defecto de la plantilla: %s" % ", ".join(sin_tipo))
 
 
 def test_ninguna_ficha_verificada_dice_que_no_lo_esta(destino):
     """Lo que paso el 07/10/2026 con Alicante, La Coruna y Pamplona."""
     malas = []
-    for slug, fm, texto in _fichas():
+    candidatas = vistas = 0
+    for slug, ruta, fm, texto in _fichas():
+        # SIN el filtro de `declara_reglas`, a proposito. Estaba y dejaba
+        # fuera las dos paginas de zona de Madrid, que responden en prosa y en
+        # una tabla escrita a mano, no con `etiquetas_permitidas`. O sea que
+        # la prueba escrita por el caso 2 del docstring no cubria el caso 2.
+        # `estado_dato: verificado` ya es la senal fuerte: si una pagina dice
+        # que esta verificada, no puede publicar que no lo esta, se declaren
+        # sus reglas como se declaren.
         if fm.get("estado_dato") != "verificado":
             continue
-        if not declara_reglas(texto):
+        candidatas += 1
+        html = _html_de(destino, ruta)
+        if html is None:
             continue
-        html = _html_de(destino, "/zbe/%s/" % slug)
-        if html and AVISO_SIN_VERIFICAR in html:
+        vistas += 1
+        if AVISO_SIN_VERIFICAR in html:
             malas.append(slug)
+    _exigir_cobertura(vistas, candidatas, "ninguna_ficha_verificada_dice_que_no_lo_esta")
     assert not malas, (
         "Estas fichas tienen la ordenanza leida y publican que no la hemos "
         "contrastado: %s" % ", ".join(malas)
@@ -156,15 +232,25 @@ def test_el_aviso_de_datos_sin_verificar_solo_sale_donde_toca(destino):
     que de verdad no este verificada.
     """
     malas = []
-    for slug, fm, _ in _fichas():
-        html = _html_de(destino, "/zbe/%s/" % slug)
-        if not html or AVISO_SIN_FUENTE not in html:
+    candidatas = vistas = 0
+    for slug, ruta, fm, _ in _fichas():
+        candidatas += 1
+        html = _html_de(destino, ruta)
+        if html is None:
             continue
-        es_ficha = fm.get("tipo", "municipio") in ("municipio", "zona")
+        vistas += 1
+        if AVISO_SIN_FUENTE not in html:
+            continue
+        # `tipo` NO se lee con un valor por defecto: replicar aqui el que usa
+        # la plantilla hacia que una pagina sin declararlo pasara por ficha
+        # para las dos, y la prueba se daba por satisfecha. Lo vigila
+        # test_toda_pagina_de_zbe_declara_su_tipo.
+        es_ficha = fm.get("tipo") in ("municipio", "zona")
         if not es_ficha or fm.get("estado_dato") == "verificado":
             malas.append("%s (tipo=%s, estado=%s)" % (
-                slug, fm.get("tipo", "municipio"),
+                slug, fm.get("tipo", "sin declarar"),
                 fm.get("estado_dato", "sin declarar")))
+    _exigir_cobertura(vistas, candidatas, "el_aviso_de_datos_sin_verificar_solo_sale_donde_toca")
     assert not malas, (
         "Estas paginas publican el aviso de «datos sin verificar» sin ser una "
         "ficha pendiente: %s" % ", ".join(malas))
@@ -180,16 +266,60 @@ def test_la_tabla_de_datos_tampoco_dice_sin_verificar(destino):
     primero no arregla el segundo.
     """
     malas = []
-    for slug, fm, texto in _fichas():
-        if fm.get("estado_dato") != "verificado" or not declara_reglas(texto):
+    candidatas = vistas = 0
+    for slug, ruta, fm, texto in _fichas():
+        # Mismo motivo que arriba: sin el filtro de `declara_reglas`.
+        if fm.get("estado_dato") != "verificado":
             continue
-        html = _html_de(destino, "/zbe/%s/" % slug)
-        if html and "Sin verificar. No publicamos esta lista" in html:
+        candidatas += 1
+        html = _html_de(destino, ruta)
+        if html is None:
+            continue
+        vistas += 1
+        if "Sin verificar. No publicamos esta lista" in html:
             malas.append(slug)
+    _exigir_cobertura(vistas, candidatas, "la_tabla_de_datos_tampoco_dice_sin_verificar")
     assert not malas, (
         "Estas fichas tienen la ordenanza leida y su tabla de datos dice "
         "«sin verificar»: %s" % ", ".join(malas)
     )
+
+
+def test_cada_fila_de_la_tabla_comparativa_lleva_su_procedencia(destino):
+    """
+    /zbe/distintivos-por-ciudad/ da diecisiete respuestas que no existen
+    juntas en ningun otro sitio de Espana. Sin la ordenanza y la fecha en la
+    misma fila, quien extrae la tabla se lleva la respuesta y no tiene nada
+    que atribuir: eso es dar la respuesta, no ser la fuente de la respuesta.
+
+    POR QUE ESTA PRUEBA EXISTE. El dato nacio sin ella. Los campos se leen con
+    `| default ""` y se pintan con un `{{- if $f.norma }}`, asi que la
+    ausencia no da error: da una celda vacia. Comprobado vaciando
+    `fuente_nombre` en zbe-verificados.html: las diecisiete celdas de
+    procedencia desaparecen y NINGUNA de las once suites del proyecto falla.
+    La pagina vuelve a estar como antes del arreglo y nadie se entera.
+
+    Es el patron que CLAUDE.md llama «un tubo a medio hacer no da ningun
+    error»: paso con la ADVERTENCIA del pipeline, con la columna
+    `etiquetas_permitidas` vacia y con `dataset_formatos`. Tres veces.
+
+    LA IGUALDAD ES LO IMPORTANTE: tantas procedencias como filas. Asi no se
+    puede «arreglar» un fallo quitando la procedencia de todas.
+    """
+    html = _html_de(destino, "/zbe/distintivos-por-ciudad/")
+    assert html, "no se publico /zbe/distintivos-por-ciudad/"
+    filas = len(re.findall(r"<th scope=[\"']?row", html))
+    conProcedencia = html.count("tabla-distintivos__norma")
+    conFecha = html.count("tabla-distintivos__fecha")
+    assert filas >= 10, (
+        "Solo %d filas en la tabla comparativa. O se han perdido municipios "
+        "verificados, o esta prueba ya no esta mirando la tabla." % filas)
+    assert conProcedencia == filas, (
+        "%d filas y %d con su norma: hay filas que dan una respuesta sin "
+        "decir de donde sale." % (filas, conProcedencia))
+    assert conFecha == filas, (
+        "%d filas y %d con fecha de verificacion: un dato normativo sin "
+        "fecha no se puede contrastar." % (filas, conFecha))
 
 
 def test_el_json_ld_de_una_ficha_describe_un_solo_documento(destino):
@@ -360,6 +490,34 @@ def test_ningun_enlace_publicado_apunta_a_ninguna_parte(destino):
         "recarga la misma pagina: %s" % ", ".join(sorted(malas)))
 
 
+def _ventana_del_menu(html, ruta):
+    """El HTML del menu lateral de una pagina ya compilada.
+
+    TRES COSAS QUE PARECEN DETALLE Y CIEGAN LA PRUEBA ENTERA:
+
+      1. `<nav\b[^>]*\bid=...`, y no `<nav id=...`. Exigir que `id` sea el
+         PRIMER atributo convierte un reordenamiento inocente en una prueba
+         que no comprueba nada. Verificado: moviendo `class` delante de `id`
+         y reintroduciendo a la vez los dos bugs reales del menu, las diez
+         pruebas pasaban.
+      2. `(.*)` avido y no `(.*?)`. El perezoso corta en el PRIMER `</nav>`,
+         asi que un `<nav>` anidado dentro del menu dejaria los enlaces fuera
+         de la ventana.
+      3. `assert` y no `continue`. Es lo que de verdad importa: si manana
+         cambia el marcado y esta expresion deja de casar, la prueba tiene
+         que DECIRLO. Un `continue` silencioso convierte «no he podido mirar»
+         en «he mirado y esta bien», que es la forma de silencio que
+         CLAUDE.md ya tiene anotada con varios nombres.
+    """
+    m = re.search(r"<nav\b[^>]*\bid=[\"']?menu-lateral[\"']?[^>]*>(.*)</nav>",
+                  html, re.S)
+    assert m, (
+        "No se encontro el menu lateral en %s. Si el marcado ha cambiado hay "
+        "que actualizar esta expresion: mientras no case, las pruebas del "
+        "menu no comprueban nada." % ruta)
+    return m.group(1)
+
+
 SECCIONES_EN_EL_MENU = ("zbe", "etiquetas", "itv", "multas", "datos")
 
 
@@ -391,11 +549,9 @@ def test_el_menu_se_abre_por_la_seccion_de_la_pagina(destino):
         html = _html_de(destino, ruta)
         if not html:
             continue
-        menu = re.search(r"<nav id=[\"']?menu-lateral[\"']?.*?</nav>", html, re.S)
-        if not menu:
-            continue
+        menu = _ventana_del_menu(html, ruta)
         # `open` minificado va sin valor, igual que `alt`.
-        if not re.search(r"<details[^>]*\bopen\b", menu.group(0)):
+        if not re.search(r"<details[^>]*\bopen\b", menu):
             cerradas.append(ruta)
     assert not cerradas, (
         "Estas paginas abren con todos los grupos del menu cerrados, sin "
@@ -428,10 +584,8 @@ def test_el_menu_marca_una_sola_pagina_como_actual(destino):
         # `aria-current="page"` y pasaba siempre, sin comprobar nada: una
         # prueba que no puede fallar. Es la misma trampa que ya dio un falso
         # positivo con `alt=""`, anotada en CLAUDE.md.
-        menu = re.search(r"<nav id=[\"']?menu-lateral[\"']?.*?</nav>", html, re.S)
-        if not menu:
-            continue
-        n = len(re.findall(r"aria-current=[\"']?page", menu.group(0)))
+        menu = _ventana_del_menu(html, ruta)
+        n = len(re.findall(r"aria-current=[\"']?page", menu))
         if n > 1:
             malas.append("%s (%d)" % (ruta, n))
     assert not malas, (
@@ -454,19 +608,22 @@ def test_la_ficha_sin_reglas_leidas_si_lo_dice(destino):
     """
     comprobadas = 0
     faltan = []
-    for slug, fm, texto in _fichas():
+    candidatas = 0
+    for slug, ruta, fm, texto in _fichas():
         if fm.get("estado_dato") == "verificado" and declara_reglas(texto):
             continue
         if fm.get("draft") == "true" or not fm.get("codigo_ine"):
             continue
         if fm.get("estado_zbe") != "activa":
             continue
-        html = _html_de(destino, "/zbe/%s/" % slug)
+        candidatas += 1
+        html = _html_de(destino, ruta)
         if html is None:
             continue
         comprobadas += 1
         if AVISO_SIN_VERIFICAR not in html:
             faltan.append(slug)
+    _exigir_cobertura(comprobadas, candidatas, "la_ficha_sin_reglas_leidas_si_lo_dice")
     assert comprobadas, (
         "No queda ninguna ficha sin reglas leidas, asi que esta prueba ya no "
         "vigila nada. Si es verdad, borrarla; si no, el filtro esta mal."

@@ -791,7 +791,8 @@
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
 
-    var anioRaw = document.getElementById('anio').value;
+    var campoAnio = document.getElementById('anio');
+    var anioRaw = campoAnio.value;
     var mesRaw = document.getElementById('mes').value;
     var autoRaw = document.getElementById('autonomia').value;
 
@@ -803,8 +804,35 @@
       autonomia: autoRaw ? parseInt(autoRaw, 10) : null
     };
 
+    /*
+     * EL ERROR LLEVA AL CAMPO, NO AL RESULTADO (08/10/2026).
+     *
+     * Antes esto escribia el mensaje y hacia `return` seco, saltandose el
+     * scrollIntoView y el focus() que SI tiene la rama de exito. Medido: con
+     * el ano vacio y el foco en «Consultar», el mensaje aparece abajo, el
+     * foco se queda en el boton y el campo `#anio` esta en top: -99, o sea
+     * fuera de la pantalla por arriba. A 400 % de zoom, mucho mas lejos.
+     *
+     * Quien usa lector de pantalla si lo oye, porque el contenedor del
+     * resultado es aria-live. El que se queda a ciegas es el usuario de
+     * teclado con vista, el de baja vision y el de ampliacion: le dicen que
+     * hay un error y no le dicen donde.
+     *
+     * El foco va AL CAMPO y no al mensaje: asi quien no ve la pantalla oye
+     * de una vez el nombre del campo, su valor y la descripcion del error,
+     * y quien si la ve aterriza donde tiene que escribir. `aria-invalid` y
+     * `aria-describedby` son lo que hace esa union, y hay que limpiarlos
+     * despues o el campo se queda marcado como invalido para siempre.
+     */
+    campoAnio.removeAttribute('aria-invalid');
+    campoAnio.removeAttribute('aria-describedby');
+
     if (datos.tipo !== 'moto' && (!datos.anio || datos.anio < 1900 || datos.anio > 2100)) {
-      salida.innerHTML = '<div class="pc-aviso pc-aviso--incierto"><p>Introduce un año de matriculación válido.</p></div>';
+      salida.innerHTML = '<div class="pc-aviso pc-aviso--incierto">' +
+        '<p id="pc-error-anio">Introduce un año de matriculación válido.</p></div>';
+      campoAnio.setAttribute('aria-invalid', 'true');
+      campoAnio.setAttribute('aria-describedby', 'pc-error-anio');
+      campoAnio.focus();
       return;
     }
 

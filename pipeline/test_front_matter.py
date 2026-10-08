@@ -168,10 +168,32 @@ def test_ninguna_descripcion_se_pasa_de_lo_que_google_ensena():
     desaprovecha sitio, y /search/ o /legal/ no necesitan 150 caracteres.
     """
     largas = []
+    raras = []
     for ruta, fm in _paginas_publicadas():
-        m = re.search(r'^description:\s*"(.*)"\s*$', fm, re.M)
-        if m and len(m.group(1)) > LIMITE_DESCRIPCION:
-            largas.append("%s (%d)" % (ruta, len(m.group(1))))
+        m = re.search(r"^description:\s*(.*)$", fm, re.M)
+        if not m:
+            continue
+        valor = m.group(1).strip()
+        # SE EXIGE LA FORMA CANONICA, Y NO POR gusto: la version anterior
+        # buscaba `description: "..."` y por tanto NO VEIA las descripciones
+        # escritas sin comillas, con comillas simples o plegadas con `>-`.
+        # Las tres son YAML valido. Comprobado: una descripcion de 200
+        # caracteres en cualquiera de esas tres formas dejaba la prueba en
+        # verde. O sea que el trabajo que esta prueba existe para proteger
+        # (22 descripciones reescritas, una de ellas perdida sola con un
+        # `git checkout`) se podia perder otra vez sin ruido.
+        #
+        # Convertir la forma rara en FALLO, y no en exencion, es lo que cierra
+        # el agujero: si alguna vez hace falta otra forma, que se decida a
+        # sabiendas y se cambie aqui.
+        if not (len(valor) >= 2 and valor[0] == '"' and valor[-1] == '"'):
+            raras.append(ruta)
+            continue
+        if len(valor) - 2 > LIMITE_DESCRIPCION:
+            largas.append("%s (%d)" % (ruta, len(valor) - 2))
+    assert not raras, (
+        "Estas descripciones no van entre comillas dobles, asi que esta "
+        "prueba no puede medirlas: %s" % ", ".join(sorted(raras)))
     assert not largas, (
         "Descripciones de mas de %d caracteres, que Google corta a mitad de "
         "frase: %s" % (LIMITE_DESCRIPCION, ", ".join(sorted(largas))))

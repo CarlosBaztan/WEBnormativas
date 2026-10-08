@@ -188,16 +188,34 @@
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
 
-    var categoria = document.getElementById('itv-categoria').value;
-    var anio = parseInt(document.getElementById('itv-anio').value, 10);
+    var campoCategoria = document.getElementById('itv-categoria');
+    var campoAnio = document.getElementById('itv-anio');
+    var categoria = campoCategoria.value;
+    var anio = parseInt(campoAnio.value, 10);
     var mes = parseInt(document.getElementById('itv-mes').value, 10);
 
+    /* El error lleva AL CAMPO, no al mensaje. Ver el porque largo en
+       assets/js/puedo-circular.js: el `return` seco se saltaba el foco que si
+       tiene la rama de exito, y el campo podia quedar fuera de pantalla. */
+    [campoCategoria, campoAnio].forEach(function (c) {
+      c.removeAttribute('aria-invalid');
+      c.removeAttribute('aria-describedby');
+    });
+
     if (!categoria || !DATOS.categorias[categoria]) {
-      salida.innerHTML = '<div class="pc-aviso pc-aviso--incierto"><p>Elige el tipo de vehículo.</p></div>';
+      salida.innerHTML = '<div class="pc-aviso pc-aviso--incierto">' +
+        '<p id="itv-error-categoria">Elige el tipo de vehículo.</p></div>';
+      campoCategoria.setAttribute('aria-invalid', 'true');
+      campoCategoria.setAttribute('aria-describedby', 'itv-error-categoria');
+      campoCategoria.focus();
       return;
     }
     if (!anio || anio < 1900 || anio > 2100) {
-      salida.innerHTML = '<div class="pc-aviso pc-aviso--incierto"><p>Introduce un año de matriculación válido.</p></div>';
+      salida.innerHTML = '<div class="pc-aviso pc-aviso--incierto">' +
+        '<p id="itv-error-anio">Introduce un año de matriculación válido.</p></div>';
+      campoAnio.setAttribute('aria-invalid', 'true');
+      campoAnio.setAttribute('aria-describedby', 'itv-error-anio');
+      campoAnio.focus();
       return;
     }
 
